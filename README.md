@@ -34,9 +34,17 @@ pnpm install
 pnpm dev
 ```
 
-Before opening a pull request, verify the foundation with:
+Install Chromium once before running browser tests locally:
 
 ```sh
-pnpm check
-pnpm build
+pnpm exec playwright install chromium
+```
+
+The available quality commands are:
+
+```sh
+pnpm quality       # type-check, lint, format check, unit test, and build
+pnpm test:unit     # Vitest component tests
+pnpm test:e2e      # Playwright browser tests
+pnpm format        # apply Prettier formatting
 ```
