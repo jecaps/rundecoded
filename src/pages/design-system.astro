@@ -1,0 +1,45 @@
+---
+import { DesignSystemPreview } from '@/components/DesignSystemPreview';
+import AppLayout from '@/layouts/AppLayout.astro';
+
+const description =
+  'A small preview surface for the RunDecoded tokens, themes, and accessible component primitives.';
+---
+
+<AppLayout title="Design system" description={description}>
+  <section class="design-system-page" aria-labelledby="design-system-title">
+    <header class="design-system-page__header">
+      <p class="route-preview__eyebrow">Phase 3 preview</p>
+      <h1 id="design-system-title">RunDecoded design system</h1>
+      <p>{description}</p>
+    </header>
+    <DesignSystemPreview client:only="react" />
+  </section>
+</AppLayout>
+
+<style>
+  .design-system-page {
+    display: grid;
+    gap: clamp(3rem, 7vw, 5rem);
+    padding-block: clamp(2.5rem, 7vw, 5rem);
+  }
+
+  .design-system-page__header {
+    max-width: 48rem;
+  }
+
+  .design-system-page__header h1 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    font-weight: 720;
+    letter-spacing: -0.045em;
+    line-height: 1.05;
+  }
+
+  .design-system-page__header > p:last-child {
+    margin: 1rem 0 0;
+    color: var(--muted-foreground);
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    line-height: 1.7;
+  }
+</style>

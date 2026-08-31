@@ -6,11 +6,13 @@ import { site } from '../site.config.mjs';
 const base = `${site.base.replace(/\/+$/, '')}/`;
 const routes = {
   catalogue: `${base}catalogue/`,
+  designSystem: `${base}design-system/`,
   runningBasics: `${base}running-basics/`,
 };
 
 const routeFiles = [
   ['Catalogue', 'catalogue/index.html'],
+  ['Design system', 'design-system/index.html'],
   ['Running Basics', 'running-basics/index.html'],
 ];
 
@@ -27,7 +29,7 @@ for (const [routeName, relativePath] of routeFiles) {
   }
 
   for (const expectedRoute of Object.values(routes)) {
-    if (!html.includes(`href="${expectedRoute}"`)) {
+    if (!html.includes(`href="${expectedRoute}`)) {
       throw new Error(`${routeName} does not link to ${expectedRoute}`);
     }
   }

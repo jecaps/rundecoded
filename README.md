@@ -6,15 +6,19 @@ The existing [Running Shoe Explorer](https://github.com/jecaps/running-shoe-expl
 
 ## Current status
 
-Phase 1 establishes the application foundation with Astro, React, and strict
-TypeScript. The first placeholder routes are available below the repository
-base path:
+Phase 3 establishes the RunDecoded design system and shared application shell
+on top of the Astro, React, and strict TypeScript foundation. The primary routes
+are available below the repository base path:
 
 - `/rundecoded/catalogue/`
 - `/rundecoded/running-basics/`
 
-Both routes use the shared application layout. Phase 0 documentation remains
-available as the migration reference:
+Both routes use the same responsive banner, navigation, footer, theme, and
+language controls. A small component preview is available at
+`/rundecoded/design-system/`. See the [design-system guide](docs/architecture/design-system.md)
+for tokens, breakpoints, and component-adoption rules.
+
+Phase 0 documentation remains available as the migration reference:
 
 - [Phase 0 baseline](docs/baseline/README.md)
 - [User journeys](docs/baseline/user-journeys.md)

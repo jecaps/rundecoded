@@ -14,6 +14,7 @@ export const routes = {
   home: baseUrl,
   catalogue: withBase('catalogue/'),
   runningBasics: withBase('running-basics/'),
+  designSystem: withBase('design-system/'),
 } as const;
 
 export function isCurrentRoute(pathname: string, route: string) {
