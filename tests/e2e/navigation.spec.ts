@@ -44,6 +44,41 @@ test('navigates between routes without changing the shared banner', async ({
   expect(basicsBanner?.height).toBeCloseTo(catalogueBanner?.height ?? 0, 0);
 });
 
+test('uses client-side navigation between primary routes', async ({ page }) => {
+  await page.goto('./catalogue/?lang=en');
+  await page.evaluate(() => {
+    (window as Window & { __navigationMarker?: string }).__navigationMarker =
+      'same-document';
+  });
+
+  await page.getByRole('link', { name: 'Running Basics' }).click();
+  await expect(page).toHaveURL(/\/running-basics\/?\?lang=en$/);
+  await expect(
+    page.getByRole('heading', { name: 'Running Basics' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: 'Running Basics' }),
+  ).toHaveAttribute('aria-current', 'page');
+  expect(
+    await page.evaluate(
+      () =>
+        (window as Window & { __navigationMarker?: string }).__navigationMarker,
+    ),
+  ).toBe('same-document');
+
+  await page.goBack();
+  await expect(page).toHaveURL(/\/catalogue\/?\?lang=en$/);
+  await expect(
+    page.getByRole('heading', { name: 'Explore running shoes' }),
+  ).toBeVisible();
+  expect(
+    await page.evaluate(
+      () =>
+        (window as Window & { __navigationMarker?: string }).__navigationMarker,
+    ),
+  ).toBe('same-document');
+});
+
 test('persists language and theme preferences across routes', async ({
   page,
 }) => {

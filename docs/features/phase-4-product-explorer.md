@@ -48,6 +48,9 @@ designed pending-image state.
   either reference is missing.
 - English, German, and French interface copy updates immediately when the shared
   footer language control changes.
+- Primary tabs use Astro client-side routing. Route changes preserve the active
+  document, browser history, language, and theme instead of performing a full
+  document reload.
 
 ## Accessibility and responsive review
 

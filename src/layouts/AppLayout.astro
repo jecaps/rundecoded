@@ -1,6 +1,7 @@
 ---
 import AppBanner from '@/components/app/AppBanner.astro';
 import SiteFooter from '@/components/app/SiteFooter.astro';
+import { ClientRouter } from 'astro:transitions';
 
 import '../styles/global.css';
 
@@ -27,6 +28,7 @@ const locale =
     />
     <meta name="generator" content={Astro.generator} />
     <title>{title} | RunDecoded</title>
+    <ClientRouter />
     <script is:inline>
       (() => {
         const storedTheme = localStorage.getItem('rundecoded-theme');
@@ -47,6 +49,13 @@ const locale =
             ? storedLocale
             : 'en';
         document.documentElement.lang = locale;
+
+        document.addEventListener('astro:after-swap', () => {
+          const persistedTheme = localStorage.getItem('rundecoded-theme');
+          if (persistedTheme === 'dark' || persistedTheme === 'light') {
+            document.documentElement.dataset.theme = persistedTheme;
+          }
+        });
       })();
     </script>
   </head>
