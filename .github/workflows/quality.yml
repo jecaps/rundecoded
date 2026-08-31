@@ -68,6 +68,20 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:unit
 
+  catalogue-validation:
+    name: Catalogue validation
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/setup@v2
+        with:
+          runtime: node@24
+          cache: true
+          install: false
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm catalogue:check
+
   browser-test:
     name: Browser test
     needs: install

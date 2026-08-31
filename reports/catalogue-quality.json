@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "status": "valid",
+  "counts": {
+    "products": 106,
+    "inputProductRows": 106,
+    "inputProvenanceRows": 107,
+    "reconciledRows": 213,
+    "aliasMerges": 1,
+    "unmatchedRows": 0,
+    "pendingImages": 9,
+    "pendingDrops": 7,
+    "pendingTechnologies": 9,
+    "warnings": 30
+  },
+  "evidence": { "verified": 97, "derived": 0, "fallback": 611, "pending": 16 },
+  "warnings": [
+    {
+      "severity": "warning",
+      "recordId": "adidas-adizero-evo-sl",
+      "field": "categories",
+      "message": "duplicate legacy category label was removed"
+    },
+    {
+      "severity": "warning",
+      "recordId": "adidas-runblaze",
+      "field": "specifications.heelToToeDrop",
+      "message": "drop is missing or unparseable; official research is required"
+    },
+    {
+      "severity": "warning",
+      "recordId": "asics-gel-kanaku-6",
+      "field": "specifications.heelToToeDrop",
+      "message": "drop is missing or unparseable; official research is required"
+    },
+    {
+      "severity": "warning",
+      "recordId": "brooks-hyperion-3",
+      "field": "categories",
+      "message": "duplicate legacy category label was removed"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipclimb-race",
+      "field": "images.0",
+      "message": "approved product image is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipclimb-race",
+      "field": "technologies",
+      "message": "technology research is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipclimb-wp",
+      "field": "images.0",
+      "message": "approved product image is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipclimb-wp",
+      "field": "technologies",
+      "message": "technology research is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipride-gravel",
+      "field": "specifications.heelToToeDrop",
+      "message": "drop is missing or unparseable; official research is required"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipride-max-wide",
+      "field": "images.0",
+      "message": "approved product image is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipride-max-wide",
+      "field": "technologies",
+      "message": "technology research is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipride-support",
+      "field": "images.0",
+      "message": "approved product image is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipride-support",
+      "field": "technologies",
+      "message": "technology research is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipride-wr",
+      "field": "images.0",
+      "message": "approved product image is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipride-wr",
+      "field": "technologies",
+      "message": "technology research is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipsonic-long",
+      "field": "specifications.heelToToeDrop",
+      "message": "drop is missing or unparseable; official research is required"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipsonic-mid",
+      "field": "images.0",
+      "message": "approved product image is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipsonic-mid",
+      "field": "specifications.heelToToeDrop",
+      "message": "drop is missing or unparseable; official research is required"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipsonic-mid",
+      "field": "technologies",
+      "message": "technology research is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipsonic-start",
+      "field": "specifications.heelToToeDrop",
+      "message": "drop is missing or unparseable; official research is required"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipsonic-x-country",
+      "field": "images.0",
+      "message": "approved product image is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipsonic-x-country",
+      "field": "specifications.heelToToeDrop",
+      "message": "drop is missing or unparseable; official research is required"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipsonic-x-country",
+      "field": "technologies",
+      "message": "technology research is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipstorm-challenger-gravel",
+      "field": "images.0",
+      "message": "approved product image is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipstorm-challenger-gravel",
+      "field": "technologies",
+      "message": "technology research is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipstorm-interval",
+      "field": "categories",
+      "message": "duplicate legacy category label was removed"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipstorm-pro-gravel",
+      "field": "images.0",
+      "message": "approved product image is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipstorm-pro-gravel",
+      "field": "technologies",
+      "message": "technology research is pending"
+    },
+    {
+      "severity": "warning",
+      "recordId": "kiprun-kipstorm-tempo",
+      "field": "categories",
+      "message": "duplicate legacy category label was removed"
+    },
+    {
+      "severity": "warning",
+      "recordId": "mizuno-neo-zen-2",
+      "field": "categories",
+      "message": "duplicate legacy category label was removed"
+    }
+  ]
+}

@@ -1,0 +1,1493 @@
+[
+  {
+    "source": "image-provenance",
+    "row": 10,
+    "sourceKey": "Decathlon|Jogflow 190 Max",
+    "productId": "decathlon-jogflow-190-max",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 100,
+    "sourceKey": "Salomon|Speedcross Peak",
+    "productId": "salomon-speedcross-peak",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 101,
+    "sourceKey": "Salomon|Speedcross Peak GTX",
+    "productId": "salomon-speedcross-peak-gtx",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 102,
+    "sourceKey": "Kiprun|Kipsonic Start",
+    "productId": "kiprun-kipsonic-start",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 103,
+    "sourceKey": "Kiprun|Kipsonic X-Country",
+    "productId": "kiprun-kipsonic-x-country",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 104,
+    "sourceKey": "Kiprun|Kipsonic Mid",
+    "productId": "kiprun-kipsonic-mid",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 105,
+    "sourceKey": "Kiprun|Kipsonic Long",
+    "productId": "kiprun-kipsonic-long",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 106,
+    "sourceKey": "Brooks|Revel 9",
+    "productId": "brooks-revel-9",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 107,
+    "sourceKey": "New Balance|Propel v5",
+    "productId": "new-balance-fuelcell-propel-v5",
+    "outcome": "merged-alias"
+  },
+  {
+    "source": "image-provenance",
+    "row": 108,
+    "sourceKey": "Puma|Velocity Nitro 5",
+    "productId": "puma-velocity-nitro-5",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 11,
+    "sourceKey": "Kiprun|Kipcore",
+    "productId": "kiprun-kipcore",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 12,
+    "sourceKey": "Kiprun|Kipcore Premium",
+    "productId": "kiprun-kipcore-premium",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 13,
+    "sourceKey": "Kiprun|Kipride",
+    "productId": "kiprun-kipride",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 14,
+    "sourceKey": "Kiprun|Kipride Max",
+    "productId": "kiprun-kipride-max",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 15,
+    "sourceKey": "Kiprun|Kipride Max Wide",
+    "productId": "kiprun-kipride-max-wide",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 16,
+    "sourceKey": "Kiprun|Kipnext",
+    "productId": "kiprun-kipnext",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 17,
+    "sourceKey": "Asics|Gel Windhawk 5",
+    "productId": "asics-gel-windhawk-5",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 18,
+    "sourceKey": "Asics|Gel Ziruss 9",
+    "productId": "asics-gel-ziruss-9",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 19,
+    "sourceKey": "Asics|Gel Stratus 5",
+    "productId": "asics-gel-stratus-5",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 2,
+    "sourceKey": "Decathlon|Jogflow 100.1",
+    "productId": "decathlon-jogflow-100-1",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 20,
+    "sourceKey": "Asics|Gel Pulse 17",
+    "productId": "asics-gel-pulse-17",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 21,
+    "sourceKey": "Asics|Gel Nimbus 28",
+    "productId": "asics-gel-nimbus-28",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 22,
+    "sourceKey": "Asics|Novablast 5",
+    "productId": "asics-novablast-5",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 23,
+    "sourceKey": "Asics|Dynablast 5",
+    "productId": "asics-dynablast-5",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 24,
+    "sourceKey": "Hoka|Clifton 10",
+    "productId": "hoka-clifton-10",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 25,
+    "sourceKey": "Hoka|Rincon 4",
+    "productId": "hoka-rincon-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 26,
+    "sourceKey": "Adidas|Supernova Rise 3",
+    "productId": "adidas-supernova-rise-3",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 27,
+    "sourceKey": "Adidas|Adistar 5",
+    "productId": "adidas-adistar-5",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 28,
+    "sourceKey": "Brooks|Ghost 18",
+    "productId": "brooks-ghost-18",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 29,
+    "sourceKey": "Brooks|Ghost Max 4",
+    "productId": "brooks-ghost-max-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 3,
+    "sourceKey": "Decathlon|Jogflow 190 Premium",
+    "productId": "decathlon-jogflow-190-premium",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 30,
+    "sourceKey": "Brooks|Ghost 17",
+    "productId": "brooks-ghost-17",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 31,
+    "sourceKey": "Brooks|Ghost Max 3",
+    "productId": "brooks-ghost-max-3",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 32,
+    "sourceKey": "Brooks|Revel Max",
+    "productId": "brooks-revel-max",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 33,
+    "sourceKey": "Brooks|Glycerin 23",
+    "productId": "brooks-glycerin-23",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 34,
+    "sourceKey": "Mizuno|Wave Rider 29",
+    "productId": "mizuno-wave-rider-29",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 35,
+    "sourceKey": "Mizuno|Wave Ultima 17",
+    "productId": "mizuno-wave-ultima-17",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 36,
+    "sourceKey": "Mizuno|Wave Impulse",
+    "productId": "mizuno-wave-impulse",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 37,
+    "sourceKey": "Puma|Velocity Nitro 4",
+    "productId": "puma-velocity-nitro-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 38,
+    "sourceKey": "Saucony|Ride 19",
+    "productId": "saucony-ride-19",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 39,
+    "sourceKey": "New Balance|1080 v15",
+    "productId": "new-balance-1080-v15",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 4,
+    "sourceKey": "Decathlon|Jogflow 190 Grip",
+    "productId": "decathlon-jogflow-190-grip",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 40,
+    "sourceKey": "New Balance|More v6",
+    "productId": "new-balance-more-v6",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 41,
+    "sourceKey": "New Balance|Ellipse",
+    "productId": "new-balance-ellipse",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 42,
+    "sourceKey": "New Balance|Kaiha v2",
+    "productId": "new-balance-kaiha-v2",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 43,
+    "sourceKey": "New Balance|840 v1",
+    "productId": "new-balance-840-v1",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 44,
+    "sourceKey": "New Balance|FuelCell Rebel v5",
+    "productId": "new-balance-fuelcell-rebel-v5",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 45,
+    "sourceKey": "Kiprun|Kipride Support",
+    "productId": "kiprun-kipride-support",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 46,
+    "sourceKey": "Asics|Gel Superion 8",
+    "productId": "asics-gel-superion-8",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 47,
+    "sourceKey": "Asics|GT-2000 13",
+    "productId": "asics-gt-2000-13",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 48,
+    "sourceKey": "Asics|Gel Kayano 32",
+    "productId": "asics-gel-kayano-32",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 49,
+    "sourceKey": "Asics|Gel Kayano 33",
+    "productId": "asics-gel-kayano-33",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 5,
+    "sourceKey": "Decathlon|Jogflow 190 Grip WP",
+    "productId": "decathlon-jogflow-190-grip-wp",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 50,
+    "sourceKey": "Asics|Gel Roadmiles 4",
+    "productId": "asics-gel-roadmiles-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 51,
+    "sourceKey": "Brooks|Adrenaline GTS 25",
+    "productId": "brooks-adrenaline-gts-25",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 52,
+    "sourceKey": "Saucony|Guide 19",
+    "productId": "saucony-guide-19",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 53,
+    "sourceKey": "Kiprun|Kipstorm Tempo",
+    "productId": "kiprun-kipstorm-tempo",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 54,
+    "sourceKey": "Kiprun|Kipstorm Interval",
+    "productId": "kiprun-kipstorm-interval",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 55,
+    "sourceKey": "Kiprun|Kipstorm Challenger",
+    "productId": "kiprun-kipstorm-challenger",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 56,
+    "sourceKey": "Kiprun|Kipstorm Pro",
+    "productId": "kiprun-kipstorm-pro",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 57,
+    "sourceKey": "Kiprun|Kipstorm Elite",
+    "productId": "kiprun-kipstorm-elite",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 58,
+    "sourceKey": "Kiprun|Kipstorm Lab",
+    "productId": "kiprun-kipstorm-lab",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 59,
+    "sourceKey": "Adidas|Adizero Boston 13",
+    "productId": "adidas-adizero-boston-13",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 6,
+    "sourceKey": "Asics|Gel Excite 11",
+    "productId": "asics-gel-excite-11",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 60,
+    "sourceKey": "Adidas|Adizero Evo SL",
+    "productId": "adidas-adizero-evo-sl",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 61,
+    "sourceKey": "Brooks|Hyperion 3",
+    "productId": "brooks-hyperion-3",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 62,
+    "sourceKey": "Mizuno|Neo Zen 2",
+    "productId": "mizuno-neo-zen-2",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 63,
+    "sourceKey": "Mizuno|Neo Cosmo",
+    "productId": "mizuno-neo-cosmo",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 64,
+    "sourceKey": "Puma|Deviate Nitro 4",
+    "productId": "puma-deviate-nitro-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 65,
+    "sourceKey": "New Balance|FuelCell Propel v5",
+    "productId": "new-balance-fuelcell-propel-v5",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 66,
+    "sourceKey": "Kiprun|Kipcore Gravel",
+    "productId": "kiprun-kipcore-gravel",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 67,
+    "sourceKey": "Kiprun|Kipcore WR",
+    "productId": "kiprun-kipcore-wr",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 68,
+    "sourceKey": "Kiprun|Kipride Gravel",
+    "productId": "kiprun-kipride-gravel",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 69,
+    "sourceKey": "Kiprun|Kipride WR",
+    "productId": "kiprun-kipride-wr",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 7,
+    "sourceKey": "Adidas|Galaxy 7",
+    "productId": "adidas-galaxy-7",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 70,
+    "sourceKey": "Kiprun|Kipsummit",
+    "productId": "kiprun-kipsummit",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 71,
+    "sourceKey": "Kiprun|Kipsummit WP",
+    "productId": "kiprun-kipsummit-wp",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 72,
+    "sourceKey": "Kiprun|Kipsummit Max",
+    "productId": "kiprun-kipsummit-max",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 73,
+    "sourceKey": "Kiprun|Kipclimb",
+    "productId": "kiprun-kipclimb",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 74,
+    "sourceKey": "Kiprun|Kipclimb WP",
+    "productId": "kiprun-kipclimb-wp",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 75,
+    "sourceKey": "Kiprun|Kipclimb Max",
+    "productId": "kiprun-kipclimb-max",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 76,
+    "sourceKey": "Hoka|Torrent 4",
+    "productId": "hoka-torrent-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 77,
+    "sourceKey": "Hoka|Speedgoat 7",
+    "productId": "hoka-speedgoat-7",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 78,
+    "sourceKey": "Asics|Gel Kanaku 6",
+    "productId": "asics-gel-kanaku-6",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 79,
+    "sourceKey": "Asics|Gel Sonoma 8 GTX",
+    "productId": "asics-gel-sonoma-8-gtx",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 8,
+    "sourceKey": "Adidas|Runblaze",
+    "productId": "adidas-runblaze",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 80,
+    "sourceKey": "Asics|Trabuco 14",
+    "productId": "asics-trabuco-14",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 81,
+    "sourceKey": "Asics|Trabuco Terra 3",
+    "productId": "asics-trabuco-terra-3",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 82,
+    "sourceKey": "Adidas|Terrex Agravic 4",
+    "productId": "adidas-terrex-agravic-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 83,
+    "sourceKey": "Salomon|Supraglide",
+    "productId": "salomon-supraglide",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 84,
+    "sourceKey": "Salomon|Ultra Flow 2",
+    "productId": "salomon-ultra-flow-2",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 85,
+    "sourceKey": "Salomon|Aero Blaze 3 Grvl",
+    "productId": "salomon-aero-blaze-3-grvl",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 86,
+    "sourceKey": "Salomon|Genesis",
+    "productId": "salomon-genesis",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 87,
+    "sourceKey": "Salomon|Ultra Glide 4",
+    "productId": "salomon-ultra-glide-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 88,
+    "sourceKey": "Brooks|Range",
+    "productId": "brooks-range",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 89,
+    "sourceKey": "Brooks|Cascadia 19",
+    "productId": "brooks-cascadia-19",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 9,
+    "sourceKey": "New Balance|520 v9",
+    "productId": "new-balance-520-v9",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 90,
+    "sourceKey": "Brooks|Ghost Trail",
+    "productId": "brooks-ghost-trail",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 91,
+    "sourceKey": "Saucony|Peregrine 16",
+    "productId": "saucony-peregrine-16",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 92,
+    "sourceKey": "New Balance|Hierro v9",
+    "productId": "new-balance-hierro-v9",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 93,
+    "sourceKey": "New Balance|Garoe v2",
+    "productId": "new-balance-garoe-v2",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 94,
+    "sourceKey": "New Balance|Rebel Trail",
+    "productId": "new-balance-rebel-trail",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 95,
+    "sourceKey": "Kiprun|Kipstorm Challenger Gravel",
+    "productId": "kiprun-kipstorm-challenger-gravel",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 96,
+    "sourceKey": "Kiprun|Kipstorm Pro Gravel",
+    "productId": "kiprun-kipstorm-pro-gravel",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 97,
+    "sourceKey": "Kiprun|Kipsummit Race",
+    "productId": "kiprun-kipsummit-race",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 98,
+    "sourceKey": "Kiprun|Kipclimb Race",
+    "productId": "kiprun-kipclimb-race",
+    "outcome": "matched"
+  },
+  {
+    "source": "image-provenance",
+    "row": 99,
+    "sourceKey": "Adidas|Adizero Agravic Speed 2",
+    "productId": "adidas-adizero-agravic-speed-2",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 10,
+    "sourceKey": "ADIDAS|Runblaze",
+    "productId": "adidas-runblaze",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 100,
+    "sourceKey": "NEW BALANCE|Hierro v9",
+    "productId": "new-balance-hierro-v9",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 101,
+    "sourceKey": "NEW BALANCE|Garoe v2",
+    "productId": "new-balance-garoe-v2",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 102,
+    "sourceKey": "NEW BALANCE|Rebel Trail",
+    "productId": "new-balance-rebel-trail",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 103,
+    "sourceKey": "KIPRUN|Kipsonic Start",
+    "productId": "kiprun-kipsonic-start",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 104,
+    "sourceKey": "KIPRUN|Kipsonic X-Country",
+    "productId": "kiprun-kipsonic-x-country",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 105,
+    "sourceKey": "KIPRUN|Kipsonic Mid",
+    "productId": "kiprun-kipsonic-mid",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 106,
+    "sourceKey": "KIPRUN|Kipsonic Long",
+    "productId": "kiprun-kipsonic-long",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 107,
+    "sourceKey": "PUMA|Velocity Nitro 5",
+    "productId": "puma-velocity-nitro-5",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 11,
+    "sourceKey": "NEW BALANCE|520 v9",
+    "productId": "new-balance-520-v9",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 12,
+    "sourceKey": "KIPRUN|Kipcore",
+    "productId": "kiprun-kipcore",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 13,
+    "sourceKey": "KIPRUN|Kipcore Premium",
+    "productId": "kiprun-kipcore-premium",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 14,
+    "sourceKey": "ASICS|Gel Ziruss 9",
+    "productId": "asics-gel-ziruss-9",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 15,
+    "sourceKey": "ASICS|Gel Stratus 5",
+    "productId": "asics-gel-stratus-5",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 16,
+    "sourceKey": "ASICS|Gel Pulse 17",
+    "productId": "asics-gel-pulse-17",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 17,
+    "sourceKey": "ASICS|Novablast 5",
+    "productId": "asics-novablast-5",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 18,
+    "sourceKey": "ASICS|Dynablast 5",
+    "productId": "asics-dynablast-5",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 19,
+    "sourceKey": "HOKA|Clifton 10",
+    "productId": "hoka-clifton-10",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 2,
+    "sourceKey": "DECATHLON|Jogflow 100.1",
+    "productId": "decathlon-jogflow-100-1",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 20,
+    "sourceKey": "HOKA|Rincon 4",
+    "productId": "hoka-rincon-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 21,
+    "sourceKey": "ADIDAS|Supernova Rise 3",
+    "productId": "adidas-supernova-rise-3",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 22,
+    "sourceKey": "BROOKS|Ghost 17",
+    "productId": "brooks-ghost-17",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 23,
+    "sourceKey": "BROOKS|Ghost 18",
+    "productId": "brooks-ghost-18",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 24,
+    "sourceKey": "BROOKS|Revel 9",
+    "productId": "brooks-revel-9",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 25,
+    "sourceKey": "BROOKS|Revel Max",
+    "productId": "brooks-revel-max",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 26,
+    "sourceKey": "MIZUNO|Wave Rider 29",
+    "productId": "mizuno-wave-rider-29",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 27,
+    "sourceKey": "MIZUNO|Wave Ultima 17",
+    "productId": "mizuno-wave-ultima-17",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 28,
+    "sourceKey": "MIZUNO|Wave Impulse",
+    "productId": "mizuno-wave-impulse",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 29,
+    "sourceKey": "PUMA|Velocity Nitro 4",
+    "productId": "puma-velocity-nitro-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 3,
+    "sourceKey": "DECATHLON|Jogflow 190 Grip",
+    "productId": "decathlon-jogflow-190-grip",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 30,
+    "sourceKey": "SAUCONY|Ride 19",
+    "productId": "saucony-ride-19",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 31,
+    "sourceKey": "KIPRUN|Kipride",
+    "productId": "kiprun-kipride",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 32,
+    "sourceKey": "NEW BALANCE|Ellipse",
+    "productId": "new-balance-ellipse",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 33,
+    "sourceKey": "ASICS|Gel Nimbus 28",
+    "productId": "asics-gel-nimbus-28",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 34,
+    "sourceKey": "BROOKS|Ghost Max 3",
+    "productId": "brooks-ghost-max-3",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 35,
+    "sourceKey": "BROOKS|Ghost Max 4",
+    "productId": "brooks-ghost-max-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 36,
+    "sourceKey": "BROOKS|Glycerin 23",
+    "productId": "brooks-glycerin-23",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 37,
+    "sourceKey": "KIPRUN|Kipride Max",
+    "productId": "kiprun-kipride-max",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 38,
+    "sourceKey": "KIPRUN|Kipride Max Wide",
+    "productId": "kiprun-kipride-max-wide",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 39,
+    "sourceKey": "NEW BALANCE|1080 v15",
+    "productId": "new-balance-1080-v15",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 4,
+    "sourceKey": "DECATHLON|Jogflow 190 Grip WP",
+    "productId": "decathlon-jogflow-190-grip-wp",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 40,
+    "sourceKey": "NEW BALANCE|More v6",
+    "productId": "new-balance-more-v6",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 41,
+    "sourceKey": "NEW BALANCE|Kaiha v2",
+    "productId": "new-balance-kaiha-v2",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 42,
+    "sourceKey": "ADIDAS|Adistar 5",
+    "productId": "adidas-adistar-5",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 43,
+    "sourceKey": "ASICS|Gel Superion 8",
+    "productId": "asics-gel-superion-8",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 44,
+    "sourceKey": "ASICS|GT-2000 13",
+    "productId": "asics-gt-2000-13",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 45,
+    "sourceKey": "ASICS|Gel Kayano 32",
+    "productId": "asics-gel-kayano-32",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 46,
+    "sourceKey": "ASICS|Gel Kayano 33",
+    "productId": "asics-gel-kayano-33",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 47,
+    "sourceKey": "ASICS|Gel Roadmiles 4",
+    "productId": "asics-gel-roadmiles-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 48,
+    "sourceKey": "BROOKS|Adrenaline GTS 25",
+    "productId": "brooks-adrenaline-gts-25",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 49,
+    "sourceKey": "SAUCONY|Guide 19",
+    "productId": "saucony-guide-19",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 5,
+    "sourceKey": "DECATHLON|Jogflow 190 Max",
+    "productId": "decathlon-jogflow-190-max",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 50,
+    "sourceKey": "NEW BALANCE|840 v1",
+    "productId": "new-balance-840-v1",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 51,
+    "sourceKey": "KIPRUN|Kipride Support",
+    "productId": "kiprun-kipride-support",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 52,
+    "sourceKey": "KIPRUN|Kipstorm Tempo",
+    "productId": "kiprun-kipstorm-tempo",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 53,
+    "sourceKey": "KIPRUN|Kipnext",
+    "productId": "kiprun-kipnext",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 54,
+    "sourceKey": "KIPRUN|Kipstorm Challenger",
+    "productId": "kiprun-kipstorm-challenger",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 55,
+    "sourceKey": "KIPRUN|Kipstorm Interval",
+    "productId": "kiprun-kipstorm-interval",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 56,
+    "sourceKey": "KIPRUN|Kipstorm Pro",
+    "productId": "kiprun-kipstorm-pro",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 57,
+    "sourceKey": "KIPRUN|Kipstorm Elite",
+    "productId": "kiprun-kipstorm-elite",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 58,
+    "sourceKey": "KIPRUN|Kipstorm Lab",
+    "productId": "kiprun-kipstorm-lab",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 59,
+    "sourceKey": "ADIDAS|Adizero Boston 13",
+    "productId": "adidas-adizero-boston-13",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 6,
+    "sourceKey": "DECATHLON|Jogflow 190 Premium",
+    "productId": "decathlon-jogflow-190-premium",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 60,
+    "sourceKey": "ADIDAS|Adizero Evo SL",
+    "productId": "adidas-adizero-evo-sl",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 61,
+    "sourceKey": "BROOKS|Hyperion 3",
+    "productId": "brooks-hyperion-3",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 62,
+    "sourceKey": "MIZUNO|Neo Zen 2",
+    "productId": "mizuno-neo-zen-2",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 63,
+    "sourceKey": "MIZUNO|Neo Cosmo",
+    "productId": "mizuno-neo-cosmo",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 64,
+    "sourceKey": "PUMA|Deviate Nitro 4",
+    "productId": "puma-deviate-nitro-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 65,
+    "sourceKey": "NEW BALANCE|FuelCell Rebel v5",
+    "productId": "new-balance-fuelcell-rebel-v5",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 66,
+    "sourceKey": "NEW BALANCE|FuelCell Propel v5",
+    "productId": "new-balance-fuelcell-propel-v5",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 67,
+    "sourceKey": "KIPRUN|Kipcore Gravel",
+    "productId": "kiprun-kipcore-gravel",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 68,
+    "sourceKey": "KIPRUN|Kipcore WR",
+    "productId": "kiprun-kipcore-wr",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 69,
+    "sourceKey": "KIPRUN|Kipride Gravel",
+    "productId": "kiprun-kipride-gravel",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 7,
+    "sourceKey": "ASICS|Gel Windhawk 5",
+    "productId": "asics-gel-windhawk-5",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 70,
+    "sourceKey": "KIPRUN|Kipride WR",
+    "productId": "kiprun-kipride-wr",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 71,
+    "sourceKey": "KIPRUN|Kipsummit",
+    "productId": "kiprun-kipsummit",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 72,
+    "sourceKey": "KIPRUN|Kipsummit WP",
+    "productId": "kiprun-kipsummit-wp",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 73,
+    "sourceKey": "KIPRUN|Kipsummit Max",
+    "productId": "kiprun-kipsummit-max",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 74,
+    "sourceKey": "KIPRUN|Kipclimb",
+    "productId": "kiprun-kipclimb",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 75,
+    "sourceKey": "KIPRUN|Kipclimb WP",
+    "productId": "kiprun-kipclimb-wp",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 76,
+    "sourceKey": "KIPRUN|Kipclimb Max",
+    "productId": "kiprun-kipclimb-max",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 77,
+    "sourceKey": "KIPRUN|Kipstorm Challenger Gravel",
+    "productId": "kiprun-kipstorm-challenger-gravel",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 78,
+    "sourceKey": "KIPRUN|Kipstorm Pro Gravel",
+    "productId": "kiprun-kipstorm-pro-gravel",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 79,
+    "sourceKey": "KIPRUN|Kipsummit Race",
+    "productId": "kiprun-kipsummit-race",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 8,
+    "sourceKey": "ASICS|Gel Excite 11",
+    "productId": "asics-gel-excite-11",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 80,
+    "sourceKey": "KIPRUN|Kipclimb Race",
+    "productId": "kiprun-kipclimb-race",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 81,
+    "sourceKey": "HOKA|Torrent 4",
+    "productId": "hoka-torrent-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 82,
+    "sourceKey": "HOKA|Speedgoat 7",
+    "productId": "hoka-speedgoat-7",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 83,
+    "sourceKey": "ASICS|Gel Kanaku 6",
+    "productId": "asics-gel-kanaku-6",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 84,
+    "sourceKey": "ASICS|Gel Sonoma 8 GTX",
+    "productId": "asics-gel-sonoma-8-gtx",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 85,
+    "sourceKey": "ASICS|Trabuco 14",
+    "productId": "asics-trabuco-14",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 86,
+    "sourceKey": "ASICS|Trabuco Terra 3",
+    "productId": "asics-trabuco-terra-3",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 87,
+    "sourceKey": "ADIDAS|Terrex Agravic 4",
+    "productId": "adidas-terrex-agravic-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 88,
+    "sourceKey": "ADIDAS|Adizero Agravic Speed 2",
+    "productId": "adidas-adizero-agravic-speed-2",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 89,
+    "sourceKey": "SALOMON|Supraglide",
+    "productId": "salomon-supraglide",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 9,
+    "sourceKey": "ADIDAS|Galaxy 7",
+    "productId": "adidas-galaxy-7",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 90,
+    "sourceKey": "SALOMON|Ultra Flow 2",
+    "productId": "salomon-ultra-flow-2",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 91,
+    "sourceKey": "SALOMON|Aero Blaze 3 Grvl",
+    "productId": "salomon-aero-blaze-3-grvl",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 92,
+    "sourceKey": "SALOMON|Ultra Glide 4",
+    "productId": "salomon-ultra-glide-4",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 93,
+    "sourceKey": "SALOMON|Speedcross Peak",
+    "productId": "salomon-speedcross-peak",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 94,
+    "sourceKey": "SALOMON|Speedcross Peak GTX",
+    "productId": "salomon-speedcross-peak-gtx",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 95,
+    "sourceKey": "SALOMON|Genesis",
+    "productId": "salomon-genesis",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 96,
+    "sourceKey": "BROOKS|Cascadia 19",
+    "productId": "brooks-cascadia-19",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 97,
+    "sourceKey": "BROOKS|Range",
+    "productId": "brooks-range",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 98,
+    "sourceKey": "BROOKS|Ghost Trail",
+    "productId": "brooks-ghost-trail",
+    "outcome": "matched"
+  },
+  {
+    "source": "legacy-products",
+    "row": 99,
+    "sourceKey": "SAUCONY|Peregrine 16",
+    "productId": "saucony-peregrine-16",
+    "outcome": "matched"
+  }
+]
