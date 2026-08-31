@@ -7,10 +7,11 @@ The existing [Running Shoe Explorer](https://github.com/jecaps/running-shoe-expl
 ## Current status
 
 Phase 1 establishes the application foundation with Astro, React, and strict
-TypeScript. The first placeholder routes are available at:
+TypeScript. The first placeholder routes are available below the repository
+base path:
 
-- `/catalogue`
-- `/running-basics`
+- `/rundecoded/catalogue/`
+- `/rundecoded/running-basics/`
 
 Both routes use the shared application layout. Phase 0 documentation remains
 available as the migration reference:
@@ -24,6 +25,8 @@ available as the migration reference:
 - [Verification checklist](docs/baseline/phase-0-verification.md)
 
 The tracked roadmap is maintained in [GitHub Project 8](https://github.com/users/jecaps/projects/8).
+See [GitHub Pages preview builds](docs/deployment/github-pages-preview.md) for
+local production-preview and pull-request review instructions.
 
 ## Local development
 
@@ -46,5 +49,6 @@ The available quality commands are:
 pnpm quality       # type-check, lint, format check, unit test, and build
 pnpm test:unit     # Vitest component tests
 pnpm test:e2e      # Playwright browser tests
+pnpm verify:pages  # validate repository-subpath output
 pnpm format        # apply Prettier formatting
 ```
