@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+/*
+ * Tailwind's Preflight supplies the browser reset. Keep this layer deliberately
+ * small so native controls, keyboard focus, and other accessible defaults are
+ * not replaced before the design system is defined.
+ */
+@layer base {
+  :root {
+    color-scheme: light dark;
+    font-family:
+      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+
+  body {
+    min-width: 20rem;
+    background-color: Canvas;
+    color: CanvasText;
+    line-height: 1.5;
+  }
+}
