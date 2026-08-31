@@ -83,6 +83,11 @@ export function DisplayControls({ initialLocale }: DisplayControlsProps) {
     url.searchParams.set('lang', nextLocale);
     window.history.replaceState({}, '', url);
     updateLocaleAwareLinks(nextLocale);
+    window.dispatchEvent(
+      new CustomEvent('rundecoded:locale-change', {
+        detail: { locale: nextLocale },
+      }),
+    );
   }
 
   function toggleTheme() {

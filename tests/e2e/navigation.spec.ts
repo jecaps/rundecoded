@@ -27,7 +27,7 @@ test('navigates between routes without changing the shared banner', async ({
 }) => {
   await page.goto('./catalogue/?lang=en');
   await expect(
-    page.getByRole('heading', { level: 1, name: 'Catalogue' }),
+    page.getByRole('heading', { level: 1, name: 'Explore running shoes' }),
   ).toBeVisible();
 
   const catalogueBanner = await page.locator('.app-banner').boundingBox();
