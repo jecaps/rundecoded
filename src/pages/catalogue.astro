@@ -1,0 +1,15 @@
+---
+import { RoutePlaceholder } from '@components/RoutePlaceholder';
+import AppLayout from '@layouts/AppLayout.astro';
+
+const description =
+  'The future home of the structured RunDecoded running-product catalogue.';
+---
+
+<AppLayout title="Catalogue" description={description}>
+  <RoutePlaceholder
+    eyebrow="Application foundation"
+    title="Catalogue"
+    description={description}
+  />
+</AppLayout>

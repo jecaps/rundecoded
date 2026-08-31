@@ -1,0 +1,20 @@
+# build output
+dist/
+
+# generated Astro files
+.astro/
+
+# dependencies
+node_modules/
+
+# environment files
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+
+# editor files
+.idea/
+.vscode/

@@ -6,7 +6,14 @@ The existing [Running Shoe Explorer](https://github.com/jecaps/running-shoe-expl
 
 ## Current status
 
-Phase 0 documents the prototype baseline before implementation begins:
+Phase 1 establishes the application foundation with Astro, React, and strict
+TypeScript. The first placeholder routes are available at:
+
+- `/catalogue`
+- `/running-basics`
+
+Both routes use the shared application layout. Phase 0 documentation remains
+available as the migration reference:
 
 - [Phase 0 baseline](docs/baseline/README.md)
 - [User journeys](docs/baseline/user-journeys.md)
@@ -16,4 +23,20 @@ Phase 0 documents the prototype baseline before implementation begins:
 - [Migration and rollback workflow](docs/baseline/migration-workflow.md)
 - [Verification checklist](docs/baseline/phase-0-verification.md)
 
-The tracked roadmap is maintained in [GitHub Project 8](https://github.com/users/jecaps/projects/8). No application scaffold is added during Phase 0.
+The tracked roadmap is maintained in [GitHub Project 8](https://github.com/users/jecaps/projects/8).
+
+## Local development
+
+RunDecoded requires Node.js 22.12 or newer and pnpm.
+
+```sh
+pnpm install
+pnpm dev
+```
+
+Before opening a pull request, verify the foundation with:
+
+```sh
+pnpm check
+pnpm build
+```
