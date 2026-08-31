@@ -9,7 +9,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    baseURL: 'http://127.0.0.1:4321',
+    baseURL: 'http://127.0.0.1:4321/rundecoded/',
     trace: 'on-first-retry',
   },
   projects: [
@@ -20,7 +20,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'pnpm dev --host 127.0.0.1',
-    url: 'http://127.0.0.1:4321/catalogue',
+    url: 'http://127.0.0.1:4321/rundecoded/catalogue/',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

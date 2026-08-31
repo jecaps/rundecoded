@@ -27,6 +27,16 @@ export default [
     },
   },
   {
+    files: [
+      '*.config.{js,mjs,ts}',
+      'scripts/**/*.{js,mjs,ts}',
+      'site.config.mjs',
+    ],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  {
     ...reactHooks.configs.flat['recommended-latest'],
     files: ['src/**/*.{ts,tsx}'],
   },

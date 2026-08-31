@@ -1,4 +1,6 @@
 ---
+import { isCurrentRoute, routes } from '@/lib/routes';
+
 import '../styles/global.css';
 
 interface Props {
@@ -10,8 +12,8 @@ const { description, title } = Astro.props;
 const currentPath = Astro.url.pathname;
 
 const navigation = [
-  { href: '/catalogue', label: 'Catalogue' },
-  { href: '/running-basics', label: 'Running Basics' },
+  { href: routes.catalogue, label: 'Catalogue' },
+  { href: routes.runningBasics, label: 'Running Basics' },
 ];
 ---
 
@@ -30,14 +32,16 @@ const navigation = [
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="/catalogue">RunDecoded</a>
+      <a class="brand" href={routes.catalogue}>RunDecoded</a>
       <nav aria-label="Primary navigation">
         <ul>
           {
             navigation.map((item) => (
               <li>
                 <a
-                  aria-current={currentPath === item.href ? 'page' : undefined}
+                  aria-current={
+                    isCurrentRoute(currentPath, item.href) ? 'page' : undefined
+                  }
                   href={item.href}
                 >
                   {item.label}

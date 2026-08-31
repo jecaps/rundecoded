@@ -1,0 +1,41 @@
+name: Pages preview
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-preview-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-preview:
+    name: Build Pages preview
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/setup@v2
+        with:
+          runtime: node@24
+          cache: true
+          install: false
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm verify:pages
+      - name: Upload Pages-compatible artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+      - name: Upload downloadable pull-request preview
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v5
+        with:
+          name: rundecoded-pages-preview-${{ github.event.pull_request.number }}
+          path: dist
+          retention-days: 14
