@@ -1,16 +1,21 @@
 ---
-import { RoutePlaceholder } from '@components/RoutePlaceholder';
+import { ProductExplorer } from '@/features/catalogue/ProductExplorer';
+import { getProductSlice } from '@/features/catalogue/slice';
 import AppLayout from '@layouts/AppLayout.astro';
 
 const description =
-  'The future home of the structured RunDecoded running-product catalogue.';
+  'Explore and compare a representative set of running shoes by purpose, construction, and technical facts.';
+const requestedLocale = Astro.url.searchParams.get('lang');
+const locale =
+  requestedLocale === 'de' || requestedLocale === 'fr' ? requestedLocale : 'en';
+const products = getProductSlice();
 ---
 
 <AppLayout title="Catalogue" description={description}>
-  <RoutePlaceholder
-    eyebrow="Product explorer"
-    title="Catalogue"
-    description={description}
-    note="The shared RunDecoded shell is ready. Product cards, search, filters, and comparison arrive with the first end-to-end explorer slice."
+  <ProductExplorer
+    assetBase={import.meta.env.BASE_URL}
+    initialLocale={locale}
+    products={products}
+    client:load
   />
 </AppLayout>

@@ -1,0 +1,213 @@
+import type { SupportedLocale } from '@/domain/catalogue';
+
+export const catalogueCopy = {
+  en: {
+    title: 'Explore running shoes',
+    intro:
+      'Search and compare a representative set of shoes by purpose, surface, guidance, and construction.',
+    searchLabel: 'Search products',
+    searchPlaceholder: 'Brand, model, category, benefit…',
+    allCategories: 'All categories',
+    filters: 'Categories',
+    results: (shown: number, total: number) => `${shown} of ${total} shoes`,
+    noResults: 'No shoes match these filters.',
+    clearFilters: 'Clear filters',
+    details: 'Details',
+    compare: 'Compare',
+    remove: 'Remove',
+    compareSelected: (count: number) => `Compare selected (${count}/2)`,
+    comparisonReady: 'Select two shoes to compare.',
+    previous: 'Previous',
+    next: 'Next',
+    page: (current: number, total: number) => `Page ${current} of ${total}`,
+    bestFor: 'Best for',
+    surface: 'Surface',
+    stability: 'Stability',
+    drop: 'Drop',
+    pending: 'Pending research',
+    technologies: 'Construction & technologies',
+    ride: 'Ride & intended use',
+    sources: 'Sources',
+    weight: 'Weight reference',
+    sourcePending: 'Source verification pending',
+    comparableProducts: 'Comparable products',
+    compareWith: (model: string) => `Compare with ${model}`,
+    openDetails: (model: string) => `Open details for ${model}`,
+    productImage: (model: string) => `Product image for ${model}`,
+    imagePending: 'Official product image pending',
+    comparisonTitle: 'Shoe comparison',
+    comparisonDescription:
+      'Compare purpose and technical facts. Differences are guidance, not a personal fit recommendation.',
+    characteristic: 'Characteristic',
+    category: 'Category',
+    different: 'Different',
+    same: 'Same',
+    notCompared: 'Not compared',
+    weightReferenceMismatch:
+      'Reference sizes differ, so weight is not highlighted.',
+    selectionLimit:
+      'Two shoes are already selected. Remove one before adding another.',
+  },
+  de: {
+    title: 'Laufschuhe entdecken',
+    intro:
+      'Durchsuche und vergleiche eine repräsentative Auswahl nach Einsatzzweck, Untergrund, Führung und Konstruktion.',
+    searchLabel: 'Produkte suchen',
+    searchPlaceholder: 'Marke, Modell, Kategorie, Vorteil…',
+    allCategories: 'Alle Kategorien',
+    filters: 'Kategorien',
+    results: (shown: number, total: number) => `${shown} von ${total} Schuhen`,
+    noResults: 'Keine Schuhe passen zu diesen Filtern.',
+    clearFilters: 'Filter löschen',
+    details: 'Details',
+    compare: 'Vergleichen',
+    remove: 'Entfernen',
+    compareSelected: (count: number) => `Auswahl vergleichen (${count}/2)`,
+    comparisonReady: 'Wähle zwei Schuhe zum Vergleichen.',
+    previous: 'Zurück',
+    next: 'Weiter',
+    page: (current: number, total: number) => `Seite ${current} von ${total}`,
+    bestFor: 'Geeignet für',
+    surface: 'Untergrund',
+    stability: 'Stabilität',
+    drop: 'Sprengung',
+    pending: 'Recherche ausstehend',
+    technologies: 'Konstruktion & Technologien',
+    ride: 'Laufgefühl & Einsatzzweck',
+    sources: 'Quellen',
+    weight: 'Gewichtsreferenz',
+    sourcePending: 'Quellenprüfung ausstehend',
+    comparableProducts: 'Vergleichbare Produkte',
+    compareWith: (model: string) => `Mit ${model} vergleichen`,
+    openDetails: (model: string) => `Details für ${model} öffnen`,
+    productImage: (model: string) => `Produktbild für ${model}`,
+    imagePending: 'Offizielles Produktbild ausstehend',
+    comparisonTitle: 'Schuhvergleich',
+    comparisonDescription:
+      'Vergleiche Einsatzzweck und technische Fakten. Unterschiede ersetzen keine persönliche Passformberatung.',
+    characteristic: 'Merkmal',
+    category: 'Kategorie',
+    different: 'Unterschiedlich',
+    same: 'Gleich',
+    notCompared: 'Nicht verglichen',
+    weightReferenceMismatch:
+      'Die Referenzgrößen unterscheiden sich; das Gewicht wird deshalb nicht hervorgehoben.',
+    selectionLimit:
+      'Zwei Schuhe sind bereits ausgewählt. Entferne einen, bevor du einen weiteren hinzufügst.',
+  },
+  fr: {
+    title: 'Explorer les chaussures',
+    intro:
+      'Recherchez et comparez une sélection représentative selon l’usage, le terrain, le guidage et la construction.',
+    searchLabel: 'Rechercher des produits',
+    searchPlaceholder: 'Marque, modèle, catégorie, avantage…',
+    allCategories: 'Toutes les catégories',
+    filters: 'Catégories',
+    results: (shown: number, total: number) =>
+      `${shown} chaussures sur ${total}`,
+    noResults: 'Aucune chaussure ne correspond à ces filtres.',
+    clearFilters: 'Effacer les filtres',
+    details: 'Détails',
+    compare: 'Comparer',
+    remove: 'Retirer',
+    compareSelected: (count: number) => `Comparer la sélection (${count}/2)`,
+    comparisonReady: 'Sélectionnez deux chaussures à comparer.',
+    previous: 'Précédent',
+    next: 'Suivant',
+    page: (current: number, total: number) => `Page ${current} sur ${total}`,
+    bestFor: 'Idéale pour',
+    surface: 'Terrain',
+    stability: 'Stabilité',
+    drop: 'Drop',
+    pending: 'Recherche en attente',
+    technologies: 'Construction et technologies',
+    ride: 'Sensations et usage',
+    sources: 'Sources',
+    weight: 'Référence de poids',
+    sourcePending: 'Vérification de la source en attente',
+    comparableProducts: 'Produits comparables',
+    compareWith: (model: string) => `Comparer avec ${model}`,
+    openDetails: (model: string) => `Ouvrir les détails de ${model}`,
+    productImage: (model: string) => `Image produit de ${model}`,
+    imagePending: 'Image produit officielle en attente',
+    comparisonTitle: 'Comparaison de chaussures',
+    comparisonDescription:
+      'Comparez les usages et les faits techniques. Les différences ne remplacent pas un conseil personnalisé.',
+    characteristic: 'Caractéristique',
+    category: 'Catégorie',
+    different: 'Différent',
+    same: 'Identique',
+    notCompared: 'Non comparé',
+    weightReferenceMismatch:
+      'Les pointures de référence diffèrent, le poids n’est donc pas mis en évidence.',
+    selectionLimit:
+      'Deux chaussures sont déjà sélectionnées. Retirez-en une avant d’en ajouter une autre.',
+  },
+} satisfies Record<SupportedLocale, Record<string, unknown>>;
+
+const categoryLabels: Record<string, Record<SupportedLocale, string>> = {
+  'daily-trainer': {
+    en: 'Daily training',
+    de: 'Tägliches Training',
+    fr: 'Entraînement quotidien',
+  },
+  'entry-level': { en: 'Entry level', de: 'Einstieg', fr: 'Débutant' },
+  'fast-training': {
+    en: 'Fast training',
+    de: 'Schnelles Training',
+    fr: 'Entraînement rapide',
+  },
+  'max-cushion': {
+    en: 'Max cushion',
+    de: 'Maximale Dämpfung',
+    fr: 'Amorti maximal',
+  },
+  race: { en: 'Race', de: 'Wettkampf', fr: 'Compétition' },
+  carbon: { en: 'Carbon', de: 'Carbon', fr: 'Carbone' },
+  stability: { en: 'Stability', de: 'Stabilität', fr: 'Stabilité' },
+  'stability-and-guidance': {
+    en: 'Stability & guidance',
+    de: 'Stabilität & Führung',
+    fr: 'Stabilité et guidage',
+  },
+  'super-trainer': {
+    en: 'Super trainer',
+    de: 'Super-Trainer',
+    fr: 'Super-trainer',
+  },
+  support: { en: 'Support', de: 'Support', fr: 'Maintien' },
+  trail: { en: 'Trail', de: 'Trail', fr: 'Trail' },
+  'trail-race': {
+    en: 'Trail race',
+    de: 'Trail-Wettkampf',
+    fr: 'Compétition trail',
+  },
+  'technical-trail': {
+    en: 'Technical trail',
+    de: 'Technischer Trail',
+    fr: 'Trail technique',
+  },
+  'road-to-trail': {
+    en: 'Road-to-trail',
+    de: 'Road-to-Trail',
+    fr: 'Route-trail',
+  },
+  neutral: { en: 'Neutral', de: 'Neutral', fr: 'Neutre' },
+};
+
+export function categoryLabel(
+  id: string,
+  fallback: string,
+  locale: SupportedLocale,
+): string {
+  return categoryLabels[id]?.[locale] ?? fallback;
+}
+
+export function stabilityLabel(value: string, locale: SupportedLocale): string {
+  const labels = {
+    neutral: { en: 'Neutral', de: 'Neutral', fr: 'Neutre' },
+    stability: { en: 'Stability', de: 'Stabilität', fr: 'Stabilité' },
+    unknown: { en: 'Pending', de: 'Ausstehend', fr: 'En attente' },
+  } as const;
+  return labels[value as keyof typeof labels]?.[locale] ?? value;
+}

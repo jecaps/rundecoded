@@ -6,9 +6,11 @@ The existing [Running Shoe Explorer](https://github.com/jecaps/running-shoe-expl
 
 ## Current status
 
-Phase 3 establishes the RunDecoded design system and shared application shell
-on top of the Astro, React, and strict TypeScript foundation. The primary routes
-are available below the repository base path:
+Phase 4 delivers the first end-to-end product explorer slice on top of the
+RunDecoded design system and shared application shell. Twelve representative
+shoes now flow from the validated catalogue into localized search, category
+filters, responsive cards, accessible details, and comparison. The primary
+routes are available below the repository base path:
 
 - `/rundecoded/catalogue/`
 - `/rundecoded/running-basics/`
@@ -17,6 +19,10 @@ Both routes use the same responsive banner, navigation, footer, theme, and
 language controls. A small component preview is available at
 `/rundecoded/design-system/`. See the [design-system guide](docs/architecture/design-system.md)
 for tokens, breakpoints, and component-adoption rules.
+
+See the [Phase 4 product explorer guide](docs/features/phase-4-product-explorer.md)
+for the product-selection rationale, pending-data policy, behaviour, and visual
+review targets.
 
 Phase 0 documentation remains available as the migration reference:
 
