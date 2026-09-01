@@ -1,6 +1,6 @@
 import type { SupportedLocale } from '@/domain/catalogue';
 
-import type { ExplorerProduct } from './slice';
+import type { ExplorerProduct } from './catalogue';
 
 function sharedValues(left: string[], right: string[]): number {
   const rightValues = new Set(right);

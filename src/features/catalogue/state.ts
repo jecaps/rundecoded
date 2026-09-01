@@ -1,7 +1,7 @@
 import type { SupportedLocale } from '@/domain/catalogue';
 
 import { searchProducts } from './search';
-import type { ExplorerProduct } from './slice';
+import type { ExplorerProduct } from './catalogue';
 
 export { normalizeSearch } from './search';
 

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "status": "valid",
   "counts": {
     "products": 106,
@@ -11,9 +11,5793 @@
     "pendingImages": 9,
     "pendingDrops": 7,
     "pendingTechnologies": 9,
-    "warnings": 30
+    "warnings": 30,
+    "verifiedImages": 97,
+    "missingLocalAssets": 0,
+    "comparableLinks": 318
   },
-  "evidence": { "verified": 97, "derived": 0, "fallback": 611, "pending": 16 },
+  "evidence": { "verified": 97, "derived": 0, "fallback": 618, "pending": 436 },
+  "brands": {
+    "Adidas": 8,
+    "Asics": 17,
+    "Brooks": 12,
+    "Decathlon": 5,
+    "Hoka": 4,
+    "Kiprun": 31,
+    "Mizuno": 5,
+    "New Balance": 11,
+    "Puma": 3,
+    "Salomon": 7,
+    "Saucony": 3
+  },
+  "categories": {
+    "carbon": 7,
+    "daily-trainer": 54,
+    "entry-level": 7,
+    "fast-training": 19,
+    "max-cushion": 15,
+    "neutral": 9,
+    "race": 4,
+    "road-to-trail": 2,
+    "spikes": 2,
+    "stability-and-guidance": 8,
+    "super-trainer": 2,
+    "support": 6,
+    "technical-trail": 31,
+    "track-spikes": 4,
+    "trail": 32,
+    "trail-race": 5
+  },
+  "languages": {
+    "en": { "values": 419, "complete": 419, "missing": 0 },
+    "de": { "values": 419, "complete": 419, "missing": 0 },
+    "fr": { "values": 419, "complete": 419, "missing": 0 }
+  },
+  "issueTypes": {
+    "pending": {
+      "construction": 106,
+      "fit": 106,
+      "heelToToeDrop": 7,
+      "stackHeight": 106,
+      "technologies": 9,
+      "weight": 102
+    },
+    "fallback": {
+      "heelToToeDrop": 99,
+      "stability": 106,
+      "surfaces": 106,
+      "technologies": 97,
+      "weight": 4
+    }
+  },
+  "assets": [
+    {
+      "productId": "adidas-adistar-5",
+      "localPath": "assets/shoes/adidas--adistar-5.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "adidas-adizero-agravic-speed-2",
+      "localPath": "assets/shoes/adidas--adizero-agravic-speed-2.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "adidas-adizero-boston-13",
+      "localPath": "assets/shoes/adidas--adizero-boston-13.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "adidas-adizero-evo-sl",
+      "localPath": "assets/shoes/adidas--adizero-evo-sl.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "adidas-galaxy-7",
+      "localPath": "assets/shoes/adidas--galaxy-7.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "adidas-runblaze",
+      "localPath": "assets/shoes/adidas--runblaze.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "adidas-supernova-rise-3",
+      "localPath": "assets/shoes/adidas--supernova-rise-3.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "adidas-terrex-agravic-4",
+      "localPath": "assets/shoes/adidas--terrex-agravic-4.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-dynablast-5",
+      "localPath": "assets/shoes/asics--dynablast-5.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gel-excite-11",
+      "localPath": "assets/shoes/asics--gel-excite-11.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gel-kanaku-6",
+      "localPath": "assets/shoes/asics--gel-kanaku-6.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gel-kayano-32",
+      "localPath": "assets/shoes/asics--gel-kayano-32.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gel-kayano-33",
+      "localPath": "assets/shoes/asics--gel-kayano-33.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gel-nimbus-28",
+      "localPath": "assets/shoes/asics--gel-nimbus-28.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gel-pulse-17",
+      "localPath": "assets/shoes/asics--gel-pulse-17.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gel-roadmiles-4",
+      "localPath": "assets/shoes/asics--gel-roadmiles-4.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gel-sonoma-8-gtx",
+      "localPath": "assets/shoes/asics--gel-sonoma-8-gtx.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gel-stratus-5",
+      "localPath": "assets/shoes/asics--gel-stratus-5.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gel-superion-8",
+      "localPath": "assets/shoes/asics--gel-superion-8.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gel-windhawk-5",
+      "localPath": "assets/shoes/asics--gel-windhawk-5.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gel-ziruss-9",
+      "localPath": "assets/shoes/asics--gel-ziruss-9.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-gt-2000-13",
+      "localPath": "assets/shoes/asics--gt-2000-13.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-novablast-5",
+      "localPath": "assets/shoes/asics--novablast-5.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-trabuco-14",
+      "localPath": "assets/shoes/asics--trabuco-14.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "asics-trabuco-terra-3",
+      "localPath": "assets/shoes/asics--trabuco-terra-3.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "brooks-adrenaline-gts-25",
+      "localPath": "assets/shoes/brooks--adrenaline-gts-25.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "brooks-cascadia-19",
+      "localPath": "assets/shoes/brooks--cascadia-19.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "brooks-ghost-17",
+      "localPath": "assets/shoes/brooks--ghost-17.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "brooks-ghost-18",
+      "localPath": "assets/shoes/brooks--ghost-18.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "brooks-ghost-max-3",
+      "localPath": "assets/shoes/brooks--ghost-max-3.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "brooks-ghost-max-4",
+      "localPath": "assets/shoes/brooks--ghost-max-4.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "brooks-ghost-trail",
+      "localPath": "assets/shoes/brooks--ghost-trail.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "brooks-glycerin-23",
+      "localPath": "assets/shoes/brooks--glycerin-23.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "brooks-hyperion-3",
+      "localPath": "assets/shoes/brooks--hyperion-3.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "brooks-range",
+      "localPath": "assets/shoes/brooks--range.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "brooks-revel-9",
+      "localPath": "assets/shoes/brooks--revel-9.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "brooks-revel-max",
+      "localPath": "assets/shoes/brooks--revel-max.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "decathlon-jogflow-100-1",
+      "localPath": "assets/shoes/decathlon--jogflow-100-1.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip",
+      "localPath": "assets/shoes/decathlon--jogflow-190-grip.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip-wp",
+      "localPath": "assets/shoes/decathlon--jogflow-190-grip-wp.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "decathlon-jogflow-190-max",
+      "localPath": "assets/shoes/decathlon--jogflow-190-max.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "decathlon-jogflow-190-premium",
+      "localPath": "assets/shoes/decathlon--jogflow-190-premium.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "hoka-clifton-10",
+      "localPath": "assets/shoes/hoka--clifton-10.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "hoka-rincon-4",
+      "localPath": "assets/shoes/hoka--rincon-4.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "hoka-speedgoat-7",
+      "localPath": "assets/shoes/hoka--speedgoat-7.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "hoka-torrent-4",
+      "localPath": "assets/shoes/hoka--torrent-4.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipclimb",
+      "localPath": "assets/shoes/kiprun--kipclimb.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipclimb-max",
+      "localPath": "assets/shoes/kiprun--kipclimb-max.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipclimb-race",
+      "localPath": null,
+      "status": "pending",
+      "present": false
+    },
+    {
+      "productId": "kiprun-kipclimb-wp",
+      "localPath": null,
+      "status": "pending",
+      "present": false
+    },
+    {
+      "productId": "kiprun-kipcore",
+      "localPath": "assets/shoes/kiprun--kipcore.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipcore-gravel",
+      "localPath": "assets/shoes/kiprun--kipcore-gravel.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipcore-premium",
+      "localPath": "assets/shoes/kiprun--kipcore-premium.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipcore-wr",
+      "localPath": "assets/shoes/kiprun--kipcore-wr.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipnext",
+      "localPath": "assets/shoes/kiprun--kipnext.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipride",
+      "localPath": "assets/shoes/kiprun--kipride.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipride-gravel",
+      "localPath": "assets/shoes/kiprun--kipride-gravel.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipride-max",
+      "localPath": "assets/shoes/kiprun--kipride-max.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipride-max-wide",
+      "localPath": null,
+      "status": "pending",
+      "present": false
+    },
+    {
+      "productId": "kiprun-kipride-support",
+      "localPath": null,
+      "status": "pending",
+      "present": false
+    },
+    {
+      "productId": "kiprun-kipride-wr",
+      "localPath": null,
+      "status": "pending",
+      "present": false
+    },
+    {
+      "productId": "kiprun-kipsonic-long",
+      "localPath": "assets/shoes/kiprun--kipsonic-long.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipsonic-mid",
+      "localPath": null,
+      "status": "pending",
+      "present": false
+    },
+    {
+      "productId": "kiprun-kipsonic-start",
+      "localPath": "assets/shoes/kiprun--kipsonic-start.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipsonic-x-country",
+      "localPath": null,
+      "status": "pending",
+      "present": false
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger",
+      "localPath": "assets/shoes/kiprun--kipstorm-challenger.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger-gravel",
+      "localPath": null,
+      "status": "pending",
+      "present": false
+    },
+    {
+      "productId": "kiprun-kipstorm-elite",
+      "localPath": "assets/shoes/kiprun--kipstorm-elite.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipstorm-interval",
+      "localPath": "assets/shoes/kiprun--kipstorm-interval.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipstorm-lab",
+      "localPath": "assets/shoes/kiprun--kipstorm-lab.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipstorm-pro",
+      "localPath": "assets/shoes/kiprun--kipstorm-pro.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipstorm-pro-gravel",
+      "localPath": null,
+      "status": "pending",
+      "present": false
+    },
+    {
+      "productId": "kiprun-kipstorm-tempo",
+      "localPath": "assets/shoes/kiprun--kipstorm-tempo.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipsummit",
+      "localPath": "assets/shoes/kiprun--kipsummit.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipsummit-max",
+      "localPath": "assets/shoes/kiprun--kipsummit-max.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipsummit-race",
+      "localPath": "assets/shoes/kiprun--kipsummit-race.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "kiprun-kipsummit-wp",
+      "localPath": "assets/shoes/kiprun--kipsummit-wp.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "mizuno-neo-cosmo",
+      "localPath": "assets/shoes/mizuno--neo-cosmo.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "mizuno-neo-zen-2",
+      "localPath": "assets/shoes/mizuno--neo-zen-2.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "mizuno-wave-impulse",
+      "localPath": "assets/shoes/mizuno--wave-impulse.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "mizuno-wave-rider-29",
+      "localPath": "assets/shoes/mizuno--wave-rider-29.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "mizuno-wave-ultima-17",
+      "localPath": "assets/shoes/mizuno--wave-ultima-17.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "new-balance-1080-v15",
+      "localPath": "assets/shoes/new-balance--1080-v15.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "new-balance-520-v9",
+      "localPath": "assets/shoes/new-balance--520-v9.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "new-balance-840-v1",
+      "localPath": "assets/shoes/new-balance--840-v1.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "new-balance-ellipse",
+      "localPath": "assets/shoes/new-balance--ellipse.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "new-balance-fuelcell-propel-v5",
+      "localPath": "assets/shoes/new-balance--fuelcell-propel-v5.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "new-balance-fuelcell-rebel-v5",
+      "localPath": "assets/shoes/new-balance--fuelcell-rebel-v5.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "new-balance-garoe-v2",
+      "localPath": "assets/shoes/new-balance--garoe-v2.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "new-balance-hierro-v9",
+      "localPath": "assets/shoes/new-balance--hierro-v9.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "new-balance-kaiha-v2",
+      "localPath": "assets/shoes/new-balance--kaiha-v2.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "new-balance-more-v6",
+      "localPath": "assets/shoes/new-balance--more-v6.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "new-balance-rebel-trail",
+      "localPath": "assets/shoes/new-balance--rebel-trail.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "puma-deviate-nitro-4",
+      "localPath": "assets/shoes/puma--deviate-nitro-4.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "puma-velocity-nitro-4",
+      "localPath": "assets/shoes/puma--velocity-nitro-4.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "puma-velocity-nitro-5",
+      "localPath": "assets/shoes/puma--velocity-nitro-5.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "salomon-aero-blaze-3-grvl",
+      "localPath": "assets/shoes/salomon--aero-blaze-3-grvl.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "salomon-genesis",
+      "localPath": "assets/shoes/salomon--genesis.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "salomon-speedcross-peak",
+      "localPath": "assets/shoes/salomon--speedcross-peak.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "salomon-speedcross-peak-gtx",
+      "localPath": "assets/shoes/salomon--speedcross-peak-gtx.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "salomon-supraglide",
+      "localPath": "assets/shoes/salomon--supraglide.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "salomon-ultra-flow-2",
+      "localPath": "assets/shoes/salomon--ultra-flow-2.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "salomon-ultra-glide-4",
+      "localPath": "assets/shoes/salomon--ultra-glide-4.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "saucony-guide-19",
+      "localPath": "assets/shoes/saucony--guide-19.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "saucony-peregrine-16",
+      "localPath": "assets/shoes/saucony--peregrine-16.webp",
+      "status": "verified",
+      "present": true
+    },
+    {
+      "productId": "saucony-ride-19",
+      "localPath": "assets/shoes/saucony--ride-19.webp",
+      "status": "verified",
+      "present": true
+    }
+  ],
+  "research": [
+    {
+      "productId": "adidas-adistar-5",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adistar-5",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adistar-5",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adistar-5",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adistar-5",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adistar-5",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adistar-5",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adistar-5",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adizero-agravic-speed-2",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-agravic-speed-2",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-agravic-speed-2",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adizero-agravic-speed-2",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adizero-agravic-speed-2",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-agravic-speed-2",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adizero-agravic-speed-2",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-agravic-speed-2",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adizero-boston-13",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-boston-13",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-boston-13",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adizero-boston-13",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adizero-boston-13",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-boston-13",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adizero-boston-13",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-boston-13",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adizero-evo-sl",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-evo-sl",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-evo-sl",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adizero-evo-sl",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adizero-evo-sl",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-evo-sl",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-adizero-evo-sl",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-evo-sl",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-galaxy-7",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-galaxy-7",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-galaxy-7",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-galaxy-7",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-galaxy-7",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-galaxy-7",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-galaxy-7",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-galaxy-7",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-runblaze",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-runblaze",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-runblaze",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-runblaze",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-runblaze",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-runblaze",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-runblaze",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-runblaze",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-supernova-rise-3",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-supernova-rise-3",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-supernova-rise-3",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-supernova-rise-3",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-supernova-rise-3",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-supernova-rise-3",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-supernova-rise-3",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-supernova-rise-3",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-terrex-agravic-4",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-terrex-agravic-4",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-terrex-agravic-4",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-terrex-agravic-4",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-terrex-agravic-4",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-terrex-agravic-4",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-terrex-agravic-4",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "fallback"
+    },
+    {
+      "productId": "adidas-terrex-agravic-4",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-dynablast-5",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-dynablast-5",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-dynablast-5",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-dynablast-5",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-dynablast-5",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-dynablast-5",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-dynablast-5",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-dynablast-5",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-excite-11",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-excite-11",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-excite-11",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-excite-11",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-excite-11",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-excite-11",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-excite-11",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-excite-11",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-kanaku-6",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kanaku-6",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kanaku-6",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kanaku-6",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-kanaku-6",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kanaku-6",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-kanaku-6",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kanaku-6",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-kayano-32",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kayano-32",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kayano-32",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-kayano-32",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-kayano-32",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kayano-32",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-kayano-32",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kayano-32",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-kayano-33",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kayano-33",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kayano-33",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-kayano-33",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-kayano-33",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kayano-33",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-kayano-33",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-kayano-33",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-nimbus-28",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-nimbus-28",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-nimbus-28",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-nimbus-28",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-nimbus-28",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-nimbus-28",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-nimbus-28",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-nimbus-28",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-pulse-17",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-pulse-17",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-pulse-17",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-pulse-17",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-pulse-17",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-pulse-17",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-pulse-17",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-pulse-17",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-roadmiles-4",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-roadmiles-4",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-roadmiles-4",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-roadmiles-4",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-roadmiles-4",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-roadmiles-4",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-roadmiles-4",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-roadmiles-4",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-sonoma-8-gtx",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-sonoma-8-gtx",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-sonoma-8-gtx",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-sonoma-8-gtx",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-sonoma-8-gtx",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-sonoma-8-gtx",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-sonoma-8-gtx",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-sonoma-8-gtx",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-stratus-5",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-stratus-5",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-stratus-5",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-stratus-5",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-stratus-5",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-stratus-5",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-stratus-5",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-stratus-5",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-superion-8",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-superion-8",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-superion-8",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-superion-8",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-superion-8",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-superion-8",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-superion-8",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-superion-8",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-windhawk-5",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-windhawk-5",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-windhawk-5",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-windhawk-5",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-windhawk-5",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-windhawk-5",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-windhawk-5",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-windhawk-5",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-ziruss-9",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-ziruss-9",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-ziruss-9",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-ziruss-9",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-ziruss-9",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-ziruss-9",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gel-ziruss-9",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gel-ziruss-9",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gt-2000-13",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gt-2000-13",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gt-2000-13",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gt-2000-13",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gt-2000-13",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gt-2000-13",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-gt-2000-13",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-gt-2000-13",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-novablast-5",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-novablast-5",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-novablast-5",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-novablast-5",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-novablast-5",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-novablast-5",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-novablast-5",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-novablast-5",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-trabuco-14",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-trabuco-14",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-trabuco-14",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-trabuco-14",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-trabuco-14",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-trabuco-14",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-trabuco-14",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-trabuco-14",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-trabuco-terra-3",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-trabuco-terra-3",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-trabuco-terra-3",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-trabuco-terra-3",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-trabuco-terra-3",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-trabuco-terra-3",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "asics-trabuco-terra-3",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "asics-trabuco-terra-3",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-adrenaline-gts-25",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-adrenaline-gts-25",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-adrenaline-gts-25",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-adrenaline-gts-25",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-adrenaline-gts-25",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-adrenaline-gts-25",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-adrenaline-gts-25",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-adrenaline-gts-25",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-cascadia-19",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-cascadia-19",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-cascadia-19",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-cascadia-19",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-cascadia-19",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-cascadia-19",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-cascadia-19",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-cascadia-19",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-17",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-17",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-17",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-17",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-17",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-17",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-17",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-17",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-18",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-18",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-18",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-18",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-18",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-18",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-18",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-18",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-max-3",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-max-3",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-max-3",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-max-3",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-max-3",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-max-3",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-max-3",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-max-3",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-max-4",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-max-4",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-max-4",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-max-4",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-max-4",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-max-4",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-max-4",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-max-4",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-trail",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-trail",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-trail",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-trail",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-trail",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-trail",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-ghost-trail",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-ghost-trail",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-glycerin-23",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-glycerin-23",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-glycerin-23",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-glycerin-23",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-glycerin-23",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-glycerin-23",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-glycerin-23",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-glycerin-23",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-hyperion-3",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-hyperion-3",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-hyperion-3",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-hyperion-3",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-hyperion-3",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-hyperion-3",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-hyperion-3",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-hyperion-3",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-range",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-range",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-range",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-range",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-range",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-range",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-range",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-range",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-revel-9",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-revel-9",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-revel-9",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-revel-9",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-revel-9",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-revel-9",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-revel-9",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-revel-9",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-revel-max",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-revel-max",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-revel-max",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-revel-max",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-revel-max",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-revel-max",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "brooks-revel-max",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "brooks-revel-max",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-100-1",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-100-1",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-100-1",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-100-1",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-100-1",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-100-1",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-100-1",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-100-1",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip-wp",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip-wp",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip-wp",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip-wp",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip-wp",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip-wp",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip-wp",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip-wp",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-grip",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-max",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-max",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-max",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-max",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-max",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-max",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-max",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-max",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-premium",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-premium",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-premium",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-premium",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-premium",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-premium",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "decathlon-jogflow-190-premium",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "decathlon-jogflow-190-premium",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-clifton-10",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-clifton-10",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-clifton-10",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-clifton-10",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-clifton-10",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-clifton-10",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-clifton-10",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-clifton-10",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-rincon-4",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-rincon-4",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-rincon-4",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-rincon-4",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-rincon-4",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-rincon-4",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-rincon-4",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-rincon-4",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-speedgoat-7",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-speedgoat-7",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-speedgoat-7",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-speedgoat-7",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-speedgoat-7",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-speedgoat-7",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-speedgoat-7",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-speedgoat-7",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-torrent-4",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-torrent-4",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-torrent-4",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-torrent-4",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-torrent-4",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-torrent-4",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "hoka-torrent-4",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "hoka-torrent-4",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb-max",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-max",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-max",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb-max",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb-max",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-max",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb-max",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-max",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb-race",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-race",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-race",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb-race",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb-race",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-race",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb-race",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-race",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-wp",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-wp",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-wp",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb-wp",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb-wp",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-wp",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb-wp",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-wp",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipclimb",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore-gravel",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore-gravel",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore-gravel",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore-gravel",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore-gravel",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore-gravel",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore-gravel",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore-gravel",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore-premium",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore-premium",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore-premium",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore-premium",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore-premium",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore-premium",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore-premium",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore-premium",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore-wr",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore-wr",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore-wr",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore-wr",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore-wr",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore-wr",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore-wr",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore-wr",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipcore",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipcore",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipnext",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipnext",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipnext",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipnext",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipnext",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipnext",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipnext",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipnext",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-gravel",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-gravel",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-gravel",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-gravel",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-gravel",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-gravel",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-gravel",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-gravel",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-max-wide",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-max-wide",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-max-wide",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-max-wide",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-max-wide",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-max-wide",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-max-wide",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-max-wide",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-max",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-max",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-max",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-max",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-max",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-max",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-max",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-max",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-support",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-support",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-support",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-support",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-support",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-support",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-support",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-support",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-wr",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-wr",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-wr",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-wr",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-wr",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-wr",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride-wr",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-wr",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipride",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsonic-long",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-long",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-long",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-long",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsonic-long",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-long",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsonic-long",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-long",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsonic-mid",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-mid",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-mid",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-mid",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsonic-mid",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-mid",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsonic-mid",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-mid",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-start",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-start",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-start",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-start",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsonic-start",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-start",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsonic-start",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-start",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsonic-x-country",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-x-country",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-x-country",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-x-country",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsonic-x-country",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-x-country",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsonic-x-country",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsonic-x-country",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger-gravel",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger-gravel",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger-gravel",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger-gravel",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger-gravel",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger-gravel",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger-gravel",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger-gravel",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-challenger",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-elite",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-elite",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-elite",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-elite",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-elite",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-elite",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-elite",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-elite",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-interval",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-interval",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-interval",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-interval",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-interval",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-interval",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-interval",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-interval",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-lab",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-lab",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-lab",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-lab",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-lab",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-lab",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-lab",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-lab",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro-gravel",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro-gravel",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro-gravel",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro-gravel",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro-gravel",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro-gravel",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro-gravel",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro-gravel",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-pro",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-tempo",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-tempo",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-tempo",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-tempo",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-tempo",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-tempo",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipstorm-tempo",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipstorm-tempo",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-max",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit-max",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit-max",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-max",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-max",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit-max",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-max",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit-max",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-race",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit-race",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit-race",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-race",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-race",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit-race",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-race",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit-race",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-wp",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit-wp",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit-wp",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-wp",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-wp",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit-wp",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-wp",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit-wp",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipsummit",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-neo-cosmo",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-neo-cosmo",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-neo-cosmo",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-neo-cosmo",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-neo-cosmo",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-neo-cosmo",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-neo-cosmo",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-neo-cosmo",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-neo-zen-2",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-neo-zen-2",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-neo-zen-2",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-neo-zen-2",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-neo-zen-2",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-neo-zen-2",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-neo-zen-2",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-neo-zen-2",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-wave-impulse",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-wave-impulse",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-wave-impulse",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-wave-impulse",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-wave-impulse",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-wave-impulse",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-wave-impulse",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-wave-impulse",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-wave-rider-29",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-wave-rider-29",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-wave-rider-29",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-wave-rider-29",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-wave-rider-29",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-wave-rider-29",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-wave-rider-29",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-wave-rider-29",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-wave-ultima-17",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-wave-ultima-17",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-wave-ultima-17",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-wave-ultima-17",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-wave-ultima-17",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-wave-ultima-17",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "mizuno-wave-ultima-17",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "mizuno-wave-ultima-17",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-1080-v15",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-1080-v15",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-1080-v15",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-1080-v15",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-1080-v15",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-1080-v15",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-1080-v15",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-1080-v15",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-520-v9",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-520-v9",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-520-v9",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-520-v9",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-520-v9",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-520-v9",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-520-v9",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-520-v9",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-840-v1",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-840-v1",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-840-v1",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-840-v1",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-840-v1",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-840-v1",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-840-v1",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-840-v1",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-ellipse",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-ellipse",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-ellipse",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-ellipse",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-ellipse",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-ellipse",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-ellipse",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-ellipse",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-fuelcell-propel-v5",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-fuelcell-propel-v5",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-fuelcell-propel-v5",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-fuelcell-propel-v5",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-fuelcell-propel-v5",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-fuelcell-propel-v5",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-fuelcell-propel-v5",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-fuelcell-propel-v5",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-fuelcell-rebel-v5",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-fuelcell-rebel-v5",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-fuelcell-rebel-v5",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-fuelcell-rebel-v5",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-fuelcell-rebel-v5",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-fuelcell-rebel-v5",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-fuelcell-rebel-v5",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-fuelcell-rebel-v5",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-garoe-v2",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-garoe-v2",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-garoe-v2",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-garoe-v2",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-garoe-v2",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-garoe-v2",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-garoe-v2",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-garoe-v2",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-hierro-v9",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-hierro-v9",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-hierro-v9",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-hierro-v9",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-hierro-v9",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-hierro-v9",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-hierro-v9",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-hierro-v9",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-kaiha-v2",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-kaiha-v2",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-kaiha-v2",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-kaiha-v2",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-kaiha-v2",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-kaiha-v2",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-kaiha-v2",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-kaiha-v2",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-more-v6",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-more-v6",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-more-v6",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-more-v6",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-more-v6",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-more-v6",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-more-v6",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-more-v6",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-rebel-trail",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-rebel-trail",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-rebel-trail",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-rebel-trail",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-rebel-trail",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-rebel-trail",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "new-balance-rebel-trail",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "new-balance-rebel-trail",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "puma-deviate-nitro-4",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "puma-deviate-nitro-4",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "puma-deviate-nitro-4",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "puma-deviate-nitro-4",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "puma-deviate-nitro-4",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "puma-deviate-nitro-4",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "puma-deviate-nitro-4",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "puma-deviate-nitro-4",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "puma-velocity-nitro-4",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "puma-velocity-nitro-4",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "puma-velocity-nitro-4",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "puma-velocity-nitro-4",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "puma-velocity-nitro-4",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "puma-velocity-nitro-4",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "puma-velocity-nitro-4",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "puma-velocity-nitro-4",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "puma-velocity-nitro-5",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "puma-velocity-nitro-5",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "puma-velocity-nitro-5",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "puma-velocity-nitro-5",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "puma-velocity-nitro-5",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "puma-velocity-nitro-5",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "puma-velocity-nitro-5",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "puma-velocity-nitro-5",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-aero-blaze-3-grvl",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-aero-blaze-3-grvl",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-aero-blaze-3-grvl",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-aero-blaze-3-grvl",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-aero-blaze-3-grvl",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-aero-blaze-3-grvl",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-aero-blaze-3-grvl",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-aero-blaze-3-grvl",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-genesis",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-genesis",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-genesis",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-genesis",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-genesis",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-genesis",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-genesis",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-genesis",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-speedcross-peak-gtx",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-speedcross-peak-gtx",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-speedcross-peak-gtx",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-speedcross-peak-gtx",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-speedcross-peak-gtx",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-speedcross-peak-gtx",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-speedcross-peak-gtx",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-speedcross-peak-gtx",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-speedcross-peak",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-speedcross-peak",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-speedcross-peak",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-speedcross-peak",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-speedcross-peak",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-speedcross-peak",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-speedcross-peak",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-speedcross-peak",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-supraglide",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-supraglide",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-supraglide",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-supraglide",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-supraglide",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-supraglide",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-supraglide",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-supraglide",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-ultra-flow-2",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-ultra-flow-2",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-ultra-flow-2",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-ultra-flow-2",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-ultra-flow-2",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-ultra-flow-2",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-ultra-flow-2",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-ultra-flow-2",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-ultra-glide-4",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-ultra-glide-4",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-ultra-glide-4",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-ultra-glide-4",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-ultra-glide-4",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-ultra-glide-4",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "salomon-ultra-glide-4",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "salomon-ultra-glide-4",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "saucony-guide-19",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "saucony-guide-19",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "saucony-guide-19",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "saucony-guide-19",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "saucony-guide-19",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "saucony-guide-19",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "saucony-guide-19",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "saucony-guide-19",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "saucony-peregrine-16",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "saucony-peregrine-16",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "saucony-peregrine-16",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "saucony-peregrine-16",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "saucony-peregrine-16",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "saucony-peregrine-16",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "saucony-peregrine-16",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "saucony-peregrine-16",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    },
+    {
+      "productId": "saucony-ride-19",
+      "field": "specifications.construction",
+      "issueType": "construction",
+      "status": "pending"
+    },
+    {
+      "productId": "saucony-ride-19",
+      "field": "specifications.fit",
+      "issueType": "fit",
+      "status": "pending"
+    },
+    {
+      "productId": "saucony-ride-19",
+      "field": "specifications.heelToToeDrop",
+      "issueType": "heelToToeDrop",
+      "status": "fallback"
+    },
+    {
+      "productId": "saucony-ride-19",
+      "field": "specifications.stability",
+      "issueType": "stability",
+      "status": "fallback"
+    },
+    {
+      "productId": "saucony-ride-19",
+      "field": "specifications.stackHeight",
+      "issueType": "stackHeight",
+      "status": "pending"
+    },
+    {
+      "productId": "saucony-ride-19",
+      "field": "specifications.surfaces",
+      "issueType": "surfaces",
+      "status": "fallback"
+    },
+    {
+      "productId": "saucony-ride-19",
+      "field": "specifications.weight",
+      "issueType": "weight",
+      "status": "pending"
+    },
+    {
+      "productId": "saucony-ride-19",
+      "field": "technologies",
+      "issueType": "technologies",
+      "status": "fallback"
+    }
+  ],
   "warnings": [
     {
       "severity": "warning",

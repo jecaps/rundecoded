@@ -10,14 +10,14 @@ import {
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { ProductExplorer } from './ProductExplorer';
-import { getProductSlice } from './slice';
+import { getProductCatalogue } from './catalogue';
 
-const products = getProductSlice();
+const products = getProductCatalogue();
 
 afterEach(cleanup);
 
 describe('ProductExplorer', () => {
-  it('renders the 12-product slice without card prices or weights', () => {
+  it('renders the first 12-product page without card prices or weights', () => {
     render(
       <ProductExplorer
         assetBase="/rundecoded/"
@@ -44,8 +44,8 @@ describe('ProductExplorer', () => {
     fireEvent.change(screen.getByLabelText('Search products'), {
       target: { value: 'Kayano' },
     });
-    expect(screen.getAllByTestId('product-card')).toHaveLength(1);
-    expect(screen.getByText('1 of 12 shoes')).toBeVisible();
+    expect(screen.getAllByTestId('product-card')).toHaveLength(2);
+    expect(screen.getByText('2 of 106 shoes')).toBeVisible();
   });
 
   it('offers keyboard-selectable typo-tolerant suggestions', () => {

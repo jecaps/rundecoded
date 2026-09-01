@@ -62,7 +62,7 @@ test('opens comparison after selecting two product cards', async ({ page }) => {
     comparison.getByRole('heading', { name: 'Shoe comparison' }),
   ).toBeVisible();
   await expect(comparison).toContainText('Adistar 5');
-  await expect(comparison).toContainText('Terrex Agravic 4');
+  await expect(comparison).toContainText('Adizero Agravic Speed 2');
   await expect(comparison).toContainText('Key differences');
   await expect(comparison).toContainText('drop');
   if (shouldAssertVisualSnapshots) {
@@ -78,12 +78,13 @@ test('opens comparison after selecting two product cards', async ({ page }) => {
 test('opens comparison from a comparable product and includes the detail product', async ({
   page,
 }) => {
+  await page.getByLabel('Search products').fill('Jogflow 100.1');
   await page
     .getByRole('button', { name: 'Jogflow 100.1', exact: true })
     .click();
   const details = page.getByRole('dialog');
   await details
-    .getByRole('button', { name: 'Compare with Jogflow 190 Grip WP' })
+    .getByRole('button', { name: 'Compare with Jogflow 190 Premium' })
     .click();
 
   const comparison = page.getByRole('dialog');
@@ -91,11 +92,8 @@ test('opens comparison from a comparable product and includes the detail product
     comparison.getByRole('heading', { name: 'Shoe comparison' }),
   ).toBeVisible();
   await expect(comparison).toContainText('Jogflow 100.1');
-  await expect(comparison).toContainText('Jogflow 190 Grip WP');
+  await expect(comparison).toContainText('Jogflow 190 Premium');
   await expect(comparison).toContainText('Key differences');
-  await expect(comparison).toContainText(
-    'Reference sizes differ, so weight is not highlighted.',
-  );
   await expect(
     comparison.locator('[data-comparison-row="weight"]'),
   ).toHaveAttribute('data-difference', 'not-compared');
@@ -106,8 +104,8 @@ test('search and filters produce accurate counts and an honest empty state', asy
   page,
 }) => {
   await page.getByLabel('Search products').fill('Kayano');
-  await expect(page.getByTestId('product-card')).toHaveCount(1);
-  await expect(page.getByText('1 of 12 shoes')).toBeVisible();
+  await expect(page.getByTestId('product-card')).toHaveCount(2);
+  await expect(page.getByText('2 of 106 shoes')).toBeVisible();
 
   await page.getByLabel('Search products').fill('not-a-running-shoe');
   await expect(page.getByText('No shoes match these filters.')).toBeVisible();
@@ -118,10 +116,10 @@ test('search and filters produce accurate counts and an honest empty state', asy
     name: 'Trail',
     exact: true,
   });
-  await expect(trailFilter).toContainText('3');
+  await expect(trailFilter).toContainText('32');
   await trailFilter.click();
-  await expect(page.getByTestId('product-card')).toHaveCount(3);
-  await expect(page.getByText('3 of 12 shoes')).toBeVisible();
+  await expect(page.getByTestId('product-card')).toHaveCount(12);
+  await expect(page.getByText('32 of 106 shoes')).toBeVisible();
 });
 
 test('provides typo-tolerant keyboard suggestions and an honest fallback', async ({
@@ -168,7 +166,7 @@ test('restores shareable filter state on reload and browser history', async ({
   });
   await page.getByRole('button', { name: 'Trail', exact: true }).click();
   await expect(page).toHaveURL(/category=trail/);
-  await expect(page.getByTestId('product-card')).toHaveCount(3);
+  await expect(page.getByTestId('product-card')).toHaveCount(12);
 
   await page.reload();
   await expect(page.getByTestId('product-explorer')).toHaveAttribute(
@@ -178,7 +176,7 @@ test('restores shareable filter state on reload and browser history', async ({
   await expect(
     page.getByRole('button', { name: 'Trail', exact: true }),
   ).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.getByTestId('product-card')).toHaveCount(3);
+  await expect(page.getByTestId('product-card')).toHaveCount(12);
 
   await page
     .getByRole('button', { name: 'All categories', exact: true })
@@ -186,7 +184,7 @@ test('restores shareable filter state on reload and browser history', async ({
   await expect(page).not.toHaveURL(/category=/);
   await page.goBack();
   await expect(page).toHaveURL(/category=trail/);
-  await expect(page.getByTestId('product-card')).toHaveCount(3);
+  await expect(page.getByTestId('product-card')).toHaveCount(12);
   expect(consoleErrors.join('\n')).not.toMatch(/hydration|didn't match/i);
 });
 

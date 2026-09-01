@@ -7,16 +7,16 @@ import {
   externalSearchUrl,
   searchProducts,
 } from './search';
-import { getProductSlice } from './slice';
+import { getProductCatalogue } from './catalogue';
 import { filterProducts, paginateProducts } from './state';
 import { parseCatalogueUrlState, writeCatalogueUrlState } from './url-state';
 
-const products = getProductSlice();
+const products = getProductCatalogue();
 const byId = new Map(products.map((item) => [item.product.id, item]));
 
-describe('Phase 4 product slice', () => {
-  it('contains exactly 12 validated products with resolvable comparables', () => {
-    expect(products).toHaveLength(12);
+describe('Phase 8 product catalogue', () => {
+  it('contains all 106 validated products with resolvable comparables', () => {
+    expect(products).toHaveLength(106);
     for (const { product } of products) {
       expect(product.comparables.length).toBeGreaterThan(0);
       for (const comparable of product.comparables)
@@ -33,15 +33,50 @@ describe('Phase 4 product slice', () => {
     ).toBe(true);
     expect(
       products.some(
-        ({ product }) => product.specifications.stability.value === 'unknown',
+        ({ product }) =>
+          product.specifications.stackHeight.evidence.status === 'pending',
       ),
     ).toBe(true);
+  });
+
+  it('uses stable unique IDs, distinct categories, and intended-use comparables', () => {
+    expect(new Set(products.map(({ product }) => product.id)).size).toBe(106);
+
+    for (const { product } of products) {
+      expect(new Set(product.categories.map(({ id }) => id)).size).toBe(
+        product.categories.length,
+      );
+      expect(
+        product.comparables.some(
+          (id) => byId.get(id)?.product.brand.name !== product.brand.name,
+        ),
+      ).toBe(true);
+      for (const comparableId of product.comparables) {
+        const comparable = byId.get(comparableId)?.product;
+        expect(comparable).toBeDefined();
+        const sharesCategory = comparable!.categories.some(({ id }) =>
+          product.categories.some((category) => category.id === id),
+        );
+        const sharesSurface =
+          comparable!.specifications.surfaces.value?.some((surface) =>
+            product.specifications.surfaces.value?.includes(surface),
+          ) ?? false;
+        expect(sharesCategory || sharesSurface).toBe(true);
+      }
+    }
+  });
+
+  it('records a reference size for every available weight', () => {
+    for (const { product } of products) {
+      const weight = product.specifications.weight.value;
+      if (weight) expect(weight.referenceSize).not.toHaveLength(0);
+    }
   });
 });
 
 describe('catalogue state', () => {
   it('searches brand, model, category, benefit, and technology text', () => {
-    expect(filterProducts(products, 'kayano', 'all', 'en')).toHaveLength(1);
+    expect(filterProducts(products, 'kayano', 'all', 'en')).toHaveLength(2);
     expect(
       filterProducts(products, 'waterproof', 'all', 'en').length,
     ).toBeGreaterThan(0);
@@ -115,7 +150,7 @@ describe('catalogue state', () => {
         product.categories.some(({ id }) => id === 'trail'),
       ),
     ).toBe(true);
-    expect(paginateProducts(trail, 99).page).toBe(1);
+    expect(paginateProducts(trail, 99).page).toBe(Math.ceil(trail.length / 12));
   });
 
   it('returns replacing 12-item pages instead of cumulative results', () => {

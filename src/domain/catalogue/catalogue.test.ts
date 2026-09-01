@@ -58,6 +58,38 @@ function shoe(overrides: Partial<ShoeProduct> = {}): ShoeProduct {
         value: { amount: 8, unit: 'mm' },
         evidence: { status: 'verified', sourceIds: ['official-source'] },
       },
+      stackHeight: {
+        value: null,
+        evidence: {
+          status: 'pending',
+          sourceIds: [],
+          note: 'Research needed.',
+        },
+      },
+      weight: {
+        value: null,
+        evidence: {
+          status: 'pending',
+          sourceIds: [],
+          note: 'Research needed.',
+        },
+      },
+      fit: {
+        value: null,
+        evidence: {
+          status: 'pending',
+          sourceIds: [],
+          note: 'Research needed.',
+        },
+      },
+      construction: {
+        value: null,
+        evidence: {
+          status: 'pending',
+          sourceIds: [],
+          note: 'Research needed.',
+        },
+      },
     },
     ...overrides,
   };

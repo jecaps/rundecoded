@@ -76,11 +76,44 @@ describe('legacy catalogue migration', () => {
 
   it('keeps missing measurements as explicit pending research', () => {
     const result = migrateRows([{ ...productRow, drop: '–' }], provenanceRows);
-    expect(result.products[0]?.specifications.heelToToeDrop).toEqual(
+    const specifications = result.products[0]?.specifications;
+    expect(specifications?.heelToToeDrop).toEqual(
       expect.objectContaining({
         value: null,
         evidence: expect.objectContaining({ status: 'pending' }),
       }),
+    );
+    expect(specifications?.stackHeight.evidence.status).toBe('pending');
+    expect(specifications?.weight.evidence.status).toBe('pending');
+    expect(specifications?.fit.evidence.status).toBe('pending');
+    expect(specifications?.construction.evidence.status).toBe('pending');
+  });
+
+  it('normalizes legacy stability labels and fully localizes categories', () => {
+    const result = migrateRows(
+      [
+        {
+          ...productRow,
+          primary_category: 'STABILITY & GUIDANCE',
+          secondary_category: 'DAILY TRAINER',
+          stability: 'Stability shoe',
+        },
+      ],
+      provenanceRows,
+    );
+    const product = result.products[0];
+    expect(product?.specifications.stability.value).toBe('stability');
+    expect(product?.categories).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: 'stability-and-guidance',
+          label: expect.objectContaining({
+            en: 'Stability & Guidance',
+            de: 'Stabilität & Führung',
+            fr: 'Stabilité et guidage',
+          }),
+        }),
+      ]),
     );
   });
 });

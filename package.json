@@ -20,6 +20,7 @@
     "test:unit:watch": "vitest",
     "test:e2e": "playwright test",
     "catalogue:migrate": "node --import tsx scripts/catalogue/transform-legacy.ts",
+    "catalogue:assets": "node --import tsx scripts/catalogue/copy-verified-assets.ts",
     "catalogue:check": "node --import tsx scripts/catalogue/transform-legacy.ts --check",
     "verify:pages": "node scripts/verify-pages-build.mjs",
     "quality": "pnpm catalogue:check && pnpm check && pnpm lint && pnpm format:check && pnpm test:unit && pnpm build"

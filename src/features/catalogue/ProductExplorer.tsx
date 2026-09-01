@@ -29,7 +29,7 @@ import {
   searchProducts,
   searchSuggestionKindLabel,
 } from './search';
-import type { ExplorerProduct } from './slice';
+import type { ExplorerProduct } from './catalogue';
 import { filterProducts, paginateProducts } from './state';
 import {
   parseCatalogueUrlState,
@@ -847,7 +847,7 @@ export function ProductExplorer({
                             </span>
                           </li>
                         ))}
-                      {detailsProduct.weight ? (
+                      {detailsProduct.weight?.sourceUrl ? (
                         <li>
                           <a
                             className="text-primary hover:underline"

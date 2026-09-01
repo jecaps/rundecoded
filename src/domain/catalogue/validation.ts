@@ -143,6 +143,22 @@ export function validateCatalogue(input: unknown): {
               field: 'specifications.heelToToeDrop.evidence.sourceIds',
               ids: product.specifications.heelToToeDrop.evidence.sourceIds,
             },
+            {
+              field: 'specifications.stackHeight.evidence.sourceIds',
+              ids: product.specifications.stackHeight.evidence.sourceIds,
+            },
+            {
+              field: 'specifications.weight.evidence.sourceIds',
+              ids: product.specifications.weight.evidence.sourceIds,
+            },
+            {
+              field: 'specifications.fit.evidence.sourceIds',
+              ids: product.specifications.fit.evidence.sourceIds,
+            },
+            {
+              field: 'specifications.construction.evidence.sourceIds',
+              ids: product.specifications.construction.evidence.sourceIds,
+            },
           ]
         : Object.entries(product.attributes).map(([attribute, fact]) => ({
             field: `attributes.${attribute}.evidence.sourceIds`,
