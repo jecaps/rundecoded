@@ -1,0 +1,555 @@
+[
+  {
+    "id": "pronation",
+    "order": 1,
+    "slug": "pronation",
+    "translations": {
+      "en": {
+        "title": "Pronation",
+        "introduction": "Pronation is the natural inward roll of the foot as it accepts body weight. It helps the foot and leg absorb and distribute load.",
+        "sections": [
+          {
+            "heading": "Quick explanation",
+            "paragraphs": [
+              "Neutral pronation is a moderate roll. Overpronation describes a greater inward roll, while underpronation (often called supination) describes a smaller roll."
+            ]
+          },
+          {
+            "heading": "Patterns and wear",
+            "paragraphs": [
+              "Wear on the outer heel is common for many runners and does not diagnose pronation by itself. A shoe’s wear pattern, your comfort, and your movement together give a better picture."
+            ]
+          },
+          {
+            "heading": "Choosing a shoe",
+            "paragraphs": [
+              "Neutral shoes suit many runners. Stability or guidance shoes can offer a more structured feel for runners who prefer it, but pronation alone should not dictate the choice."
+            ]
+          },
+          {
+            "heading": "Deeper explanation",
+            "paragraphs": [
+              "The useful question is not whether pronation is “good” or “bad”, but whether a shoe feels comfortable, secure, and predictable across the runner’s intended sessions."
+            ]
+          }
+        ],
+        "callout": "A shoe cannot reliably diagnose your running mechanics. Fit, comfort, training use, and gradual adaptation matter too."
+      },
+      "de": {
+        "title": "Pronation",
+        "introduction": "Pronation ist das natürliche Einwärtsrollen des Fußes, wenn er das Körpergewicht übernimmt. So können Fuß und Bein Belastung aufnehmen und verteilen.",
+        "sections": [
+          {
+            "heading": "Kurz erklärt",
+            "paragraphs": [
+              "Neutrale Pronation beschreibt ein moderates Rollen. Überpronation ein stärkeres Einwärtsrollen, Unterpronation (oft Supination genannt) ein geringeres Rollen."
+            ]
+          },
+          {
+            "heading": "Muster und Abrieb",
+            "paragraphs": [
+              "Abrieb an der äußeren Ferse ist bei vielen Läuferinnen und Läufern normal und beweist keine Pronation. Abrieb, Komfort und Bewegung ergeben zusammen ein besseres Bild."
+            ]
+          },
+          {
+            "heading": "Schuhwahl",
+            "paragraphs": [
+              "Neutralschuhe passen zu vielen Läuferinnen und Läufern. Stabilitäts- oder Führungsschuhe können sich strukturierter anfühlen, aber Pronation allein sollte die Wahl nicht bestimmen."
+            ]
+          },
+          {
+            "heading": "Vertiefung",
+            "paragraphs": [
+              "Die wichtige Frage ist nicht, ob Pronation „gut“ oder „schlecht“ ist, sondern ob sich ein Schuh bei den geplanten Einheiten komfortabel, sicher und berechenbar anfühlt."
+            ]
+          }
+        ],
+        "callout": "Ein Schuh kann die Laufmechanik nicht zuverlässig diagnostizieren. Passform, Komfort, Einsatzzweck und eine schrittweise Gewöhnung zählen ebenfalls."
+      },
+      "fr": {
+        "title": "Pronation",
+        "introduction": "La pronation est le roulement naturel du pied vers l’intérieur lorsqu’il reçoit le poids du corps. Elle aide le pied et la jambe à absorber et répartir la charge.",
+        "sections": [
+          {
+            "heading": "En bref",
+            "paragraphs": [
+              "La pronation neutre correspond à un roulement modéré. La surpronation est plus marquée, tandis que la sous-pronation (souvent appelée supination) est plus faible."
+            ]
+          },
+          {
+            "heading": "Usure et observation",
+            "paragraphs": [
+              "Une usure sur l’extérieur du talon est fréquente et ne permet pas de diagnostiquer la pronation. L’usure, le confort et le mouvement donnent ensemble une meilleure indication."
+            ]
+          },
+          {
+            "heading": "Choisir une chaussure",
+            "paragraphs": [
+              "Les chaussures neutres conviennent à beaucoup de coureurs. Les modèles de stabilité ou de guidage peuvent offrir une sensation plus structurée, mais la pronation seule ne doit pas décider du choix."
+            ]
+          },
+          {
+            "heading": "Pour aller plus loin",
+            "paragraphs": [
+              "La question utile n’est pas de savoir si la pronation est « bonne » ou « mauvaise », mais si la chaussure reste confortable, sûre et prévisible pendant les séances prévues."
+            ]
+          }
+        ],
+        "callout": "Une chaussure ne peut pas diagnostiquer fiablement votre mécanique. La coupe, le confort, l’usage et une adaptation progressive comptent aussi."
+      }
+    }
+  },
+  {
+    "id": "foot-strike",
+    "order": 2,
+    "slug": "foot-strike",
+    "translations": {
+      "en": {
+        "title": "Foot strike",
+        "introduction": "Foot strike describes which part of the foot contacts the ground first during a running step.",
+        "sections": [
+          {
+            "heading": "Heel strike",
+            "paragraphs": [
+              "The heel contacts first. Load is distributed through the heel, shin, knee, and hip as the body moves over the foot."
+            ]
+          },
+          {
+            "heading": "Midfoot strike",
+            "paragraphs": [
+              "The midfoot lands closer to the body’s centre of mass. It can feel balanced, but it still depends on pace, technique, and footwear."
+            ]
+          },
+          {
+            "heading": "Forefoot strike",
+            "paragraphs": [
+              "The front or ball of the foot contacts first. This can increase work for the calf and Achilles, especially when introduced suddenly."
+            ]
+          },
+          {
+            "heading": "What takes the load?",
+            "paragraphs": [
+              "Changing strike pattern changes where load is felt; it does not remove load. Runners should avoid forcing a new strike without a gradual plan."
+            ]
+          }
+        ]
+      },
+      "de": {
+        "title": "Fußaufsatz",
+        "introduction": "Der Fußaufsatz beschreibt, welcher Teil des Fußes beim Laufschritt zuerst den Boden berührt.",
+        "sections": [
+          {
+            "heading": "Fersenaufsatz",
+            "paragraphs": [
+              "Die Ferse landet zuerst. Die Belastung verteilt sich über Ferse, Schienbein, Knie und Hüfte, während der Körper über den Fuß läuft."
+            ]
+          },
+          {
+            "heading": "Mittelfußaufsatz",
+            "paragraphs": [
+              "Der Mittelfuß landet näher am Körperschwerpunkt. Das kann ausgewogen wirken, hängt aber weiterhin von Tempo, Technik und Schuh ab."
+            ]
+          },
+          {
+            "heading": "Vorfußaufsatz",
+            "paragraphs": [
+              "Der Vorfuß oder Ballen berührt zuerst den Boden. Das kann besonders bei einer plötzlichen Umstellung die Waden und Achillessehne stärker fordern."
+            ]
+          },
+          {
+            "heading": "Wo entsteht Belastung?",
+            "paragraphs": [
+              "Eine Änderung des Fußaufsatzes verlagert Belastung, entfernt sie aber nicht. Eine Umstellung sollte nicht ohne schrittweisen Plan erzwungen werden."
+            ]
+          }
+        ]
+      },
+      "fr": {
+        "title": "Attaque du pied",
+        "introduction": "L’attaque du pied décrit la partie qui touche le sol en premier pendant une foulée.",
+        "sections": [
+          {
+            "heading": "Attaque talon",
+            "paragraphs": [
+              "Le talon touche d’abord. La charge se répartit entre talon, tibia, genou et hanche lorsque le corps passe au-dessus du pied."
+            ]
+          },
+          {
+            "heading": "Attaque médio-pied",
+            "paragraphs": [
+              "Le médio-pied se pose plus près du centre de gravité. La sensation peut être équilibrée, mais dépend aussi de l’allure, de la technique et de la chaussure."
+            ]
+          },
+          {
+            "heading": "Attaque avant-pied",
+            "paragraphs": [
+              "L’avant-pied ou la plante touche d’abord. Cela peut augmenter le travail du mollet et du tendon d’Achille, surtout lors d’un changement rapide."
+            ]
+          },
+          {
+            "heading": "Où se place la charge ?",
+            "paragraphs": [
+              "Modifier l’attaque déplace la charge, mais ne la supprime pas. Évitez de forcer une nouvelle attaque sans progression."
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "drop",
+    "order": 3,
+    "slug": "drop",
+    "translations": {
+      "en": {
+        "title": "Drop",
+        "introduction": "Heel-to-toe drop is the height difference between the heel and forefoot of a shoe, measured in millimetres.",
+        "sections": [
+          {
+            "heading": "What it means",
+            "paragraphs": [
+              "A higher drop places relatively more material under the heel. A lower drop creates a smaller heel-to-forefoot difference."
+            ]
+          },
+          {
+            "heading": "How it may feel",
+            "paragraphs": [
+              "Higher-drop shoes may feel familiar to heel strikers. Lower-drop shoes can feel more connected or flexible, but may ask more from the calf and Achilles."
+            ]
+          }
+        ]
+      },
+      "de": {
+        "title": "Sprengung",
+        "introduction": "Die Sprengung ist der Höhenunterschied zwischen Ferse und Vorfuß eines Schuhs, gemessen in Millimetern.",
+        "sections": [
+          {
+            "heading": "Was bedeutet das?",
+            "paragraphs": [
+              "Eine höhere Sprengung bringt relativ mehr Material unter die Ferse. Eine niedrigere Sprengung hat einen kleineren Höhenunterschied."
+            ]
+          },
+          {
+            "heading": "Wie kann es sich anfühlen?",
+            "paragraphs": [
+              "Eine höhere Sprengung kann für Fersenläufer vertraut wirken. Eine niedrigere kann direkter oder flexibler wirken, fordert aber möglicherweise Waden und Achillessehne stärker."
+            ]
+          }
+        ]
+      },
+      "fr": {
+        "title": "Drop",
+        "introduction": "Le drop est la différence de hauteur entre le talon et l’avant-pied, mesurée en millimètres.",
+        "sections": [
+          {
+            "heading": "Ce que cela signifie",
+            "paragraphs": [
+              "Un drop élevé place relativement plus de matière sous le talon. Un drop faible crée une différence talon-avant-pied plus petite."
+            ]
+          },
+          {
+            "heading": "Sensations possibles",
+            "paragraphs": [
+              "Un drop élevé peut sembler familier aux coureurs attaquant du talon. Un drop faible peut sembler plus direct, mais solliciter davantage le mollet et le tendon d’Achille."
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stack-height",
+    "order": 4,
+    "slug": "stack-height",
+    "translations": {
+      "en": {
+        "title": "Stack height",
+        "introduction": "Stack height is the amount of shoe material between the foot and the ground, usually discussed at the heel and forefoot.",
+        "sections": [
+          {
+            "heading": "Protection and feel",
+            "paragraphs": [
+              "More stack can provide cushioning and distance from rough surfaces. Less stack can feel closer to the ground and more direct."
+            ]
+          },
+          {
+            "heading": "Trade-offs",
+            "paragraphs": [
+              "Stack height does not tell the whole story. Foam type, geometry, width, and stability also shape how protective or stable a shoe feels."
+            ]
+          }
+        ]
+      },
+      "de": {
+        "title": "Stackhöhe",
+        "introduction": "Die Stackhöhe beschreibt, wie viel Schuhmaterial zwischen Fuß und Boden liegt, meist getrennt nach Ferse und Vorfuß.",
+        "sections": [
+          {
+            "heading": "Schutz und Gefühl",
+            "paragraphs": [
+              "Mehr Stack kann Dämpfung und Abstand zu unebenen Flächen bieten. Weniger Stack kann bodennäher und direkter wirken."
+            ]
+          },
+          {
+            "heading": "Abwägungen",
+            "paragraphs": [
+              "Die Stackhöhe erklärt nicht alles. Schaum, Geometrie, Breite und Stabilität beeinflussen ebenfalls, wie schützend oder stabil ein Schuh wirkt."
+            ]
+          }
+        ]
+      },
+      "fr": {
+        "title": "Hauteur de semelle",
+        "introduction": "La hauteur de semelle correspond à la quantité de matière entre le pied et le sol, généralement indiquée au talon et à l’avant-pied.",
+        "sections": [
+          {
+            "heading": "Protection et sensations",
+            "paragraphs": [
+              "Une semelle plus épaisse peut apporter amorti et distance avec les surfaces irrégulières. Une semelle plus fine peut sembler plus proche du sol."
+            ]
+          },
+          {
+            "heading": "Compromis",
+            "paragraphs": [
+              "La hauteur ne dit pas tout. La mousse, la géométrie, la largeur et la stabilité influencent aussi la protection ressentie."
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "cushioning",
+    "order": 5,
+    "slug": "cushioning",
+    "translations": {
+      "en": {
+        "title": "Cushioning",
+        "introduction": "Cushioning describes how a shoe manages impact and pressure, but “soft” and “protective” are not always the same thing.",
+        "sections": [
+          {
+            "heading": "Foam and response",
+            "paragraphs": [
+              "Different foams can feel soft, firm, lively, or stable. A responsive shoe returns energy quickly; a softer shoe may feel calmer and more forgiving."
+            ]
+          },
+          {
+            "heading": "Max cushioning",
+            "paragraphs": [
+              "Max-cushion shoes use more midsole material for a protective, comfortable ride. They can be excellent for easy and long running, but are not automatically best for every runner."
+            ]
+          }
+        ]
+      },
+      "de": {
+        "title": "Dämpfung",
+        "introduction": "Dämpfung beschreibt, wie ein Schuh Druck und Aufprall verarbeitet. „Weich“ und „schützend“ sind aber nicht immer dasselbe.",
+        "sections": [
+          {
+            "heading": "Schaum und Reaktion",
+            "paragraphs": [
+              "Verschiedene Schäume können weich, fest, lebendig oder stabil wirken. Ein reaktiver Schuh gibt Energie schnell zurück, ein weicherer kann ruhiger und nachgiebiger wirken."
+            ]
+          },
+          {
+            "heading": "Maximale Dämpfung",
+            "paragraphs": [
+              "Maximal gedämpfte Schuhe nutzen mehr Material für ein geschütztes, komfortables Laufgefühl. Sie können für lockere und lange Läufe gut sein, sind aber nicht automatisch für alle am besten."
+            ]
+          }
+        ]
+      },
+      "fr": {
+        "title": "Amorti",
+        "introduction": "L’amorti décrit la façon dont une chaussure gère l’impact et la pression. « Souple » et « protecteur » ne sont pas toujours synonymes.",
+        "sections": [
+          {
+            "heading": "Mousse et dynamisme",
+            "paragraphs": [
+              "Les mousses peuvent sembler souples, fermes, dynamiques ou stables. Une chaussure réactive restitue rapidement l’énergie ; une chaussure plus souple peut sembler plus calme."
+            ]
+          },
+          {
+            "heading": "Amorti maximal",
+            "paragraphs": [
+              "Les chaussures à amorti maximal utilisent davantage de matière pour une sensation protectrice et confortable. Elles peuvent convenir aux sorties faciles et longues, sans convenir à tout le monde."
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "fit",
+    "order": 6,
+    "slug": "fit",
+    "translations": {
+      "en": {
+        "title": "Fit and sizing",
+        "introduction": "A technically impressive shoe is not useful if it does not hold the foot securely and comfortably.",
+        "sections": [
+          {
+            "heading": "What to check",
+            "paragraphs": [
+              "Check the complete fit rather than one measurement."
+            ],
+            "bullets": [
+              "Secure heel without slipping",
+              "Enough room for the toes to spread",
+              "No pressure across the widest part of the foot"
+            ]
+          },
+          {
+            "heading": "Sizing in practice",
+            "paragraphs": [
+              "Feet can swell during longer runs. Try shoes with the socks you plan to use and leave practical space in front of the toes."
+            ]
+          }
+        ]
+      },
+      "de": {
+        "title": "Passform und Größe",
+        "introduction": "Ein technisch beeindruckender Schuh hilft nicht, wenn er den Fuß nicht sicher und bequem hält.",
+        "sections": [
+          {
+            "heading": "Darauf achten",
+            "paragraphs": [
+              "Beurteile die gesamte Passform statt nur einer Messung."
+            ],
+            "bullets": [
+              "Sichere Ferse ohne Rutschen",
+              "Genug Platz für die Zehen",
+              "Kein Druck an der breitesten Stelle"
+            ]
+          },
+          {
+            "heading": "Größe in der Praxis",
+            "paragraphs": [
+              "Füße können bei längeren Läufen anschwellen. Probiere Schuhe mit den geplanten Socken und lasse vorne praktischen Platz."
+            ]
+          }
+        ]
+      },
+      "fr": {
+        "title": "Coupe et pointure",
+        "introduction": "Une chaussure techniquement intéressante ne sert à rien si elle ne maintient pas le pied confortablement.",
+        "sections": [
+          {
+            "heading": "À vérifier",
+            "paragraphs": [
+              "Évaluez l’ensemble de la coupe plutôt qu’une seule mesure."
+            ],
+            "bullets": [
+              "Talon maintenu sans glissement",
+              "Espace suffisant pour les orteils",
+              "Pas de pression sur la partie la plus large"
+            ]
+          },
+          {
+            "heading": "La pointure en pratique",
+            "paragraphs": [
+              "Les pieds peuvent gonfler pendant les longues sorties. Essayez les chaussures avec les chaussettes prévues et gardez un espace pratique devant les orteils."
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "training-use",
+    "order": 7,
+    "slug": "training-use",
+    "translations": {
+      "en": {
+        "title": "Training use",
+        "introduction": "The best shoe is often the one that matches the session rather than the one with the most impressive specification.",
+        "sections": [
+          {
+            "heading": "Easy and daily runs",
+            "paragraphs": [
+              "Prioritise comfort, predictable handling, and a fit you can wear repeatedly."
+            ]
+          },
+          {
+            "heading": "Long runs",
+            "paragraphs": [
+              "Look for a comfortable ride, enough protection, and a fit that remains secure as fatigue builds."
+            ]
+          },
+          {
+            "heading": "Intervals and racing",
+            "paragraphs": [
+              "Lighter, more responsive shoes may suit faster sessions, but only if the runner can use them comfortably."
+            ]
+          },
+          {
+            "heading": "Trail and mixed surfaces",
+            "paragraphs": [
+              "Grip, outsole rubber, foothold, and protection become more important as terrain becomes uneven or slippery."
+            ]
+          }
+        ]
+      },
+      "de": {
+        "title": "Einsatzzweck",
+        "introduction": "Der beste Schuh passt oft zur Einheit und nicht zu den beeindruckendsten technischen Daten.",
+        "sections": [
+          {
+            "heading": "Lockere und tägliche Läufe",
+            "paragraphs": [
+              "Komfort, berechenbares Abrollen und eine Passform für wiederholtes Tragen sind wichtig."
+            ]
+          },
+          {
+            "heading": "Lange Läufe",
+            "paragraphs": [
+              "Achte auf komfortables Laufgefühl, ausreichenden Schutz und sicheren Halt bei zunehmender Ermüdung."
+            ]
+          },
+          {
+            "heading": "Intervalle und Wettkampf",
+            "paragraphs": [
+              "Leichtere, reaktivere Schuhe können für schnelle Einheiten passen, wenn sie bequem genutzt werden können."
+            ]
+          },
+          {
+            "heading": "Trail und wechselnde Untergründe",
+            "paragraphs": [
+              "Grip, Außensohle, Halt und Schutz werden wichtiger, wenn der Untergrund uneben oder rutschig wird."
+            ]
+          }
+        ]
+      },
+      "fr": {
+        "title": "Usage d’entraînement",
+        "introduction": "La meilleure chaussure correspond souvent à la séance, plutôt qu’aux caractéristiques les plus impressionnantes.",
+        "sections": [
+          {
+            "heading": "Sorties faciles et quotidiennes",
+            "paragraphs": [
+              "Privilégiez le confort, un déroulé prévisible et une coupe adaptée aux utilisations répétées."
+            ]
+          },
+          {
+            "heading": "Sorties longues",
+            "paragraphs": [
+              "Recherchez un déroulé confortable, une protection suffisante et un maintien sûr lorsque la fatigue augmente."
+            ]
+          },
+          {
+            "heading": "Intervalles et compétition",
+            "paragraphs": [
+              "Une chaussure plus légère et réactive peut convenir aux séances rapides si elle reste confortable."
+            ]
+          },
+          {
+            "heading": "Trail et surfaces mixtes",
+            "paragraphs": [
+              "L’adhérence, la semelle extérieure, le maintien et la protection deviennent essentiels sur terrain irrégulier ou glissant."
+            ]
+          }
+        ]
+      }
+    }
+  }
+]
