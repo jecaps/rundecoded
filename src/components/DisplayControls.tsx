@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/tooltip';
 import { isLocale, type Locale } from '@/i18n/config';
 import { switchLocaleUrl } from '@/lib/routes';
+import { preserveScrollOnNextAstroNavigation } from '@/lib/scroll-restoration';
 
 type Theme = 'dark' | 'light';
 
@@ -54,6 +55,7 @@ export function DisplayControls({ initialLocale }: DisplayControlsProps) {
   function changeLocale(nextLocale: string) {
     if (!isLocale(nextLocale)) return;
 
+    preserveScrollOnNextAstroNavigation();
     window.localStorage.setItem('rundecoded-locale', nextLocale);
     document.documentElement.lang = nextLocale;
     window.dispatchEvent(
