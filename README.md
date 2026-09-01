@@ -6,11 +6,12 @@ The existing [Running Shoe Explorer](https://github.com/jecaps/running-shoe-expl
 
 ## Current status
 
-Phase 4 delivers the first end-to-end product explorer slice on top of the
+Phase 5 completes the interactive product explorer experience on top of the
 RunDecoded design system and shared application shell. Twelve representative
-shoes now flow from the validated catalogue into localized search, category
-filters, responsive cards, accessible details, and comparison. The primary
-routes are available below the repository base path:
+shoes now flow from the validated catalogue into typo-tolerant search,
+predictive suggestions, URL-backed filters and pagination, responsive cards,
+accessible details, and comparison. The primary routes are available below the
+repository base path:
 
 - `/rundecoded/catalogue/`
 - `/rundecoded/running-basics/`
@@ -20,9 +21,10 @@ language controls. A small component preview is available at
 `/rundecoded/design-system/`. See the [design-system guide](docs/architecture/design-system.md)
 for tokens, breakpoints, and component-adoption rules.
 
-See the [Phase 4 product explorer guide](docs/features/phase-4-product-explorer.md)
-for the product-selection rationale, pending-data policy, behaviour, and visual
-review targets.
+See the [Phase 5 complete explorer guide](docs/features/phase-5-complete-explorer.md)
+for search ranking, URL state, comparison, accessibility, and review coverage.
+The [Phase 4 product explorer guide](docs/features/phase-4-product-explorer.md)
+retains the product-selection rationale and pending-data policy.
 
 Phase 0 documentation remains available as the migration reference:
 

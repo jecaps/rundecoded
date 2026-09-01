@@ -1,6 +1,7 @@
 ---
 import { ProductExplorer } from '@/features/catalogue/ProductExplorer';
 import { getProductSlice } from '@/features/catalogue/slice';
+import { parseCatalogueUrlState } from '@/features/catalogue/url-state';
 import AppLayout from '@layouts/AppLayout.astro';
 
 const description =
@@ -9,12 +10,22 @@ const requestedLocale = Astro.url.searchParams.get('lang');
 const locale =
   requestedLocale === 'de' || requestedLocale === 'fr' ? requestedLocale : 'en';
 const products = getProductSlice();
+const validCategoryIds = new Set(
+  products.flatMap(({ product }) => product.categories.map(({ id }) => id)),
+);
+const initialState = parseCatalogueUrlState(
+  Astro.url.searchParams,
+  validCategoryIds,
+);
 ---
 
 <AppLayout title="Catalogue" description={description}>
   <ProductExplorer
     assetBase={import.meta.env.BASE_URL}
+    initialCategoryId={initialState.categoryId}
     initialLocale={locale}
+    initialPage={initialState.page}
+    initialQuery={initialState.query}
     products={products}
     client:load
   />

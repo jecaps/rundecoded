@@ -7,6 +7,8 @@ export const catalogueCopy = {
       'Search and compare a representative set of shoes by purpose, surface, guidance, and construction.',
     searchLabel: 'Search products',
     searchPlaceholder: 'Brand, model, category, benefit…',
+    suggestions: 'Search suggestions',
+    searchDecathlon: (query: string) => `Search Decathlon for “${query}”`,
     allCategories: 'All categories',
     filters: 'Categories',
     results: (shown: number, total: number) => `${shown} of ${total} shoes`,
@@ -38,6 +40,7 @@ export const catalogueCopy = {
     comparisonTitle: 'Shoe comparison',
     comparisonDescription:
       'Compare purpose and technical facts. Differences are guidance, not a personal fit recommendation.',
+    differenceSummary: 'Key differences',
     characteristic: 'Characteristic',
     category: 'Category',
     different: 'Different',
@@ -54,6 +57,8 @@ export const catalogueCopy = {
       'Durchsuche und vergleiche eine repräsentative Auswahl nach Einsatzzweck, Untergrund, Führung und Konstruktion.',
     searchLabel: 'Produkte suchen',
     searchPlaceholder: 'Marke, Modell, Kategorie, Vorteil…',
+    suggestions: 'Suchvorschläge',
+    searchDecathlon: (query: string) => `Bei Decathlon nach „${query}“ suchen`,
     allCategories: 'Alle Kategorien',
     filters: 'Kategorien',
     results: (shown: number, total: number) => `${shown} von ${total} Schuhen`,
@@ -85,6 +90,7 @@ export const catalogueCopy = {
     comparisonTitle: 'Schuhvergleich',
     comparisonDescription:
       'Vergleiche Einsatzzweck und technische Fakten. Unterschiede ersetzen keine persönliche Passformberatung.',
+    differenceSummary: 'Wichtigste Unterschiede',
     characteristic: 'Merkmal',
     category: 'Kategorie',
     different: 'Unterschiedlich',
@@ -101,6 +107,8 @@ export const catalogueCopy = {
       'Recherchez et comparez une sélection représentative selon l’usage, le terrain, le guidage et la construction.',
     searchLabel: 'Rechercher des produits',
     searchPlaceholder: 'Marque, modèle, catégorie, avantage…',
+    suggestions: 'Suggestions de recherche',
+    searchDecathlon: (query: string) => `Rechercher « ${query} » sur Decathlon`,
     allCategories: 'Toutes les catégories',
     filters: 'Catégories',
     results: (shown: number, total: number) =>
@@ -133,6 +141,7 @@ export const catalogueCopy = {
     comparisonTitle: 'Comparaison de chaussures',
     comparisonDescription:
       'Comparez les usages et les faits techniques. Les différences ne remplacent pas un conseil personnalisé.',
+    differenceSummary: 'Différences principales',
     characteristic: 'Caractéristique',
     category: 'Catégorie',
     different: 'Différent',

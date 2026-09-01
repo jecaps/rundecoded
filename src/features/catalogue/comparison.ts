@@ -96,3 +96,37 @@ export function compareProducts(
 
   return rows;
 }
+
+export function comparisonSummary(
+  left: ExplorerProduct,
+  right: ExplorerProduct,
+  locale: SupportedLocale,
+): string {
+  const leftCategory = primaryCategory(left, locale);
+  const rightCategory = primaryCategory(right, locale);
+  const leftSurface = surfaces(left);
+  const rightSurface = surfaces(right);
+  const leftDrop = left.product.specifications.heelToToeDrop.value?.amount;
+  const rightDrop = right.product.specifications.heelToToeDrop.value?.amount;
+  const dropDifference =
+    leftDrop !== undefined && rightDrop !== undefined
+      ? Math.abs(leftDrop - rightDrop)
+      : null;
+
+  const summaries = {
+    en:
+      leftCategory === rightCategory && leftSurface === rightSurface
+        ? `${left.product.model} and ${right.product.model} share a ${leftCategory.toLocaleLowerCase(locale)} role on ${leftSurface.toLocaleLowerCase(locale)} surfaces${dropDifference ? `, with a ${dropDifference} mm drop difference` : ''}.`
+        : `${left.product.model} is a ${leftCategory.toLocaleLowerCase(locale)} option for ${leftSurface.toLocaleLowerCase(locale)}, while ${right.product.model} is oriented toward ${rightCategory.toLocaleLowerCase(locale)} use on ${rightSurface.toLocaleLowerCase(locale)}${dropDifference ? `; their drops differ by ${dropDifference} mm` : ''}.`,
+    de:
+      leftCategory === rightCategory && leftSurface === rightSurface
+        ? `${left.product.model} und ${right.product.model} teilen den Einsatzzweck ${leftCategory} auf ${leftSurface}${dropDifference ? `; die Sprengung unterscheidet sich um ${dropDifference} mm` : ''}.`
+        : `${left.product.model} ist für ${leftCategory} auf ${leftSurface} ausgelegt, während ${right.product.model} auf ${rightCategory} auf ${rightSurface} zielt${dropDifference ? `; die Sprengung unterscheidet sich um ${dropDifference} mm` : ''}.`,
+    fr:
+      leftCategory === rightCategory && leftSurface === rightSurface
+        ? `${left.product.model} et ${right.product.model} partagent un usage ${leftCategory} sur ${leftSurface}${dropDifference ? `, avec ${dropDifference} mm d’écart de drop` : ''}.`
+        : `${left.product.model} vise un usage ${leftCategory} sur ${leftSurface}, tandis que ${right.product.model} est orientée ${rightCategory} sur ${rightSurface}${dropDifference ? ` ; leur drop diffère de ${dropDifference} mm` : ''}.`,
+  } as const;
+
+  return summaries[locale];
+}

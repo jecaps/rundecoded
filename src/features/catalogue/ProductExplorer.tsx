@@ -2,13 +2,14 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
+  ArrowUpRight,
   Check,
   ImageOff,
   Search,
   X,
 } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -20,13 +21,28 @@ import { resolveLocalizedText, type SupportedLocale } from '@/domain/catalogue';
 import { cn } from '@/lib/utils';
 
 import { catalogueCopy, categoryLabel, stabilityLabel } from './copy';
-import { compareProducts } from './comparison';
+import { rankComparableProducts } from './comparables';
+import { compareProducts, comparisonSummary } from './comparison';
+import {
+  buildSearchSuggestions,
+  externalSearchUrl,
+  searchProducts,
+  searchSuggestionKindLabel,
+} from './search';
 import type { ExplorerProduct } from './slice';
 import { filterProducts, paginateProducts } from './state';
+import {
+  parseCatalogueUrlState,
+  writeCatalogueUrlState,
+  type CatalogueUrlState,
+} from './url-state';
 
 interface ProductExplorerProps {
   assetBase: string;
+  initialCategoryId?: string;
   initialLocale: SupportedLocale;
+  initialPage?: number;
+  initialQuery?: string;
   products: ExplorerProduct[];
 }
 
@@ -94,19 +110,47 @@ function ProductPicture({
 
 export function ProductExplorer({
   assetBase,
+  initialCategoryId = 'all',
   initialLocale,
+  initialPage = 1,
+  initialQuery = '',
   products,
 }: ProductExplorerProps) {
+  const validCategoryIds = useMemo(
+    () =>
+      new Set(
+        products.flatMap(({ product }) =>
+          product.categories.map(({ id }) => id),
+        ),
+      ),
+    [products],
+  );
+  const initialBrowserState = () =>
+    typeof window === 'undefined'
+      ? null
+      : parseCatalogueUrlState(
+          new URL(window.location.href).searchParams,
+          validCategoryIds,
+        );
   const [locale, setLocale] = useState(initialLocale);
-  const [query, setQuery] = useState('');
-  const [categoryId, setCategoryId] = useState('all');
-  const [page, setPage] = useState(1);
+  const [query, setQuery] = useState(
+    () => initialBrowserState()?.query ?? initialQuery,
+  );
+  const [categoryId, setCategoryId] = useState(
+    () => initialBrowserState()?.categoryId ?? initialCategoryId,
+  );
+  const [page, setPage] = useState(
+    () => initialBrowserState()?.page ?? initialPage,
+  );
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false);
+  const [activeSuggestion, setActiveSuggestion] = useState(-1);
   const [detailsId, setDetailsId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const [selectionNotice, setSelectionNotice] = useState('');
   const resultsRef = useRef<HTMLDivElement>(null);
   const explorerRef = useRef<HTMLElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
   const comparisonOpenerRef = useRef<HTMLButtonElement | null>(null);
   const copy = catalogueCopy[locale];
@@ -122,6 +166,22 @@ export function ProductExplorer({
     return () =>
       window.removeEventListener('rundecoded:locale-change', onLocaleChange);
   }, []);
+
+  useEffect(() => {
+    function onPopState() {
+      const restored = parseCatalogueUrlState(
+        new URL(window.location.href).searchParams,
+        validCategoryIds,
+      );
+      setQuery(restored.query);
+      setCategoryId(restored.categoryId);
+      setPage(restored.page);
+      setSuggestionsOpen(false);
+      setActiveSuggestion(-1);
+    }
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [validCategoryIds]);
 
   const productsById = useMemo(
     () => new Map(products.map((item) => [item.product.id, item])),
@@ -146,6 +206,23 @@ export function ProductExplorer({
     [categoryId, locale, products, query],
   );
   const pagination = paginateProducts(filtered, page);
+  const queryMatches = useMemo(
+    () => searchProducts(products, query, locale),
+    [locale, products, query],
+  );
+  const suggestions = useMemo(
+    () => buildSearchSuggestions(products, query, locale),
+    [locale, products, query],
+  );
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const { product } of queryMatches) {
+      for (const { id } of product.categories) {
+        counts.set(id, (counts.get(id) ?? 0) + 1);
+      }
+    }
+    return counts;
+  }, [queryMatches]);
   const detailsProduct = detailsId
     ? (productsById.get(detailsId) ?? null)
     : null;
@@ -153,20 +230,53 @@ export function ProductExplorer({
     .map((id) => productsById.get(id))
     .filter((item): item is ExplorerProduct => Boolean(item));
 
+  const comparableProducts = detailsProduct
+    ? rankComparableProducts(detailsProduct, products, locale)
+    : [];
+
+  function updateUrlState(state: CatalogueUrlState, mode: 'push' | 'replace') {
+    const nextUrl = writeCatalogueUrlState(
+      new URL(window.location.href),
+      state,
+    );
+    window.history[mode === 'push' ? 'pushState' : 'replaceState'](
+      {},
+      '',
+      nextUrl,
+    );
+  }
+
   function updateQuery(nextQuery: string) {
     setQuery(nextQuery);
     setPage(1);
+    setSuggestionsOpen(nextQuery.trim().length >= 2);
+    setActiveSuggestion(-1);
+    updateUrlState({ categoryId, page: 1, query: nextQuery }, 'replace');
   }
 
   function updateCategory(nextCategory: string) {
     setCategoryId(nextCategory);
     setPage(1);
+    setSuggestionsOpen(false);
+    updateUrlState({ categoryId: nextCategory, page: 1, query }, 'push');
   }
 
   function clearFilters() {
     setQuery('');
     setCategoryId('all');
     setPage(1);
+    setSuggestionsOpen(false);
+    setActiveSuggestion(-1);
+    updateUrlState({ categoryId: 'all', page: 1, query: '' }, 'push');
+  }
+
+  function chooseSuggestion(value: string) {
+    setQuery(value);
+    setPage(1);
+    setSuggestionsOpen(false);
+    setActiveSuggestion(-1);
+    updateUrlState({ categoryId, page: 1, query: value }, 'push');
+    searchInputRef.current?.focus();
   }
 
   function openDetails(id: string, opener: HTMLElement) {
@@ -197,6 +307,7 @@ export function ProductExplorer({
 
   function changePage(nextPage: number) {
     setPage(nextPage);
+    updateUrlState({ categoryId, page: nextPage, query }, 'push');
     resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -241,18 +352,55 @@ export function ProductExplorer({
       </header>
 
       <div className="border-border bg-surface tablet:p-6 mt-8 rounded-[var(--radius-panel)] border p-4 shadow-[var(--shadow-sm)]">
-        <label className="grid gap-2" htmlFor="catalogue-search">
-          <span className="text-sm font-semibold">{copy.searchLabel}</span>
-          <span className="border-border bg-background focus-within:border-primary focus-within:ring-ring/20 flex min-h-12 items-center gap-3 rounded-[var(--radius-control)] border px-4 focus-within:ring-3">
+        <div className="relative grid gap-2">
+          <label className="text-sm font-semibold" htmlFor="catalogue-search">
+            {copy.searchLabel}
+          </label>
+          <div className="border-border bg-background focus-within:border-primary focus-within:ring-ring/20 flex min-h-12 items-center gap-3 rounded-[var(--radius-control)] border px-4 focus-within:ring-3">
             <Search
               aria-hidden="true"
               className="text-muted-foreground size-5 shrink-0"
             />
             <input
+              ref={searchInputRef}
+              aria-activedescendant={
+                activeSuggestion >= 0
+                  ? `catalogue-suggestion-${activeSuggestion}`
+                  : undefined
+              }
+              aria-autocomplete="list"
+              aria-controls="catalogue-suggestions"
+              aria-expanded={suggestionsOpen && suggestions.length > 0}
               className="placeholder:text-muted-foreground min-w-0 flex-1 border-0 bg-transparent outline-none"
               id="catalogue-search"
               onChange={(event) => updateQuery(event.target.value)}
+              onBlur={() => {
+                setSuggestionsOpen(false);
+                setActiveSuggestion(-1);
+              }}
+              onFocus={() => setSuggestionsOpen(query.trim().length >= 2)}
+              onKeyDown={(event) => {
+                if (!suggestions.length) return;
+                if (event.key === 'ArrowDown') {
+                  event.preventDefault();
+                  setSuggestionsOpen(true);
+                  setActiveSuggestion((current) =>
+                    Math.min(current + 1, suggestions.length - 1),
+                  );
+                } else if (event.key === 'ArrowUp') {
+                  event.preventDefault();
+                  setActiveSuggestion((current) => Math.max(current - 1, 0));
+                } else if (event.key === 'Enter' && activeSuggestion >= 0) {
+                  event.preventDefault();
+                  const suggestion = suggestions[activeSuggestion];
+                  if (suggestion) chooseSuggestion(suggestion.value);
+                } else if (event.key === 'Escape') {
+                  setSuggestionsOpen(false);
+                  setActiveSuggestion(-1);
+                }
+              }}
               placeholder={copy.searchPlaceholder}
+              role="combobox"
               type="search"
               value={query}
             />
@@ -266,8 +414,38 @@ export function ProductExplorer({
                 <X aria-hidden="true" className="size-4" />
               </button>
             ) : null}
-          </span>
-        </label>
+          </div>
+          {suggestionsOpen && suggestions.length ? (
+            <ul
+              aria-label={copy.suggestions}
+              className="border-border bg-surface absolute top-full right-0 left-0 z-40 mt-2 max-h-80 list-none overflow-y-auto rounded-[var(--radius-control)] border p-1 shadow-xl"
+              id="catalogue-suggestions"
+              role="listbox"
+            >
+              {suggestions.map((suggestion, index) => (
+                <li key={suggestion.id} role="presentation">
+                  <button
+                    aria-selected={activeSuggestion === index}
+                    className={cn(
+                      'hover:bg-surface-subtle focus-visible:bg-surface-subtle flex min-h-11 w-full cursor-pointer items-center justify-between gap-4 rounded-[calc(var(--radius-control)-0.2rem)] border-0 bg-transparent px-3 py-2 text-left outline-none',
+                      activeSuggestion === index && 'bg-surface-subtle',
+                    )}
+                    id={`catalogue-suggestion-${index}`}
+                    onClick={() => chooseSuggestion(suggestion.value)}
+                    onMouseDown={(event) => event.preventDefault()}
+                    role="option"
+                    type="button"
+                  >
+                    <span className="font-medium">{suggestion.label}</span>
+                    <span className="text-muted-foreground text-xs">
+                      {searchSuggestionKindLabel(suggestion.kind, locale)}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
 
         <fieldset className="mt-5 border-0 p-0">
           <legend className="mb-2 text-sm font-semibold">{copy.filters}</legend>
@@ -277,7 +455,7 @@ export function ProductExplorer({
                 <button
                   aria-pressed={categoryId === id}
                   className={cn(
-                    'border-border min-h-9 shrink-0 cursor-pointer rounded-full border px-4 text-sm font-semibold transition-colors',
+                    'border-border min-h-11 shrink-0 cursor-pointer rounded-full border px-4 text-sm font-semibold transition-colors',
                     categoryId === id
                       ? 'bg-foreground text-background border-foreground'
                       : 'bg-surface text-muted-foreground hover:bg-surface-subtle hover:text-foreground',
@@ -286,7 +464,12 @@ export function ProductExplorer({
                   onClick={() => updateCategory(id)}
                   type="button"
                 >
-                  {label}
+                  {label}{' '}
+                  <span aria-hidden="true">
+                    {id === 'all'
+                      ? queryMatches.length
+                      : (categoryCounts.get(id) ?? 0)}
+                  </span>
                 </button>
               ),
             )}
@@ -433,9 +616,22 @@ export function ProductExplorer({
         ) : (
           <div className="border-border bg-surface mt-6 rounded-[var(--radius-panel)] border p-10 text-center">
             <p className="m-0 text-lg font-semibold">{copy.noResults}</p>
-            <Button className="mt-4" onClick={clearFilters} variant="outline">
-              {copy.clearFilters}
-            </Button>
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              <Button onClick={clearFilters} variant="outline">
+                {copy.clearFilters}
+              </Button>
+              {query.trim().length >= 2 ? (
+                <a
+                  className={buttonVariants({ variant: 'secondary' })}
+                  href={externalSearchUrl(query, locale)}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {copy.searchDecathlon(query)}
+                  <ArrowUpRight aria-hidden="true" className="size-4" />
+                </a>
+              ) : null}
+            </div>
           </div>
         )}
       </div>
@@ -591,9 +787,8 @@ export function ProductExplorer({
                       {copy.comparableProducts}
                     </h3>
                     <div className="mt-3 grid gap-2">
-                      {detailsProduct.product.comparables.map((id) => {
-                        const comparable = productsById.get(id);
-                        if (!comparable) return null;
+                      {comparableProducts.map((comparable) => {
+                        const id = comparable.product.id;
                         return (
                           <button
                             className="border-border hover:bg-surface-subtle flex cursor-pointer items-center justify-between gap-4 rounded-[var(--radius-control)] border bg-transparent px-4 py-3 text-left"
@@ -682,66 +877,83 @@ export function ProductExplorer({
 
           {comparisonProducts.length === 2 ? (
             <div className="mt-3">
-              <div className="grid grid-cols-[minmax(7rem,0.65fr)_repeat(2,minmax(0,1fr))] gap-px overflow-hidden rounded-[var(--radius-control)] border">
-                <div className="bg-surface-subtle p-3 text-sm font-semibold">
-                  {copy.characteristic}
-                </div>
-                {comparisonProducts.map((item) => (
-                  <div className="bg-surface-subtle p-3" key={item.product.id}>
-                    <span className="block text-xs font-bold tracking-wide uppercase">
-                      {item.product.brand.name}
-                    </span>
-                    <span className="mt-1 block font-semibold">
-                      {item.product.model}
-                    </span>
+              <section className="bg-callout border-callout-border mb-4 border-l-4 p-4">
+                <h3 className="m-0 text-sm font-semibold">
+                  {copy.differenceSummary}
+                </h3>
+                <p className="text-muted-foreground mt-2 mb-0 text-sm leading-6">
+                  {comparisonSummary(
+                    comparisonProducts[0],
+                    comparisonProducts[1],
+                    locale,
+                  )}
+                </p>
+              </section>
+              <div className="overflow-x-auto rounded-[var(--radius-control)] border">
+                <div className="grid min-w-[34rem] grid-cols-[minmax(7rem,0.65fr)_repeat(2,minmax(0,1fr))] gap-px overflow-hidden">
+                  <div className="bg-surface-subtle p-3 text-sm font-semibold">
+                    {copy.characteristic}
                   </div>
-                ))}
-                {comparisonRows.map((row) => (
-                  <div className="contents" key={row.key}>
+                  {comparisonProducts.map((item) => (
                     <div
-                      className="border-border border-t p-3 text-sm font-semibold"
-                      data-comparison-row={row.key}
-                      data-difference={
-                        row.difference === null
-                          ? 'not-compared'
-                          : row.difference
-                            ? 'true'
-                            : 'false'
-                      }
+                      className="bg-surface-subtle p-3"
+                      key={item.product.id}
                     >
-                      {comparisonLabels[row.key]}
-                      <span className="text-muted-foreground mt-1 block text-xs font-normal">
-                        {row.difference === null
-                          ? copy.notCompared
-                          : row.difference
-                            ? copy.different
-                            : copy.same}
+                      <span className="block text-xs font-bold tracking-wide uppercase">
+                        {item.product.brand.name}
+                      </span>
+                      <span className="mt-1 block font-semibold">
+                        {item.product.model}
                       </span>
                     </div>
-                    <div
-                      className={cn(
-                        'border-border border-t p-3 text-sm',
-                        row.difference ? 'bg-callout' : 'bg-surface',
-                      )}
-                      data-difference={
-                        row.difference === true ? 'true' : undefined
-                      }
-                    >
-                      {row.left}
+                  ))}
+                  {comparisonRows.map((row) => (
+                    <div className="contents" key={row.key}>
+                      <div
+                        className="border-border border-t p-3 text-sm font-semibold"
+                        data-comparison-row={row.key}
+                        data-difference={
+                          row.difference === null
+                            ? 'not-compared'
+                            : row.difference
+                              ? 'true'
+                              : 'false'
+                        }
+                      >
+                        {comparisonLabels[row.key]}
+                        <span className="text-muted-foreground mt-1 block text-xs font-normal">
+                          {row.difference === null
+                            ? copy.notCompared
+                            : row.difference
+                              ? copy.different
+                              : copy.same}
+                        </span>
+                      </div>
+                      <div
+                        className={cn(
+                          'border-border border-t p-3 text-sm',
+                          row.difference ? 'bg-callout' : 'bg-surface',
+                        )}
+                        data-difference={
+                          row.difference === true ? 'true' : undefined
+                        }
+                      >
+                        {row.left}
+                      </div>
+                      <div
+                        className={cn(
+                          'border-border border-t p-3 text-sm',
+                          row.difference ? 'bg-callout' : 'bg-surface',
+                        )}
+                        data-difference={
+                          row.difference === true ? 'true' : undefined
+                        }
+                      >
+                        {row.right}
+                      </div>
                     </div>
-                    <div
-                      className={cn(
-                        'border-border border-t p-3 text-sm',
-                        row.difference ? 'bg-callout' : 'bg-surface',
-                      )}
-                      data-difference={
-                        row.difference === true ? 'true' : undefined
-                      }
-                    >
-                      {row.right}
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
               {weightMismatch ? (
                 <p className="border-callout-border bg-callout text-muted-foreground mt-4 border-l-4 p-3 text-sm">
