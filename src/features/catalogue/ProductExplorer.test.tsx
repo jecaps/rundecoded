@@ -4,6 +4,7 @@ import {
   fireEvent,
   render,
   screen,
+  waitFor,
   within,
 } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -93,6 +94,12 @@ describe('ProductExplorer', () => {
         initialLocale="en"
         products={products}
       />,
+    );
+    await waitFor(() =>
+      expect(screen.getByTestId('product-explorer')).toHaveAttribute(
+        'data-hydrated',
+        'true',
+      ),
     );
     act(() => {
       window.dispatchEvent(

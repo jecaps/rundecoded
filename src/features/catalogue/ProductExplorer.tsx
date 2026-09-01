@@ -133,6 +133,7 @@ export function ProductExplorer({
           validCategoryIds,
         );
   const [locale, setLocale] = useState(initialLocale);
+  const [hydrated, setHydrated] = useState(false);
   const [query, setQuery] = useState(
     () => initialBrowserState()?.query ?? initialQuery,
   );
@@ -149,23 +150,43 @@ export function ProductExplorer({
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const [selectionNotice, setSelectionNotice] = useState('');
   const resultsRef = useRef<HTMLDivElement>(null);
-  const explorerRef = useRef<HTMLElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
   const comparisonOpenerRef = useRef<HTMLButtonElement | null>(null);
   const copy = catalogueCopy[locale];
 
   useEffect(() => {
-    explorerRef.current?.setAttribute('data-hydrated', 'true');
-    function onLocaleChange(event: Event) {
-      const nextLocale = (event as CustomEvent<{ locale: SupportedLocale }>)
-        .detail.locale;
+    const frame = window.requestAnimationFrame(() => {
+      const urlLocale = new URL(window.location.href).searchParams.get('lang');
+      const storedLocale =
+        window.localStorage?.getItem('rundecoded-locale') ?? null;
+      const nextLocale =
+        urlLocale === 'de' || urlLocale === 'en' || urlLocale === 'fr'
+          ? urlLocale
+          : storedLocale === 'de' ||
+              storedLocale === 'en' ||
+              storedLocale === 'fr'
+            ? storedLocale
+            : initialLocale;
+
       setLocale(nextLocale);
+      setHydrated(true);
+    });
+
+    function onLocaleChange(event: Event) {
+      const nextLocale = (event as CustomEvent<{ locale?: unknown }>).detail
+        ?.locale;
+      if (nextLocale === 'de' || nextLocale === 'en' || nextLocale === 'fr') {
+        setLocale(nextLocale);
+      }
     }
+
     window.addEventListener('rundecoded:locale-change', onLocaleChange);
-    return () =>
+    return () => {
+      window.cancelAnimationFrame(frame);
       window.removeEventListener('rundecoded:locale-change', onLocaleChange);
-  }, []);
+    };
+  }, [initialLocale]);
 
   useEffect(() => {
     function onPopState() {
@@ -331,9 +352,9 @@ export function ProductExplorer({
 
   return (
     <section
-      ref={explorerRef}
       className="tablet:py-14 py-10"
       aria-labelledby="catalogue-title"
+      data-hydrated={hydrated ? 'true' : undefined}
       data-testid="product-explorer"
     >
       <header className="max-w-3xl">
