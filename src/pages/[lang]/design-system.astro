@@ -1,0 +1,10 @@
+---
+import DesignSystemPage from '@/components/pages/DesignSystemPage.astro';
+import { getLocaleStaticPaths, type Locale } from '@/i18n/config';
+
+export const getStaticPaths = getLocaleStaticPaths;
+
+const locale = Astro.params.lang as Locale;
+---
+
+<DesignSystemPage locale={locale} />

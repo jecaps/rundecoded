@@ -1,0 +1,29 @@
+---
+import { getLocaleStaticPaths, type Locale } from '@/i18n/config';
+import { localizedRoute } from '@/lib/routes';
+
+export const getStaticPaths = getLocaleStaticPaths;
+
+const locale = Astro.params.lang as Locale;
+const target = localizedRoute(locale, 'catalogue');
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>Redirecting to RunDecoded</title>
+    <script is:inline define:vars={{ target }}>
+      const next = new URL(target, location.origin);
+      next.search = location.search;
+      next.hash = location.hash;
+      location.replace(next);
+    </script>
+  </head>
+  <body>
+    <p>Redirecting to <a href={target}>RunDecoded</a>…</p>
+  </body>
+</html>

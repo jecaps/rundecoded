@@ -1,35 +1,37 @@
 ---
-import { isCurrentRoute, routes } from '@/lib/routes';
+import type { Locale } from '@/i18n/config';
+import { sharedMessages } from '@/i18n/messages';
+import { isCurrentRoute, localizedRoute } from '@/lib/routes';
 
 interface Props {
   currentPath: string;
-  locale: string;
+  locale: Locale;
 }
 
 const { currentPath, locale } = Astro.props;
-const withLocale = (href: string) => `${href}?lang=${locale}`;
+const messages = sharedMessages[locale];
 const navigation = [
-  { href: routes.catalogue, label: 'Catalogue' },
-  { href: routes.runningBasics, label: 'Running Basics' },
-];
+  { key: 'catalogue', label: messages.navigation.catalogue },
+  { key: 'runningBasics', label: messages.navigation.runningBasics },
+] as const;
+const navigationLinks = navigation.map((item) => ({
+  ...item,
+  href: localizedRoute(locale, item.key),
+}));
 ---
 
 <header class="app-banner page-container">
   <div class="app-banner__hero">
     <a
       class="app-banner__brand"
-      data-locale-aware
-      href={withLocale(routes.catalogue)}
-      aria-label="RunDecoded catalogue"
+      href={localizedRoute(locale, 'catalogue')}
+      aria-label={messages.banner.catalogueLabel}
     >
-      <span class="app-banner__eyebrow"
-        >Running product training · By Jerika</span
-      >
+      <span class="app-banner__eyebrow">{messages.banner.eyebrow}</span>
       <span class="app-banner__title">RunDecoded</span>
     </a>
     <p class="app-banner__description">
-      Understand what running products are designed to do—from cushioning and
-      stability to surface and intended use.
+      {messages.banner.description}
     </p>
     <span class="app-banner__watermark" aria-hidden="true">RUN</span>
   </div>
@@ -37,14 +39,13 @@ const navigation = [
   <nav class="primary-tabs" aria-label="Primary navigation">
     <ul>
       {
-        navigation.map((item) => (
+        navigationLinks.map((item) => (
           <li>
             <a
               aria-current={
-                isCurrentRoute(currentPath, item.href) ? 'page' : undefined
+                isCurrentRoute(currentPath, item.key) ? 'page' : undefined
               }
-              data-locale-aware
-              href={withLocale(item.href)}
+              href={item.href}
             >
               {item.label}
             </a>

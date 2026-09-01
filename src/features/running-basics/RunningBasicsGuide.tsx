@@ -44,15 +44,7 @@ export function RunningBasicsGuide({
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
-      const urlLocale = new URL(window.location.href).searchParams.get('lang');
-      const storedLocale =
-        window.localStorage?.getItem('rundecoded-locale') ?? null;
-      const nextLocale = isLocale(urlLocale)
-        ? urlLocale
-        : isLocale(storedLocale)
-          ? storedLocale
-          : initialLocale;
-      setLocale(nextLocale);
+      setLocale(initialLocale);
       setHydrated(true);
     });
     return () => window.cancelAnimationFrame(frame);

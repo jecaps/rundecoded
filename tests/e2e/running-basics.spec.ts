@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }) => {
     localStorage.setItem('rundecoded-theme', 'light');
     localStorage.setItem('rundecoded-locale', 'en');
   });
-  await page.goto('./running-basics/?lang=en');
+  await page.goto('./en/running-basics/');
   await waitForGuide(page);
 });
 
@@ -142,7 +142,7 @@ for (const locale of [
   test(`renders complete ${locale.code.toUpperCase()} guide content`, async ({
     page,
   }) => {
-    await page.goto(`./running-basics/?lang=${locale.code}#foot-strike`);
+    await page.goto(`./${locale.code}/running-basics/#foot-strike`);
     await waitForGuide(page);
     await expect(
       page.getByRole('heading', { level: 1, name: locale.pageTitle }),
@@ -165,7 +165,7 @@ test('updates the guide immediately when the footer language changes', async ({
   await expect(
     page.getByRole('heading', { level: 2, name: 'Fußaufsatz' }),
   ).toBeVisible();
-  await expect(page).toHaveURL(/\?lang=de$/);
+  await expect(page).toHaveURL(/\/de\/running-basics\/$/);
 });
 
 test('passes accessibility checks and preserves responsive reading width', async ({

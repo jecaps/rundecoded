@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
     localStorage.setItem('rundecoded-theme', 'light');
     localStorage.setItem('rundecoded-locale', 'en');
   });
-  await page.goto('./catalogue/?lang=en');
+  await page.goto('./en/catalogue/');
   await expect(page.getByTestId('product-explorer')).toHaveAttribute(
     'data-hydrated',
     'true',
@@ -237,7 +237,7 @@ test('updates the explorer immediately when the footer language changes', async 
     page.getByRole('heading', { name: 'Laufschuhe entdecken' }),
   ).toBeVisible();
   await expect(page.getByLabel('Produkte suchen')).toBeVisible();
-  await expect(page).toHaveURL(/\?lang=de$/);
+  await expect(page).toHaveURL(/\/de\/catalogue\/$/);
 });
 
 for (const viewport of [

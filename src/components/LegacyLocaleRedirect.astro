@@ -1,0 +1,46 @@
+---
+import { defaultLocale, supportedLocales } from '@/i18n/config';
+import { localizedRoute, type LocalizedRouteKey } from '@/lib/routes';
+
+interface Props {
+  route: LocalizedRouteKey;
+}
+
+const { route } = Astro.props;
+const routesByLocale = Object.fromEntries(
+  supportedLocales.map((locale) => [locale, localizedRoute(locale, route)]),
+);
+const fallback = localizedRoute(defaultLocale, route);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="refresh" content={`0;url=${fallback}`} />
+    <link rel="canonical" href={fallback} />
+    <title>Redirecting to RunDecoded</title>
+    <script is:inline define:vars={{ routesByLocale, supportedLocales }}>
+      (() => {
+        const current = new URL(location.href);
+        const requested = current.searchParams.get('lang');
+        const stored = localStorage.getItem('rundecoded-locale');
+        const locale = supportedLocales.includes(requested)
+          ? requested
+          : supportedLocales.includes(stored)
+            ? stored
+            : 'en';
+        const target = new URL(routesByLocale[locale], location.origin);
+        current.searchParams.delete('lang');
+        target.search = current.search;
+        target.hash = current.hash;
+        location.replace(target);
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Redirecting to <a href={fallback}>RunDecoded</a>…</p>
+  </body>
+</html>

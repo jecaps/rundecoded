@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Check, Languages, Moon, Sun } from 'lucide-react';
+import { navigate } from 'astro:transitions/client';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,8 +17,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { isLocale, type Locale } from '@/i18n/config';
+import { switchLocaleUrl } from '@/lib/routes';
 
-type Locale = 'de' | 'en' | 'fr';
 type Theme = 'dark' | 'light';
 
 const locales: Array<{ label: string; value: Locale }> = [
@@ -36,31 +38,8 @@ interface DisplayControlsProps {
   initialLocale: Locale;
 }
 
-function isLocale(value: string | null): value is Locale {
-  return value === 'de' || value === 'en' || value === 'fr';
-}
-
-function updateLocaleAwareLinks(locale: Locale) {
-  document
-    .querySelectorAll<HTMLAnchorElement>('[data-locale-aware]')
-    .forEach((link) => {
-      const url = new URL(link.href);
-      url.searchParams.set('lang', locale);
-      link.href = url.toString();
-    });
-}
-
 export function DisplayControls({ initialLocale }: DisplayControlsProps) {
-  const [locale, setLocale] = useState<Locale>(() => {
-    if (typeof window === 'undefined') return initialLocale;
-    const urlLocale = new URL(window.location.href).searchParams.get('lang');
-    const storedLocale = window.localStorage.getItem('rundecoded-locale');
-    return isLocale(urlLocale)
-      ? urlLocale
-      : isLocale(storedLocale)
-        ? storedLocale
-        : initialLocale;
-  });
+  const locale = initialLocale;
   const [theme, setTheme] = useState<Theme>(() =>
     typeof document !== 'undefined' &&
     document.documentElement.dataset.theme === 'dark'
@@ -70,24 +49,22 @@ export function DisplayControls({ initialLocale }: DisplayControlsProps) {
 
   useEffect(() => {
     document.documentElement.lang = locale;
-    updateLocaleAwareLinks(locale);
   }, [locale]);
 
   function changeLocale(nextLocale: string) {
     if (!isLocale(nextLocale)) return;
 
-    setLocale(nextLocale);
     window.localStorage.setItem('rundecoded-locale', nextLocale);
     document.documentElement.lang = nextLocale;
-    const url = new URL(window.location.href);
-    url.searchParams.set('lang', nextLocale);
-    window.history.replaceState({}, '', url);
-    updateLocaleAwareLinks(nextLocale);
     window.dispatchEvent(
       new CustomEvent('rundecoded:locale-change', {
         detail: { locale: nextLocale },
       }),
     );
+    const nextUrl = switchLocaleUrl(new URL(window.location.href), nextLocale);
+    void navigate(`${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`, {
+      history: 'push',
+    });
   }
 
   function toggleTheme() {
