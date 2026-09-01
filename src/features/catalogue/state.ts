@@ -1,18 +1,11 @@
-import { resolveLocalizedText, type SupportedLocale } from '@/domain/catalogue';
+import type { SupportedLocale } from '@/domain/catalogue';
 
-import { categoryLabel } from './copy';
+import { searchProducts } from './search';
 import type { ExplorerProduct } from './slice';
 
-export const PAGE_SIZE = 12;
+export { normalizeSearch } from './search';
 
-export function normalizeSearch(value: string): string {
-  return value
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLocaleLowerCase('en')
-    .replace(/[^a-z0-9]+/g, ' ')
-    .trim();
-}
+export const PAGE_SIZE = 12;
 
 export function filterProducts(
   products: ExplorerProduct[],
@@ -20,28 +13,14 @@ export function filterProducts(
   categoryId: string,
   locale: SupportedLocale,
 ): ExplorerProduct[] {
-  const normalizedQuery = normalizeSearch(query);
-
-  return products.filter(({ product }) => {
+  return searchProducts(products, query, locale).filter(({ product }) => {
     if (
       categoryId !== 'all' &&
       !product.categories.some(({ id }) => id === categoryId)
     ) {
       return false;
     }
-    if (!normalizedQuery) return true;
-
-    const searchable = [
-      product.brand.name,
-      product.model,
-      resolveLocalizedText(product.copy.bestFor, locale).value,
-      ...product.categories.map(({ id, label }) =>
-        categoryLabel(id, resolveLocalizedText(label, locale).value, locale),
-      ),
-      ...(product.technologies.value ?? []),
-    ];
-
-    return normalizeSearch(searchable.join(' ')).includes(normalizedQuery);
+    return true;
   });
 }
 

@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
@@ -49,7 +50,10 @@ test('opens comparison after selecting two product cards', async ({ page }) => {
   const cards = page.getByTestId('product-card');
   await cards.nth(0).getByRole('button', { name: 'Compare' }).click();
   await cards.nth(1).getByRole('button', { name: 'Compare' }).click();
-  await page.getByRole('button', { name: 'Compare selected (2/2)' }).click();
+  const compareSelected = page.getByRole('button', {
+    name: 'Compare selected (2/2)',
+  });
+  await compareSelected.click();
 
   const comparison = page.getByRole('dialog');
   await expect(
@@ -57,6 +61,14 @@ test('opens comparison after selecting two product cards', async ({ page }) => {
   ).toBeVisible();
   await expect(comparison).toContainText('Adistar 5');
   await expect(comparison).toContainText('Terrex Agravic 4');
+  await expect(comparison).toContainText('Key differences');
+  await expect(comparison).toContainText('drop');
+  await expect(comparison).toHaveScreenshot('catalogue-comparison.png', {
+    animations: 'disabled',
+    maxDiffPixelRatio: 0.05,
+  });
+  await comparison.getByRole('button', { name: 'Close' }).click();
+  await expect(compareSelected).toBeFocused();
 });
 
 test('opens comparison from a comparable product and includes the detail product', async ({
@@ -76,6 +88,7 @@ test('opens comparison from a comparable product and includes the detail product
   ).toBeVisible();
   await expect(comparison).toContainText('Jogflow 100.1');
   await expect(comparison).toContainText('Jogflow 190 Grip WP');
+  await expect(comparison).toContainText('Key differences');
   await expect(comparison).toContainText(
     'Reference sizes differ, so weight is not highlighted.',
   );
@@ -97,9 +110,116 @@ test('search and filters produce accurate counts and an honest empty state', asy
   await page.getByRole('button', { name: 'Clear filters' }).last().click();
   await expect(page.getByTestId('product-card')).toHaveCount(12);
 
-  await page.getByRole('button', { name: 'Trail', exact: true }).click();
+  const trailFilter = page.getByRole('button', {
+    name: 'Trail',
+    exact: true,
+  });
+  await expect(trailFilter).toContainText('3');
+  await trailFilter.click();
   await expect(page.getByTestId('product-card')).toHaveCount(3);
   await expect(page.getByText('3 of 12 shoes')).toBeVisible();
+});
+
+test('provides typo-tolerant keyboard suggestions and an honest fallback', async ({
+  page,
+}) => {
+  const search = page.getByLabel('Search products');
+  await search.fill('kayno');
+  const suggestions = page.getByRole('listbox', { name: 'Search suggestions' });
+  await expect(suggestions).toBeVisible();
+  await expect(
+    suggestions.getByRole('option', { name: /Gel Kayano 32/ }),
+  ).toBeVisible();
+  await search.evaluate((element) => {
+    element.scrollIntoView({ block: 'center' });
+  });
+  await expect(page).toHaveScreenshot('catalogue-suggestions.png', {
+    animations: 'disabled',
+    maxDiffPixelRatio: 0.05,
+  });
+  await search.press('ArrowDown');
+  await search.press('Enter');
+  await expect(search).toHaveValue('Gel Kayano 32');
+  await expect(page.getByTestId('product-card')).toHaveCount(1);
+  await expect(page).toHaveURL(/q=Gel\+Kayano\+32/);
+
+  await search.fill('zzqxvnotashoe');
+  await expect(page.getByText('No shoes match these filters.')).toBeVisible();
+  await expect(
+    page.getByRole('link', {
+      name: 'Search Decathlon for “zzqxvnotashoe”',
+    }),
+  ).toHaveAttribute('href', /decathlon\.co\.uk/);
+  await expect(suggestions).toBeHidden();
+});
+
+test('restores shareable filter state on reload and browser history', async ({
+  page,
+}) => {
+  const consoleErrors: string[] = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') consoleErrors.push(message.text());
+  });
+  await page.getByRole('button', { name: 'Trail', exact: true }).click();
+  await expect(page).toHaveURL(/category=trail/);
+  await expect(page.getByTestId('product-card')).toHaveCount(3);
+
+  await page.reload();
+  await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+  await expect(
+    page.getByRole('button', { name: 'Trail', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByTestId('product-card')).toHaveCount(3);
+
+  await page
+    .getByRole('button', { name: 'All categories', exact: true })
+    .click();
+  await expect(page).not.toHaveURL(/category=/);
+  await page.goBack();
+  await expect(page).toHaveURL(/category=trail/);
+  await expect(page.getByTestId('product-card')).toHaveCount(3);
+  expect(consoleErrors.join('\n')).not.toMatch(/hydration|didn't match/i);
+});
+
+test('passes automated accessibility checks in explorer states', async ({
+  page,
+}) => {
+  const baseResults = await new AxeBuilder({ page }).include('main').analyze();
+  expect(
+    baseResults.violations.filter(
+      ({ impact }) => impact === 'critical' || impact === 'serious',
+    ),
+  ).toEqual([]);
+
+  await page.getByLabel('Search products').fill('kayno');
+  await expect(page.getByRole('listbox')).toBeVisible();
+  await page.locator('html').evaluate((element) => {
+    element.dataset.theme = 'dark';
+  });
+  await page.waitForTimeout(300);
+  const suggestionResults = await new AxeBuilder({ page })
+    .include('main')
+    .analyze();
+  expect(
+    suggestionResults.violations.filter(
+      ({ impact }) => impact === 'critical' || impact === 'serious',
+    ),
+  ).toEqual([]);
+
+  await page.getByLabel('Search products').fill('');
+  await page.getByRole('button', { name: 'Adistar 5', exact: true }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  const dialogResults = await new AxeBuilder({ page })
+    .include('[role="dialog"]')
+    .analyze();
+  expect(
+    dialogResults.violations.filter(
+      ({ impact }) => impact === 'critical' || impact === 'serious',
+    ),
+  ).toEqual([]);
 });
 
 test('updates the explorer immediately when the footer language changes', async ({

@@ -47,6 +47,45 @@ describe('ProductExplorer', () => {
     expect(screen.getByText('1 of 12 shoes')).toBeVisible();
   });
 
+  it('offers keyboard-selectable typo-tolerant suggestions', () => {
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+      />,
+    );
+    const search = screen.getByLabelText('Search products');
+    fireEvent.change(search, { target: { value: 'kayno' } });
+    expect(
+      screen.getByRole('listbox', { name: 'Search suggestions' }),
+    ).toBeVisible();
+    expect(screen.getByRole('option', { name: /Gel Kayano 32/ })).toBeVisible();
+    fireEvent.keyDown(search, { key: 'ArrowDown' });
+    fireEvent.keyDown(search, { key: 'Enter' });
+    expect(search).toHaveValue('Gel Kayano 32');
+    expect(screen.getAllByTestId('product-card')).toHaveLength(1);
+  });
+
+  it('shows an external fallback only for an out-of-range query', () => {
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+      />,
+    );
+    fireEvent.change(screen.getByLabelText('Search products'), {
+      target: { value: 'zzqxvnotashoe' },
+    });
+    expect(screen.getByText('No shoes match these filters.')).toBeVisible();
+    expect(
+      screen.getByRole('link', {
+        name: 'Search Decathlon for “zzqxvnotashoe”',
+      }),
+    ).toHaveAttribute('href', expect.stringContaining('decathlon.co.uk'));
+  });
+
   it('responds to the shared locale-change event', async () => {
     render(
       <ProductExplorer
