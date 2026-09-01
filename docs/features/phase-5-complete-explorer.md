@@ -61,7 +61,10 @@ Playwright and axe-core cover the base explorer, open suggestions in light and
 dark themes, and product details. Browser tests also cover URL restoration,
 keyboard suggestions, the external fallback, comparison summaries, and phone,
 tablet, and desktop screenshots. Additional screenshots record the suggestion
-panel and comparison dialog for focused visual review.
+panel and comparison dialog for focused visual review. Pixel baselines are
+reviewed locally on the platform that generated them; CI continues to verify
+the corresponding content, interaction, accessibility, and layout assertions
+without comparing operating-system-specific font rendering.
 
 ## Validation
 

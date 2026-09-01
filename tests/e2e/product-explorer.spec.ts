@@ -1,6 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
+const shouldAssertVisualSnapshots = !process.env.CI;
+
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('rundecoded-theme', 'light');
@@ -63,10 +65,12 @@ test('opens comparison after selecting two product cards', async ({ page }) => {
   await expect(comparison).toContainText('Terrex Agravic 4');
   await expect(comparison).toContainText('Key differences');
   await expect(comparison).toContainText('drop');
-  await expect(comparison).toHaveScreenshot('catalogue-comparison.png', {
-    animations: 'disabled',
-    maxDiffPixelRatio: 0.05,
-  });
+  if (shouldAssertVisualSnapshots) {
+    await expect(comparison).toHaveScreenshot('catalogue-comparison.png', {
+      animations: 'disabled',
+      maxDiffPixelRatio: 0.05,
+    });
+  }
   await comparison.getByRole('button', { name: 'Close' }).click();
   await expect(compareSelected).toBeFocused();
 });
@@ -133,10 +137,12 @@ test('provides typo-tolerant keyboard suggestions and an honest fallback', async
   await search.evaluate((element) => {
     element.scrollIntoView({ block: 'center' });
   });
-  await expect(page).toHaveScreenshot('catalogue-suggestions.png', {
-    animations: 'disabled',
-    maxDiffPixelRatio: 0.05,
-  });
+  if (shouldAssertVisualSnapshots) {
+    await expect(page).toHaveScreenshot('catalogue-suggestions.png', {
+      animations: 'disabled',
+      maxDiffPixelRatio: 0.05,
+    });
+  }
   await search.press('ArrowDown');
   await search.press('Enter');
   await expect(search).toHaveValue('Gel Kayano 32');
@@ -261,12 +267,14 @@ for (const viewport of [
       );
     }
 
-    await expect(page.locator('main')).toHaveScreenshot(
-      `catalogue-${viewport.name}.png`,
-      {
-        animations: 'disabled',
-        maxDiffPixelRatio: 0.05,
-      },
-    );
+    if (shouldAssertVisualSnapshots) {
+      await expect(page.locator('main')).toHaveScreenshot(
+        `catalogue-${viewport.name}.png`,
+        {
+          animations: 'disabled',
+          maxDiffPixelRatio: 0.05,
+        },
+      );
+    }
   });
 }
