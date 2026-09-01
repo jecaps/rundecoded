@@ -143,13 +143,16 @@ export function ProductExplorer({
   const [page, setPage] = useState(
     () => initialBrowserState()?.page ?? initialPage,
   );
+  const [pageDirection, setPageDirection] = useState<
+    'backward' | 'forward' | null
+  >(null);
   const [suggestionsOpen, setSuggestionsOpen] = useState(false);
   const [activeSuggestion, setActiveSuggestion] = useState(-1);
   const [detailsId, setDetailsId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const [selectionNotice, setSelectionNotice] = useState('');
-  const resultsRef = useRef<HTMLDivElement>(null);
+  const pageRef = useRef(page);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
   const comparisonOpenerRef = useRef<HTMLButtonElement | null>(null);
@@ -184,6 +187,14 @@ export function ProductExplorer({
       );
       setQuery(restored.query);
       setCategoryId(restored.categoryId);
+      setPageDirection(
+        restored.page === pageRef.current
+          ? null
+          : restored.page > pageRef.current
+            ? 'forward'
+            : 'backward',
+      );
+      pageRef.current = restored.page;
       setPage(restored.page);
       setSuggestionsOpen(false);
       setActiveSuggestion(-1);
@@ -257,7 +268,9 @@ export function ProductExplorer({
 
   function updateQuery(nextQuery: string) {
     setQuery(nextQuery);
+    pageRef.current = 1;
     setPage(1);
+    setPageDirection(null);
     setSuggestionsOpen(nextQuery.trim().length >= 2);
     setActiveSuggestion(-1);
     updateUrlState({ categoryId, page: 1, query: nextQuery }, 'replace');
@@ -265,7 +278,9 @@ export function ProductExplorer({
 
   function updateCategory(nextCategory: string) {
     setCategoryId(nextCategory);
+    pageRef.current = 1;
     setPage(1);
+    setPageDirection(null);
     setSuggestionsOpen(false);
     updateUrlState({ categoryId: nextCategory, page: 1, query }, 'push');
   }
@@ -273,7 +288,9 @@ export function ProductExplorer({
   function clearFilters() {
     setQuery('');
     setCategoryId('all');
+    pageRef.current = 1;
     setPage(1);
+    setPageDirection(null);
     setSuggestionsOpen(false);
     setActiveSuggestion(-1);
     updateUrlState({ categoryId: 'all', page: 1, query: '' }, 'push');
@@ -281,7 +298,9 @@ export function ProductExplorer({
 
   function chooseSuggestion(value: string) {
     setQuery(value);
+    pageRef.current = 1;
     setPage(1);
+    setPageDirection(null);
     setSuggestionsOpen(false);
     setActiveSuggestion(-1);
     updateUrlState({ categoryId, page: 1, query: value }, 'push');
@@ -315,9 +334,10 @@ export function ProductExplorer({
   }
 
   function changePage(nextPage: number) {
+    setPageDirection(nextPage > pageRef.current ? 'forward' : 'backward');
+    pageRef.current = nextPage;
     setPage(nextPage);
     updateUrlState({ categoryId, page: nextPage, query }, 'push');
-    resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   const comparisonRows =
@@ -340,7 +360,7 @@ export function ProductExplorer({
 
   return (
     <section
-      className="tablet:py-14 py-10"
+      className="tablet:py-14 py-10 [overflow-anchor:none]"
       aria-labelledby="catalogue-title"
       data-hydrated={hydrated ? 'true' : undefined}
       data-testid="product-explorer"
@@ -497,9 +517,18 @@ export function ProductExplorer({
         </div>
       </div>
 
-      <div className="scroll-mt-6" ref={resultsRef}>
+      <div className="overflow-x-clip">
         {pagination.items.length ? (
-          <div className="tablet:grid-cols-2 desktop:grid-cols-3 mt-6 grid grid-cols-1 gap-5">
+          <div
+            className={cn(
+              'tablet:grid-cols-2 desktop:grid-cols-3 mt-6 grid grid-cols-1 gap-5',
+              pageDirection === 'forward' && 'catalogue-page--forward',
+              pageDirection === 'backward' && 'catalogue-page--backward',
+            )}
+            data-page-direction={pageDirection ?? undefined}
+            data-testid="product-page"
+            key={`${categoryId}:${query}:${pagination.page}`}
+          >
             {pagination.items.map((item) => {
               const { product } = item;
               const selected = selectedIds.includes(product.id);
@@ -658,7 +687,7 @@ export function ProductExplorer({
             <ArrowLeft aria-hidden="true" className="size-4" />
             {copy.previous}
           </Button>
-          <span className="text-muted-foreground text-sm">
+          <span aria-live="polite" className="text-muted-foreground text-sm">
             {copy.page(pagination.page, pagination.pageCount)}
           </span>
           <Button

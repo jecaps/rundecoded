@@ -188,6 +188,53 @@ test('restores shareable filter state on reload and browser history', async ({
   expect(consoleErrors.join('\n')).not.toMatch(/hydration|didn't match/i);
 });
 
+test('changes result pages horizontally without moving the viewport', async ({
+  page,
+}) => {
+  const pagination = page.getByRole('navigation', { name: 'Pagination' });
+  await pagination.evaluate((element) => {
+    document.documentElement.style.scrollBehavior = 'auto';
+    element.scrollIntoView({ block: 'center' });
+  });
+  const initialScrollY = await page.evaluate(() => window.scrollY);
+
+  await pagination
+    .getByRole('button', { name: 'Next' })
+    .evaluate((button: HTMLButtonElement) => button.click());
+  await expect(page).toHaveURL(/\?page=2$/);
+  await expect(page.getByTestId('product-page')).toHaveAttribute(
+    'data-page-direction',
+    'forward',
+  );
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+      ),
+  );
+  const forwardScrollY = await page.evaluate(() => window.scrollY);
+  expect(forwardScrollY).toBeGreaterThan(500);
+  expect(Math.abs(forwardScrollY - initialScrollY)).toBeLessThanOrEqual(32);
+
+  await pagination
+    .getByRole('button', { name: 'Previous' })
+    .evaluate((button: HTMLButtonElement) => button.click());
+  await expect(page).not.toHaveURL(/page=/);
+  await expect(page.getByTestId('product-page')).toHaveAttribute(
+    'data-page-direction',
+    'backward',
+  );
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+      ),
+  );
+  const backwardScrollY = await page.evaluate(() => window.scrollY);
+  expect(backwardScrollY).toBeGreaterThan(500);
+  expect(Math.abs(backwardScrollY - initialScrollY)).toBeLessThanOrEqual(32);
+});
+
 test('passes automated accessibility checks in explorer states', async ({
   page,
 }) => {

@@ -68,6 +68,31 @@ describe('ProductExplorer', () => {
     expect(screen.getAllByTestId('product-card')).toHaveLength(1);
   });
 
+  it('moves between anchored result pages with directional transitions', () => {
+    window.history.replaceState({}, '', '/en/catalogue/');
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(screen.getByTestId('product-page')).toHaveAttribute(
+      'data-page-direction',
+      'forward',
+    );
+    expect(window.location.search).toBe('?page=2');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Previous' }));
+    expect(screen.getByTestId('product-page')).toHaveAttribute(
+      'data-page-direction',
+      'backward',
+    );
+    expect(window.location.search).toBe('');
+  });
+
   it('shows an external fallback only for an out-of-range query', () => {
     render(
       <ProductExplorer
