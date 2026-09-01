@@ -110,6 +110,43 @@ test('preserves the current Running Basics topic when switching language', async
   ).toHaveAttribute('aria-current', 'location');
 });
 
+test('keeps the footer in view when switching language at the bottom of a page', async ({
+  page,
+}) => {
+  await page.goto('./fr/running-basics/');
+  await expect(page.getByTestId('running-basics-guide')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+  await page.getByRole('contentinfo').scrollIntoViewIfNeeded();
+
+  const distanceFromBottomBefore = await page.evaluate(
+    () =>
+      document.documentElement.scrollHeight -
+      window.innerHeight -
+      window.scrollY,
+  );
+
+  await page.getByRole('button', { name: 'Langue: FR' }).click();
+  await page.getByRole('menuitemradio', { name: 'English' }).click();
+  await expect(page).toHaveURL(/\/en\/running-basics\/$/);
+  await expect(
+    page.getByRole('button', { name: 'Language: EN' }),
+  ).toBeVisible();
+
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () =>
+          document.documentElement.scrollHeight -
+          window.innerHeight -
+          window.scrollY,
+      ),
+    )
+    .toBeLessThanOrEqual(distanceFromBottomBefore + 2);
+  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+});
+
 test('redirects legacy query locales and intentionally rejects unknown route locales', async ({
   page,
 }) => {
