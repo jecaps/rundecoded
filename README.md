@@ -6,19 +6,25 @@ The existing [Running Shoe Explorer](https://github.com/jecaps/running-shoe-expl
 
 ## Current status
 
-Phase 6 adds Running Basics as a structured multilingual reference guide beside
-the complete Phase 5 product explorer. Seven approved educational topics now
-flow from a validated Astro content collection into a responsive editorial
-layout with synchronized anchor navigation. The primary routes are available
-below the repository base path:
+Phase 7 introduces durable localized routes and metadata across the Phase 5
+product explorer and Phase 6 Running Basics guide. The URL is now the language
+source of truth, language switching preserves shareable page state, and every
+supported page publishes localized canonical and `hreflang` metadata. The
+primary routes are available below the repository base path:
 
-- `/rundecoded/catalogue/`
-- `/rundecoded/running-basics/`
+- `/rundecoded/en/catalogue/`
+- `/rundecoded/de/catalogue/`
+- `/rundecoded/fr/catalogue/`
+- `/rundecoded/en/running-basics/`
+- `/rundecoded/de/running-basics/`
+- `/rundecoded/fr/running-basics/`
 
 Both routes use the same responsive banner, navigation, footer, theme, and
-language controls. A small component preview is available at
-`/rundecoded/design-system/`. See the [design-system guide](docs/architecture/design-system.md)
-for tokens, breakpoints, and component-adoption rules.
+language controls. A small component preview is available at each locale's
+`design-system/` route. See the [localized-routing guide](docs/architecture/localized-routing.md)
+for route behavior, state preservation, fallback policy, and metadata. The
+[design-system guide](docs/architecture/design-system.md) documents tokens,
+breakpoints, and component-adoption rules.
 
 See the [Phase 6 Running Basics guide](docs/features/phase-6-running-basics.md)
 for the topic model, multilingual content, navigation behavior, and test

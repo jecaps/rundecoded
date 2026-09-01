@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+
+import { RunningBasicsGuide } from '@/features/running-basics/RunningBasicsGuide';
+import type { RunningBasicsTopic } from '@/features/running-basics/schema';
+import type { Locale } from '@/i18n/config';
+import { sharedMessages } from '@/i18n/messages';
+import AppLayout from '@layouts/AppLayout.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const metadata = sharedMessages[locale].pages.runningBasics;
+const topics: RunningBasicsTopic[] = (await getCollection('runningBasics'))
+  .map((entry) => ({ id: entry.id, ...entry.data }))
+  .sort((left, right) => left.order - right.order);
+---
+
+<AppLayout
+  title={metadata.title}
+  description={metadata.description}
+  locale={locale}
+  route="runningBasics"
+>
+  <RunningBasicsGuide client:load initialLocale={locale} topics={topics} />
+</AppLayout>

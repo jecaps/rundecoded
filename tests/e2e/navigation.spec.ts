@@ -25,7 +25,7 @@ function contrastRatio(first: string, second: string) {
 test('navigates between routes without changing the shared banner', async ({
   page,
 }) => {
-  await page.goto('./catalogue/?lang=en');
+  await page.goto('./en/catalogue/');
   await expect(
     page.getByRole('heading', { level: 1, name: 'Explore running shoes' }),
   ).toBeVisible();
@@ -33,7 +33,7 @@ test('navigates between routes without changing the shared banner', async ({
   const catalogueBanner = await page.locator('.app-banner').boundingBox();
   await page.getByRole('link', { name: 'Running Basics' }).click();
 
-  await expect(page).toHaveURL(/\/rundecoded\/running-basics\/\?lang=en$/);
+  await expect(page).toHaveURL(/\/rundecoded\/en\/running-basics\/$/);
   await expect(
     page.getByRole('heading', { level: 1, name: 'Running Basics' }),
   ).toBeVisible();
@@ -45,14 +45,14 @@ test('navigates between routes without changing the shared banner', async ({
 });
 
 test('uses client-side navigation between primary routes', async ({ page }) => {
-  await page.goto('./catalogue/?lang=en');
+  await page.goto('./en/catalogue/');
   await page.evaluate(() => {
     (window as Window & { __navigationMarker?: string }).__navigationMarker =
       'same-document';
   });
 
   await page.getByRole('link', { name: 'Running Basics' }).click();
-  await expect(page).toHaveURL(/\/running-basics\/?\?lang=en$/);
+  await expect(page).toHaveURL(/\/en\/running-basics\/$/);
   await expect(
     page.getByRole('heading', { name: 'Running Basics' }),
   ).toBeVisible();
@@ -67,7 +67,7 @@ test('uses client-side navigation between primary routes', async ({ page }) => {
   ).toBe('same-document');
 
   await page.goBack();
-  await expect(page).toHaveURL(/\/catalogue\/?\?lang=en$/);
+  await expect(page).toHaveURL(/\/en\/catalogue\/$/);
   await expect(
     page.getByRole('heading', { name: 'Explore running shoes' }),
   ).toBeVisible();
@@ -82,11 +82,11 @@ test('uses client-side navigation between primary routes', async ({ page }) => {
 test('persists language and theme preferences across routes', async ({
   page,
 }) => {
-  await page.goto('./catalogue/?lang=en');
+  await page.goto('./en/catalogue/');
 
   await page.getByRole('button', { name: 'Language: EN' }).click();
   await page.getByRole('menuitemradio', { name: 'Deutsch' }).click();
-  await expect(page).toHaveURL(/\?lang=de$/);
+  await expect(page).toHaveURL(/\/de\/catalogue\/$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'de');
 
   const initialTheme = await page.locator('html').getAttribute('data-theme');
@@ -97,16 +97,16 @@ test('persists language and theme preferences across routes', async ({
     selectedTheme,
   );
 
-  await page.getByRole('link', { name: 'Running Basics' }).click();
-  await expect(page).toHaveURL(/\/running-basics\/\?lang=de$/);
+  await page.getByRole('link', { name: 'Laufgrundlagen' }).click();
+  await expect(page).toHaveURL(/\/de\/running-basics\/$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'de');
   await expect(page.locator('html')).toHaveAttribute(
     'data-theme',
     selectedTheme,
   );
 
-  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
-  await expect(page).toHaveURL(/\/catalogue\/\?lang=de$/);
+  await page.getByRole('link', { name: 'Katalog', exact: true }).click();
+  await expect(page).toHaveURL(/\/de\/catalogue\/$/);
   await expect(page.getByTestId('product-explorer')).toHaveAttribute(
     'data-hydrated',
     'true',
@@ -122,7 +122,7 @@ test('keeps controls compact on phone and tablet widths', async ({ page }) => {
     { height: 1024, width: 768 },
   ]) {
     await page.setViewportSize(viewport);
-    await page.goto('./catalogue/?lang=en');
+    await page.goto('./en/catalogue/');
 
     await expect(page.locator('.site-footer__controls')).toBeVisible();
     await expect(page.locator('.site-footer__credit')).toBeVisible();
@@ -145,7 +145,7 @@ test('keeps controls compact on phone and tablet widths', async ({ page }) => {
 test('design-system primitives support keyboard interaction', async ({
   page,
 }) => {
-  await page.goto('./design-system/?lang=en');
+  await page.goto('./en/design-system/');
 
   await page.getByRole('button', { name: 'Open dialog' }).click();
   await expect(page.getByRole('dialog')).toBeVisible();
@@ -163,7 +163,7 @@ test('design-system primitives support keyboard interaction', async ({
 test('semantic text colors meet WCAG AA contrast in both themes', async ({
   page,
 }) => {
-  await page.goto('./design-system/?lang=en');
+  await page.goto('./en/design-system/');
 
   for (const theme of ['light', 'dark']) {
     await page.locator('html').evaluate((element, selectedTheme) => {

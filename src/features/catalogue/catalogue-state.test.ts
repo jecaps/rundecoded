@@ -85,10 +85,11 @@ describe('catalogue state', () => {
 
   it('serializes, restores, and sanitizes shareable catalogue state', () => {
     const url = writeCatalogueUrlState(
-      new URL('https://example.com/catalogue/?lang=de'),
+      new URL('https://example.com/de/catalogue/'),
       { categoryId: 'trail', page: 2, query: 'grip' },
     );
-    expect(url.searchParams.get('lang')).toBe('de');
+    expect(url.pathname).toBe('/de/catalogue/');
+    expect(url.searchParams.has('lang')).toBe(false);
     expect(url.searchParams.get('q')).toBe('grip');
     expect(url.searchParams.get('category')).toBe('trail');
     expect(url.searchParams.get('page')).toBe('2');

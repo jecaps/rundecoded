@@ -1,0 +1,10 @@
+---
+import CataloguePage from '@/components/pages/CataloguePage.astro';
+import { getLocaleStaticPaths, type Locale } from '@/i18n/config';
+
+export const getStaticPaths = getLocaleStaticPaths;
+
+const locale = Astro.params.lang as Locale;
+---
+
+<CataloguePage locale={locale} />

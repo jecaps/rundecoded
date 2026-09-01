@@ -1,23 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
-
-import { RunningBasicsGuide } from '@/features/running-basics/RunningBasicsGuide';
-import { runningBasicsCopy } from '@/features/running-basics/copy';
-import type {
-  RunningBasicsLocale,
-  RunningBasicsTopic,
-} from '@/features/running-basics/schema';
-import AppLayout from '@layouts/AppLayout.astro';
-
-const requestedLocale = Astro.url.searchParams.get('lang');
-const locale: RunningBasicsLocale =
-  requestedLocale === 'de' || requestedLocale === 'fr' ? requestedLocale : 'en';
-const copy = runningBasicsCopy[locale];
-const topics: RunningBasicsTopic[] = (await getCollection('runningBasics'))
-  .map((entry) => ({ id: entry.id, ...entry.data }))
-  .sort((left, right) => left.order - right.order);
+import LegacyLocaleRedirect from '@/components/LegacyLocaleRedirect.astro';
 ---
 
-<AppLayout title={copy.title} description={copy.introduction}>
-  <RunningBasicsGuide client:load initialLocale={locale} topics={topics} />
-</AppLayout>
+<LegacyLocaleRedirect route="runningBasics" />

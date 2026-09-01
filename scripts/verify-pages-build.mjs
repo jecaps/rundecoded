@@ -4,19 +4,19 @@ import { join } from 'node:path';
 import { site } from '../site.config.mjs';
 
 const base = `${site.base.replace(/\/+$/, '')}/`;
-const routes = {
-  catalogue: `${base}catalogue/`,
-  designSystem: `${base}design-system/`,
-  runningBasics: `${base}running-basics/`,
-};
+const locales = ['en', 'de', 'fr'];
+const routeSegments = ['catalogue', 'design-system', 'running-basics'];
+const localizedRoute = (locale, segment) => `${base}${locale}/${segment}/`;
+const routeFiles = locales.flatMap((locale) =>
+  routeSegments.map((segment) => [
+    `${locale}/${segment}`,
+    `${locale}/${segment}/index.html`,
+    locale,
+    segment,
+  ]),
+);
 
-const routeFiles = [
-  ['Catalogue', 'catalogue/index.html'],
-  ['Design system', 'design-system/index.html'],
-  ['Running Basics', 'running-basics/index.html'],
-];
-
-for (const [routeName, relativePath] of routeFiles) {
+for (const [routeName, relativePath, locale, segment] of routeFiles) {
   const html = await readFile(join('dist', relativePath), 'utf8');
   const absoluteAssetOrLink = /\b(?:href|src)="(\/[^"#?]*)/g;
 
@@ -28,17 +28,40 @@ for (const [routeName, relativePath] of routeFiles) {
     }
   }
 
-  for (const expectedRoute of Object.values(routes)) {
+  for (const expectedRoute of routeSegments.map((routeSegment) =>
+    localizedRoute(locale, routeSegment),
+  )) {
     if (!html.includes(`href="${expectedRoute}`)) {
       throw new Error(`${routeName} does not link to ${expectedRoute}`);
     }
+  }
+
+  const canonical = `${site.origin}${localizedRoute(locale, segment)}`;
+  if (!html.includes(`rel="canonical" href="${canonical}"`)) {
+    throw new Error(`${routeName} does not use canonical URL ${canonical}`);
+  }
+
+  for (const alternateLocale of locales) {
+    const alternate = `${site.origin}${localizedRoute(alternateLocale, segment)}`;
+    if (
+      !html.includes(
+        `rel="alternate" hreflang="${alternateLocale}" href="${alternate}"`,
+      )
+    ) {
+      throw new Error(`${routeName} is missing hreflang ${alternateLocale}`);
+    }
+  }
+
+  if (html.includes('?lang=')) {
+    throw new Error(`${routeName} still contains query-based locale links`);
   }
 }
 
 const rootHtml = await readFile(join('dist', 'index.html'), 'utf8');
 
-if (!rootHtml.includes(routes.catalogue)) {
-  throw new Error(`The root redirect does not target ${routes.catalogue}`);
+const defaultCatalogue = localizedRoute('en', 'catalogue');
+if (!rootHtml.includes(defaultCatalogue)) {
+  throw new Error(`The root redirect does not target ${defaultCatalogue}`);
 }
 
 console.log(`Pages build verified for ${base}`);

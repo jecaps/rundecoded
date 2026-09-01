@@ -1,3 +1,5 @@
 ---
-return Astro.redirect(`${import.meta.env.BASE_URL}catalogue/`);
+import LegacyLocaleRedirect from '@/components/LegacyLocaleRedirect.astro';
 ---
+
+<LegacyLocaleRedirect route="catalogue" />
