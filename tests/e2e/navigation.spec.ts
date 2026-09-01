@@ -104,6 +104,16 @@ test('persists language and theme preferences across routes', async ({
     'data-theme',
     selectedTheme,
   );
+
+  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await expect(page).toHaveURL(/\/catalogue\/\?lang=de$/);
+  await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Laufschuhe entdecken' }),
+  ).toBeVisible();
 });
 
 test('keeps controls compact on phone and tablet widths', async ({ page }) => {
