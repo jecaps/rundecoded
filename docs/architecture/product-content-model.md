@@ -6,7 +6,8 @@ Phase 2 converts the audited legacy catalogue into deterministic, validated cont
 
 All products share identity, lifecycle, brand, categories, localized editorial copy, technologies, images, sources, and comparable-product references. A discriminated `kind` keeps category-specific fields separate:
 
-- `shoe` owns surface, stability, and heel-to-toe drop specifications;
+- `shoe` owns surface, stability, heel-to-toe drop, stack height, weight, fit,
+  and construction specifications;
 - `apparel`, `sock`, `vest`, and `accessory` use category-specific attributes and cannot accidentally receive shoe-only fields.
 
 The Zod schemas in `src/domain/catalogue/schema.ts` are the runtime contract and the source of inferred TypeScript types. Strict objects reject unknown fields so modelling mistakes remain visible.
@@ -40,3 +41,9 @@ Sources retain URL, type, checked date, status, and notes. A verified evidence i
 Output ordering and formatting are stable and contain no generated timestamp. `pnpm catalogue:check` reruns the transformation in memory and fails if committed outputs differ. Every legacy product and provenance row receives a reconciliation entry, including merged aliases.
 
 Structural errors fail validation. Explicit research gaps remain warnings so pending images, drops, or technologies can be tracked without weakening the contract.
+
+Phase 8 extends the report with brand, category, and language counts; a local
+asset audit; issue-type totals; and a machine-readable research queue. Weight
+facts require a reference size whenever a value exists. Stack height, fit, and
+construction remain explicit pending facts until an approved source supports
+them.

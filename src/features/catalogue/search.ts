@@ -3,7 +3,7 @@ import Fuse from 'fuse.js';
 import { resolveLocalizedText, type SupportedLocale } from '@/domain/catalogue';
 
 import { categoryLabel, stabilityLabel } from './copy';
-import type { ExplorerProduct } from './slice';
+import type { ExplorerProduct } from './catalogue';
 
 interface ProductSearchDocument {
   bestFor: string;
@@ -86,6 +86,12 @@ export function searchProducts(
   const normalized = normalizeSearch(query);
   if (!normalized) return products;
   if (normalized.length < 2) return products;
+  const documents = products.map((item) => productDocument(item, locale));
+  const exactModelMatches = documents
+    .filter(({ model }) => normalizeSearch(model) === normalized)
+    .map(({ item }) => item);
+  if (exactModelMatches.length > 0) return exactModelMatches;
+
   return productSearch(products, locale)
     .search(query)
     .map(({ item }) => item.item);

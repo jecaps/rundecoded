@@ -107,6 +107,22 @@ export const millimetreFactSchema = factSchema(
   }),
 );
 
+export const weightFactSchema = factSchema(
+  z.strictObject({
+    amount: z.number().positive().max(2000),
+    unit: z.literal('g'),
+    referenceSize: z.string().trim().min(1),
+  }),
+);
+
+export const stackHeightFactSchema = factSchema(
+  z.strictObject({
+    heel: z.number().min(0).max(100),
+    forefoot: z.number().min(0).max(100),
+    unit: z.literal('mm'),
+  }),
+);
+
 const sharedProductShape = {
   schemaVersion: z.literal(1),
   id: idSchema,
@@ -128,6 +144,10 @@ export const shoeProductSchema = z.strictObject({
     surfaces: factSchema(z.array(z.string().trim().min(1)).min(1)),
     stability: factSchema(z.enum(['neutral', 'stability', 'unknown'])),
     heelToToeDrop: millimetreFactSchema,
+    stackHeight: stackHeightFactSchema,
+    weight: weightFactSchema,
+    fit: factSchema(z.array(z.string().trim().min(1)).min(1)),
+    construction: factSchema(z.array(z.string().trim().min(1)).min(1)),
   }),
 });
 

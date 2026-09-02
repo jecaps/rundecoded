@@ -10,14 +10,14 @@ import {
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { ProductExplorer } from './ProductExplorer';
-import { getProductSlice } from './slice';
+import { getProductCatalogue } from './catalogue';
 
-const products = getProductSlice();
+const products = getProductCatalogue();
 
 afterEach(cleanup);
 
 describe('ProductExplorer', () => {
-  it('renders the 12-product slice without card prices or weights', () => {
+  it('renders the first 12-product page without card prices or weights', () => {
     render(
       <ProductExplorer
         assetBase="/rundecoded/"
@@ -31,6 +31,17 @@ describe('ProductExplorer', () => {
     expect(
       within(firstCard!).queryByText(/€|price|264 g/i),
     ).not.toBeInTheDocument();
+    expect(firstCard!.querySelectorAll('[data-card-badge]')).toHaveLength(2);
+    expect(
+      firstCard!.querySelector('[data-card-badge="purpose"]'),
+    ).toHaveTextContent('Max cushion');
+    expect(
+      firstCard!.querySelector('[data-card-badge="stability"]'),
+    ).toHaveTextContent('Neutral');
+    expect(within(firstCard!).getByTestId('card-best-for')).toHaveClass(
+      'line-clamp-2',
+    );
+    expect(within(firstCard!).queryByText('Stability')).not.toBeInTheDocument();
   });
 
   it('updates result counts for typed search and category filters', () => {
@@ -44,8 +55,8 @@ describe('ProductExplorer', () => {
     fireEvent.change(screen.getByLabelText('Search products'), {
       target: { value: 'Kayano' },
     });
-    expect(screen.getAllByTestId('product-card')).toHaveLength(1);
-    expect(screen.getByText('1 of 12 shoes')).toBeVisible();
+    expect(screen.getAllByTestId('product-card')).toHaveLength(2);
+    expect(screen.getByText('2 of 106 shoes')).toBeVisible();
   });
 
   it('offers keyboard-selectable typo-tolerant suggestions', () => {
@@ -66,6 +77,31 @@ describe('ProductExplorer', () => {
     fireEvent.keyDown(search, { key: 'Enter' });
     expect(search).toHaveValue('Gel Kayano 32');
     expect(screen.getAllByTestId('product-card')).toHaveLength(1);
+  });
+
+  it('moves between anchored result pages with directional transitions', () => {
+    window.history.replaceState({}, '', '/en/catalogue/');
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(screen.getByTestId('product-page')).toHaveAttribute(
+      'data-page-direction',
+      'forward',
+    );
+    expect(window.location.search).toBe('?page=2');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Previous' }));
+    expect(screen.getByTestId('product-page')).toHaveAttribute(
+      'data-page-direction',
+      'backward',
+    );
+    expect(window.location.search).toBe('');
   });
 
   it('shows an external fallback only for an out-of-range query', () => {

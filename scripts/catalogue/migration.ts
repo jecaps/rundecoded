@@ -40,6 +40,100 @@ const fallbackEvidence: Evidence = {
   note: 'Imported from the audited legacy catalogue; official verification is pending.',
 };
 
+const categoryTranslations: Record<string, LocalizedText> = {
+  carbon: localized('Carbon', 'Carbon', 'Carbone'),
+  'daily-trainer': localized(
+    'Daily Trainer',
+    'Tägliches Training',
+    'Entraînement quotidien',
+  ),
+  'entry-level': localized('Entry Level', 'Einstieg', 'Débutant'),
+  'fast-training': localized(
+    'Fast Training',
+    'Schnelles Training',
+    'Entraînement rapide',
+  ),
+  'max-cushion': localized(
+    'Max Cushion',
+    'Maximale Dämpfung',
+    'Amorti maximal',
+  ),
+  neutral: localized('Neutral', 'Neutral', 'Neutre'),
+  race: localized('Race', 'Wettkampf', 'Compétition'),
+  'road-to-trail': localized('Road-To-Trail', 'Road-to-Trail', 'Route-trail'),
+  spikes: localized('Spikes', 'Spikes', 'Pointes'),
+  'stability-and-guidance': localized(
+    'Stability & Guidance',
+    'Stabilität & Führung',
+    'Stabilité et guidage',
+  ),
+  'super-trainer': localized('Super Trainer', 'Super-Trainer', 'Super-trainer'),
+  support: localized('Support', 'Support', 'Maintien'),
+  'technical-trail': localized(
+    'Technical Trail',
+    'Technischer Trail',
+    'Trail technique',
+  ),
+  'track-spikes': localized(
+    'Track / Spikes',
+    'Bahn / Spikes',
+    'Piste / pointes',
+  ),
+  trail: localized('Trail', 'Trail', 'Trail'),
+  'trail-race': localized('Trail Race', 'Trail-Wettkampf', 'Compétition trail'),
+};
+
+interface RecordedWeight {
+  amount: number;
+  referenceSize: string;
+  sourceUrl: string;
+}
+
+const recordedWeights = new Map<string, RecordedWeight>([
+  [
+    'adidas-adistar-5',
+    {
+      amount: 264,
+      referenceSize: 'EU 42⅔',
+      sourceUrl: 'https://www.adidas.de/en/adistar-5-running-shoes/KI4355.html',
+    },
+  ],
+  [
+    'adidas-terrex-agravic-4',
+    {
+      amount: 276.8,
+      referenceSize: 'EU 42⅔',
+      sourceUrl:
+        'https://www.adidas.de/en/terrex-agravic-4-trail-running-shoes/KJ1291.html',
+    },
+  ],
+  [
+    'decathlon-jogflow-100-1',
+    {
+      amount: 250,
+      referenceSize: 'EU 43',
+      sourceUrl:
+        'https://www.decathlon.de/p/laufschuhe-herren-jogflow-100-1-schwarz-grau/337693/c382c227m8733464',
+    },
+  ],
+  [
+    'decathlon-jogflow-190-grip-wp',
+    {
+      amount: 364,
+      referenceSize: 'EU 42',
+      sourceUrl:
+        'https://www.decathlon.de/p/laufschuhe-strasse-trailrunning-herren-wasserdicht-jogflow-190-grip-schwarz/365616/c382c208m8958646',
+    },
+  ],
+]);
+
+function pendingFact(note: string) {
+  return {
+    value: null,
+    evidence: { status: 'pending' as const, sourceIds: [], note },
+  };
+}
+
 export function slugify(value: string): string {
   return value
     .normalize('NFKD')
@@ -72,6 +166,10 @@ function localized(
   fr: string | null,
 ): LocalizedText {
   return { en, de, fr };
+}
+
+function localizedCategory(label: string): LocalizedText {
+  return categoryTranslations[slugify(label)] ?? localized(label, null, null);
 }
 
 function titleCase(value: string): string {
@@ -131,6 +229,29 @@ function makeSources(
   return sources;
 }
 
+function ensureWeightSource(
+  productId: string,
+  sources: ProductSource[],
+  weight: RecordedWeight,
+): string {
+  const existing = sources.find((source) => source.url === weight.sourceUrl);
+  if (existing) return existing.id;
+
+  const id = sourceId(productId, 'weight-source');
+  sources.push({
+    id,
+    type: weight.sourceUrl.includes('adidas.')
+      ? 'manufacturer'
+      : 'retailer-product',
+    label: 'Phase 4 recorded weight source',
+    url: weight.sourceUrl,
+    checkedAt: null,
+    status: 'fallback',
+    note: 'Preserved from the approved explorer slice; re-check date is pending.',
+  });
+  return id;
+}
+
 function parseDrop(
   value: string,
   productId: string,
@@ -165,8 +286,67 @@ function normalizeStability(
 ): 'neutral' | 'stability' | 'unknown' {
   const normalized = value.trim().toLocaleLowerCase('en');
   if (normalized === 'neutral') return 'neutral';
-  if (normalized === 'stability') return 'stability';
+  if (normalized === 'stability' || normalized === 'stability shoe')
+    return 'stability';
   return 'unknown';
+}
+
+function comparableScore(current: ShoeProduct, candidate: ShoeProduct) {
+  const currentCategories = current.categories.map(({ id }) => id);
+  const candidateCategories = new Set(candidate.categories.map(({ id }) => id));
+  const sharedCategories = currentCategories.filter((id) =>
+    candidateCategories.has(id),
+  ).length;
+  const currentSurfaces = current.specifications.surfaces.value ?? [];
+  const candidateSurfaces = new Set(
+    candidate.specifications.surfaces.value ?? [],
+  );
+  const sharedSurfaces = currentSurfaces.filter((surface) =>
+    candidateSurfaces.has(surface),
+  ).length;
+  const currentDrop = current.specifications.heelToToeDrop.value?.amount;
+  const candidateDrop = candidate.specifications.heelToToeDrop.value?.amount;
+  const dropAffinity =
+    currentDrop === undefined || candidateDrop === undefined
+      ? 0
+      : Math.max(0, 4 - Math.abs(currentDrop - candidateDrop) / 2);
+
+  return (
+    (currentCategories[0] === candidate.categories[0]?.id ? 16 : 0) +
+    sharedCategories * 6 +
+    sharedSurfaces * 8 +
+    (current.specifications.stability.value ===
+    candidate.specifications.stability.value
+      ? 3
+      : 0) +
+    dropAffinity +
+    (current.brand.id !== candidate.brand.id ? 0.25 : 0)
+  );
+}
+
+function assignComparables(products: ShoeProduct[]) {
+  for (const product of products) {
+    const ranked = products
+      .filter((candidate) => candidate.id !== product.id)
+      .map((candidate) => ({
+        candidate,
+        score: comparableScore(product, candidate),
+      }))
+      .sort(
+        (left, right) =>
+          right.score - left.score ||
+          left.candidate.id.localeCompare(right.candidate.id, 'en'),
+      );
+    const selected = ranked.slice(0, 3).map(({ candidate }) => candidate);
+    const crossBrand = ranked.find(
+      ({ candidate }) => candidate.brand.id !== product.brand.id,
+    )?.candidate;
+
+    if (crossBrand && !selected.some(({ id }) => id === crossBrand.id)) {
+      selected[selected.length - 1] = crossBrand;
+    }
+    product.comparables = selected.map(({ id }) => id);
+  }
 }
 
 export function migrateRows(
@@ -252,6 +432,10 @@ export function migrateRows(
     const technologies = splitList(row.technologies, /\s*\|\s*/);
     const primaryProvenance = matchingProvenance[0];
     const sources = makeSources(productId, matchingProvenance);
+    const weight = recordedWeights.get(productId);
+    const weightSourceId = weight
+      ? ensureWeightSource(productId, sources, weight)
+      : null;
     const imageSource = sources.find(
       (source) => source.type === 'retailer-image',
     );
@@ -276,7 +460,7 @@ export function migrateRows(
       model: row.model.trim(),
       categories: categoryLabels.map((label) => ({
         id: slugify(label),
-        label: localized(label, null, null),
+        label: localizedCategory(label),
       })),
       copy: {
         bestFor: localized(
@@ -300,18 +484,22 @@ export function migrateRows(
         {
           id: sourceId(productId, 'primary-image'),
           role: 'primary',
-          localPath: row.display_image.trim() || null,
+          localPath: imageVerified ? row.display_image.trim() || null : null,
           sourceUrl: primaryProvenance?.source_image || null,
           sourceId: imageSource?.id ?? null,
           status: imageVerified ? 'verified' : 'pending',
-          alt: localized(`${titleCase(row.brand)} ${row.model}`, null, null),
+          alt: localized(
+            `${titleCase(row.brand)} ${row.model}`,
+            `${titleCase(row.brand)} ${row.model}`,
+            `${titleCase(row.brand)} ${row.model}`,
+          ),
         },
       ],
       sources,
       comparables: [],
       specifications: {
         surfaces: {
-          value: splitList(row.surface, /\s*[·|]\s*/),
+          value: splitList(row.surface, /\s*[·|]\s*/).map(titleCase),
           evidence: fallbackEvidence,
         },
         stability: {
@@ -319,10 +507,36 @@ export function migrateRows(
           evidence: fallbackEvidence,
         },
         heelToToeDrop: parseDrop(row.drop, productId, warnings),
+        stackHeight: pendingFact(
+          'No reliable heel and forefoot stack measurements exist in the audited source.',
+        ),
+        weight: weight
+          ? {
+              value: {
+                amount: weight.amount,
+                unit: 'g',
+                referenceSize: weight.referenceSize,
+              },
+              evidence: {
+                status: 'fallback',
+                sourceIds: weightSourceId ? [weightSourceId] : [],
+                note: 'Preserved from the approved Phase 4 explorer slice.',
+              },
+            }
+          : pendingFact(
+              'No weight with a reliable reference size exists in the audited source.',
+            ),
+        fit: pendingFact(
+          'No structured fit assessment exists in the audited source.',
+        ),
+        construction: pendingFact(
+          'Construction details require official-source research.',
+        ),
       },
     };
   });
 
+  assignComparables(products);
   products.sort((left, right) => left.id.localeCompare(right.id, 'en'));
   reconciliation.sort((left, right) =>
     `${left.source}:${left.row}`.localeCompare(

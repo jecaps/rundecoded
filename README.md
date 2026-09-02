@@ -6,11 +6,16 @@ The existing [Running Shoe Explorer](https://github.com/jecaps/running-shoe-expl
 
 ## Current status
 
-Phase 7 introduces durable localized routes and metadata across the Phase 5
-product explorer and Phase 6 Running Basics guide. The URL is now the language
-source of truth, language switching preserves shareable page state, and every
-supported page publishes localized canonical and `hreflang` metadata. The
-primary routes are available below the repository base path:
+Phase 8 migrates the complete audited catalogue into the validated product
+model. The explorer now contains all 106 approved products, 97 verified local
+images, explicit pending states for the nine unresolved images, and generated
+cross-brand comparables. A reproducible machine and human-readable quality
+report records every remaining research item without presenting it as verified.
+
+The Phase 7 URL remains the language source of truth, language switching
+preserves shareable page state, and every supported page publishes localized
+canonical and `hreflang` metadata. The primary routes are available below the
+repository base path:
 
 - `/rundecoded/en/catalogue/`
 - `/rundecoded/de/catalogue/`
@@ -32,6 +37,9 @@ coverage. The [Phase 5 complete explorer guide](docs/features/phase-5-complete-e
 documents search ranking, URL state, comparison, and explorer accessibility.
 The [Phase 4 product explorer guide](docs/features/phase-4-product-explorer.md)
 retains the product-selection rationale and pending-data policy.
+The [Phase 8 full-catalogue guide](docs/features/phase-8-full-catalogue.md)
+documents catalogue coverage, asset provenance, comparable selection, and the
+research-report workflow.
 
 Phase 0 documentation remains available as the migration reference:
 
@@ -71,3 +79,7 @@ pnpm test:e2e      # Playwright browser tests
 pnpm verify:pages  # validate repository-subpath output
 pnpm format        # apply Prettier formatting
 ```
+
+Catalogue maintenance commands are documented in the
+[Phase 8 guide](docs/features/phase-8-full-catalogue.md). The committed quality
+report can be regenerated and checked with `pnpm catalogue:check`.

@@ -4,7 +4,7 @@ export const catalogueCopy = {
   en: {
     title: 'Explore running shoes',
     intro:
-      'Search and compare a representative set of shoes by purpose, surface, guidance, and construction.',
+      'Search and compare the complete catalogue by purpose, surface, guidance, and construction.',
     searchLabel: 'Search products',
     searchPlaceholder: 'Brand, model, category, benefit…',
     suggestions: 'Search suggestions',
@@ -26,7 +26,7 @@ export const catalogueCopy = {
     surface: 'Surface',
     stability: 'Stability',
     drop: 'Drop',
-    pending: 'Pending research',
+    pending: 'Pending',
     technologies: 'Construction & technologies',
     ride: 'Ride & intended use',
     sources: 'Sources',
@@ -54,7 +54,7 @@ export const catalogueCopy = {
   de: {
     title: 'Laufschuhe entdecken',
     intro:
-      'Durchsuche und vergleiche eine repräsentative Auswahl nach Einsatzzweck, Untergrund, Führung und Konstruktion.',
+      'Durchsuche und vergleiche den vollständigen Katalog nach Einsatzzweck, Untergrund, Führung und Konstruktion.',
     searchLabel: 'Produkte suchen',
     searchPlaceholder: 'Marke, Modell, Kategorie, Vorteil…',
     suggestions: 'Suchvorschläge',
@@ -76,7 +76,7 @@ export const catalogueCopy = {
     surface: 'Untergrund',
     stability: 'Stabilität',
     drop: 'Sprengung',
-    pending: 'Recherche ausstehend',
+    pending: 'Ausstehend',
     technologies: 'Konstruktion & Technologien',
     ride: 'Laufgefühl & Einsatzzweck',
     sources: 'Quellen',
@@ -104,7 +104,7 @@ export const catalogueCopy = {
   fr: {
     title: 'Explorer les chaussures',
     intro:
-      'Recherchez et comparez une sélection représentative selon l’usage, le terrain, le guidage et la construction.',
+      'Recherchez et comparez le catalogue complet selon l’usage, le terrain, le guidage et la construction.',
     searchLabel: 'Rechercher des produits',
     searchPlaceholder: 'Marque, modèle, catégorie, avantage…',
     suggestions: 'Suggestions de recherche',
@@ -127,7 +127,7 @@ export const catalogueCopy = {
     surface: 'Terrain',
     stability: 'Stabilité',
     drop: 'Drop',
-    pending: 'Recherche en attente',
+    pending: 'En attente',
     technologies: 'Construction et technologies',
     ride: 'Sensations et usage',
     sources: 'Sources',

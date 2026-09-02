@@ -29,7 +29,7 @@ import {
   searchProducts,
   searchSuggestionKindLabel,
 } from './search';
-import type { ExplorerProduct } from './slice';
+import type { ExplorerProduct } from './catalogue';
 import { filterProducts, paginateProducts } from './state';
 import {
   parseCatalogueUrlState,
@@ -59,6 +59,32 @@ function localizedCategory(
 ) {
   const category = item.product.categories[index];
   if (!category) return null;
+  return categoryLabel(
+    category.id,
+    resolveLocalizedText(category.label, locale).value,
+    locale,
+  );
+}
+
+const specificationCategoryIds = new Set([
+  'carbon',
+  'neutral',
+  'stability-and-guidance',
+  'support',
+]);
+
+function purposeCategory(item: ExplorerProduct) {
+  return (
+    item.product.categories.find(
+      ({ id }) => !specificationCategoryIds.has(id),
+    ) ?? item.product.categories[0]
+  );
+}
+
+function localizedCategoryValue(
+  category: ExplorerProduct['product']['categories'][number],
+  locale: SupportedLocale,
+) {
   return categoryLabel(
     category.id,
     resolveLocalizedText(category.label, locale).value,
@@ -143,13 +169,16 @@ export function ProductExplorer({
   const [page, setPage] = useState(
     () => initialBrowserState()?.page ?? initialPage,
   );
+  const [pageDirection, setPageDirection] = useState<
+    'backward' | 'forward' | null
+  >(null);
   const [suggestionsOpen, setSuggestionsOpen] = useState(false);
   const [activeSuggestion, setActiveSuggestion] = useState(-1);
   const [detailsId, setDetailsId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const [selectionNotice, setSelectionNotice] = useState('');
-  const resultsRef = useRef<HTMLDivElement>(null);
+  const pageRef = useRef(page);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
   const comparisonOpenerRef = useRef<HTMLButtonElement | null>(null);
@@ -184,6 +213,14 @@ export function ProductExplorer({
       );
       setQuery(restored.query);
       setCategoryId(restored.categoryId);
+      setPageDirection(
+        restored.page === pageRef.current
+          ? null
+          : restored.page > pageRef.current
+            ? 'forward'
+            : 'backward',
+      );
+      pageRef.current = restored.page;
       setPage(restored.page);
       setSuggestionsOpen(false);
       setActiveSuggestion(-1);
@@ -257,7 +294,9 @@ export function ProductExplorer({
 
   function updateQuery(nextQuery: string) {
     setQuery(nextQuery);
+    pageRef.current = 1;
     setPage(1);
+    setPageDirection(null);
     setSuggestionsOpen(nextQuery.trim().length >= 2);
     setActiveSuggestion(-1);
     updateUrlState({ categoryId, page: 1, query: nextQuery }, 'replace');
@@ -265,7 +304,9 @@ export function ProductExplorer({
 
   function updateCategory(nextCategory: string) {
     setCategoryId(nextCategory);
+    pageRef.current = 1;
     setPage(1);
+    setPageDirection(null);
     setSuggestionsOpen(false);
     updateUrlState({ categoryId: nextCategory, page: 1, query }, 'push');
   }
@@ -273,7 +314,9 @@ export function ProductExplorer({
   function clearFilters() {
     setQuery('');
     setCategoryId('all');
+    pageRef.current = 1;
     setPage(1);
+    setPageDirection(null);
     setSuggestionsOpen(false);
     setActiveSuggestion(-1);
     updateUrlState({ categoryId: 'all', page: 1, query: '' }, 'push');
@@ -281,7 +324,9 @@ export function ProductExplorer({
 
   function chooseSuggestion(value: string) {
     setQuery(value);
+    pageRef.current = 1;
     setPage(1);
+    setPageDirection(null);
     setSuggestionsOpen(false);
     setActiveSuggestion(-1);
     updateUrlState({ categoryId, page: 1, query: value }, 'push');
@@ -315,9 +360,10 @@ export function ProductExplorer({
   }
 
   function changePage(nextPage: number) {
+    setPageDirection(nextPage > pageRef.current ? 'forward' : 'backward');
+    pageRef.current = nextPage;
     setPage(nextPage);
     updateUrlState({ categoryId, page: nextPage, query }, 'push');
-    resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   const comparisonRows =
@@ -340,7 +386,7 @@ export function ProductExplorer({
 
   return (
     <section
-      className="tablet:py-14 py-10"
+      className="tablet:py-14 py-10 [overflow-anchor:none]"
       aria-labelledby="catalogue-title"
       data-hydrated={hydrated ? 'true' : undefined}
       data-testid="product-explorer"
@@ -497,9 +543,18 @@ export function ProductExplorer({
         </div>
       </div>
 
-      <div className="scroll-mt-6" ref={resultsRef}>
+      <div className="overflow-x-clip">
         {pagination.items.length ? (
-          <div className="tablet:grid-cols-2 desktop:grid-cols-3 mt-6 grid grid-cols-1 gap-5">
+          <div
+            className={cn(
+              'tablet:grid-cols-2 desktop:grid-cols-3 mt-6 grid grid-cols-1 gap-5',
+              pageDirection === 'forward' && 'catalogue-page--forward',
+              pageDirection === 'backward' && 'catalogue-page--backward',
+            )}
+            data-page-direction={pageDirection ?? undefined}
+            data-testid="product-page"
+            key={`${categoryId}:${query}:${pagination.page}`}
+          >
             {pagination.items.map((item) => {
               const { product } = item;
               const selected = selectedIds.includes(product.id);
@@ -507,10 +562,15 @@ export function ProductExplorer({
                 product.copy.bestFor,
                 locale,
               ).value;
+              const purpose = purposeCategory(item);
+              const stability = stabilityLabel(
+                product.specifications.stability.value ?? 'unknown',
+                locale,
+              );
 
               return (
                 <article
-                  className="border-border bg-surface flex min-w-0 flex-col overflow-hidden rounded-[var(--radius-panel)] border shadow-[var(--shadow-sm)]"
+                  className="border-border bg-surface flex h-[38rem] min-w-0 flex-col overflow-hidden rounded-[var(--radius-panel)] border shadow-[var(--shadow-sm)]"
                   data-testid="product-card"
                   key={product.id}
                 >
@@ -534,7 +594,7 @@ export function ProductExplorer({
                       {product.brand.name}
                     </p>
                     <button
-                      className="text-foreground hover:text-primary mt-1 cursor-pointer border-0 bg-transparent p-0 text-left text-2xl font-bold tracking-[-0.025em]"
+                      className="text-foreground hover:text-primary mt-1 line-clamp-2 min-h-14 cursor-pointer border-0 bg-transparent p-0 text-left text-2xl font-bold tracking-[-0.025em]"
                       onClick={(event) =>
                         openDetails(product.id, event.currentTarget)
                       }
@@ -543,30 +603,36 @@ export function ProductExplorer({
                       {product.model}
                     </button>
 
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {product.categories.slice(0, 2).map((category, index) => (
+                    <div className="mt-3 flex min-h-7 flex-wrap content-start gap-2">
+                      {purpose ? (
                         <span
-                          className={cn(
-                            'rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase',
-                            index === 0
-                              ? 'bg-primary text-primary-foreground'
-                              : 'bg-surface-subtle text-muted-foreground',
-                          )}
-                          key={category.id}
+                          className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
+                          data-card-badge="purpose"
                         >
-                          {localizedCategory(item, locale, index)}
+                          {localizedCategoryValue(purpose, locale)}
                         </span>
-                      ))}
+                      ) : null}
+                      <span
+                        className="bg-surface-subtle text-muted-foreground rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
+                        data-card-badge="stability"
+                      >
+                        {stability}
+                      </span>
                     </div>
 
-                    <div className="bg-surface-subtle mt-4 rounded-[var(--radius-control)] p-4">
+                    <div className="mt-4 min-h-[4.75rem]">
                       <p className="text-muted-foreground m-0 text-[0.7rem] font-bold tracking-[0.13em] uppercase">
                         {copy.bestFor}
                       </p>
-                      <p className="mt-1 mb-0 text-sm leading-6">{bestFor}</p>
+                      <p
+                        className="mt-1 mb-0 line-clamp-2 text-sm leading-6"
+                        data-testid="card-best-for"
+                      >
+                        {bestFor}
+                      </p>
                     </div>
 
-                    <dl className="mt-5 grid grid-cols-3 gap-2 text-center">
+                    <dl className="border-border mt-4 grid min-h-14 grid-cols-2 border-t pt-4 text-center">
                       <div>
                         <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
                           {copy.surface}
@@ -576,18 +642,7 @@ export function ProductExplorer({
                             copy.pending}
                         </dd>
                       </div>
-                      <div className="border-border border-x px-2">
-                        <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
-                          {copy.stability}
-                        </dt>
-                        <dd className="mt-1 text-sm font-semibold">
-                          {stabilityLabel(
-                            product.specifications.stability.value ?? 'unknown',
-                            locale,
-                          )}
-                        </dd>
-                      </div>
-                      <div>
+                      <div className="border-border border-l px-2">
                         <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
                           {copy.drop}
                         </dt>
@@ -658,7 +713,7 @@ export function ProductExplorer({
             <ArrowLeft aria-hidden="true" className="size-4" />
             {copy.previous}
           </Button>
-          <span className="text-muted-foreground text-sm">
+          <span aria-live="polite" className="text-muted-foreground text-sm">
             {copy.page(pagination.page, pagination.pageCount)}
           </span>
           <Button
@@ -847,7 +902,7 @@ export function ProductExplorer({
                             </span>
                           </li>
                         ))}
-                      {detailsProduct.weight ? (
+                      {detailsProduct.weight?.sourceUrl ? (
                         <li>
                           <a
                             className="text-primary hover:underline"

@@ -1,7 +1,7 @@
 import { resolveLocalizedText, type SupportedLocale } from '@/domain/catalogue';
 
 import { categoryLabel, stabilityLabel } from './copy';
-import type { ExplorerProduct } from './slice';
+import type { ExplorerProduct } from './catalogue';
 
 export interface ComparisonRow {
   difference: boolean | null;

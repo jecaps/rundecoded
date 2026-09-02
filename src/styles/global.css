@@ -223,6 +223,32 @@
   }
 }
 
+@keyframes catalogue-page-forward {
+  from {
+    transform: translateX(2rem);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes catalogue-page-backward {
+  from {
+    transform: translateX(-2rem);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.catalogue-page--forward {
+  animation: catalogue-page-forward 150ms ease-out;
+}
+
+.catalogue-page--backward {
+  animation: catalogue-page-backward 150ms ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
