@@ -11,6 +11,12 @@ import {
 
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/components/ui/card';
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -616,92 +622,98 @@ export function ProductExplorer({
               );
 
               return (
-                <article
-                  className="border-border bg-surface flex h-[38rem] min-w-0 flex-col overflow-hidden rounded-[var(--radius-panel)] border shadow-[var(--shadow-sm)]"
-                  data-testid="product-card"
+                <Card
+                  className="h-[38rem] min-w-0 overflow-hidden"
                   key={product.id}
                 >
-                  <button
-                    aria-label={copy.openDetails(product.model)}
-                    className="bg-surface-subtle block h-56 w-full cursor-pointer border-0 p-3"
-                    onClick={(event) =>
-                      openDetails(product.id, event.currentTarget)
-                    }
-                    type="button"
+                  <article
+                    className="flex h-full min-w-0 flex-col"
+                    data-testid="product-card"
                   >
-                    <ProductPicture
-                      assetBase={assetBase}
-                      item={item}
-                      locale={locale}
-                    />
-                  </button>
+                    <CardHeader className="bg-surface-subtle h-56 p-3">
+                      <button
+                        aria-label={copy.openDetails(product.model)}
+                        className="block h-full w-full cursor-pointer border-0 bg-transparent p-0"
+                        onClick={(event) =>
+                          openDetails(product.id, event.currentTarget)
+                        }
+                        type="button"
+                      >
+                        <ProductPicture
+                          assetBase={assetBase}
+                          item={item}
+                          locale={locale}
+                        />
+                      </button>
+                    </CardHeader>
 
-                  <div className="flex flex-1 flex-col p-5">
-                    <p className="text-muted-foreground m-0 text-xs font-bold tracking-[0.15em] uppercase">
-                      {product.brand.name}
-                    </p>
-                    <button
-                      className="text-foreground hover:text-primary mt-1 line-clamp-2 min-h-14 cursor-pointer border-0 bg-transparent p-0 text-left text-2xl font-bold tracking-[-0.025em]"
-                      onClick={(event) =>
-                        openDetails(product.id, event.currentTarget)
-                      }
-                      type="button"
-                    >
-                      {product.model}
-                    </button>
+                    <CardContent className="flex flex-1 flex-col p-5 pb-0">
+                      <p className="text-muted-foreground m-0 text-xs font-bold tracking-[0.15em] uppercase">
+                        {product.brand.name}
+                      </p>
+                      <button
+                        className="text-foreground hover:text-primary mt-1 line-clamp-2 min-h-14 cursor-pointer border-0 bg-transparent p-0 text-left text-2xl font-bold tracking-[-0.025em]"
+                        onClick={(event) =>
+                          openDetails(product.id, event.currentTarget)
+                        }
+                        type="button"
+                      >
+                        {product.model}
+                      </button>
 
-                    <div className="mt-3 flex min-h-7 flex-wrap content-start gap-2">
-                      {purpose ? (
+                      <div className="mt-3 flex min-h-7 flex-wrap content-start gap-2">
+                        {purpose ? (
+                          <span
+                            className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
+                            data-card-badge="purpose"
+                          >
+                            {localizedCategoryValue(purpose, locale)}
+                          </span>
+                        ) : null}
                         <span
-                          className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
-                          data-card-badge="purpose"
+                          className="bg-surface-subtle text-muted-foreground rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
+                          data-card-badge="stability"
                         >
-                          {localizedCategoryValue(purpose, locale)}
+                          {stability}
                         </span>
-                      ) : null}
-                      <span
-                        className="bg-surface-subtle text-muted-foreground rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
-                        data-card-badge="stability"
-                      >
-                        {stability}
-                      </span>
-                    </div>
+                      </div>
 
-                    <div className="mt-4">
-                      <p className="text-muted-foreground m-0 text-[0.7rem] font-bold tracking-[0.13em] uppercase">
-                        {copy.bestFor}
-                      </p>
-                      <p
-                        className="mt-1 mb-0 line-clamp-2 text-sm leading-6"
-                        data-testid="card-best-for"
-                      >
-                        {bestForSummaryText}
-                      </p>
-                    </div>
-
-                    <dl className="border-border mt-3 grid min-h-14 grid-cols-2 border-t pt-3 text-center">
-                      <div>
-                        <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
-                          {copy.distance}
-                        </dt>
-                        <dd
-                          className="mt-1 text-sm font-semibold"
-                          data-testid="card-distance"
+                      <div className="mt-4">
+                        <p className="text-muted-foreground m-0 text-[0.7rem] font-bold tracking-[0.13em] uppercase">
+                          {copy.bestFor}
+                        </p>
+                        <p
+                          className="mt-1 mb-0 line-clamp-2 text-sm leading-6"
+                          data-testid="card-best-for"
                         >
-                          {distance}
-                        </dd>
+                          {bestForSummaryText}
+                        </p>
                       </div>
-                      <div className="border-border border-l px-2">
-                        <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
-                          {copy.drop}
-                        </dt>
-                        <dd className="mt-1 text-sm font-semibold">
-                          {dropLabel(item, copy.pending)}
-                        </dd>
-                      </div>
-                    </dl>
 
-                    <div className="mt-auto grid grid-cols-2 gap-3 pt-6">
+                      <dl className="border-border mt-3 grid min-h-14 grid-cols-2 border-t pt-3 text-center">
+                        <div>
+                          <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
+                            {copy.distance}
+                          </dt>
+                          <dd
+                            className="mt-1 text-sm font-semibold"
+                            data-testid="card-distance"
+                          >
+                            {distance}
+                          </dd>
+                        </div>
+                        <div className="border-border border-l px-2">
+                          <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
+                            {copy.drop}
+                          </dt>
+                          <dd className="mt-1 text-sm font-semibold">
+                            {dropLabel(item, copy.pending)}
+                          </dd>
+                        </div>
+                      </dl>
+                    </CardContent>
+
+                    <CardFooter className="grid grid-cols-2 gap-3 p-5 pt-0">
                       <Button
                         aria-pressed={selected}
                         onClick={() => toggleComparison(product.id)}
@@ -720,9 +732,9 @@ export function ProductExplorer({
                       >
                         {copy.details}
                       </Button>
-                    </div>
-                  </div>
-                </article>
+                    </CardFooter>
+                  </article>
+                </Card>
               );
             })}
           </div>
