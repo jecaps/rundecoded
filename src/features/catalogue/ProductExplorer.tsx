@@ -97,6 +97,48 @@ function dropLabel(item: ExplorerProduct, pending: string) {
   return drop ? `${drop.amount} ${drop.unit}` : pending;
 }
 
+// The current catalogue stores distance guidance in the localized best-for
+// copy. Keep the card honest by surfacing only explicit distance language and
+// leaving the value pending when the copy does not contain it.
+const explicitDistancePatterns = [
+  /\b\d+\s*(?:km|k|m)\s*[–-]\s*\d+\s*(?:km|k|m)\b/i,
+  /\b\d+\s*(?:km|k|m)\s*(?:to|through|bis zu|bis|au|à|jusqu['’]à|-)\s*(?:\d+\s*(?:km|k|m)|(?:half|semi[- ]?)?marathon|ultra)\b/i,
+  /\b(?:up to|through|from|bis zu|bis|jusqu['’]à)\s+\d+\s*(?:km|k|m)\b/i,
+  /\b\d+\s*(?:[–-]\s*\d+\s*)?(?:km|k|m)\b/i,
+  /\b(?:half|semi[- ]?)?marathon(?:\s+(?:and|to|through|bis|et|au)\s+(?:half|semi[- ]?)?marathon)?\b/i,
+  /\bultra(?:\s+distance)?\b/i,
+  /\b(?:short\s+(?:to|through)\s+(?:middle|long)|middle\s+to\s+long(?:er)?|long\s+varied|(?:short|middle|long|varied))\s+distances?\b/i,
+  /\b(?:kurze?|mittlere?|lange?)\s+Distanzen?\b/i,
+  /\b(?:courtes?|moyennes?|longues?)\s+distances?\b/i,
+] as const;
+
+const impliedDistancePattern =
+  /\b(?:short|middle|long|longer|kurz\w*|mittel\w*|lang\w*|court\w*|moyen\w*|tempo|interval\w*|marathon|ultra)\b[^·,]*(?:runs?|races?|distances?|trails?|sessions?|track|läufe?|distanzen?|sentiers?|séances?|sorties?)\b/iu;
+
+function distanceLabel(bestFor: string, pending: string) {
+  const segments = bestFor.split('·').map((segment) => segment.trim());
+
+  for (const candidate of segments) {
+    for (const pattern of explicitDistancePatterns) {
+      const match = candidate.match(pattern);
+      if (match) return match[0].replace(/\s+/g, ' ').trim();
+    }
+  }
+
+  for (const candidate of segments) {
+    const match = candidate.match(impliedDistancePattern);
+    if (match) return match[0].replace(/\s+/g, ' ').trim();
+  }
+
+  return pending;
+}
+
+function bestForSummary(bestFor: string) {
+  // The first editorial segment is the audience; keep the card focused on use.
+  const segments = bestFor.split('·').map((segment) => segment.trim());
+  return (segments.length > 1 ? segments.slice(1) : segments).join(' · ');
+}
+
 function ProductPicture({
   assetBase,
   className,
@@ -565,6 +607,8 @@ export function ProductExplorer({
                 product.copy.bestFor,
                 locale,
               ).value;
+              const bestForSummaryText = bestForSummary(bestFor);
+              const distance = distanceLabel(bestFor, copy.pending);
               const purpose = purposeCategory(item);
               const stability = stabilityLabel(
                 product.specifications.stability.value ?? 'unknown',
@@ -623,7 +667,7 @@ export function ProductExplorer({
                       </span>
                     </div>
 
-                    <div className="mt-4 min-h-[4.75rem]">
+                    <div className="mt-4">
                       <p className="text-muted-foreground m-0 text-[0.7rem] font-bold tracking-[0.13em] uppercase">
                         {copy.bestFor}
                       </p>
@@ -631,18 +675,20 @@ export function ProductExplorer({
                         className="mt-1 mb-0 line-clamp-2 text-sm leading-6"
                         data-testid="card-best-for"
                       >
-                        {bestFor}
+                        {bestForSummaryText}
                       </p>
                     </div>
 
-                    <dl className="border-border mt-4 grid min-h-14 grid-cols-2 border-t pt-4 text-center">
+                    <dl className="border-border mt-3 grid min-h-14 grid-cols-2 border-t pt-3 text-center">
                       <div>
                         <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
-                          {copy.surface}
+                          {copy.distance}
                         </dt>
-                        <dd className="mt-1 text-sm font-semibold">
-                          {product.specifications.surfaces.value?.join(', ') ??
-                            copy.pending}
+                        <dd
+                          className="mt-1 text-sm font-semibold"
+                          data-testid="card-distance"
+                        >
+                          {distance}
                         </dd>
                       </div>
                       <div className="border-border border-l px-2">

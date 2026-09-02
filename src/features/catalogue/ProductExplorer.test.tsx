@@ -41,6 +41,13 @@ describe('ProductExplorer', () => {
     expect(within(firstCard!).getByTestId('card-best-for')).toHaveClass(
       'line-clamp-2',
     );
+    expect(
+      within(firstCard!).getByTestId('card-best-for'),
+    ).not.toHaveTextContent('All levels');
+    expect(within(firstCard!).getByTestId('card-distance')).toHaveTextContent(
+      'marathon',
+    );
+    expect(within(firstCard!).queryByText('Surface')).not.toBeInTheDocument();
     expect(within(firstCard!).queryByText('Stability')).not.toBeInTheDocument();
   });
 
