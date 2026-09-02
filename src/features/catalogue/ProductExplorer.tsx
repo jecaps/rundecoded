@@ -623,7 +623,7 @@ export function ProductExplorer({
 
               return (
                 <Card
-                  className="h-[38rem] min-w-0 overflow-hidden"
+                  className="desktop:h-[37rem] min-w-0 overflow-hidden"
                   key={product.id}
                 >
                   <article
