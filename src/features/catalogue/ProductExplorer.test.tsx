@@ -28,6 +28,7 @@ describe('ProductExplorer', () => {
     expect(screen.getAllByTestId('product-card')).toHaveLength(12);
     const firstCard = screen.getAllByTestId('product-card')[0];
     expect(firstCard).toBeDefined();
+    expect(firstCard!.parentElement).toHaveAttribute('data-slot', 'card');
     expect(
       within(firstCard!).queryByText(/€|price|264 g/i),
     ).not.toBeInTheDocument();
