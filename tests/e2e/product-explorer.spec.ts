@@ -122,6 +122,27 @@ test('search and filters produce accurate counts and an honest empty state', asy
   await expect(page.getByText('32 of 106 shoes')).toBeVisible();
 });
 
+test('contains category filters within the viewport on narrow screens', async ({
+  page,
+}) => {
+  for (const width of [320, 390, 768]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('./en/catalogue/');
+
+    const rail = page.getByTestId('category-filter-rail');
+    const railBox = await rail.boundingBox();
+    const documentWidth = await page.evaluate(() =>
+      Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
+    );
+
+    expect(railBox).not.toBeNull();
+    expect((railBox?.x ?? 0) + (railBox?.width ?? 0)).toBeLessThanOrEqual(
+      width,
+    );
+    expect(documentWidth).toBeLessThanOrEqual(width);
+  }
+});
+
 test('provides typo-tolerant keyboard suggestions and an honest fallback', async ({
   page,
 }) => {

@@ -502,9 +502,12 @@ export function ProductExplorer({
           ) : null}
         </div>
 
-        <fieldset className="mt-5 border-0 p-0">
+        <fieldset className="mt-5 max-w-full min-w-0 overflow-hidden border-0 p-0">
           <legend className="mb-2 text-sm font-semibold">{copy.filters}</legend>
-          <div className="flex gap-2 overflow-x-auto pb-2">
+          <div
+            className="flex max-w-full min-w-0 gap-2 overflow-x-auto pb-2"
+            data-testid="category-filter-rail"
+          >
             {[['all', copy.allCategories] as const, ...categoryOptions].map(
               ([id, label]) => (
                 <button
