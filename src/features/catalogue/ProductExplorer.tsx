@@ -622,10 +622,7 @@ export function ProductExplorer({
               );
 
               return (
-                <Card
-                  className="h-[38rem] min-w-0 overflow-hidden"
-                  key={product.id}
-                >
+                <Card className="min-w-0 overflow-hidden" key={product.id}>
                   <article
                     className="flex h-full min-w-0 flex-col"
                     data-testid="product-card"
