@@ -54,6 +54,8 @@ Phase 0 documentation remains available as the migration reference:
 The tracked roadmap is maintained in [GitHub Project 8](https://github.com/users/jecaps/projects/8).
 See [GitHub Pages preview builds](docs/deployment/github-pages-preview.md) for
 local production-preview and pull-request review instructions.
+The Phase 9 [release runbook](docs/deployment/phase-9-release.md) documents the
+production audit, protected Pages deployment, smoke checks, and rollback plan.
 
 ## Local development
 
@@ -76,7 +78,9 @@ The available quality commands are:
 pnpm quality       # type-check, lint, format check, unit test, and build
 pnpm test:unit     # Vitest component tests
 pnpm test:e2e      # Playwright browser tests
+pnpm test:e2e:production # build and run the suite against Astro preview output
 pnpm verify:pages  # validate repository-subpath output
+pnpm verify:performance # enforce the production JS and CSS budgets
 pnpm format        # apply Prettier formatting
 ```
 

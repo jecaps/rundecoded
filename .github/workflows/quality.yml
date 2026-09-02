@@ -121,3 +121,31 @@ jobs:
           install: false
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+      - run: pnpm verify:pages
+      - run: pnpm verify:performance
+
+  production-audit:
+    name: Production preview audit
+    needs: install
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/setup@v2
+        with:
+          runtime: node@24
+          cache: true
+          install: false
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e:production
+      - name: Upload production audit report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: production-audit-report
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 14

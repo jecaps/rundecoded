@@ -19,11 +19,13 @@
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:e2e:production": "pnpm build && pnpm verify:pages && pnpm verify:performance && PLAYWRIGHT_PREVIEW=1 pnpm test:e2e",
     "catalogue:migrate": "node --import tsx scripts/catalogue/transform-legacy.ts",
     "catalogue:assets": "node --import tsx scripts/catalogue/copy-verified-assets.ts",
     "catalogue:check": "node --import tsx scripts/catalogue/transform-legacy.ts --check",
     "verify:pages": "node scripts/verify-pages-build.mjs",
-    "quality": "pnpm catalogue:check && pnpm check && pnpm lint && pnpm format:check && pnpm test:unit && pnpm build"
+    "verify:performance": "node scripts/verify-production-budget.mjs",
+    "quality": "pnpm catalogue:check && pnpm check && pnpm lint && pnpm format:check && pnpm test:unit && pnpm build && pnpm verify:pages && pnpm verify:performance"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.4",

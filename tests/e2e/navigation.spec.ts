@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test';
 
 function relativeLuminance(color: string) {
-  const channels = color
+  const hex = color.replace(/^#/, '');
+  const expandedHex = hex.length === 3 ? hex.replace(/./g, '$&$&') : hex;
+  const channels = expandedHex
     .match(/[\da-f]{2}/gi)
     ?.slice(0, 3)
     .map((channel) => Number.parseInt(channel, 16) / 255)
@@ -10,7 +12,9 @@ function relativeLuminance(color: string) {
     );
 
   if (!channels || channels.length !== 3) {
-    throw new Error(`Expected a six-digit hex color, received ${color}`);
+    throw new Error(
+      `Expected a three- or six-digit hex color, received ${color}`,
+    );
   }
 
   return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
