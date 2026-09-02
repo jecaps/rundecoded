@@ -31,6 +31,17 @@ describe('ProductExplorer', () => {
     expect(
       within(firstCard!).queryByText(/€|price|264 g/i),
     ).not.toBeInTheDocument();
+    expect(firstCard!.querySelectorAll('[data-card-badge]')).toHaveLength(2);
+    expect(
+      firstCard!.querySelector('[data-card-badge="purpose"]'),
+    ).toHaveTextContent('Max cushion');
+    expect(
+      firstCard!.querySelector('[data-card-badge="stability"]'),
+    ).toHaveTextContent('Neutral');
+    expect(within(firstCard!).getByTestId('card-best-for')).toHaveClass(
+      'line-clamp-2',
+    );
+    expect(within(firstCard!).queryByText('Stability')).not.toBeInTheDocument();
   });
 
   it('updates result counts for typed search and category filters', () => {

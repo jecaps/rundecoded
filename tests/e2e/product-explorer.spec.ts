@@ -197,6 +197,12 @@ test('changes result pages horizontally without moving the viewport', async ({
     element.scrollIntoView({ block: 'center' });
   });
   const initialScrollY = await page.evaluate(() => window.scrollY);
+  const initialCardHeights = await page
+    .getByTestId('product-card')
+    .evaluateAll((cards) =>
+      cards.map((card) => Math.round(card.getBoundingClientRect().height)),
+    );
+  expect(new Set(initialCardHeights).size).toBe(1);
 
   await pagination
     .getByRole('button', { name: 'Next' })
@@ -213,6 +219,13 @@ test('changes result pages horizontally without moving the viewport', async ({
       ),
   );
   const forwardScrollY = await page.evaluate(() => window.scrollY);
+  const forwardCardHeights = await page
+    .getByTestId('product-card')
+    .evaluateAll((cards) =>
+      cards.map((card) => Math.round(card.getBoundingClientRect().height)),
+    );
+  expect(new Set(forwardCardHeights).size).toBe(1);
+  expect(forwardCardHeights[0]).toBe(initialCardHeights[0]);
   expect(forwardScrollY).toBeGreaterThan(500);
   expect(Math.abs(forwardScrollY - initialScrollY)).toBeLessThanOrEqual(32);
 

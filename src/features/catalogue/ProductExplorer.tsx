@@ -66,6 +66,32 @@ function localizedCategory(
   );
 }
 
+const specificationCategoryIds = new Set([
+  'carbon',
+  'neutral',
+  'stability-and-guidance',
+  'support',
+]);
+
+function purposeCategory(item: ExplorerProduct) {
+  return (
+    item.product.categories.find(
+      ({ id }) => !specificationCategoryIds.has(id),
+    ) ?? item.product.categories[0]
+  );
+}
+
+function localizedCategoryValue(
+  category: ExplorerProduct['product']['categories'][number],
+  locale: SupportedLocale,
+) {
+  return categoryLabel(
+    category.id,
+    resolveLocalizedText(category.label, locale).value,
+    locale,
+  );
+}
+
 function dropLabel(item: ExplorerProduct, pending: string) {
   const drop = item.product.specifications.heelToToeDrop.value;
   return drop ? `${drop.amount} ${drop.unit}` : pending;
@@ -536,10 +562,15 @@ export function ProductExplorer({
                 product.copy.bestFor,
                 locale,
               ).value;
+              const purpose = purposeCategory(item);
+              const stability = stabilityLabel(
+                product.specifications.stability.value ?? 'unknown',
+                locale,
+              );
 
               return (
                 <article
-                  className="border-border bg-surface flex min-w-0 flex-col overflow-hidden rounded-[var(--radius-panel)] border shadow-[var(--shadow-sm)]"
+                  className="border-border bg-surface flex h-[38rem] min-w-0 flex-col overflow-hidden rounded-[var(--radius-panel)] border shadow-[var(--shadow-sm)]"
                   data-testid="product-card"
                   key={product.id}
                 >
@@ -563,7 +594,7 @@ export function ProductExplorer({
                       {product.brand.name}
                     </p>
                     <button
-                      className="text-foreground hover:text-primary mt-1 cursor-pointer border-0 bg-transparent p-0 text-left text-2xl font-bold tracking-[-0.025em]"
+                      className="text-foreground hover:text-primary mt-1 line-clamp-2 min-h-14 cursor-pointer border-0 bg-transparent p-0 text-left text-2xl font-bold tracking-[-0.025em]"
                       onClick={(event) =>
                         openDetails(product.id, event.currentTarget)
                       }
@@ -572,30 +603,36 @@ export function ProductExplorer({
                       {product.model}
                     </button>
 
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {product.categories.slice(0, 2).map((category, index) => (
+                    <div className="mt-3 flex min-h-7 flex-wrap content-start gap-2">
+                      {purpose ? (
                         <span
-                          className={cn(
-                            'rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase',
-                            index === 0
-                              ? 'bg-primary text-primary-foreground'
-                              : 'bg-surface-subtle text-muted-foreground',
-                          )}
-                          key={category.id}
+                          className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
+                          data-card-badge="purpose"
                         >
-                          {localizedCategory(item, locale, index)}
+                          {localizedCategoryValue(purpose, locale)}
                         </span>
-                      ))}
+                      ) : null}
+                      <span
+                        className="bg-surface-subtle text-muted-foreground rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
+                        data-card-badge="stability"
+                      >
+                        {stability}
+                      </span>
                     </div>
 
-                    <div className="bg-surface-subtle mt-4 rounded-[var(--radius-control)] p-4">
+                    <div className="mt-4 min-h-[4.75rem]">
                       <p className="text-muted-foreground m-0 text-[0.7rem] font-bold tracking-[0.13em] uppercase">
                         {copy.bestFor}
                       </p>
-                      <p className="mt-1 mb-0 text-sm leading-6">{bestFor}</p>
+                      <p
+                        className="mt-1 mb-0 line-clamp-2 text-sm leading-6"
+                        data-testid="card-best-for"
+                      >
+                        {bestFor}
+                      </p>
                     </div>
 
-                    <dl className="mt-5 grid grid-cols-3 gap-2 text-center">
+                    <dl className="border-border mt-4 grid min-h-14 grid-cols-2 border-t pt-4 text-center">
                       <div>
                         <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
                           {copy.surface}
@@ -605,18 +642,7 @@ export function ProductExplorer({
                             copy.pending}
                         </dd>
                       </div>
-                      <div className="border-border border-x px-2">
-                        <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
-                          {copy.stability}
-                        </dt>
-                        <dd className="mt-1 text-sm font-semibold">
-                          {stabilityLabel(
-                            product.specifications.stability.value ?? 'unknown',
-                            locale,
-                          )}
-                        </dd>
-                      </div>
-                      <div>
+                      <div className="border-border border-l px-2">
                         <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
                           {copy.drop}
                         </dt>
