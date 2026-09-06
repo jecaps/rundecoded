@@ -156,4 +156,36 @@ describe('ProductExplorer', () => {
       await screen.findByRole('heading', { name: 'Explorer les chaussures' }),
     ).toBeVisible();
   });
+
+  it('shows migrated prototype details only for an exact product match', () => {
+    const boston = products.find(
+      ({ product }) => product.id === 'adidas-adizero-boston-13',
+    );
+    const adistar = products.find(
+      ({ product }) => product.id === 'adidas-adistar-5',
+    );
+    expect(boston?.details).not.toBeNull();
+    expect(adistar?.details).toBeNull();
+
+    window.history.replaceState({}, '', '/en/catalogue/?q=Boston+13');
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        initialQuery="Boston 13"
+        products={products}
+      />,
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Details' }));
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toHaveTextContent(
+      'The Boston 13 brings race-inspired technology',
+    );
+    expect(dialog).toHaveTextContent('36 / 30 mm');
+    expect(dialog).toHaveTextContent('260 g');
+    expect(dialog).toHaveTextContent('Strengths & limitations');
+    expect(dialog).toHaveTextContent(
+      'Migrated from the original RunDecoded prototype',
+    );
+  });
 });

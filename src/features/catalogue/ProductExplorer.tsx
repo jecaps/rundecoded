@@ -327,6 +327,11 @@ export function ProductExplorer({
   const comparableProducts = detailsProduct
     ? rankComparableProducts(detailsProduct, products, locale)
     : [];
+  const detailProfile = detailsProduct?.details ?? null;
+  const detailProductSource =
+    detailsProduct?.product.sources.find(
+      (source) => source.type === 'retailer-product' && source.url,
+    ) ?? null;
 
   function updateUrlState(state: CatalogueUrlState, mode: 'push' | 'replace') {
     const nextUrl = writeCatalogueUrlState(
@@ -843,145 +848,272 @@ export function ProductExplorer({
                     {detailsProduct.product.model}
                   </DialogTitle>
                   <DialogDescription>
-                    {
-                      resolveLocalizedText(
-                        detailsProduct.product.copy.bestFor,
-                        locale,
-                      ).value
-                    }
+                    {detailProfile
+                      ? resolveLocalizedText(detailProfile.overview, locale)
+                          .value
+                      : copy.detailsPending}
                   </DialogDescription>
                 </DialogHeader>
 
-                <div className="mt-7 grid gap-7">
-                  <section>
-                    <h3 className="m-0 text-base font-semibold">{copy.ride}</h3>
-                    <p className="text-muted-foreground mt-2 mb-0 leading-7">
-                      {
-                        resolveLocalizedText(
-                          detailsProduct.product.copy.bestFor,
-                          locale,
-                        ).value
-                      }
-                    </p>
-                  </section>
-
-                  <section>
-                    <h3 className="m-0 text-base font-semibold">
-                      {copy.technologies}
-                    </h3>
-                    {detailsProduct.product.technologies.value ? (
-                      <ul className="mt-3 flex list-none flex-wrap gap-2 p-0">
-                        {detailsProduct.product.technologies.value.map(
-                          (technology) => (
-                            <li
-                              className="bg-surface-subtle rounded-full px-3 py-1.5 text-sm"
-                              key={technology}
-                            >
-                              {technology}
-                            </li>
-                          ),
-                        )}
-                      </ul>
-                    ) : (
-                      <p className="text-muted-foreground mt-2">
-                        {copy.pending}
-                      </p>
-                    )}
-                  </section>
-
-                  <section>
-                    <h3 className="m-0 text-base font-semibold">
-                      {copy.weight}
-                    </h3>
-                    {detailsProduct.weight ? (
-                      <p className="text-muted-foreground mt-2 mb-0">
-                        {detailsProduct.weight.amount}{' '}
-                        {detailsProduct.weight.unit} ·{' '}
-                        {detailsProduct.weight.referenceSize} ·{' '}
-                        {detailsProduct.weight.status}
-                      </p>
-                    ) : (
-                      <p className="text-muted-foreground mt-2 mb-0">
-                        {copy.pending}
-                      </p>
-                    )}
-                  </section>
-
-                  <section>
-                    <h3 className="m-0 text-base font-semibold">
-                      {copy.comparableProducts}
-                    </h3>
-                    <div className="mt-3 grid gap-2">
-                      {comparableProducts.map((comparable) => {
-                        const id = comparable.product.id;
-                        return (
-                          <button
-                            className="border-border hover:bg-surface-subtle flex cursor-pointer items-center justify-between gap-4 rounded-[var(--radius-control)] border bg-transparent px-4 py-3 text-left"
-                            key={id}
-                            onClick={() => compareFromDetails(id)}
-                            type="button"
-                          >
-                            <span>
-                              <span className="block text-xs font-bold tracking-wide uppercase">
-                                {comparable.product.brand.name}
-                              </span>
-                              <span className="text-muted-foreground mt-1 block text-sm">
-                                {comparable.product.model}
-                              </span>
-                            </span>
-                            <span className="text-primary text-sm font-semibold">
-                              {copy.compareWith(comparable.product.model)}
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </section>
-
-                  <section>
-                    <h3 className="m-0 text-base font-semibold">
-                      {copy.sources}
-                    </h3>
-                    <ul className="mt-2 grid gap-2 pl-5 text-sm">
-                      {detailsProduct.product.sources
-                        .filter(
-                          (source) =>
-                            source.url && source.type !== 'retailer-image',
-                        )
-                        .map((source) => (
-                          <li key={source.id}>
-                            <a
-                              className="text-primary hover:underline"
-                              href={source.url ?? undefined}
-                              rel="noreferrer"
-                              target="_blank"
-                            >
-                              {source.label}
-                            </a>{' '}
-                            <span className="text-muted-foreground">
-                              ({source.status})
-                            </span>
-                          </li>
-                        ))}
-                      {detailsProduct.weight?.sourceUrl ? (
-                        <li>
-                          <a
-                            className="text-primary hover:underline"
-                            href={detailsProduct.weight.sourceUrl}
-                            rel="noreferrer"
-                            target="_blank"
-                          >
-                            {copy.weight}
-                          </a>{' '}
-                          <span className="text-muted-foreground">
-                            ({detailsProduct.weight.status})
-                          </span>
-                        </li>
-                      ) : null}
-                    </ul>
-                  </section>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {detailsProduct.product.categories.map((category) => (
+                    <span
+                      className="bg-surface-subtle rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
+                      key={category.id}
+                    >
+                      {localizedCategoryValue(category, locale)}
+                    </span>
+                  ))}
                 </div>
+
+                <section className="bg-surface-subtle mt-6 rounded-[var(--radius-control)] p-4">
+                  <h3 className="m-0 text-sm font-semibold">{copy.bestFor}</h3>
+                  <p className="mt-1 mb-0 text-sm leading-6">
+                    {
+                      resolveLocalizedText(
+                        detailProfile?.bestFor ??
+                          detailsProduct.product.copy.bestFor,
+                        locale,
+                      ).value
+                    }
+                  </p>
+                </section>
+
+                <dl className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4 text-sm">
+                  <div className="border-border border-b pb-3">
+                    <dt className="text-muted-foreground text-xs font-bold uppercase">
+                      {copy.surface}
+                    </dt>
+                    <dd className="mt-1 font-semibold">
+                      {detailsProduct.product.specifications.surfaces.value?.join(
+                        ', ',
+                      ) ?? copy.pending}
+                    </dd>
+                  </div>
+                  <div className="border-border border-b pb-3">
+                    <dt className="text-muted-foreground text-xs font-bold uppercase">
+                      {copy.stability}
+                    </dt>
+                    <dd className="mt-1 font-semibold">
+                      {stabilityLabel(
+                        detailsProduct.product.specifications.stability.value ??
+                          'unknown',
+                        locale,
+                      )}
+                    </dd>
+                  </div>
+                  <div className="border-border border-b pb-3">
+                    <dt className="text-muted-foreground text-xs font-bold uppercase">
+                      {copy.weightValue}
+                    </dt>
+                    <dd className="mt-1 font-semibold">
+                      {detailProfile?.specifications.weight ??
+                        (detailsProduct.weight
+                          ? `${detailsProduct.weight.amount} ${detailsProduct.weight.unit}`
+                          : copy.pending)}
+                    </dd>
+                  </div>
+                  <div className="border-border border-b pb-3">
+                    <dt className="text-muted-foreground text-xs font-bold uppercase">
+                      {copy.drop}
+                    </dt>
+                    <dd className="mt-1 font-semibold">
+                      {dropLabel(detailsProduct, copy.pending)}
+                    </dd>
+                  </div>
+                  <div className="border-border border-b pb-3">
+                    <dt className="text-muted-foreground text-xs font-bold uppercase">
+                      {copy.fit}
+                    </dt>
+                    <dd className="mt-1 font-semibold">
+                      {detailProfile
+                        ? resolveLocalizedText(
+                            detailProfile.specifications.fit,
+                            locale,
+                          ).value
+                        : copy.pending}
+                    </dd>
+                  </div>
+                  <div className="border-border border-b pb-3">
+                    <dt className="text-muted-foreground text-xs font-bold uppercase">
+                      {copy.stackHeight}
+                    </dt>
+                    <dd className="mt-1 font-semibold">
+                      {detailProfile?.specifications.stackHeight ??
+                        copy.pending}
+                    </dd>
+                  </div>
+                  <div className="border-border border-b pb-3">
+                    <dt className="text-muted-foreground text-xs font-bold uppercase">
+                      {copy.plateSystem}
+                    </dt>
+                    <dd className="mt-1 font-semibold">
+                      {detailProfile
+                        ? resolveLocalizedText(
+                            detailProfile.specifications.plateSystem,
+                            locale,
+                          ).value
+                        : copy.pending}
+                    </dd>
+                  </div>
+                </dl>
+
+                {detailProductSource?.url ? (
+                  <a
+                    className={cn(
+                      buttonVariants({ variant: 'primary' }),
+                      'mt-6',
+                    )}
+                    href={detailProductSource.url}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {copy.sourceProduct}
+                    <ArrowUpRight aria-hidden="true" className="size-4" />
+                  </a>
+                ) : null}
               </div>
+            </div>
+
+            <div className="border-border tablet:p-8 grid gap-8 border-t p-6">
+              <section>
+                <h3 className="m-0 text-lg font-semibold">
+                  {copy.constructionAndRide}
+                </h3>
+                {detailProfile ? (
+                  <div className="tablet:grid-cols-2 mt-4 grid gap-3">
+                    {(
+                      [
+                        [copy.rideCharacter, detailProfile.construction.ride],
+                        [copy.support, detailProfile.construction.support],
+                        [copy.upper, detailProfile.construction.upper],
+                        [copy.midsole, detailProfile.construction.midsole],
+                        [copy.outsole, detailProfile.construction.outsole],
+                      ] as const
+                    ).map(([label, value]) => (
+                      <div
+                        className="border-border rounded-[var(--radius-control)] border p-4"
+                        key={label}
+                      >
+                        <h4 className="text-muted-foreground m-0 text-xs font-bold tracking-wide uppercase">
+                          {label}
+                        </h4>
+                        <p className="mt-2 mb-0 text-sm leading-6">
+                          {resolveLocalizedText(value, locale).value}
+                        </p>
+                      </div>
+                    ))}
+                    <div className="border-border rounded-[var(--radius-control)] border p-4">
+                      <h4 className="text-muted-foreground m-0 text-xs font-bold tracking-wide uppercase">
+                        {copy.technologies}
+                      </h4>
+                      <p className="mt-2 mb-0 text-sm leading-6">
+                        {(
+                          detailProfile.specifications.technologies ??
+                          detailsProduct.product.technologies.value
+                        )?.join(' · ') ?? copy.pending}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-3">
+                    <p className="text-muted-foreground mb-0">
+                      {copy.detailsPending}
+                    </p>
+                    <h4 className="mt-5 mb-0 text-sm font-semibold">
+                      {copy.technologies}
+                    </h4>
+                    <p className="text-muted-foreground mt-2 mb-0 text-sm leading-6">
+                      {detailsProduct.product.technologies.value?.join(' · ') ??
+                        copy.pending}
+                    </p>
+                  </div>
+                )}
+              </section>
+
+              {detailProfile ? (
+                <section>
+                  <h3 className="m-0 text-lg font-semibold">
+                    {copy.strengthsAndLimitations}
+                  </h3>
+                  <p className="text-muted-foreground mt-1 mb-0 text-sm">
+                    {copy.strengthsLead}
+                  </p>
+                  <dl className="tablet:grid-cols-2 mt-4 grid gap-4 text-sm">
+                    <div className="border-border border-t pt-3">
+                      <dt className="text-muted-foreground text-xs font-bold uppercase">
+                        {copy.bestAt}
+                      </dt>
+                      <dd className="mt-1">
+                        {
+                          resolveLocalizedText(
+                            detailProfile.decision.bestAt,
+                            locale,
+                          ).value
+                        }
+                      </dd>
+                    </div>
+                    <div className="border-border border-t pt-3">
+                      <dt className="text-muted-foreground text-xs font-bold uppercase">
+                        {copy.lessSuitableFor}
+                      </dt>
+                      <dd className="mt-1">
+                        {
+                          resolveLocalizedText(
+                            detailProfile.decision.lessSuitableFor,
+                            locale,
+                          ).value
+                        }
+                      </dd>
+                    </div>
+                  </dl>
+                </section>
+              ) : null}
+
+              <section>
+                <h3 className="m-0 text-lg font-semibold">
+                  {copy.comparableProducts}
+                </h3>
+                <div className="mt-3 grid gap-2">
+                  {comparableProducts.map((comparable) => {
+                    const id = comparable.product.id;
+                    return (
+                      <button
+                        className="border-border hover:bg-surface-subtle flex cursor-pointer items-center justify-between gap-4 rounded-[var(--radius-control)] border bg-transparent px-4 py-3 text-left"
+                        key={id}
+                        onClick={() => compareFromDetails(id)}
+                        type="button"
+                      >
+                        <span>
+                          <span className="block text-xs font-bold tracking-wide uppercase">
+                            {comparable.product.brand.name}
+                          </span>
+                          <span className="text-muted-foreground mt-1 block text-sm">
+                            {comparable.product.model}
+                          </span>
+                        </span>
+                        <span className="text-primary text-sm font-semibold">
+                          {copy.compareWith(comparable.product.model)}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+
+              <section className="border-border border-t pt-4 text-sm">
+                <h3 className="m-0 text-base font-semibold">
+                  {detailProfile ? copy.prototypeEvidence : copy.sources}
+                </h3>
+                <p className="text-muted-foreground mt-2 mb-0">
+                  {detailProfile
+                    ? resolveLocalizedText(
+                        detailProfile.provenance.note,
+                        locale,
+                      ).value
+                    : copy.sourcePending}
+                </p>
+              </section>
             </div>
           </DialogContent>
         ) : null}
