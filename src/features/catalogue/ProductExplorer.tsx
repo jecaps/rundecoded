@@ -332,6 +332,8 @@ export function ProductExplorer({
     detailsProduct?.product.sources.find(
       (source) => source.type === 'retailer-product' && source.url,
     ) ?? null;
+  const detailSourceUrl =
+    detailProfile?.provenance.officialProductUrl ?? detailProductSource?.url;
 
   function updateUrlState(state: CatalogueUrlState, mode: 'push' | 'replace') {
     const nextUrl = writeCatalogueUrlState(
@@ -918,7 +920,8 @@ export function ProductExplorer({
                       {copy.drop}
                     </dt>
                     <dd className="mt-1 font-semibold">
-                      {dropLabel(detailsProduct, copy.pending)}
+                      {detailProfile?.specifications.drop ??
+                        dropLabel(detailsProduct, copy.pending)}
                     </dd>
                   </div>
                   <div className="border-border border-b pb-3">
@@ -958,13 +961,13 @@ export function ProductExplorer({
                   </div>
                 </dl>
 
-                {detailProductSource?.url ? (
+                {detailSourceUrl ? (
                   <a
                     className={cn(
                       buttonVariants({ variant: 'primary' }),
                       'mt-6',
                     )}
-                    href={detailProductSource.url}
+                    href={detailSourceUrl}
                     rel="noreferrer"
                     target="_blank"
                   >

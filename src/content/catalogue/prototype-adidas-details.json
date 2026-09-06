@@ -1,0 +1,633 @@
+{
+  "adidas-galaxy-7": {
+    "overview": {
+      "en": "The Adidas Galaxy 7 is a neutral road shoe for beginners and short, easy sessions. Its Cloudfoam midsole cushions each step, while the durable textile upper and TPU outsole are designed for straightforward everyday comfort.",
+      "de": "Der Adidas Galaxy 7 ist ein neutraler Straßenlaufschuh für Einsteiger und kurze, lockere Einheiten. Die Cloudfoam-Zwischensohle dämpft jeden Schritt, während das robuste Textil-Obermaterial und die TPU-Außensohle auf unkomplizierten Alltagskomfort ausgelegt sind.",
+      "fr": "L’Adidas Galaxy 7 est une chaussure de route neutre pour débuter et effectuer des sorties courtes et faciles. La semelle intermédiaire Cloudfoam amortit chaque pas, tandis que la tige textile robuste et la semelle TPU privilégient un confort simple au quotidien."
+    },
+    "cardSummary": {
+      "en": "A straightforward neutral beginner shoe with comfortable Cloudfoam cushioning and a durable TPU outsole.",
+      "de": "Ein unkomplizierter neutraler Einsteigerschuh mit komfortabler Cloudfoam-Dämpfung und robuster TPU-Außensohle.",
+      "fr": "Chaussure neutre simple pour débuter, avec amorti Cloudfoam confortable et semelle extérieure TPU durable."
+    },
+    "bestFor": {
+      "en": "Beginner · short easy road runs · everyday use",
+      "de": "Anfänger · kurze lockere Straßenläufe · Alltag",
+      "fr": "Débutant · sorties route courtes et faciles · quotidien"
+    },
+    "construction": {
+      "ride": {
+        "en": "Soft, calm and predictable, prioritising comfort over speed.",
+        "de": "Weich, ruhig und vorhersehbar; auf Komfort statt Tempo ausgelegt.",
+        "fr": "Souple, calme et prévisible, privilégiant le confort à la vitesse."
+      },
+      "support": {
+        "en": "Neutral construction without a corrective pronation system; support mainly comes from the upper and fit.",
+        "de": "Neutraler Aufbau ohne korrigierendes Pronationssystem; Halt entsteht hauptsächlich durch Schaft und Passform.",
+        "fr": "Construction neutre sans système correcteur de pronation ; le maintien vient surtout de la tige et du chaussant."
+      },
+      "upper": {
+        "en": "Durable textile upper with traditional lacing and a regular fit.",
+        "de": "Strapazierfähiges Textil-Obermaterial mit klassischer Schnürung und regulärer Passform.",
+        "fr": "Tige textile durable avec laçage classique et chaussant standard."
+      },
+      "midsole": {
+        "en": "Cloudfoam cushioning for lasting comfort during short road runs and everyday wear.",
+        "de": "Cloudfoam-Dämpfung für lang anhaltenden Komfort bei kurzen Straßenläufen und im Alltag.",
+        "fr": "Amorti Cloudfoam pour un confort durable pendant les sorties courtes sur route et au quotidien."
+      },
+      "outsole": {
+        "en": "Durable TPU outsole for paved roads and paths.",
+        "de": "Robuste TPU-Außensohle für befestigte Straßen und Wege.",
+        "fr": "Semelle extérieure TPU durable pour routes et chemins revêtus."
+      }
+    },
+    "decision": {
+      "bestAt": {
+        "en": "first and easy runs with straightforward comfort",
+        "de": "erste und lockere Läufe mit unkompliziertem Komfort",
+        "fr": "premières sorties et footings faciles avec un confort simple"
+      },
+      "lessSuitableFor": {
+        "en": "high-speed sessions, racing or technical trails",
+        "de": "hohes Tempo, Wettkampf oder technische Trails",
+        "fr": "séances rapides, compétition ou trails techniques"
+      }
+    },
+    "specifications": {
+      "fit": { "en": "Regular", "de": "Normal", "fr": "Standard" },
+      "plateSystem": { "en": "None", "de": "Keine", "fr": "Aucune" },
+      "stackHeight": "35 / 29 mm",
+      "technologies": ["Cloudfoam", "Durable textile upper", "TPU outsole"],
+      "weight": "319 g",
+      "drop": "6 mm"
+    },
+    "provenance": {
+      "label": "Original RunDecoded prototype",
+      "note": {
+        "en": "Migrated from the original RunDecoded prototype. Manufacturer re-verification is pending.",
+        "de": "Aus dem ursprünglichen RunDecoded-Prototyp übernommen. Eine erneute Herstellerprüfung steht noch aus.",
+        "fr": "Données reprises du prototype RunDecoded d’origine. Une nouvelle vérification auprès du fabricant est en attente."
+      },
+      "officialProductUrl": "https://www.adidas.de/en/galaxy-7-running-shoes/ID8760.html",
+      "status": "fallback"
+    }
+  },
+  "adidas-runblaze": {
+    "overview": {
+      "en": "The Adidas Runblaze is designed for first runs and everyday base training on straightforward surfaces. Cloudfoam combines light cushioning with responsiveness, the mesh promotes airflow, and the Adiwear outsole supplies durable road traction.",
+      "de": "Der Adidas Runblaze ist für erste Läufe und tägliches Basistraining auf einfachen Untergründen konzipiert. Cloudfoam verbindet leichte Dämpfung mit Reaktionsfreude, das Mesh lässt Luft zirkulieren und die Adiwear-Außensohle sorgt für haltbaren Straßengrip.",
+      "fr": "L’Adidas Runblaze est conçue pour les premières sorties et l’entraînement quotidien sur surfaces simples. Cloudfoam associe amorti léger et réactivité, le mesh favorise la circulation de l’air et la semelle Adiwear apporte une adhérence durable sur route."
+    },
+    "cardSummary": {
+      "en": "Comfortable neutral beginner shoe with responsive Cloudfoam cushioning, airy mesh and a durable Adiwear outsole.",
+      "de": "Komfortabler neutraler Einsteigerschuh mit reaktiver Cloudfoam-Dämpfung, luftigem Mesh und robuster Adiwear-Sohle.",
+      "fr": "Chaussure neutre confortable pour débuter, avec Cloudfoam réactive, mesh aéré et semelle Adiwear durable."
+    },
+    "bestFor": {
+      "en": "Beginner · daily training · 1–10 km",
+      "de": "Anfänger · tägliches Training · 1–10 km",
+      "fr": "Débutant · entraînement quotidien · 1–10 km"
+    },
+    "construction": {
+      "ride": {
+        "en": "Lightly cushioned, straightforward and a little more responsive than a casual-only shoe.",
+        "de": "Leicht gedämpft, unkompliziert und etwas reaktiver als ein reiner Freizeitschuh.",
+        "fr": "Légèrement amortie, accessible et un peu plus réactive qu’une chaussure uniquement destinée aux loisirs."
+      },
+      "support": {
+        "en": "Neutral trainer without a corrective stability element; the fit provides everyday hold.",
+        "de": "Neutraler Trainingsschuh ohne korrigierendes Stabilitätselement; die Passform bietet alltäglichen Halt.",
+        "fr": "Chaussure d’entraînement neutre sans élément correcteur de stabilité ; le chaussant assure un maintien quotidien."
+      },
+      "upper": {
+        "en": "Breathable mesh upper with a regular fit and traditional lacing; contains at least 20% recycled content.",
+        "de": "Atmungsaktiver Mesh-Schaft mit regulärer Passform und klassischer Schnürung; mindestens 20 % recycelte Materialien.",
+        "fr": "Tige en mesh respirant avec chaussant standard et laçage classique ; contient au moins 20 % de matières recyclées."
+      },
+      "midsole": {
+        "en": "Cloudfoam midsole for light, comfortable and responsive cushioning.",
+        "de": "Cloudfoam-Zwischensohle für leichte, komfortable und reaktive Dämpfung.",
+        "fr": "Semelle intermédiaire Cloudfoam pour un amorti léger, confortable et réactif."
+      },
+      "outsole": {
+        "en": "Abrasion-resistant Adiwear rubber outsole for dependable road grip.",
+        "de": "Abriebfeste Adiwear-Gummiaußensohle für verlässlichen Grip auf der Straße.",
+        "fr": "Semelle extérieure en caoutchouc Adiwear résistante à l’abrasion pour une adhérence fiable sur route."
+      }
+    },
+    "decision": {
+      "bestAt": {
+        "en": "first and easy runs with straightforward comfort",
+        "de": "erste und lockere Läufe mit unkompliziertem Komfort",
+        "fr": "premières sorties et footings faciles avec un confort simple"
+      },
+      "lessSuitableFor": {
+        "en": "high-speed sessions, racing or technical trails",
+        "de": "hohes Tempo, Wettkampf oder technische Trails",
+        "fr": "séances rapides, compétition ou trails techniques"
+      }
+    },
+    "specifications": {
+      "fit": { "en": "Regular", "de": "Normal", "fr": "Standard" },
+      "plateSystem": { "en": "None", "de": "Keine", "fr": "Aucune" },
+      "stackHeight": "–",
+      "technologies": [
+        "Cloudfoam",
+        "Breathable mesh",
+        "Adiwear outsole",
+        "20% recycled content"
+      ],
+      "weight": "278 g",
+      "drop": "–"
+    },
+    "provenance": {
+      "label": "Original RunDecoded prototype",
+      "note": {
+        "en": "Migrated from the original RunDecoded prototype. Manufacturer re-verification is pending.",
+        "de": "Aus dem ursprünglichen RunDecoded-Prototyp übernommen. Eine erneute Herstellerprüfung steht noch aus.",
+        "fr": "Données reprises du prototype RunDecoded d’origine. Une nouvelle vérification auprès du fabricant est en attente."
+      },
+      "officialProductUrl": "https://www.adidas.com/kw/en/runblaze-m/JQ0630.html",
+      "status": "fallback"
+    }
+  },
+  "adidas-supernova-rise-3": {
+    "overview": {
+      "en": "The Adidas Supernova Rise 3 is a comfortable daily trainer for roads and consistent mileage. Its full-length Dreamstrike+ midsole blends soft and stable cushioning, the Primeweave upper provides breathable support, and Lighttraxion promotes a natural transition.",
+      "de": "Der Adidas Supernova Rise 3 ist ein komfortabler Daily Trainer für Straße und lange Alltagskilometer. Die durchgehende Dreamstrike+-Zwischensohle kombiniert weiche und stabile Dämpfung, der Primeweave-Schaft bietet atmungsaktiven Halt und Lighttraxion unterstützt ein natürliches Abrollen.",
+      "fr": "L’Adidas Supernova Rise 3 est une chaussure quotidienne confortable pour la route et l’accumulation de kilomètres. La semelle Dreamstrike+ sur toute la longueur associe souplesse et stabilité, la tige Primeweave apporte un maintien respirant et Lighttraxion favorise un déroulé naturel."
+    },
+    "cardSummary": {
+      "en": "Balanced daily trainer with soft, stable Dreamstrike+ cushioning, a Primeweave upper and smooth Lighttraxion transitions.",
+      "de": "Ausgewogener Daily Trainer mit weicher, stabiler Dreamstrike+-Dämpfung, Primeweave-Schaft und geschmeidigem Lighttraxion-Abrollen.",
+      "fr": "Chaussure quotidienne équilibrée avec Dreamstrike+ souple et stable, tige Primeweave et transitions fluides Lighttraxion."
+    },
+    "bestFor": {
+      "en": "All levels · daily road running · easy to long runs",
+      "de": "Alle Levels · tägliche Straßenläufe · lockere bis lange Läufe",
+      "fr": "Tous niveaux · course quotidienne sur route · sorties faciles à longues"
+    },
+    "construction": {
+      "ride": {
+        "en": "Soft, smooth and controlled. Adidas describes the current Dreamstrike+ cushioning as 20% softer than the previous version.",
+        "de": "Weich, geschmeidig und kontrolliert. Adidas beschreibt die aktuelle Dreamstrike+-Dämpfung als 20 % weicher als beim Vorgänger.",
+        "fr": "Souple, fluide et contrôlée. Adidas annonce un amorti Dreamstrike+ 20 % plus souple que la version précédente."
+      },
+      "support": {
+        "en": "Neutral shoe with a stable cushioning base, secure Primeweave hold and a central heel strike zone; no traditional pronation-control system.",
+        "de": "Neutraler Schuh mit stabiler Dämpfungsbasis, sicherem Primeweave-Halt und zentraler Aufprallzone in der Ferse; kein klassisches Pronationssystem.",
+        "fr": "Chaussure neutre avec base d’amorti stable, maintien Primeweave et zone d’impact centrale au talon ; pas de système antipronation traditionnel."
+      },
+      "upper": {
+        "en": "Light Primeweave engineered-woven upper with precision laser perforations for breathability, support and a regular fit.",
+        "de": "Leichter Primeweave-Gewebeschaft mit präzisen Laserperforationen für Atmungsaktivität, Halt und eine reguläre Passform.",
+        "fr": "Tige légère en Primeweave tissé avec perforations laser précises pour la respirabilité, le maintien et un chaussant standard."
+      },
+      "midsole": {
+        "en": "Full-length Dreamstrike+ foam balancing soft cushioning with stable support.",
+        "de": "Durchgehender Dreamstrike+-Schaum mit ausgewogener weicher und stabiler Dämpfung.",
+        "fr": "Mousse Dreamstrike+ sur toute la longueur, combinant amorti souple et soutien stable."
+      },
+      "outsole": {
+        "en": "Lighttraxion outsole shaped around foot anatomy for lasting grip and smooth transitions.",
+        "de": "Lighttraxion-Außensohle mit an der Fußanatomie orientierter Struktur für dauerhaften Grip und flüssige Übergänge.",
+        "fr": "Semelle Lighttraxion inspirée de l’anatomie du pied pour une adhérence durable et des transitions fluides."
+      }
+    },
+    "decision": {
+      "bestAt": {
+        "en": "regular training miles and versatile everyday use",
+        "de": "regelmäßige Trainingskilometer und vielseitigen Alltag",
+        "fr": "kilomètres d’entraînement réguliers et usage quotidien polyvalent"
+      },
+      "lessSuitableFor": {
+        "en": "specialised race pace or extreme terrain",
+        "de": "spezialisiertes Wettkampftempo oder extremes Gelände",
+        "fr": "allure de compétition spécialisée ou terrain extrême"
+      }
+    },
+    "specifications": {
+      "fit": { "en": "Regular", "de": "Normal", "fr": "Standard" },
+      "plateSystem": { "en": "None", "de": "Keine", "fr": "Aucune" },
+      "stackHeight": "35 / 28 mm",
+      "technologies": [
+        "Dreamstrike+",
+        "Primeweave upper",
+        "Lighttraxion",
+        "Central strike zone"
+      ],
+      "weight": "230 g",
+      "drop": "7 mm"
+    },
+    "provenance": {
+      "label": "Original RunDecoded prototype",
+      "note": {
+        "en": "Migrated from the original RunDecoded prototype. Manufacturer re-verification is pending.",
+        "de": "Aus dem ursprünglichen RunDecoded-Prototyp übernommen. Eine erneute Herstellerprüfung steht noch aus.",
+        "fr": "Données reprises du prototype RunDecoded d’origine. Une nouvelle vérification auprès du fabricant est en attente."
+      },
+      "officialProductUrl": "https://www.adidas.de/supernova-rise-3-laufschuh/JR7375.html",
+      "status": "fallback"
+    }
+  },
+  "adidas-adistar-5": {
+    "overview": {
+      "en": "The Adidas Adistar 5 is designed for comfortable daily and long road running. Dreamstrike foam balances soft and stable cushioning, the Distance Last and an internal midfoot panel secure the fit, while rocker geometry supports smooth transitions.",
+      "de": "Der Adidas Adistar 5 ist auf komfortable tägliche und lange Straßenläufe ausgelegt. Dreamstrike-Schaum verbindet weiche mit stabiler Dämpfung, der Distance Last und ein internes Mittelfuß-Panel sichern den Sitz, während die Rocker-Geometrie flüssige Übergänge unterstützt.",
+      "fr": "L’Adidas Adistar 5 vise le confort sur les sorties quotidiennes et longues. La mousse Dreamstrike associe souplesse et stabilité, le Distance Last et le panneau interne sécurisent le pied, tandis que le rocker fluidifie les transitions."
+    },
+    "cardSummary": {
+      "en": "Maximum-cushion distance shoe with Dreamstrike foam, a 45 mm heel and rolling geometry.",
+      "de": "Maximal gedämpfter Langstreckenschuh mit Dreamstrike-Schaum, 45-mm-Ferse und rollender Geometrie.",
+      "fr": "Chaussure longue distance à amorti maximal avec mousse Dreamstrike, talon de 45 mm et géométrie roulante."
+    },
+    "bestFor": {
+      "en": "All levels · long easy road runs · high mileage through marathon",
+      "de": "Alle Levels · lange ruhige Straßenläufe · hohe Umfänge bis Marathon",
+      "fr": "Tous niveaux · longues sorties faciles · gros volume jusqu’au marathon"
+    },
+    "construction": {
+      "ride": {
+        "en": "Very soft, stable and smoothly rolling, prioritising comfort and endurance over aggressive speed.",
+        "de": "Sehr weich, stabil und gleichmäßig rollend; auf Komfort und Ausdauer statt aggressives Tempo ausgerichtet.",
+        "fr": "Très souple, stable et fluide, privilégiant confort et endurance plutôt que vitesse agressive."
+      },
+      "support": {
+        "en": "Neutral construction with inherent stability from the high broad platform, Distance Last and internal midfoot panel.",
+        "de": "Neutraler Aufbau mit inhärenter Stabilität durch hohe, breite Plattform, Distance Last und internes Mittelfuß-Panel.",
+        "fr": "Construction neutre avec stabilité intrinsèque grâce à la plateforme large, au Distance Last et au panneau interne."
+      },
+      "upper": {
+        "en": "Textile upper with a regular fit, secure lacing and an internal panel for adaptive midfoot hold.",
+        "de": "Textil-Schaft mit regulärer Passform, sicherer Schnürung und internem Panel für anpassungsfähigen Mittelfußhalt.",
+        "fr": "Tige textile au chaussant standard avec laçage sûr et panneau interne pour maintenir le médio-pied."
+      },
+      "midsole": {
+        "en": "Dreamstrike foam in a 45/39 mm platform for soft supportive cushioning and smooth transitions.",
+        "de": "Dreamstrike-Schaum in einer 45/39-mm-Plattform für weiche, unterstützende Dämpfung und flüssiges Abrollen.",
+        "fr": "Mousse Dreamstrike sur une plateforme de 45/39 mm pour un amorti souple, stable et des transitions fluides."
+      },
+      "outsole": {
+        "en": "Synthetic road outsole for protection and traction on daily and long runs.",
+        "de": "Synthetische Straßen-Außensohle für Schutz und Traktion bei täglichen und langen Läufen.",
+        "fr": "Semelle extérieure synthétique pour protection et adhérence sur les sorties quotidiennes et longues."
+      }
+    },
+    "decision": {
+      "bestAt": {
+        "en": "easy to long runs when protection and comfort matter",
+        "de": "ruhige bis lange Läufe mit viel Schutz und Komfort",
+        "fr": "sorties faciles à longues privilégiant protection et confort"
+      },
+      "lessSuitableFor": {
+        "en": "direct tempo work or racing",
+        "de": "direktes Tempo- oder Wettkampflaufen",
+        "fr": "séances rapides ou compétition très directe"
+      }
+    },
+    "specifications": {
+      "fit": { "en": "Regular", "de": "Normal", "fr": "Standard" },
+      "plateSystem": { "en": "None", "de": "Keine", "fr": "Aucune" },
+      "stackHeight": "45 / 39 mm",
+      "technologies": [
+        "Dreamstrike foam",
+        "Distance Last",
+        "Internal fit panel",
+        "Rocker geometry"
+      ],
+      "weight": "264 g",
+      "drop": "6 mm"
+    },
+    "provenance": {
+      "label": "Original RunDecoded prototype",
+      "note": {
+        "en": "Migrated from the original RunDecoded prototype. Manufacturer re-verification is pending.",
+        "de": "Aus dem ursprünglichen RunDecoded-Prototyp übernommen. Eine erneute Herstellerprüfung steht noch aus.",
+        "fr": "Données reprises du prototype RunDecoded d’origine. Une nouvelle vérification auprès du fabricant est en attente."
+      },
+      "officialProductUrl": "https://www.adidas.de/en/adistar-5-running-shoes/KI4355.html",
+      "status": "fallback"
+    }
+  },
+  "adidas-adizero-boston-13": {
+    "overview": {
+      "en": "The Adidas Adizero Boston 13 brings race technology into a more durable trainer for tempo sessions and long fast runs. Lightstrike Pro and Lightstrike combine energy return with control, while glass-fibre ENERGYRODS 2.0 assist propulsion.",
+      "de": "Der Adidas Adizero Boston 13 bringt Wettkampftechnologien in einen haltbareren Trainingsschuh für Tempoeinheiten und lange schnelle Läufe. Lightstrike Pro und Lightstrike kombinieren Energierückgabe mit Kontrolle, während ENERGYRODS 2.0 aus Glasfaser den Vortrieb unterstützen.",
+      "fr": "L’Adidas Adizero Boston 13 transpose des technologies de compétition dans une chaussure plus durable pour le tempo et les longues sorties rapides. Lightstrike Pro et Lightstrike associent retour d’énergie et contrôle, tandis que les ENERGYRODS 2.0 en fibre de verre favorisent la propulsion."
+    },
+    "cardSummary": {
+      "en": "Propulsive super trainer with Lightstrike Pro, glass-fibre ENERGYRODS 2.0 and a grippy Lighttraxion-Continental outsole.",
+      "de": "Propulsiver Super-Trainer mit Lightstrike Pro, glasfaserverstärkten ENERGYRODS 2.0 und griffiger Lighttraxion-Continental-Sohle.",
+      "fr": "Super-trainer propulsif avec Lightstrike Pro, ENERGYRODS 2.0 en fibre de verre et semelle Lighttraxion-Continental adhérente."
+    },
+    "bestFor": {
+      "en": "Recreational & competitive · tempo and long fast runs · marathon training",
+      "de": "Freizeit- & Wettkampfläufer · Tempo und lange schnelle Läufe · Marathontraining",
+      "fr": "Loisir et compétition · tempo et longues sorties rapides · préparation marathon"
+    },
+    "construction": {
+      "ride": {
+        "en": "Firm, responsive and clearly propulsion-focused, while more versatile and durable than a pure race shoe.",
+        "de": "Straff, reaktiv und deutlich vortriebsorientiert; vielseitiger und haltbarer als ein reiner Wettkampfschuh.",
+        "fr": "Ferme, réactive et nettement orientée propulsion, tout en étant plus polyvalente et durable qu’une pure chaussure de compétition."
+      },
+      "support": {
+        "en": "Neutral performance shoe; midfoot lockdown and ENERGYRODS guide movement but do not replace pronation support.",
+        "de": "Neutraler Performance-Schuh; Mittelfußfixierung und ENERGYRODS führen die Bewegung, ersetzen aber keine Pronationsstütze.",
+        "fr": "Chaussure performance neutre ; le maintien du médio-pied et les ENERGYRODS guident le mouvement sans corriger la pronation."
+      },
+      "upper": {
+        "en": "Very light mesh upper with breathable zones and an eye-stay construction that secures the midfoot.",
+        "de": "Sehr leichter Mesh-Schaft mit atmungsaktiven Zonen und Schnürleistenkonstruktion zur Fixierung des Mittelfußes.",
+        "fr": "Tige en mesh très légère avec zones respirantes et construction des œillets maintenant le médio-pied."
+      },
+      "midsole": {
+        "en": "Lightstrike Pro for energy return, Lightstrike for a controlled base and glass-fibre ENERGYRODS 2.0 for dynamic transitions.",
+        "de": "Lightstrike Pro für Energierückgabe, Lightstrike für eine kontrollierte Basis und ENERGYRODS 2.0 aus Glasfaser für dynamische Übergänge.",
+        "fr": "Lightstrike Pro pour le retour d’énergie, Lightstrike pour une base contrôlée et ENERGYRODS 2.0 en fibre de verre pour des transitions dynamiques."
+      },
+      "outsole": {
+        "en": "Weight-saving Lighttraxion outsole with Continental™ rubber at toe-off for grip on dry and wet asphalt.",
+        "de": "Gewichtsreduzierte Lighttraxion-Außensohle mit Continental™ Gummi im Abdruckbereich für Grip auf trockenem und nassem Asphalt.",
+        "fr": "Semelle Lighttraxion allégée avec caoutchouc Continental™ à l’impulsion pour l’adhérence sur asphalte sec ou humide."
+      }
+    },
+    "decision": {
+      "bestAt": {
+        "en": "fast training with a responsive, propulsive ride",
+        "de": "schnelles Training mit reaktivem Vortrieb",
+        "fr": "entraînement rapide et propulsion réactive"
+      },
+      "lessSuitableFor": {
+        "en": "very slow running or technical terrain",
+        "de": "sehr langsame Läufe oder technisches Gelände",
+        "fr": "footings très lents ou terrain technique"
+      }
+    },
+    "specifications": {
+      "fit": { "en": "Regular", "de": "Normal", "fr": "Standard" },
+      "plateSystem": {
+        "en": "ENERGYRODS 2.0",
+        "de": "ENERGYRODS 2.0",
+        "fr": "ENERGYRODS 2.0"
+      },
+      "stackHeight": "36 / 30 mm",
+      "technologies": [
+        "LIGHTSTRIKE PRO",
+        "LIGHTSTRIKE",
+        "ENERGYRODS 2.0",
+        "Lighttraxion + Continental™"
+      ],
+      "weight": "253 g",
+      "drop": "6 mm"
+    },
+    "provenance": {
+      "label": "Original RunDecoded prototype",
+      "note": {
+        "en": "Migrated from the original RunDecoded prototype. Manufacturer re-verification is pending.",
+        "de": "Aus dem ursprünglichen RunDecoded-Prototyp übernommen. Eine erneute Herstellerprüfung steht noch aus.",
+        "fr": "Données reprises du prototype RunDecoded d’origine. Une nouvelle vérification auprès du fabricant est en attente."
+      },
+      "officialProductUrl": "https://www.adidas.de/en/adizero-boston-13-shoes/JS4932.html",
+      "status": "fallback"
+    }
+  },
+  "adidas-adizero-evo-sl": {
+    "overview": {
+      "en": "The Adidas Adizero Evo SL translates the fast feel of the Adizero racing family into a versatile trainer without a carbon plate. Its Lightstrike Pro midsole supplies lightweight cushioning and energy return for fast sessions, longer runs and occasional racing.",
+      "de": "Der Adidas Adizero Evo SL überträgt das schnelle Laufgefühl der Adizero-Rennfamilie in einen vielseitigen Trainingsschuh ohne Carbonplatte. Die Lightstrike-Pro-Zwischensohle liefert leichte Dämpfung und Energierückgabe für schnelle Einheiten, längere Läufe und gelegentliche Wettkämpfe.",
+      "fr": "L’Adidas Adizero Evo SL transpose les sensations rapides de la famille Adizero dans une chaussure polyvalente sans plaque carbone. La semelle Lightstrike Pro apporte amorti léger et retour d’énergie pour les séances rapides, les sorties longues et certaines compétitions."
+    },
+    "cardSummary": {
+      "en": "Lightweight, plateless performance trainer with full-length Lightstrike Pro cushioning and high energy return.",
+      "de": "Leichter, plattenloser Performance-Trainer mit durchgehender Lightstrike-Pro-Dämpfung und hoher Energierückgabe.",
+      "fr": "Chaussure performance légère sans plaque, avec amorti Lightstrike Pro intégral et fort retour d’énergie."
+    },
+    "bestFor": {
+      "en": "Recreational & competitive · fast training · 10 km to marathon",
+      "de": "Freizeit- & Wettkampfläufer · schnelle Trainingsläufe · 10 km bis Marathon",
+      "fr": "Loisir et compétition · entraînement rapide · 10 km au marathon"
+    },
+    "construction": {
+      "ride": {
+        "en": "Light, bouncy and highly dynamic, yet more flexible and everyday-friendly than a carbon racer.",
+        "de": "Leicht, federnd und sehr dynamisch, dabei flexibler und alltagstauglicher als ein Carbon-Racer.",
+        "fr": "Légère, rebondissante et très dynamique, tout en restant plus flexible et polyvalente qu’une chaussure carbone."
+      },
+      "support": {
+        "en": "Neutral, plateless construction; the secure upper and outsole patches add confidence without a corrective stability system.",
+        "de": "Neutraler, plattenloser Aufbau; sicherer Schaft und Außensohlen-Patches geben Halt, ohne korrigierendes Stabilitätssystem.",
+        "fr": "Construction neutre sans plaque ; la tige ajustée et les inserts de semelle apportent du maintien sans système correcteur."
+      },
+      "upper": {
+        "en": "Light textile and mesh upper with a regular fit and secure traditional lacing.",
+        "de": "Leichter Textil-/Mesh-Schaft mit regulärer Passform und sicherer klassischer Schnürung.",
+        "fr": "Tige légère en textile et mesh avec chaussant standard et laçage classique sûr."
+      },
+      "midsole": {
+        "en": "Full-length Lightstrike Pro foam for very light cushioning, responsiveness and energy return; no plate.",
+        "de": "Durchgehender Lightstrike-Pro-Schaum für sehr leichte Dämpfung, Reaktionsfreude und Energierückgabe; keine Platte.",
+        "fr": "Mousse Lightstrike Pro sur toute la longueur pour un amorti très léger, de la réactivité et du retour d’énergie ; sans plaque."
+      },
+      "outsole": {
+        "en": "Rubber outsole with a grippy Continental™ forefoot patch and clear rubber at the heel.",
+        "de": "Gummiaußensohle mit griffigem Continental™-Patch im Vorfuß und transparentem Gummi im Fersenbereich.",
+        "fr": "Semelle en caoutchouc avec insert Continental™ adhérent à l’avant-pied et caoutchouc transparent au talon."
+      }
+    },
+    "decision": {
+      "bestAt": {
+        "en": "tempo sessions and faster training runs",
+        "de": "Tempoeinheiten und schnelle Trainingsläufe",
+        "fr": "séances tempo et entraînements rapides"
+      },
+      "lessSuitableFor": {
+        "en": "very easy running with a maximum-comfort focus",
+        "de": "sehr ruhige Läufe mit maximalem Komfortfokus",
+        "fr": "footings très tranquilles privilégiant l’amorti maximal"
+      }
+    },
+    "specifications": {
+      "fit": { "en": "Regular", "de": "Normal", "fr": "Standard" },
+      "plateSystem": { "en": "None", "de": "Keine", "fr": "Aucune" },
+      "stackHeight": "38 / 32 mm",
+      "technologies": [
+        "LIGHTSTRIKE PRO",
+        "Lightweight mesh",
+        "Continental™ forefoot",
+        "Clear-rubber heel"
+      ],
+      "weight": "224 g",
+      "drop": "6 mm"
+    },
+    "provenance": {
+      "label": "Original RunDecoded prototype",
+      "note": {
+        "en": "Migrated from the original RunDecoded prototype. Manufacturer re-verification is pending.",
+        "de": "Aus dem ursprünglichen RunDecoded-Prototyp übernommen. Eine erneute Herstellerprüfung steht noch aus.",
+        "fr": "Données reprises du prototype RunDecoded d’origine. Une nouvelle vérification auprès du fabricant est en attente."
+      },
+      "officialProductUrl": "https://www.adidas.de/en/adizero-evo-sl-shoes/KH9575.html",
+      "status": "fallback"
+    }
+  },
+  "adidas-terrex-agravic-4": {
+    "overview": {
+      "en": "The Adidas Terrex Agravic 4 is a versatile trail trainer for beginners through experienced runners. Its revised Lightstrike cushioning is more comfortable for long sessions, the upper balances ventilation with protection, and Continental™ rubber supplies traction across varied terrain.",
+      "de": "Der Adidas Terrex Agravic 4 ist ein vielseitiger Trail-Trainingsschuh für Einsteiger bis erfahrene Läufer. Die überarbeitete Lightstrike-Dämpfung ist komfortabler für lange Einheiten, der Schaft verbindet Belüftung mit Schutz und Continental™ Gummi liefert Traktion auf wechselndem Gelände.",
+      "fr": "L’Adidas Terrex Agravic 4 est une chaussure d’entraînement trail polyvalente, du débutant au coureur expérimenté. L’amorti Lightstrike revu améliore le confort sur les longues sorties, la tige équilibre ventilation et protection, et le caoutchouc Continental™ assure l’adhérence sur terrain varié."
+    },
+    "cardSummary": {
+      "en": "Versatile trail all-rounder with softer Lightstrike cushioning, protective mesh and Continental grip for wet and dry paths.",
+      "de": "Vielseitiger Trail-Allrounder mit weicherer Lightstrike-Dämpfung, schützendem Mesh und Continental-Grip für nasse wie trockene Wege.",
+      "fr": "Chaussure trail polyvalente avec Lightstrike plus souple, mesh protecteur et adhérence Continental sur terrain sec ou humide."
+    },
+    "bestFor": {
+      "en": "All levels · everyday trail training · long varied trails",
+      "de": "Alle Levels · tägliches Trailtraining · lange wechselnde Trails",
+      "fr": "Tous niveaux · entraînement trail quotidien · longues sorties variées"
+    },
+    "construction": {
+      "ride": {
+        "en": "Smooth, protective and agile enough for quicker sessions, with more comfort focus than a pure trail racer.",
+        "de": "Geschmeidig, geschützt und agil genug für zügige Einheiten, mit stärkerem Komfortfokus als ein reiner Trail-Racer.",
+        "fr": "Fluide, protectrice et assez agile pour accélérer, avec davantage de confort qu’une pure chaussure de trail compétition."
+      },
+      "support": {
+        "en": "Neutral trail shoe with inherent stability from TPU overlays, a protective upper and secure base; no pronation-control system.",
+        "de": "Neutraler Trail-Schuh mit inhärenter Stabilität durch TPU-Overlays, schützenden Schaft und sichere Basis; kein Pronationssystem.",
+        "fr": "Chaussure trail neutre avec stabilité intrinsèque grâce aux renforts TPU, à la tige protectrice et à la base sûre ; sans système antipronation."
+      },
+      "upper": {
+        "en": "Breathable textile and mesh upper with TPU overlays for hold, protection and durability; regular fit.",
+        "de": "Atmungsaktiver Textil-/Mesh-Schaft mit TPU-Overlays für Halt, Schutz und Haltbarkeit; reguläre Passform.",
+        "fr": "Tige respirante en textile et mesh avec renforts TPU pour le maintien, la protection et la durabilité ; chaussant standard."
+      },
+      "midsole": {
+        "en": "Lightweight Lightstrike cushioning with softer foam and a protective mesh layer against rocks and debris.",
+        "de": "Leichte Lightstrike-Dämpfung mit weicherem Schaum und schützender Mesh-Lage gegen Steine und Schmutz.",
+        "fr": "Amorti Lightstrike léger avec mousse plus souple et couche de mesh protectrice contre pierres et débris."
+      },
+      "outsole": {
+        "en": "Continental™ rubber outsole for dependable traction on wet and dry trails.",
+        "de": "Continental™ Gummiaußensohle für verlässliche Traktion auf nassen und trockenen Trails.",
+        "fr": "Semelle extérieure en caoutchouc Continental™ pour une adhérence fiable sur trails secs ou humides."
+      }
+    },
+    "decision": {
+      "bestAt": {
+        "en": "varied terrain where traction and protection matter",
+        "de": "wechselndes Gelände mit Grip und Schutz",
+        "fr": "terrains variés où adhérence et protection comptent"
+      },
+      "lessSuitableFor": {
+        "en": "long paved sections or pure road speed",
+        "de": "lange Asphaltabschnitte oder reines Straßentempo",
+        "fr": "longues portions goudronnées ou vitesse pure sur route"
+      }
+    },
+    "specifications": {
+      "fit": { "en": "Regular", "de": "Normal", "fr": "Standard" },
+      "plateSystem": { "en": "None", "de": "Keine", "fr": "Aucune" },
+      "stackHeight": "35 / 27 mm",
+      "technologies": [
+        "LIGHTSTRIKE",
+        "Continental™ rubber",
+        "TPU overlays",
+        "Protective mesh layer"
+      ],
+      "weight": "276,8 g",
+      "drop": "8 mm"
+    },
+    "provenance": {
+      "label": "Original RunDecoded prototype",
+      "note": {
+        "en": "Migrated from the original RunDecoded prototype. Manufacturer re-verification is pending.",
+        "de": "Aus dem ursprünglichen RunDecoded-Prototyp übernommen. Eine erneute Herstellerprüfung steht noch aus.",
+        "fr": "Données reprises du prototype RunDecoded d’origine. Une nouvelle vérification auprès du fabricant est en attente."
+      },
+      "officialProductUrl": "https://www.adidas.de/en/terrex-agravic-4-trail-running-shoes/KJ1291.html",
+      "status": "fallback"
+    }
+  },
+  "adidas-adizero-agravic-speed-2": {
+    "overview": {
+      "en": "The Adidas Terrex Agravic Speed 2 is designed for short, fast trail races where low weight and ground feel matter. Its low-profile dual-foam midsole combines Lightstrike Pro with a Lightstrike rim, while the Continental™ outsole provides traction across changing terrain.",
+      "de": "Der Adidas Terrex Agravic Speed 2 ist für kurze, schnelle Trailrennen entwickelt, bei denen geringes Gewicht und Bodengefühl entscheidend sind. Die flache Dual-Foam-Zwischensohle kombiniert Lightstrike Pro mit einem Lightstrike-Rahmen, während die Continental™-Außensohle Traktion auf wechselndem Untergrund liefert.",
+      "fr": "L’Adidas Terrex Agravic Speed 2 est conçue pour les trails courts et rapides où légèreté et proximité du sol sont essentielles. Sa semelle basse à double mousse associe Lightstrike Pro à un cadre Lightstrike, tandis que la semelle Continental™ apporte l’adhérence sur terrain changeant."
+    },
+    "cardSummary": {
+      "en": "Very light short-distance trail racer with a low-profile Lightstrike Pro platform and Continental grip for fast, agile movement.",
+      "de": "Sehr leichter Kurzdistanz-Trail-Racer mit flacher Lightstrike-Pro-Plattform und Continental-Grip für schnelle, agile Bewegungen.",
+      "fr": "Chaussure de trail courte distance très légère, avec plateforme basse Lightstrike Pro et adhérence Continental pour une foulée rapide et agile."
+    },
+    "bestFor": {
+      "en": "Competitive & elite · short trail races · high pace",
+      "de": "Wettkampf & Elite · kurze Trailrennen · hohes Tempo",
+      "fr": "Compétition et élite · trails courts · allure rapide"
+    },
+    "construction": {
+      "ride": {
+        "en": "Direct, low, responsive and highly agile, built for speed and racing rather than maximum long-distance comfort.",
+        "de": "Direkt, niedrig, reaktiv und sehr agil; für Tempo und Wettkampf statt maximalen Langstreckenkomfort.",
+        "fr": "Directe, basse, réactive et très agile, pensée pour la vitesse et la compétition plutôt que le confort maximal sur longue distance."
+      },
+      "support": {
+        "en": "Neutral race construction with inherent stability from the Lightstrike rim, secure upper and low platform; no pronation-control system.",
+        "de": "Neutraler Race-Aufbau mit zusätzlicher inhärenter Stabilität durch Lightstrike-Rahmen, sicheren Schaft und niedrige Plattform; kein Pronationssystem.",
+        "fr": "Construction de compétition neutre avec stabilité intrinsèque grâce au cadre Lightstrike, à la tige sûre et à la plateforme basse ; sans système antipronation."
+      },
+      "upper": {
+        "en": "Reengineered lightweight mesh and textile upper with synthetic reinforcements for greater hold at lower weight; regular fit.",
+        "de": "Überarbeiteter leichter Mesh-/Textilschaft mit synthetischen Verstärkungen für mehr Halt bei geringerem Gewicht; reguläre Passform.",
+        "fr": "Tige légère en mesh et textile remaniée avec renforts synthétiques pour davantage de maintien à poids réduit ; chaussant standard."
+      },
+      "midsole": {
+        "en": "Low-profile combination of Lightstrike Pro and a stabilising Lightstrike rim for responsive cushioning and agile ground feel.",
+        "de": "Flache Kombination aus Lightstrike Pro und stabilisierendem Lightstrike-Rahmen für reaktive Dämpfung und bodennahes, agiles Laufen.",
+        "fr": "Combinaison basse de Lightstrike Pro et d’un cadre Lightstrike stabilisant pour un amorti réactif et des sensations proches du sol."
+      },
+      "outsole": {
+        "en": "Continental™ rubber outsole for traction through fast direction changes and varied trail surfaces.",
+        "de": "Continental™ Gummiaußensohle für Traktion bei schnellen Richtungswechseln und auf unterschiedlichen Trailoberflächen.",
+        "fr": "Semelle extérieure en caoutchouc Continental™ pour l’adhérence lors des changements de direction rapides et sur surfaces variées."
+      }
+    },
+    "decision": {
+      "bestAt": {
+        "en": "fast technical trails with secure traction",
+        "de": "schnelle technische Trails mit sicherem Grip",
+        "fr": "trails techniques rapides avec adhérence sûre"
+      },
+      "lessSuitableFor": {
+        "en": "long easy road running",
+        "de": "lange ruhige Straßenläufe",
+        "fr": "longues sorties faciles sur route"
+      }
+    },
+    "specifications": {
+      "fit": { "en": "Regular", "de": "Normal", "fr": "Standard" },
+      "plateSystem": { "en": "None", "de": "Keine", "fr": "Aucune" },
+      "stackHeight": "35 / 27 mm",
+      "technologies": [
+        "LIGHTSTRIKE PRO",
+        "LIGHTSTRIKE rim",
+        "Continental™ rubber",
+        "Low-profile geometry"
+      ],
+      "weight": "221 g",
+      "drop": "8 mm"
+    },
+    "provenance": {
+      "label": "Original RunDecoded prototype",
+      "note": {
+        "en": "Migrated from the original RunDecoded prototype. Manufacturer re-verification is pending.",
+        "de": "Aus dem ursprünglichen RunDecoded-Prototyp übernommen. Eine erneute Herstellerprüfung steht noch aus.",
+        "fr": "Données reprises du prototype RunDecoded d’origine. Une nouvelle vérification auprès du fabricant est en attente."
+      },
+      "officialProductUrl": "https://www.adidas.com/us/terrex-agravic-speed-2-trail-running-shoes/JS3536.html",
+      "status": "fallback"
+    }
+  }
+}

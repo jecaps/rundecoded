@@ -157,32 +157,33 @@ describe('ProductExplorer', () => {
     ).toBeVisible();
   });
 
-  it('shows migrated prototype details only for an exact product match', () => {
-    const boston = products.find(
-      ({ product }) => product.id === 'adidas-adizero-boston-13',
+  it('shows primary prototype details for every exact Adidas match', () => {
+    const adidasProducts = products.filter(
+      ({ product }) => product.brand.id === 'adidas',
     );
-    const adistar = products.find(
-      ({ product }) => product.id === 'adidas-adistar-5',
-    );
-    expect(boston?.details).not.toBeNull();
-    expect(adistar?.details).toBeNull();
+    expect(adidasProducts).toHaveLength(8);
+    expect(adidasProducts.every(({ details }) => details !== null)).toBe(true);
+    expect(
+      products.find(({ product }) => product.id === 'asics-dynablast-5')
+        ?.details,
+    ).toBeNull();
 
-    window.history.replaceState({}, '', '/en/catalogue/?q=Boston+13');
+    window.history.replaceState({}, '', '/en/catalogue/?q=Runblaze');
     render(
       <ProductExplorer
         assetBase="/rundecoded/"
         initialLocale="en"
-        initialQuery="Boston 13"
+        initialQuery="Runblaze"
         products={products}
       />,
     );
     fireEvent.click(screen.getByRole('button', { name: 'Details' }));
     const dialog = screen.getByRole('dialog');
     expect(dialog).toHaveTextContent(
-      'The Boston 13 brings race-inspired technology',
+      'The Adidas Runblaze is designed for first runs',
     );
-    expect(dialog).toHaveTextContent('36 / 30 mm');
-    expect(dialog).toHaveTextContent('260 g');
+    expect(dialog).toHaveTextContent('278 g');
+    expect(dialog).toHaveTextContent('Cloudfoam midsole');
     expect(dialog).toHaveTextContent('Strengths & limitations');
     expect(dialog).toHaveTextContent(
       'Migrated from the original RunDecoded prototype',
