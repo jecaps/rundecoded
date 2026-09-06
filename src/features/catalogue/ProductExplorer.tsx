@@ -832,7 +832,7 @@ export function ProductExplorer({
             }}
           >
             <div className="desktop:grid-cols-[0.85fr_1.15fr] grid">
-              <div className="bg-surface-subtle min-h-64 p-6">
+              <div className="bg-surface-subtle desktop:flex desktop:items-center desktop:justify-center min-h-64 p-6">
                 <ProductPicture
                   assetBase={assetBase}
                   className="max-h-80"
