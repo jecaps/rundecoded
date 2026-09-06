@@ -49,7 +49,7 @@ export const catalogueCopy = {
       'A concise view migrated from the original RunDecoded prototype.',
     bestAt: 'Best at',
     lessSuitableFor: 'Less suitable for',
-    sourceProduct: 'View source product',
+    sourceProduct: 'View on Decathlon',
     prototypeEvidence: 'Prototype evidence',
     detailsPending:
       'The original prototype did not contain a full detail profile for this exact model. Verification is pending.',
@@ -120,7 +120,7 @@ export const catalogueCopy = {
       'Kurze Einordnung, übernommen aus dem ursprünglichen RunDecoded-Prototyp.',
     bestAt: 'Besonders stark bei',
     lessSuitableFor: 'Weniger geeignet für',
-    sourceProduct: 'Quellprodukt ansehen',
+    sourceProduct: 'Bei Decathlon ansehen',
     prototypeEvidence: 'Prototyp-Datengrundlage',
     detailsPending:
       'Der ursprüngliche Prototyp enthielt für dieses exakte Modell kein vollständiges Detailprofil. Die Prüfung steht noch aus.',
@@ -191,7 +191,7 @@ export const catalogueCopy = {
     strengthsLead: 'Synthèse reprise du prototype RunDecoded d’origine.',
     bestAt: 'Particulièrement adaptée à',
     lessSuitableFor: 'Moins adaptée à',
-    sourceProduct: 'Voir le produit source',
+    sourceProduct: 'Voir sur Decathlon',
     prototypeEvidence: 'Données du prototype',
     detailsPending:
       'Le prototype d’origine ne contenait pas de fiche détaillée complète pour ce modèle exact. La vérification est en attente.',

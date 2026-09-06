@@ -332,8 +332,7 @@ export function ProductExplorer({
     detailsProduct?.product.sources.find(
       (source) => source.type === 'retailer-product' && source.url,
     ) ?? null;
-  const detailSourceUrl =
-    detailProfile?.provenance.officialProductUrl ?? detailProductSource?.url;
+  const detailSourceUrl = detailProductSource?.url;
 
   function updateUrlState(state: CatalogueUrlState, mode: 'push' | 'replace') {
     const nextUrl = writeCatalogueUrlState(

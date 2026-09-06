@@ -188,5 +188,11 @@ describe('ProductExplorer', () => {
     expect(dialog).toHaveTextContent(
       'Migrated from the original RunDecoded prototype',
     );
+    expect(
+      screen.getByRole('link', { name: 'View on Decathlon' }),
+    ).toHaveAttribute(
+      'href',
+      'https://www.decathlon.it/p/scarpe-running-uomo-adidas-runblaze-nere/_/R-p-361354',
+    );
   });
 });
