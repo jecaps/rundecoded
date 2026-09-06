@@ -1,5 +1,9 @@
 import productsJson from '@/content/catalogue/products.json';
 import {
+  prototypeProductDetails,
+  type PrototypeProductDetails,
+} from '@/content/catalogue/prototype-product-details';
+import {
   validateCatalogue,
   type ShoeProduct,
   type VerificationStatus,
@@ -14,6 +18,7 @@ export interface ExplorerWeight {
 }
 
 export interface ExplorerProduct {
+  details: PrototypeProductDetails | null;
   product: ShoeProduct;
   weight: ExplorerWeight | null;
 }
@@ -36,5 +41,9 @@ export function getProductCatalogue(): ExplorerProduct[] {
     .products.filter(
       (product): product is ShoeProduct => product.kind === 'shoe',
     )
-    .map((product) => ({ product, weight: explorerWeight(product) }));
+    .map((product) => ({
+      details: prototypeProductDetails[product.id] ?? null,
+      product,
+      weight: explorerWeight(product),
+    }));
 }

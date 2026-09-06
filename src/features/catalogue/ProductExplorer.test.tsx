@@ -156,4 +156,43 @@ describe('ProductExplorer', () => {
       await screen.findByRole('heading', { name: 'Explorer les chaussures' }),
     ).toBeVisible();
   });
+
+  it('shows primary prototype details for every exact Adidas match', () => {
+    const adidasProducts = products.filter(
+      ({ product }) => product.brand.id === 'adidas',
+    );
+    expect(adidasProducts).toHaveLength(8);
+    expect(adidasProducts.every(({ details }) => details !== null)).toBe(true);
+    expect(
+      products.find(({ product }) => product.id === 'asics-dynablast-5')
+        ?.details,
+    ).toBeNull();
+
+    window.history.replaceState({}, '', '/en/catalogue/?q=Runblaze');
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        initialQuery="Runblaze"
+        products={products}
+      />,
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Details' }));
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toHaveTextContent(
+      'The Adidas Runblaze is designed for first runs',
+    );
+    expect(dialog).toHaveTextContent('278 g');
+    expect(dialog).toHaveTextContent('Cloudfoam midsole');
+    expect(dialog).toHaveTextContent('Strengths & limitations');
+    expect(dialog).toHaveTextContent(
+      'Migrated from the original RunDecoded prototype',
+    );
+    expect(
+      screen.getByRole('link', { name: 'View on Decathlon' }),
+    ).toHaveAttribute(
+      'href',
+      'https://www.decathlon.it/p/scarpe-running-uomo-adidas-runblaze-nere/_/R-p-361354',
+    );
+  });
 });
