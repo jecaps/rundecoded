@@ -23,8 +23,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Toaster } from '@/components/ui/sonner';
 import { resolveLocalizedText, type SupportedLocale } from '@/domain/catalogue';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 import { catalogueCopy, categoryLabel, stabilityLabel } from './copy';
 import { rankComparableProducts } from './comparables';
@@ -224,12 +226,11 @@ export function ProductExplorer({
   const [activeSuggestion, setActiveSuggestion] = useState(-1);
   const [detailsId, setDetailsId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [activeComparisonIds, setActiveComparisonIds] = useState<string[]>([]);
   const [comparisonOpen, setComparisonOpen] = useState(false);
-  const [selectionLimitReached, setSelectionLimitReached] = useState(false);
   const pageRef = useRef(page);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
-  const comparisonOpenerRef = useRef<HTMLButtonElement | null>(null);
   const copy = catalogueCopy[locale];
 
   useEffect(() => {
@@ -320,7 +321,10 @@ export function ProductExplorer({
   const detailsProduct = detailsId
     ? (productsById.get(detailsId) ?? null)
     : null;
-  const comparisonProducts = selectedIds
+  const selectedProducts = selectedIds
+    .map((id) => productsById.get(id))
+    .filter((item): item is ExplorerProduct => Boolean(item));
+  const comparisonProducts = activeComparisonIds
     .map((id) => productsById.get(id))
     .filter((item): item is ExplorerProduct => Boolean(item));
 
@@ -393,12 +397,14 @@ export function ProductExplorer({
   }
 
   function toggleComparison(id: string) {
-    setSelectionLimitReached(false);
+    toast.dismiss('comparison-selection-limit');
     setSelectedIds((current) => {
       if (current.includes(id))
         return current.filter((selectedId) => selectedId !== id);
       if (current.length >= 2) {
-        setSelectionLimitReached(true);
+        toast.error(copy.selectionLimit, {
+          id: 'comparison-selection-limit',
+        });
         return current;
       }
       return [...current, id];
@@ -407,10 +413,20 @@ export function ProductExplorer({
 
   function compareFromDetails(comparableId: string) {
     if (!detailsProduct) return;
+    const comparisonIds = [detailsProduct.product.id, comparableId];
     detailsOpenerRef.current = null;
-    setSelectedIds([detailsProduct.product.id, comparableId]);
+    setSelectedIds(comparisonIds);
+    setActiveComparisonIds(comparisonIds);
     setDetailsId(null);
     setComparisonOpen(true);
+  }
+
+  function handleComparisonOpenChange(open: boolean) {
+    setComparisonOpen(open);
+    if (!open) {
+      setSelectedIds([]);
+      toast.dismiss('comparison-selection-limit');
+    }
   }
 
   function changePage(nextPage: number) {
@@ -794,44 +810,38 @@ export function ProductExplorer({
         </nav>
       ) : null}
 
-      {selectedIds.length ? (
+      {selectedIds.length && !comparisonOpen ? (
         <div
           aria-label={copy.comparisonSelection}
-          className="border-border bg-surface tablet:grid-cols-[minmax(0,1fr)_auto] sticky bottom-3 z-30 mx-auto mt-8 grid max-w-2xl items-center gap-3 rounded-[var(--radius-panel)] border p-3 shadow-xl"
+          className="border-border bg-surface/95 sticky bottom-3 z-30 mx-auto mt-8 flex w-[min(32rem,calc(100%-1rem))] flex-col items-center gap-2.5 rounded-[var(--radius-panel)] border p-3 shadow-[var(--shadow-panel)] backdrop-blur-sm"
           role="region"
         >
-          <div className="flex min-w-0 flex-1 flex-col justify-center">
-            {selectionLimitReached ? (
-              <p
-                aria-live="polite"
-                className="text-danger mt-0 mb-2 text-xs font-medium"
-              >
-                {copy.selectionLimit}
-              </p>
-            ) : null}
+          <div className="flex w-full min-w-0 justify-center">
             <div
               aria-label={copy.compareSelected(selectedIds.length)}
-              className="flex flex-wrap items-center gap-2"
+              className="flex flex-wrap items-center justify-center gap-2"
             >
-              {comparisonProducts.map((item) => (
+              {selectedProducts.map((item) => (
                 <button
                   aria-label={copy.deselectProduct(item.product.model)}
-                  className="border-border bg-surface-subtle hover:bg-surface-strong focus-visible:ring-ring/35 inline-flex h-8 max-w-full cursor-pointer items-center gap-2 rounded-full border px-3 text-xs font-semibold outline-none focus-visible:ring-3"
+                  className="border-primary/20 bg-primary/8 hover:border-primary/35 hover:bg-primary/12 focus-visible:ring-ring/35 inline-flex h-9 max-w-full cursor-pointer items-center gap-2 rounded-full border py-1 pr-1.5 pl-3 text-xs font-semibold outline-none focus-visible:ring-3"
                   key={item.product.id}
                   onClick={() => toggleComparison(item.product.id)}
                   type="button"
                 >
                   <span className="truncate">{item.product.model}</span>
-                  <X aria-hidden="true" className="size-3.5 shrink-0" />
+                  <span className="bg-surface/70 inline-flex size-6 shrink-0 items-center justify-center rounded-full">
+                    <X aria-hidden="true" className="size-3.5" />
+                  </span>
                 </button>
               ))}
             </div>
           </div>
           <Button
-            className="tablet:w-auto w-full"
+            className="h-10 w-full max-w-xs px-4 shadow-sm"
             disabled={selectedIds.length !== 2}
-            onClick={(event) => {
-              comparisonOpenerRef.current = event.currentTarget;
+            onClick={() => {
+              setActiveComparisonIds(selectedIds);
               setComparisonOpen(true);
             }}
           >
@@ -839,6 +849,8 @@ export function ProductExplorer({
           </Button>
         </div>
       ) : null}
+
+      <Toaster />
 
       <Dialog
         open={detailsProduct !== null}
@@ -1146,12 +1158,13 @@ export function ProductExplorer({
         ) : null}
       </Dialog>
 
-      <Dialog open={comparisonOpen} onOpenChange={setComparisonOpen}>
+      <Dialog open={comparisonOpen} onOpenChange={handleComparisonOpenChange}>
         <DialogContent
           className="max-h-[calc(100vh-2rem)] w-[min(calc(100%-2rem),58rem)] overflow-y-auto"
           onCloseAutoFocus={(event) => {
             event.preventDefault();
-            comparisonOpenerRef.current?.focus();
+            setActiveComparisonIds([]);
+            searchInputRef.current?.focus();
           }}
         >
           <DialogHeader>

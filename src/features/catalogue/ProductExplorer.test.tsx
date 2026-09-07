@@ -67,7 +67,7 @@ describe('ProductExplorer', () => {
     expect(screen.getByText('2 of 106 shoes')).toBeVisible();
   });
 
-  it('lets users manage selected comparison shoes from the selection tray', () => {
+  it('lets users manage selected comparison shoes from the selection tray', async () => {
     window.history.replaceState({}, '', '/en/catalogue/');
     render(
       <ProductExplorer
@@ -85,28 +85,69 @@ describe('ProductExplorer', () => {
     expect(screen.getAllByRole('button', { name: /^Deselect / })).toHaveLength(
       2,
     );
-    expect(
-      screen.getByRole('region', { name: 'Shoe comparison selection' }),
-    ).toBeVisible();
+    const selectionTray = screen.getByRole('region', {
+      name: 'Shoe comparison selection',
+    });
+    expect(selectionTray).toBeVisible();
+    expect(selectionTray).toHaveClass('flex', 'flex-col', 'items-center');
     fireEvent.click(compareButtons[2]!);
-    const selectionWarning = screen.getByText(
+    const selectionWarning = await screen.findByText(
       'Two shoes are already selected. Remove one before adding another.',
     );
     expect(selectionWarning).toBeVisible();
-    expect(selectionWarning).toHaveClass('text-danger');
+    expect(selectionWarning.closest('[data-sonner-toast]')).toHaveAttribute(
+      'data-type',
+      'error',
+    );
 
     fireEvent.click(screen.getAllByRole('button', { name: /^Deselect / })[0]!);
     expect(screen.getAllByRole('button', { name: 'Selected' })).toHaveLength(1);
-    expect(
-      screen.queryByText(
-        'Two shoes are already selected. Remove one before adding another.',
-      ),
-    ).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.queryByText(
+          'Two shoes are already selected. Remove one before adding another.',
+        ),
+      ).not.toBeInTheDocument();
+    });
 
     fireEvent.click(screen.getAllByRole('button', { name: /^Deselect / })[0]!);
     expect(
       screen.queryByRole('region', { name: 'Shoe comparison selection' }),
     ).not.toBeInTheDocument();
+  });
+
+  it('hides the selection tray while comparing and clears it after closing', async () => {
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+      />,
+    );
+
+    const compareButtons = screen.getAllByRole('button', { name: 'Compare' });
+    fireEvent.click(compareButtons[0]!);
+    fireEvent.click(compareButtons[1]!);
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Compare selected (2/2)' }),
+    );
+
+    expect(screen.getByRole('dialog')).toBeVisible();
+    expect(
+      screen.queryByRole('region', { name: 'Shoe comparison selection' }),
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Close' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('region', { name: 'Shoe comparison selection' }),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryAllByRole('button', { name: 'Selected' }),
+      ).toHaveLength(0);
+    });
   });
 
   it('offers keyboard-selectable typo-tolerant suggestions', () => {
