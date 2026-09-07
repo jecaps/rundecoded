@@ -72,7 +72,7 @@ test('opens comparison after selecting two product cards', async ({ page }) => {
     });
   }
   await comparison.getByRole('button', { name: 'Close' }).click();
-  await expect(compareSelected).toBeFocused();
+  await expect(page.getByLabel('Search products')).toBeFocused();
 });
 
 test('opens comparison from a comparable product and includes the detail product', async ({

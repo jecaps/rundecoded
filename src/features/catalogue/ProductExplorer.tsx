@@ -231,7 +231,6 @@ export function ProductExplorer({
   const pageRef = useRef(page);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
-  const comparisonOpenerRef = useRef<HTMLButtonElement | null>(null);
   const copy = catalogueCopy[locale];
 
   useEffect(() => {
@@ -841,8 +840,7 @@ export function ProductExplorer({
           <Button
             className="h-10 w-full max-w-xs px-4 shadow-sm"
             disabled={selectedIds.length !== 2}
-            onClick={(event) => {
-              comparisonOpenerRef.current = event.currentTarget;
+            onClick={() => {
               setActiveComparisonIds(selectedIds);
               setComparisonOpen(true);
             }}
