@@ -157,14 +157,23 @@ describe('ProductExplorer', () => {
     ).toBeVisible();
   });
 
-  it('shows primary prototype details for every exact Adidas match', () => {
+  it('maps every available primary prototype profile by exact product ID', () => {
     const adidasProducts = products.filter(
       ({ product }) => product.brand.id === 'adidas',
     );
     expect(adidasProducts).toHaveLength(8);
     expect(adidasProducts.every(({ details }) => details !== null)).toBe(true);
+    expect(products.filter(({ details }) => details !== null)).toHaveLength(97);
     expect(
-      products.find(({ product }) => product.id === 'asics-dynablast-5')
+      products.find(
+        ({ product }) => product.id === 'decathlon-jogflow-190-grip',
+      )?.details?.provenance.status,
+    ).toBe('verified');
+    expect(
+      products.find(({ product }) => product.id === 'hoka-clifton-10')?.details,
+    ).not.toBeNull();
+    expect(
+      products.find(({ product }) => product.id === 'kiprun-kipride-support')
         ?.details,
     ).toBeNull();
 
@@ -194,5 +203,25 @@ describe('ProductExplorer', () => {
       'href',
       'https://www.decathlon.it/p/scarpe-running-uomo-adidas-runblaze-nere/_/R-p-361354',
     );
+  });
+
+  it('renders a complete migrated profile outside the Adidas range', () => {
+    window.history.replaceState({}, '', '/en/catalogue/?q=Clifton+10');
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        initialQuery="Clifton 10"
+        products={products}
+      />,
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Details' }));
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toHaveTextContent(
+      "The Clifton 10 is HOKA's comfort-focused neutral daily trainer",
+    );
+    expect(dialog).toHaveTextContent('Active Foot Frame');
+    expect(dialog).toHaveTextContent('42/34 mm');
+    expect(dialog).toHaveTextContent('Strengths & limitations');
   });
 });

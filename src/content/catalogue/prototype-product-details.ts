@@ -1,4 +1,6 @@
 import prototypeAdidasDetailsJson from './prototype-adidas-details.json';
+import prototypeRemainingDetailsJson from './prototype-remaining-details.json';
+import verifiedDecathlonDetailsJson from './verified-decathlon-details.json';
 
 import type { LocalizedText } from '@/domain/catalogue';
 
@@ -29,7 +31,7 @@ export interface PrototypeProductDetails {
     label: string;
     note: LocalizedText;
     officialProductUrl: string;
-    status: 'fallback';
+    status: 'fallback' | 'verified';
   };
 }
 
@@ -38,7 +40,8 @@ export interface PrototypeProductDetails {
  * original RunDecoded detail dialogs. Keys use the new catalogue's exact IDs,
  * so similarly named products cannot inherit one another's profiles.
  */
-export const prototypeProductDetails = prototypeAdidasDetailsJson as Record<
-  string,
-  PrototypeProductDetails
->;
+export const prototypeProductDetails = {
+  ...prototypeAdidasDetailsJson,
+  ...prototypeRemainingDetailsJson,
+  ...verifiedDecathlonDetailsJson,
+} as Record<string, PrototypeProductDetails>;
