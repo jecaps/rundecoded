@@ -51,6 +51,7 @@ export const catalogueCopy = {
     lessSuitableFor: 'Less suitable for',
     sourceProduct: 'View on Decathlon',
     prototypeEvidence: 'Prototype evidence',
+    verifiedEvidence: 'Verified product source',
     detailsPending:
       'The original prototype did not contain a full detail profile for this exact model. Verification is pending.',
     comparableProducts: 'Comparable products',
@@ -122,6 +123,7 @@ export const catalogueCopy = {
     lessSuitableFor: 'Weniger geeignet für',
     sourceProduct: 'Bei Decathlon ansehen',
     prototypeEvidence: 'Prototyp-Datengrundlage',
+    verifiedEvidence: 'Geprüfte Produktquelle',
     detailsPending:
       'Der ursprüngliche Prototyp enthielt für dieses exakte Modell kein vollständiges Detailprofil. Die Prüfung steht noch aus.',
     comparableProducts: 'Vergleichbare Produkte',
@@ -193,6 +195,7 @@ export const catalogueCopy = {
     lessSuitableFor: 'Moins adaptée à',
     sourceProduct: 'Voir sur Decathlon',
     prototypeEvidence: 'Données du prototype',
+    verifiedEvidence: 'Source produit vérifiée',
     detailsPending:
       'Le prototype d’origine ne contenait pas de fiche détaillée complète pour ce modèle exact. La vérification est en attente.',
     comparableProducts: 'Produits comparables',

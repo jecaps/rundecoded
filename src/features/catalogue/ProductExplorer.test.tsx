@@ -163,7 +163,12 @@ describe('ProductExplorer', () => {
     );
     expect(adidasProducts).toHaveLength(8);
     expect(adidasProducts.every(({ details }) => details !== null)).toBe(true);
-    expect(products.filter(({ details }) => details !== null)).toHaveLength(94);
+    expect(products.filter(({ details }) => details !== null)).toHaveLength(97);
+    expect(
+      products.find(
+        ({ product }) => product.id === 'decathlon-jogflow-190-grip',
+      )?.details?.provenance.status,
+    ).toBe('verified');
     expect(
       products.find(({ product }) => product.id === 'hoka-clifton-10')?.details,
     ).not.toBeNull();

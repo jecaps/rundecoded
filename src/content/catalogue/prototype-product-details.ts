@@ -1,5 +1,6 @@
 import prototypeAdidasDetailsJson from './prototype-adidas-details.json';
 import prototypeRemainingDetailsJson from './prototype-remaining-details.json';
+import verifiedDecathlonDetailsJson from './verified-decathlon-details.json';
 
 import type { LocalizedText } from '@/domain/catalogue';
 
@@ -30,7 +31,7 @@ export interface PrototypeProductDetails {
     label: string;
     note: LocalizedText;
     officialProductUrl: string;
-    status: 'fallback';
+    status: 'fallback' | 'verified';
   };
 }
 
@@ -42,4 +43,5 @@ export interface PrototypeProductDetails {
 export const prototypeProductDetails = {
   ...prototypeAdidasDetailsJson,
   ...prototypeRemainingDetailsJson,
+  ...verifiedDecathlonDetailsJson,
 } as Record<string, PrototypeProductDetails>;

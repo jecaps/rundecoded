@@ -1,0 +1,240 @@
+{
+  "decathlon-jogflow-190-grip": {
+    "overview": {
+      "de": "Der Jogflow 190 Grip ist ein Einsteiger-Laufschuh für gelegentliche bis regelmäßige Läufe auf Straßen und einfachen Naturwegen. Weicher IMEVA-Schaum dämpft den Schritt, während 3,5-mm-Stollen auf ebenen und unebenen Wegen Halt geben.",
+      "en": "The Jogflow 190 Grip is an entry-level shoe for occasional to regular runs on roads and easy natural paths. Soft IMEVA foam cushions each step, while 3.5 mm lugs add grip on even and uneven paths.",
+      "fr": "La Jogflow 190 Grip est une chaussure d’initiation pour des sorties occasionnelles à régulières sur route et chemins naturels faciles. La mousse IMEVA souple amortit la foulée, tandis que les crampons de 3,5 mm apportent de l’adhérence sur terrain régulier ou irrégulier."
+    },
+    "cardSummary": {
+      "de": "Weich gedämpfter Einsteigerschuh für Straße und einfache Naturwege mit 3,5-mm-Stollen.",
+      "en": "A softly cushioned entry-level shoe for roads and easy natural paths, with 3.5 mm lugs.",
+      "fr": "Une chaussure d’initiation souple pour la route et les chemins naturels faciles, avec des crampons de 3,5 mm."
+    },
+    "bestFor": {
+      "de": "Anfänger · Straße und leichte Trails · 10–30 km pro Woche",
+      "en": "Beginner · road and easy trails · 10–30 km per week",
+      "fr": "Débutant · route et trails faciles · 10 à 30 km par semaine"
+    },
+    "construction": {
+      "ride": {
+        "de": "Weich, komfortabel und unkompliziert für lockere Läufe auf gemischtem Untergrund.",
+        "en": "Soft, comfortable and straightforward for easy runs across mixed surfaces.",
+        "fr": "Souple, confortable et simple pour les sorties faciles sur terrains variés."
+      },
+      "support": {
+        "de": "Komfortorientierte Konstruktion für Einsteiger; Decathlon beschreibt den Schuh als dämpfend und stabil, ohne ein korrigierendes Führungssystem auszuweisen.",
+        "en": "A comfort-oriented beginner construction; Decathlon describes cushioning and stability without identifying a corrective guidance system.",
+        "fr": "Une construction confortable pour débuter ; Decathlon mentionne amorti et stabilité sans indiquer de système de guidage correcteur."
+      },
+      "upper": {
+        "de": "Schaft aus Polyester, Polyurethan und TPU mit klassischer Schnürung, mittlerer Weite und normaler Passform.",
+        "en": "Polyester, polyurethane and TPU upper with traditional lacing, medium width and a regular fit.",
+        "fr": "Tige en polyester, polyuréthane et TPU avec laçage classique, largeur moyenne et chaussant standard."
+      },
+      "midsole": {
+        "de": "IMEVA-/EVA-Schaum, laut Decathlon 17,5 % weicher als bei der Vorgängerversion.",
+        "en": "IMEVA/EVA foam that Decathlon says is 17.5% softer than the previous version.",
+        "fr": "Mousse IMEVA/EVA annoncée par Decathlon comme 17,5 % plus souple que la version précédente."
+      },
+      "outsole": {
+        "de": "3,5-mm-Stollen für Traktion auf flachen und hügeligen Naturwegen; Außensohle aus 30 % synthetischem Kautschuk und 70 % EVA.",
+        "en": "3.5 mm lugs for traction on flat and hilly natural paths; outsole made from 30% synthetic rubber and 70% EVA.",
+        "fr": "Crampons de 3,5 mm pour l’adhérence sur chemins naturels plats ou vallonnés ; semelle composée de 30 % de caoutchouc synthétique et 70 % d’EVA."
+      }
+    },
+    "decision": {
+      "bestAt": {
+        "de": "lockere Straßenläufe und einfache Naturwege mit komfortabler Dämpfung",
+        "en": "easy road runs and simple natural paths with comfortable cushioning",
+        "fr": "sorties faciles sur route et chemins naturels simples avec un amorti confortable"
+      },
+      "lessSuitableFor": {
+        "de": "schnelle Wettkämpfe oder anspruchsvolle technische Trails",
+        "en": "fast racing or demanding technical trails",
+        "fr": "compétition rapide ou trails techniques exigeants"
+      }
+    },
+    "specifications": {
+      "drop": "8 mm",
+      "fit": { "de": "Normal", "en": "Regular", "fr": "Standard" },
+      "plateSystem": { "de": "Keine", "en": "None", "fr": "Aucune" },
+      "stackHeight": "–",
+      "technologies": [
+        "IMEVA foam",
+        "3.5 mm lugs",
+        "Removable insole",
+        "Comfort score 8.2/10"
+      ],
+      "weight": "245 g (EU 39)"
+    },
+    "provenance": {
+      "label": "Decathlon product page",
+      "note": {
+        "de": "Am 7. September 2026 anhand der verlinkten Decathlon-Produktseite geprüft.",
+        "en": "Verified against the linked Decathlon product page on 7 September 2026.",
+        "fr": "Vérifié à partir de la page produit Decathlon liée le 7 septembre 2026."
+      },
+      "officialProductUrl": "https://www.decathlon.de/p/laufschuhe-trailrunning-damen-jogflow-190-grip-schwarz-rosa/348767/c382c183c260m8913965",
+      "status": "verified"
+    }
+  },
+  "decathlon-jogflow-190-grip-wp": {
+    "overview": {
+      "de": "Der Jogflow 190 Grip WP verbindet weiche IMEVA-Dämpfung mit einem wasserdichten, atmungsaktiven Schaft für Straße und leichte Trails bei nassem Wetter. 3,5-mm-Stollen und ein verstärkter Zehenbereich ergänzen Schutz und Halt.",
+      "en": "The Jogflow 190 Grip WP combines soft IMEVA cushioning with a waterproof, breathable upper for roads and easy trails in wet weather. Its 3.5 mm lugs and reinforced toe add grip and protection.",
+      "fr": "La Jogflow 190 Grip WP associe un amorti IMEVA souple à une tige imperméable et respirante pour la route et les trails faciles par temps humide. Les crampons de 3,5 mm et le renfort avant ajoutent adhérence et protection."
+    },
+    "cardSummary": {
+      "de": "Wasserdichter Straßen-/Trail-Schuh mit weicher IMEVA-Dämpfung, Schutz und 3,5-mm-Stollen.",
+      "en": "A waterproof road-to-trail shoe with soft IMEVA cushioning, protection and 3.5 mm lugs.",
+      "fr": "Une chaussure imperméable route-trail avec amorti IMEVA souple, protection et crampons de 3,5 mm."
+    },
+    "bestFor": {
+      "de": "Anfänger · nasse Straßen und leichte Trails · bis 20 km",
+      "en": "Beginner · wet roads and easy trails · up to 20 km",
+      "fr": "Débutant · routes humides et trails faciles · jusqu’à 20 km"
+    },
+    "construction": {
+      "ride": {
+        "de": "Weich und geschützt für gelegentliche Läufe auf wechselndem, nassem Untergrund.",
+        "en": "Soft and protective for occasional runs across changing wet surfaces.",
+        "fr": "Souple et protectrice pour des sorties occasionnelles sur terrains humides variés."
+      },
+      "support": {
+        "de": "Neutrale Konstruktion ohne Korrekturelement; Verstärkungen und ein mittelweites Obermaterial sorgen für sicheren Halt.",
+        "en": "Neutral construction without a corrective element; reinforcements and a medium-width upper provide secure hold.",
+        "fr": "Construction neutre sans élément correcteur ; les renforts et la tige de largeur moyenne assurent un bon maintien."
+      },
+      "upper": {
+        "de": "Wasserdichter, atmungsaktiver Synthetikschaft mit Zehenverstärkung und elastischem Schnürsenkelhalter an der Zunge.",
+        "en": "Waterproof, breathable synthetic upper with toe reinforcement and an elastic lace keeper on the tongue.",
+        "fr": "Tige synthétique imperméable et respirante avec renfort à l’avant et passant élastique pour les lacets sur la languette."
+      },
+      "midsole": {
+        "de": "Weicher IMEVA-/EVA-Schaum für komfortable Stoßdämpfung.",
+        "en": "Soft IMEVA/EVA foam for comfortable impact cushioning.",
+        "fr": "Mousse IMEVA/EVA souple pour un amorti confortable des impacts."
+      },
+      "outsole": {
+        "de": "3,5-mm-Stollen für Straße, Parks und Feldwege; 70 % EVA und 30 % synthetischer Kautschuk.",
+        "en": "3.5 mm lugs for roads, parks and field paths; 70% EVA and 30% synthetic rubber.",
+        "fr": "Crampons de 3,5 mm pour routes, parcs et chemins ; 70 % d’EVA et 30 % de caoutchouc synthétique."
+      }
+    },
+    "decision": {
+      "bestAt": {
+        "de": "nassen Straßen und einfachen Trails, wenn Wasserschutz und Grip zählen",
+        "en": "wet roads and easy trails where waterproofing and grip matter",
+        "fr": "routes humides et trails faciles lorsque l’imperméabilité et l’adhérence comptent"
+      },
+      "lessSuitableFor": {
+        "de": "schnellen Wettkämpfen oder hoch technischen Trails",
+        "en": "fast racing or highly technical trails",
+        "fr": "compétition rapide ou trails très techniques"
+      }
+    },
+    "specifications": {
+      "drop": "8 mm",
+      "fit": { "de": "Normal", "en": "Regular", "fr": "Standard" },
+      "plateSystem": { "de": "Keine", "en": "None", "fr": "Aucune" },
+      "stackHeight": "–",
+      "technologies": [
+        "Waterproof breathable upper",
+        "IMEVA foam",
+        "3.5 mm lugs",
+        "Reinforced toe",
+        "Lace keeper"
+      ],
+      "weight": "364 g (EU 42)"
+    },
+    "provenance": {
+      "label": "Decathlon product page",
+      "note": {
+        "de": "Am 7. September 2026 anhand der verlinkten Decathlon-Produktseite geprüft.",
+        "en": "Verified against the linked Decathlon product page on 7 September 2026.",
+        "fr": "Vérifié à partir de la page produit Decathlon liée le 7 septembre 2026."
+      },
+      "officialProductUrl": "https://www.decathlon.de/p/laufschuhe-strasse-trailrunning-herren-wasserdicht-jogflow-190-grip-schwarz/365616/c382c208m8958646",
+      "status": "verified"
+    }
+  },
+  "decathlon-jogflow-190-max": {
+    "overview": {
+      "de": "Der Jogflow 190 Max ist ein neutraler, komfortorientierter Straßenschuh für gelegentliche bis regelmäßige kurze Läufe. Seine dickere Sohle bietet laut Decathlon 27 % mehr Dämpfung als der Jogflow 190; gepolsterte Ferse und Zunge erhöhen den Tragekomfort.",
+      "en": "The Jogflow 190 Max is a neutral, comfort-focused road shoe for occasional to regular short runs. Decathlon says its thicker sole offers 27% more cushioning than the Jogflow 190, while a padded heel and tongue improve comfort.",
+      "fr": "La Jogflow 190 Max est une chaussure de route neutre axée sur le confort pour des sorties courtes, occasionnelles à régulières. Selon Decathlon, sa semelle plus épaisse offre 27 % d’amorti en plus que la Jogflow 190 ; le talon et la languette rembourrés améliorent le confort."
+    },
+    "cardSummary": {
+      "de": "Komfortorientierter Straßenschuh mit stärkerer Dämpfung sowie gepolsterter Ferse und Zunge.",
+      "en": "A comfort-focused road shoe with increased cushioning plus a padded heel and tongue.",
+      "fr": "Une chaussure de route confortable avec davantage d’amorti ainsi qu’un talon et une languette rembourrés."
+    },
+    "bestFor": {
+      "de": "Anfänger und Freizeitläufer · lockere Straßenläufe · 1–10 km",
+      "en": "Beginner and recreational runner · easy road runs · 1–10 km",
+      "fr": "Débutant et coureur loisir · sorties faciles sur route · 1 à 10 km"
+    },
+    "construction": {
+      "ride": {
+        "de": "Komfortabel und gleichmäßig gedämpft, mit Fokus auf entspanntes Laufen statt hohes Tempo.",
+        "en": "Comfortable and consistently cushioned, prioritising relaxed running over high speed.",
+        "fr": "Confortable et régulièrement amortie, privilégiant les sorties détendues à la vitesse."
+      },
+      "support": {
+        "de": "Neutraler Aufbau ohne Korrekturelement; die breite, komfortorientierte Plattform sorgt für ein ruhiges Laufgefühl.",
+        "en": "Neutral construction without a corrective element; the broad, comfort-oriented platform supports a settled ride.",
+        "fr": "Construction neutre sans élément correcteur ; la plateforme large et confortable favorise une foulée stable."
+      },
+      "upper": {
+        "de": "Atmungsaktiver Polyester-Meshschaft mit gepolsterter Ferse, gepolsterter Zunge und klassischer Schnürung.",
+        "en": "Breathable polyester mesh upper with a padded heel, padded tongue and traditional lacing.",
+        "fr": "Tige respirante en mesh polyester avec talon et languette rembourrés et laçage classique."
+      },
+      "midsole": {
+        "de": "Dickere EVA-Schaumsohle für komfortable Dämpfung; laut Decathlon 27 % mehr als beim Jogflow 190.",
+        "en": "Thicker EVA foam sole for comfortable cushioning; Decathlon states 27% more than the Jogflow 190.",
+        "fr": "Semelle en mousse EVA plus épaisse pour un amorti confortable ; Decathlon annonce 27 % de plus que la Jogflow 190."
+      },
+      "outsole": {
+        "de": "Straßen-Außensohle aus 40 % synthetischem Kautschuk und 60 % EVA.",
+        "en": "Road outsole made from 40% synthetic rubber and 60% EVA.",
+        "fr": "Semelle extérieure route composée de 40 % de caoutchouc synthétique et 60 % d’EVA."
+      }
+    },
+    "decision": {
+      "bestAt": {
+        "de": "kurzen, lockeren Straßenläufen mit unkompliziertem Komfort",
+        "en": "short, easy road runs with straightforward comfort",
+        "fr": "sorties courtes et faciles sur route avec un confort simple"
+      },
+      "lessSuitableFor": {
+        "de": "schnellen Einheiten, Wettkämpfen oder Trails",
+        "en": "fast sessions, racing or trails",
+        "fr": "séances rapides, compétition ou trails"
+      }
+    },
+    "specifications": {
+      "drop": "8 mm",
+      "fit": { "de": "Normal", "en": "Regular", "fr": "Standard" },
+      "plateSystem": { "de": "Keine", "en": "None", "fr": "Aucune" },
+      "stackHeight": "–",
+      "technologies": [
+        "EVA cushioning",
+        "27% more cushioning",
+        "Breathable mesh",
+        "Padded heel and tongue"
+      ],
+      "weight": "270 g (EU 42)"
+    },
+    "provenance": {
+      "label": "Decathlon product page",
+      "note": {
+        "de": "Am 7. September 2026 anhand der verlinkten Decathlon-Produktseite geprüft.",
+        "en": "Verified against the linked Decathlon product page on 7 September 2026.",
+        "fr": "Vérifié à partir de la page produit Decathlon liée le 7 septembre 2026."
+      },
+      "officialProductUrl": "https://www.decathlon.de/p/laufschuhe-herren-jogflow-190-max-grau/365587/c208c227m8958639",
+      "status": "verified"
+    }
+  }
+}

@@ -1105,7 +1105,11 @@ export function ProductExplorer({
 
               <section className="border-border border-t pt-4 text-sm">
                 <h3 className="m-0 text-base font-semibold">
-                  {detailProfile ? copy.prototypeEvidence : copy.sources}
+                  {detailProfile
+                    ? detailProfile.provenance.status === 'verified'
+                      ? copy.verifiedEvidence
+                      : copy.prototypeEvidence
+                    : copy.sources}
                 </h3>
                 <p className="text-muted-foreground mt-2 mb-0">
                   {detailProfile
