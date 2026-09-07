@@ -67,6 +67,48 @@ describe('ProductExplorer', () => {
     expect(screen.getByText('2 of 106 shoes')).toBeVisible();
   });
 
+  it('lets users manage selected comparison shoes from the selection tray', () => {
+    window.history.replaceState({}, '', '/en/catalogue/');
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+      />,
+    );
+
+    const compareButtons = screen.getAllByRole('button', { name: 'Compare' });
+    fireEvent.click(compareButtons[0]!);
+    fireEvent.click(compareButtons[1]!);
+
+    expect(screen.getAllByRole('button', { name: 'Selected' })).toHaveLength(2);
+    expect(screen.getAllByRole('button', { name: /^Deselect / })).toHaveLength(
+      2,
+    );
+    expect(
+      screen.getByRole('region', { name: 'Shoe comparison selection' }),
+    ).toBeVisible();
+    fireEvent.click(compareButtons[2]!);
+    const selectionWarning = screen.getByText(
+      'Two shoes are already selected. Remove one before adding another.',
+    );
+    expect(selectionWarning).toBeVisible();
+    expect(selectionWarning).toHaveClass('text-danger');
+
+    fireEvent.click(screen.getAllByRole('button', { name: /^Deselect / })[0]!);
+    expect(screen.getAllByRole('button', { name: 'Selected' })).toHaveLength(1);
+    expect(
+      screen.queryByText(
+        'Two shoes are already selected. Remove one before adding another.',
+      ),
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getAllByRole('button', { name: /^Deselect / })[0]!);
+    expect(
+      screen.queryByRole('region', { name: 'Shoe comparison selection' }),
+    ).not.toBeInTheDocument();
+  });
+
   it('offers keyboard-selectable typo-tolerant suggestions', () => {
     render(
       <ProductExplorer
