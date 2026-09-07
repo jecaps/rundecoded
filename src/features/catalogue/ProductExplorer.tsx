@@ -225,7 +225,7 @@ export function ProductExplorer({
   const [detailsId, setDetailsId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [comparisonOpen, setComparisonOpen] = useState(false);
-  const [selectionNotice, setSelectionNotice] = useState('');
+  const [selectionLimitReached, setSelectionLimitReached] = useState(false);
   const pageRef = useRef(page);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
@@ -393,12 +393,12 @@ export function ProductExplorer({
   }
 
   function toggleComparison(id: string) {
-    setSelectionNotice('');
+    setSelectionLimitReached(false);
     setSelectedIds((current) => {
       if (current.includes(id))
         return current.filter((selectedId) => selectedId !== id);
       if (current.length >= 2) {
-        setSelectionNotice(copy.selectionLimit);
+        setSelectionLimitReached(true);
         return current;
       }
       return [...current, id];
@@ -728,7 +728,7 @@ export function ProductExplorer({
                         {selected ? (
                           <Check aria-hidden="true" className="size-4" />
                         ) : null}
-                        {selected ? copy.remove : copy.compare}
+                        {selected ? copy.selected : copy.compare}
                       </Button>
                       <Button
                         onClick={(event) =>
@@ -795,19 +795,40 @@ export function ProductExplorer({
       ) : null}
 
       {selectedIds.length ? (
-        <div className="border-border bg-surface sticky bottom-3 z-30 mx-auto mt-8 flex max-w-xl flex-wrap items-center justify-between gap-3 rounded-[var(--radius-panel)] border p-3 shadow-xl">
-          <div>
-            <p className="m-0 text-sm font-semibold">{copy.comparisonReady}</p>
-            {selectionNotice ? (
+        <div
+          aria-label={copy.comparisonSelection}
+          className="border-border bg-surface tablet:grid-cols-[minmax(0,1fr)_auto] sticky bottom-3 z-30 mx-auto mt-8 grid max-w-2xl items-center gap-3 rounded-[var(--radius-panel)] border p-3 shadow-xl"
+          role="region"
+        >
+          <div className="flex min-w-0 flex-1 flex-col justify-center">
+            {selectionLimitReached ? (
               <p
                 aria-live="polite"
-                className="text-muted-foreground mt-1 mb-0 text-xs"
+                className="text-danger mt-0 mb-2 text-xs font-medium"
               >
-                {selectionNotice}
+                {copy.selectionLimit}
               </p>
             ) : null}
+            <div
+              aria-label={copy.compareSelected(selectedIds.length)}
+              className="flex flex-wrap items-center gap-2"
+            >
+              {comparisonProducts.map((item) => (
+                <button
+                  aria-label={copy.deselectProduct(item.product.model)}
+                  className="border-border bg-surface-subtle hover:bg-surface-strong focus-visible:ring-ring/35 inline-flex h-8 max-w-full cursor-pointer items-center gap-2 rounded-full border px-3 text-xs font-semibold outline-none focus-visible:ring-3"
+                  key={item.product.id}
+                  onClick={() => toggleComparison(item.product.id)}
+                  type="button"
+                >
+                  <span className="truncate">{item.product.model}</span>
+                  <X aria-hidden="true" className="size-3.5 shrink-0" />
+                </button>
+              ))}
+            </div>
           </div>
           <Button
+            className="tablet:w-auto w-full"
             disabled={selectedIds.length !== 2}
             onClick={(event) => {
               comparisonOpenerRef.current = event.currentTarget;

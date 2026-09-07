@@ -17,6 +17,7 @@
   --color-overlay: var(--overlay);
   --color-callout: var(--callout);
   --color-callout-border: var(--callout-border);
+  --color-danger: var(--danger);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
   --breakpoint-tablet: 48rem;
@@ -49,6 +50,7 @@
   --shell-navigation-active: #ffffff;
   --callout: #eaf2ff;
   --callout-border: #9bbcf0;
+  --danger: #b42318;
   --radius-sm: 0.4rem;
   --radius-control: 0.7rem;
   --radius-panel: 1rem;
@@ -90,6 +92,7 @@
   --shell-navigation-active: #ffffff;
   --callout: #182942;
   --callout-border: #466c9f;
+  --danger: #ff8a80;
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 24%);
   --shadow-panel: 0 20px 55px rgb(0 0 0 / 26%);
 }
