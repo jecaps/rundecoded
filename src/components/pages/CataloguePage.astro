@@ -16,9 +16,15 @@ const products = getProductCatalogue();
 const validCategoryIds = new Set(
   products.flatMap(({ product }) => product.categories.map(({ id }) => id)),
 );
+const validSurfaces = new Set(
+  products.flatMap(
+    ({ product }) => product.specifications.surfaces.value ?? [],
+  ),
+);
 const initialState = parseCatalogueUrlState(
   Astro.url.searchParams,
   validCategoryIds,
+  validSurfaces,
 );
 ---
 
@@ -34,6 +40,8 @@ const initialState = parseCatalogueUrlState(
     initialLocale={locale}
     initialPage={initialState.page}
     initialQuery={initialState.query}
+    initialStability={initialState.stability}
+    initialSurface={initialState.surface}
     products={products}
     client:load
   />

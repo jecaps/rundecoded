@@ -11,6 +11,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 
 import { ProductExplorer } from './ProductExplorer';
 import { getProductCatalogue } from './catalogue';
+import { filterProducts } from './state';
 
 const products = getProductCatalogue();
 
@@ -65,6 +66,47 @@ describe('ProductExplorer', () => {
     });
     expect(screen.getAllByTestId('product-card')).toHaveLength(2);
     expect(screen.getByText('2 of 106 shoes')).toBeVisible();
+  });
+
+  it('presents the employee consultation entry and consolidated filters', async () => {
+    window.history.replaceState({}, '', '/en/catalogue/');
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+      />,
+    );
+
+    expect(
+      screen.getByRole('heading', {
+        name: 'Help a customer choose the right shoe',
+      }),
+    ).toBeVisible();
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Start customer consultation' }),
+    );
+    expect(
+      await screen.findByText('The customer questionnaire is the next step.'),
+    ).toBeVisible();
+    expect(
+      screen.getByRole('button', { name: /All categories/ }),
+    ).toBeVisible();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Filters' }));
+    expect(
+      screen.getByRole('group', { name: 'Additional catalogue filters' }),
+    ).toBeVisible();
+    fireEvent.change(screen.getByLabelText('Surface'), {
+      target: { value: 'Track' },
+    });
+
+    const expected = filterProducts(products, '', 'all', 'en', {
+      stability: 'all',
+      surface: 'Track',
+    }).length;
+    expect(screen.getByText(`${expected} of 106 shoes`)).toBeVisible();
+    expect(window.location.search).toContain('surface=Track');
   });
 
   it('lets users manage selected comparison shoes from the selection tray', async () => {

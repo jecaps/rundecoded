@@ -7,16 +7,35 @@ export { normalizeSearch } from './search';
 
 export const PAGE_SIZE = 12;
 
+export interface CatalogueAttributeFilters {
+  stability?: 'all' | 'neutral' | 'stability';
+  surface?: string;
+}
+
 export function filterProducts(
   products: ExplorerProduct[],
   query: string,
   categoryId: string,
   locale: SupportedLocale,
+  attributeFilters: CatalogueAttributeFilters = {},
 ): ExplorerProduct[] {
   return searchProducts(products, query, locale).filter(({ product }) => {
     if (
       categoryId !== 'all' &&
       !product.categories.some(({ id }) => id === categoryId)
+    ) {
+      return false;
+    }
+    if (
+      attributeFilters.surface &&
+      !product.specifications.surfaces.value?.includes(attributeFilters.surface)
+    ) {
+      return false;
+    }
+    if (
+      attributeFilters.stability &&
+      attributeFilters.stability !== 'all' &&
+      product.specifications.stability.value !== attributeFilters.stability
     ) {
       return false;
     }

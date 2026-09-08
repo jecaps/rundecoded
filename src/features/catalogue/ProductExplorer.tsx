@@ -4,8 +4,11 @@ import {
   ArrowRight,
   ArrowUpRight,
   Check,
+  ChevronDown,
   ImageOff,
   Search,
+  SlidersHorizontal,
+  Sparkles,
   X,
 } from 'lucide-react';
 
@@ -23,18 +26,30 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Toaster } from '@/components/ui/sonner';
 import { resolveLocalizedText, type SupportedLocale } from '@/domain/catalogue';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
-import { catalogueCopy, categoryLabel, stabilityLabel } from './copy';
+import {
+  catalogueCopy,
+  categoryLabel,
+  stabilityLabel,
+  surfaceLabel,
+} from './copy';
 import { rankComparableProducts } from './comparables';
 import { compareProducts, comparisonSummary } from './comparison';
 import {
   buildSearchSuggestions,
   externalSearchUrl,
-  searchProducts,
   searchSuggestionKindLabel,
 } from './search';
 import type { ExplorerProduct } from './catalogue';
@@ -51,6 +66,8 @@ interface ProductExplorerProps {
   initialLocale: SupportedLocale;
   initialPage?: number;
   initialQuery?: string;
+  initialStability?: 'all' | 'neutral' | 'stability';
+  initialSurface?: string;
   products: ExplorerProduct[];
 }
 
@@ -159,6 +176,8 @@ export function ProductExplorer({
   initialLocale,
   initialPage = 1,
   initialQuery = '',
+  initialStability = 'all',
+  initialSurface = '',
   products,
 }: ProductExplorerProps) {
   const validCategoryIds = useMemo(
@@ -170,12 +189,22 @@ export function ProductExplorer({
       ),
     [products],
   );
+  const validSurfaces = useMemo(
+    () =>
+      new Set(
+        products.flatMap(
+          ({ product }) => product.specifications.surfaces.value ?? [],
+        ),
+      ),
+    [products],
+  );
   const initialBrowserState = () =>
     typeof window === 'undefined'
       ? null
       : parseCatalogueUrlState(
           new URL(window.location.href).searchParams,
           validCategoryIds,
+          validSurfaces,
         );
   const [locale, setLocale] = useState(initialLocale);
   const [hydrated, setHydrated] = useState(false);
@@ -188,6 +217,13 @@ export function ProductExplorer({
   const [page, setPage] = useState(
     () => initialBrowserState()?.page ?? initialPage,
   );
+  const [surface, setSurface] = useState(
+    () => initialBrowserState()?.surface ?? initialSurface,
+  );
+  const [stability, setStability] = useState<'all' | 'neutral' | 'stability'>(
+    () => initialBrowserState()?.stability ?? initialStability,
+  );
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [pageDirection, setPageDirection] = useState<
     'backward' | 'forward' | null
   >(null);
@@ -228,9 +264,12 @@ export function ProductExplorer({
       const restored = parseCatalogueUrlState(
         new URL(window.location.href).searchParams,
         validCategoryIds,
+        validSurfaces,
       );
       setQuery(restored.query);
       setCategoryId(restored.categoryId);
+      setSurface(restored.surface);
+      setStability(restored.stability);
       setPageDirection(
         restored.page === pageRef.current
           ? null
@@ -245,7 +284,7 @@ export function ProductExplorer({
     }
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
-  }, [validCategoryIds]);
+  }, [validCategoryIds, validSurfaces]);
 
   const productsById = useMemo(
     () => new Map(products.map((item) => [item.product.id, item])),
@@ -265,28 +304,33 @@ export function ProductExplorer({
       left[1].localeCompare(right[1], locale),
     );
   }, [locale, products]);
+  const surfaceOptions = useMemo(
+    () =>
+      [...validSurfaces].sort((left, right) =>
+        left.localeCompare(right, locale),
+      ),
+    [locale, validSurfaces],
+  );
+  const selectedCategoryLabel =
+    categoryId === 'all'
+      ? copy.allCategories
+      : (categoryOptions.find(([id]) => id === categoryId)?.[1] ??
+        copy.allCategories);
   const filtered = useMemo(
-    () => filterProducts(products, query, categoryId, locale),
-    [categoryId, locale, products, query],
+    () =>
+      filterProducts(products, query, categoryId, locale, {
+        stability,
+        surface,
+      }),
+    [categoryId, locale, products, query, stability, surface],
   );
   const pagination = paginateProducts(filtered, page);
-  const queryMatches = useMemo(
-    () => searchProducts(products, query, locale),
-    [locale, products, query],
-  );
   const suggestions = useMemo(
     () => buildSearchSuggestions(products, query, locale),
     [locale, products, query],
   );
-  const categoryCounts = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const { product } of queryMatches) {
-      for (const { id } of product.categories) {
-        counts.set(id, (counts.get(id) ?? 0) + 1);
-      }
-    }
-    return counts;
-  }, [queryMatches]);
+  const appliedAttributeFilterCount =
+    Number(Boolean(surface)) + Number(stability !== 'all');
   const detailsProduct = detailsId
     ? (productsById.get(detailsId) ?? null)
     : null;
@@ -326,7 +370,10 @@ export function ProductExplorer({
     setPageDirection(null);
     setSuggestionsOpen(nextQuery.trim().length >= 2);
     setActiveSuggestion(-1);
-    updateUrlState({ categoryId, page: 1, query: nextQuery }, 'replace');
+    updateUrlState(
+      { categoryId, page: 1, query: nextQuery, stability, surface },
+      'replace',
+    );
   }
 
   function updateCategory(nextCategory: string) {
@@ -335,18 +382,66 @@ export function ProductExplorer({
     setPage(1);
     setPageDirection(null);
     setSuggestionsOpen(false);
-    updateUrlState({ categoryId: nextCategory, page: 1, query }, 'push');
+    updateUrlState(
+      {
+        categoryId: nextCategory,
+        page: 1,
+        query,
+        stability,
+        surface,
+      },
+      'push',
+    );
+  }
+
+  function updateSurface(nextSurface: string) {
+    setSurface(nextSurface);
+    pageRef.current = 1;
+    setPage(1);
+    setPageDirection(null);
+    updateUrlState(
+      { categoryId, page: 1, query, stability, surface: nextSurface },
+      'push',
+    );
+  }
+
+  function updateStability(nextStability: 'all' | 'neutral' | 'stability') {
+    setStability(nextStability);
+    pageRef.current = 1;
+    setPage(1);
+    setPageDirection(null);
+    updateUrlState(
+      {
+        categoryId,
+        page: 1,
+        query,
+        stability: nextStability,
+        surface,
+      },
+      'push',
+    );
   }
 
   function clearFilters() {
     setQuery('');
     setCategoryId('all');
+    setSurface('');
+    setStability('all');
     pageRef.current = 1;
     setPage(1);
     setPageDirection(null);
     setSuggestionsOpen(false);
     setActiveSuggestion(-1);
-    updateUrlState({ categoryId: 'all', page: 1, query: '' }, 'push');
+    updateUrlState(
+      {
+        categoryId: 'all',
+        page: 1,
+        query: '',
+        stability: 'all',
+        surface: '',
+      },
+      'push',
+    );
   }
 
   function chooseSuggestion(value: string) {
@@ -356,7 +451,10 @@ export function ProductExplorer({
     setPageDirection(null);
     setSuggestionsOpen(false);
     setActiveSuggestion(-1);
-    updateUrlState({ categoryId, page: 1, query: value }, 'push');
+    updateUrlState(
+      { categoryId, page: 1, query: value, stability, surface },
+      'push',
+    );
     searchInputRef.current?.focus();
   }
 
@@ -402,7 +500,10 @@ export function ProductExplorer({
     setPageDirection(nextPage > pageRef.current ? 'forward' : 'backward');
     pageRef.current = nextPage;
     setPage(nextPage);
-    updateUrlState({ categoryId, page: nextPage, query }, 'push');
+    updateUrlState(
+      { categoryId, page: nextPage, query, stability, surface },
+      'push',
+    );
   }
 
   const comparisonRows =
@@ -445,139 +546,221 @@ export function ProductExplorer({
         </p>
       </header>
 
-      <div className="border-border bg-surface tablet:p-6 mt-8 rounded-[var(--radius-panel)] border p-4 shadow-[var(--shadow-sm)]">
-        <div className="relative grid gap-2">
-          <label className="text-sm font-semibold" htmlFor="catalogue-search">
-            {copy.searchLabel}
-          </label>
-          <div className="border-border bg-background focus-within:border-primary focus-within:ring-ring/20 flex min-h-12 items-center gap-3 rounded-[var(--radius-control)] border px-4 focus-within:ring-3">
-            <Search
-              aria-hidden="true"
-              className="text-muted-foreground size-5 shrink-0"
-            />
-            <input
-              ref={searchInputRef}
-              aria-activedescendant={
-                activeSuggestion >= 0
-                  ? `catalogue-suggestion-${activeSuggestion}`
-                  : undefined
-              }
-              aria-autocomplete="list"
-              aria-controls="catalogue-suggestions"
-              aria-expanded={suggestionsOpen && suggestions.length > 0}
-              className="placeholder:text-muted-foreground min-w-0 flex-1 border-0 bg-transparent outline-none"
-              id="catalogue-search"
-              onChange={(event) => updateQuery(event.target.value)}
-              onBlur={() => {
-                setSuggestionsOpen(false);
-                setActiveSuggestion(-1);
-              }}
-              onFocus={() => setSuggestionsOpen(query.trim().length >= 2)}
-              onKeyDown={(event) => {
-                if (!suggestions.length) return;
-                if (event.key === 'ArrowDown') {
-                  event.preventDefault();
-                  setSuggestionsOpen(true);
-                  setActiveSuggestion((current) =>
-                    Math.min(current + 1, suggestions.length - 1),
-                  );
-                } else if (event.key === 'ArrowUp') {
-                  event.preventDefault();
-                  setActiveSuggestion((current) => Math.max(current - 1, 0));
-                } else if (event.key === 'Enter' && activeSuggestion >= 0) {
-                  event.preventDefault();
-                  const suggestion = suggestions[activeSuggestion];
-                  if (suggestion) chooseSuggestion(suggestion.value);
-                } else if (event.key === 'Escape') {
+      <div className="border-border bg-surface tablet:grid-cols-[auto_minmax(0,1fr)_auto] mt-8 grid items-center gap-4 rounded-[var(--radius-panel)] border p-4 shadow-[var(--shadow-sm)]">
+        <span className="bg-surface-subtle text-primary flex size-11 items-center justify-center rounded-[var(--radius-control)]">
+          <Sparkles aria-hidden="true" className="size-5" />
+        </span>
+        <div>
+          <h2 className="m-0 text-base font-semibold">
+            {copy.consultationTitle}
+          </h2>
+          <p className="text-muted-foreground mt-1 mb-0 text-sm leading-5">
+            {copy.consultationDescription}
+          </p>
+        </div>
+        <Button
+          onClick={() => toast.info(copy.consultationPending)}
+          type="button"
+        >
+          {copy.consultationAction}
+          <ArrowRight aria-hidden="true" className="size-4" />
+        </Button>
+      </div>
+
+      <div className="mt-5">
+        <div className="tablet:grid-cols-[minmax(16rem,1fr)_auto_auto] grid gap-2">
+          <div className="relative min-w-0">
+            <label className="sr-only" htmlFor="catalogue-search">
+              {copy.searchLabel}
+            </label>
+            <div className="border-border bg-background focus-within:border-primary focus-within:ring-ring/20 flex h-11 items-center gap-3 rounded-[var(--radius-control)] border px-4 focus-within:ring-3">
+              <Search
+                aria-hidden="true"
+                className="text-muted-foreground size-4 shrink-0"
+              />
+              <input
+                ref={searchInputRef}
+                aria-activedescendant={
+                  activeSuggestion >= 0
+                    ? `catalogue-suggestion-${activeSuggestion}`
+                    : undefined
+                }
+                aria-autocomplete="list"
+                aria-controls="catalogue-suggestions"
+                aria-expanded={suggestionsOpen && suggestions.length > 0}
+                className="placeholder:text-muted-foreground min-w-0 flex-1 border-0 bg-transparent text-sm outline-none"
+                id="catalogue-search"
+                onChange={(event) => updateQuery(event.target.value)}
+                onBlur={() => {
                   setSuggestionsOpen(false);
                   setActiveSuggestion(-1);
-                }
-              }}
-              placeholder={copy.searchPlaceholder}
-              role="combobox"
-              type="search"
-              value={query}
-            />
-            {query ? (
-              <button
-                aria-label={copy.clearFilters}
-                className="text-muted-foreground hover:text-foreground cursor-pointer border-0 bg-transparent p-1"
-                onClick={() => updateQuery('')}
-                type="button"
-              >
-                <X aria-hidden="true" className="size-4" />
-              </button>
-            ) : null}
-          </div>
-          {suggestionsOpen && suggestions.length ? (
-            <ul
-              aria-label={copy.suggestions}
-              className="border-border bg-surface absolute top-full right-0 left-0 z-40 mt-2 max-h-80 list-none overflow-y-auto rounded-[var(--radius-control)] border p-1 shadow-xl"
-              id="catalogue-suggestions"
-              role="listbox"
-            >
-              {suggestions.map((suggestion, index) => (
-                <li key={suggestion.id} role="presentation">
-                  <button
-                    aria-selected={activeSuggestion === index}
-                    className={cn(
-                      'hover:bg-surface-subtle focus-visible:bg-surface-subtle flex min-h-11 w-full cursor-pointer items-center justify-between gap-4 rounded-[calc(var(--radius-control)-0.2rem)] border-0 bg-transparent px-3 py-2 text-left outline-none',
-                      activeSuggestion === index && 'bg-surface-subtle',
-                    )}
-                    id={`catalogue-suggestion-${index}`}
-                    onClick={() => chooseSuggestion(suggestion.value)}
-                    onMouseDown={(event) => event.preventDefault()}
-                    role="option"
-                    type="button"
-                  >
-                    <span className="font-medium">{suggestion.label}</span>
-                    <span className="text-muted-foreground text-xs">
-                      {searchSuggestionKindLabel(suggestion.kind, locale)}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
-
-        <fieldset className="mt-5 max-w-full min-w-0 overflow-hidden border-0 p-0">
-          <legend className="mb-2 text-sm font-semibold">{copy.filters}</legend>
-          <div
-            className="flex max-w-full min-w-0 gap-2 overflow-x-auto pb-2"
-            data-testid="category-filter-rail"
-          >
-            {[['all', copy.allCategories] as const, ...categoryOptions].map(
-              ([id, label]) => (
+                }}
+                onFocus={() => setSuggestionsOpen(query.trim().length >= 2)}
+                onKeyDown={(event) => {
+                  if (!suggestions.length) return;
+                  if (event.key === 'ArrowDown') {
+                    event.preventDefault();
+                    setSuggestionsOpen(true);
+                    setActiveSuggestion((current) =>
+                      Math.min(current + 1, suggestions.length - 1),
+                    );
+                  } else if (event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    setActiveSuggestion((current) => Math.max(current - 1, 0));
+                  } else if (event.key === 'Enter' && activeSuggestion >= 0) {
+                    event.preventDefault();
+                    const suggestion = suggestions[activeSuggestion];
+                    if (suggestion) chooseSuggestion(suggestion.value);
+                  } else if (event.key === 'Escape') {
+                    setSuggestionsOpen(false);
+                    setActiveSuggestion(-1);
+                  }
+                }}
+                placeholder={copy.searchPlaceholder}
+                role="combobox"
+                type="search"
+                value={query}
+              />
+              {query ? (
                 <button
-                  aria-pressed={categoryId === id}
-                  className={cn(
-                    'border-border min-h-11 shrink-0 cursor-pointer rounded-full border px-4 text-sm font-semibold transition-colors',
-                    categoryId === id
-                      ? 'bg-foreground text-background border-foreground'
-                      : 'bg-surface text-muted-foreground hover:bg-surface-subtle hover:text-foreground',
-                  )}
-                  key={id}
-                  onClick={() => updateCategory(id)}
+                  aria-label={copy.clearFilters}
+                  className="text-muted-foreground hover:text-foreground cursor-pointer border-0 bg-transparent p-1"
+                  onClick={() => updateQuery('')}
                   type="button"
                 >
-                  {label}{' '}
-                  <span aria-hidden="true">
-                    {id === 'all'
-                      ? queryMatches.length
-                      : (categoryCounts.get(id) ?? 0)}
-                  </span>
+                  <X aria-hidden="true" className="size-4" />
                 </button>
-              ),
-            )}
+              ) : null}
+            </div>
+            {suggestionsOpen && suggestions.length ? (
+              <ul
+                aria-label={copy.suggestions}
+                className="border-border bg-surface absolute top-full right-0 left-0 z-40 mt-2 max-h-80 list-none overflow-y-auto rounded-[var(--radius-control)] border p-1 shadow-xl"
+                id="catalogue-suggestions"
+                role="listbox"
+              >
+                {suggestions.map((suggestion, index) => (
+                  <li key={suggestion.id} role="presentation">
+                    <button
+                      aria-selected={activeSuggestion === index}
+                      className={cn(
+                        'hover:bg-surface-subtle focus-visible:bg-surface-subtle flex min-h-11 w-full cursor-pointer items-center justify-between gap-4 rounded-[calc(var(--radius-control)-0.2rem)] border-0 bg-transparent px-3 py-2 text-left outline-none',
+                        activeSuggestion === index && 'bg-surface-subtle',
+                      )}
+                      id={`catalogue-suggestion-${index}`}
+                      onClick={() => chooseSuggestion(suggestion.value)}
+                      onMouseDown={(event) => event.preventDefault()}
+                      role="option"
+                      type="button"
+                    >
+                      <span className="font-medium">{suggestion.label}</span>
+                      <span className="text-muted-foreground text-xs">
+                        {searchSuggestionKindLabel(suggestion.kind, locale)}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </div>
-        </fieldset>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                className="tablet:w-auto h-11 w-full justify-between"
+                variant="outline"
+              >
+                {selectedCategoryLabel}
+                <ChevronDown aria-hidden="true" className="size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="max-h-80 overflow-y-auto"
+            >
+              <DropdownMenuLabel>{copy.allCategories}</DropdownMenuLabel>
+              <DropdownMenuRadioGroup
+                onValueChange={updateCategory}
+                value={categoryId}
+              >
+                <DropdownMenuRadioItem value="all">
+                  {copy.allCategories}
+                </DropdownMenuRadioItem>
+                {categoryOptions.map(([id, label]) => (
+                  <DropdownMenuRadioItem key={id} value={id}>
+                    {label}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Button
+            aria-controls="catalogue-attribute-filters"
+            aria-expanded={filtersOpen}
+            className="tablet:w-auto h-11 w-full"
+            onClick={() => setFiltersOpen((current) => !current)}
+            variant="outline"
+          >
+            <SlidersHorizontal aria-hidden="true" className="size-4" />
+            {copy.filters}
+            {appliedAttributeFilterCount > 0 ? (
+              <span className="bg-primary text-primary-foreground inline-flex size-5 items-center justify-center rounded-full text-[0.68rem]">
+                {appliedAttributeFilterCount}
+              </span>
+            ) : null}
+          </Button>
+        </div>
+
+        {filtersOpen ? (
+          <fieldset
+            className="border-border bg-surface tablet:grid-cols-2 mt-3 grid gap-4 rounded-[var(--radius-panel)] border p-4"
+            id="catalogue-attribute-filters"
+          >
+            <legend className="sr-only">{copy.filterPanel}</legend>
+            <label className="grid gap-2 text-sm font-semibold">
+              {copy.surfaceFilter}
+              <select
+                className="border-border bg-background h-11 rounded-[var(--radius-control)] border px-3 font-normal"
+                onChange={(event) => updateSurface(event.target.value)}
+                value={surface}
+              >
+                <option value="">{copy.anySurface}</option>
+                {surfaceOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {surfaceLabel(option, locale)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="grid gap-2 text-sm font-semibold">
+              {copy.stabilityFilter}
+              <select
+                className="border-border bg-background h-11 rounded-[var(--radius-control)] border px-3 font-normal"
+                onChange={(event) =>
+                  updateStability(
+                    event.target.value as 'all' | 'neutral' | 'stability',
+                  )
+                }
+                value={stability}
+              >
+                <option value="all">{copy.anyStability}</option>
+                <option value="neutral">
+                  {stabilityLabel('neutral', locale)}
+                </option>
+                <option value="stability">
+                  {stabilityLabel('stability', locale)}
+                </option>
+              </select>
+            </label>
+          </fieldset>
+        ) : null}
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
           <p aria-live="polite" className="text-muted-foreground m-0 text-sm">
             {copy.results(filtered.length, products.length)}
           </p>
-          {query || categoryId !== 'all' ? (
+          {query || categoryId !== 'all' || surface || stability !== 'all' ? (
             <Button onClick={clearFilters} size="sm" variant="ghost">
               {copy.clearFilters}
             </Button>

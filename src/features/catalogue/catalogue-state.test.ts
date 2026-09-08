@@ -134,22 +134,49 @@ describe('catalogue state', () => {
   it('serializes, restores, and sanitizes shareable catalogue state', () => {
     const url = writeCatalogueUrlState(
       new URL('https://example.com/de/catalogue/'),
-      { categoryId: 'trail', page: 2, query: 'grip' },
+      {
+        categoryId: 'trail',
+        page: 2,
+        query: 'grip',
+        stability: 'stability',
+        surface: 'Trail',
+      },
     );
     expect(url.pathname).toBe('/de/catalogue/');
     expect(url.searchParams.has('lang')).toBe(false);
     expect(url.searchParams.get('q')).toBe('grip');
     expect(url.searchParams.get('category')).toBe('trail');
     expect(url.searchParams.get('page')).toBe('2');
-    expect(
-      parseCatalogueUrlState(url.searchParams, new Set(['trail'])),
-    ).toEqual({ categoryId: 'trail', page: 2, query: 'grip' });
+    expect(url.searchParams.get('surface')).toBe('Trail');
+    expect(url.searchParams.get('stability')).toBe('stability');
     expect(
       parseCatalogueUrlState(
-        new URLSearchParams('category=unknown&page=-2'),
+        url.searchParams,
         new Set(['trail']),
+        new Set(['Trail']),
       ),
-    ).toEqual({ categoryId: 'all', page: 1, query: '' });
+    ).toEqual({
+      categoryId: 'trail',
+      page: 2,
+      query: 'grip',
+      stability: 'stability',
+      surface: 'Trail',
+    });
+    expect(
+      parseCatalogueUrlState(
+        new URLSearchParams(
+          'category=unknown&page=-2&surface=Moon&stability=unknown',
+        ),
+        new Set(['trail']),
+        new Set(['Trail']),
+      ),
+    ).toEqual({
+      categoryId: 'all',
+      page: 1,
+      query: '',
+      stability: 'all',
+      surface: '',
+    });
     expect(externalSearchUrl('unknown shoe', 'fr')).toContain(
       'decathlon.fr/search',
     );
@@ -164,6 +191,22 @@ describe('catalogue state', () => {
       ),
     ).toBe(true);
     expect(paginateProducts(trail, 99).page).toBe(Math.ceil(trail.length / 12));
+  });
+
+  it('combines surface and stability filters', () => {
+    const trailStability = filterProducts(products, '', 'all', 'en', {
+      surface: 'Road',
+      stability: 'stability',
+    });
+
+    expect(trailStability.length).toBeGreaterThan(0);
+    expect(
+      trailStability.every(
+        ({ product }) =>
+          product.specifications.surfaces.value?.includes('Road') &&
+          product.specifications.stability.value === 'stability',
+      ),
+    ).toBe(true);
   });
 
   it('returns replacing 12-item pages instead of cumulative results', () => {

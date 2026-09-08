@@ -6,11 +6,21 @@ export const catalogueCopy = {
     intro:
       'Search and compare the complete catalogue by purpose, surface, guidance, and construction.',
     searchLabel: 'Search products',
-    searchPlaceholder: 'Brand, model, category, benefit…',
+    searchPlaceholder: 'Search by brand, model or technology',
     suggestions: 'Search suggestions',
     searchDecathlon: (query: string) => `Search Decathlon for “${query}”`,
+    consultationTitle: 'Help a customer choose the right shoe',
+    consultationDescription:
+      'Answer a short questionnaire with the customer to find explainable matches.',
+    consultationAction: 'Start customer consultation',
+    consultationPending: 'The customer questionnaire is the next step.',
     allCategories: 'All categories',
-    filters: 'Categories',
+    filters: 'Filters',
+    filterPanel: 'Additional catalogue filters',
+    surfaceFilter: 'Surface',
+    anySurface: 'Any surface',
+    stabilityFilter: 'Stability',
+    anyStability: 'Any stability',
     results: (shown: number, total: number) => `${shown} of ${total} shoes`,
     noResults: 'No shoes match these filters.',
     clearFilters: 'Clear filters',
@@ -81,11 +91,21 @@ export const catalogueCopy = {
     intro:
       'Durchsuche und vergleiche den vollständigen Katalog nach Einsatzzweck, Untergrund, Führung und Konstruktion.',
     searchLabel: 'Produkte suchen',
-    searchPlaceholder: 'Marke, Modell, Kategorie, Vorteil…',
+    searchPlaceholder: 'Nach Marke, Modell oder Technologie suchen',
     suggestions: 'Suchvorschläge',
     searchDecathlon: (query: string) => `Bei Decathlon nach „${query}“ suchen`,
+    consultationTitle: 'Den passenden Schuh für einen Kunden finden',
+    consultationDescription:
+      'Beantworte gemeinsam mit dem Kunden einige Fragen und erhalte nachvollziehbare Empfehlungen.',
+    consultationAction: 'Kundenberatung starten',
+    consultationPending: 'Der Kundenfragebogen folgt als nächster Schritt.',
     allCategories: 'Alle Kategorien',
-    filters: 'Kategorien',
+    filters: 'Filter',
+    filterPanel: 'Zusätzliche Katalogfilter',
+    surfaceFilter: 'Untergrund',
+    anySurface: 'Alle Untergründe',
+    stabilityFilter: 'Stabilität',
+    anyStability: 'Alle Stabilitätsarten',
     results: (shown: number, total: number) => `${shown} von ${total} Schuhen`,
     noResults: 'Keine Schuhe passen zu diesen Filtern.',
     clearFilters: 'Filter löschen',
@@ -156,11 +176,22 @@ export const catalogueCopy = {
     intro:
       'Recherchez et comparez le catalogue complet selon l’usage, le terrain, le guidage et la construction.',
     searchLabel: 'Rechercher des produits',
-    searchPlaceholder: 'Marque, modèle, catégorie, avantage…',
+    searchPlaceholder: 'Rechercher par marque, modèle ou technologie',
     suggestions: 'Suggestions de recherche',
     searchDecathlon: (query: string) => `Rechercher « ${query} » sur Decathlon`,
+    consultationTitle: 'Aider un client à choisir la bonne chaussure',
+    consultationDescription:
+      'Répondez à quelques questions avec le client pour obtenir des recommandations explicables.',
+    consultationAction: 'Démarrer le conseil client',
+    consultationPending:
+      'Le questionnaire client constitue la prochaine étape.',
     allCategories: 'Toutes les catégories',
-    filters: 'Catégories',
+    filters: 'Filtres',
+    filterPanel: 'Filtres supplémentaires du catalogue',
+    surfaceFilter: 'Terrain',
+    anySurface: 'Tous les terrains',
+    stabilityFilter: 'Stabilité',
+    anyStability: 'Tous les types de stabilité',
     results: (shown: number, total: number) =>
       `${shown} chaussures sur ${total}`,
     noResults: 'Aucune chaussure ne correspond à ces filtres.',
@@ -291,6 +322,27 @@ export function stabilityLabel(value: string, locale: SupportedLocale): string {
     neutral: { en: 'Neutral', de: 'Neutral', fr: 'Neutre' },
     stability: { en: 'Stability', de: 'Stabilität', fr: 'Stabilité' },
     unknown: { en: 'Pending', de: 'Ausstehend', fr: 'En attente' },
+  } as const;
+  return labels[value as keyof typeof labels]?.[locale] ?? value;
+}
+
+export function surfaceLabel(value: string, locale: SupportedLocale): string {
+  const labels = {
+    Road: { en: 'Road', de: 'Straße', fr: 'Route' },
+    Gravel: { en: 'Gravel', de: 'Schotter', fr: 'Gravier' },
+    'Firm Paths': { en: 'Firm paths', de: 'Feste Wege', fr: 'Chemins fermes' },
+    Trail: { en: 'Trail', de: 'Trail', fr: 'Trail' },
+    'Muddy trail': {
+      en: 'Muddy trail',
+      de: 'Schlammige Trails',
+      fr: 'Trail boueux',
+    },
+    Track: { en: 'Track', de: 'Bahn', fr: 'Piste' },
+    'Cross-country': {
+      en: 'Cross-country',
+      de: 'Crosslauf',
+      fr: 'Cross-country',
+    },
   } as const;
   return labels[value as keyof typeof labels]?.[locale] ?? value;
 }
