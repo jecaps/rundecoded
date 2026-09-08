@@ -106,6 +106,10 @@ function evidenceFields(product: ShoeProduct) {
       evidence: product.specifications.stability.evidence,
     },
     {
+      field: 'specifications.maximumDistance',
+      evidence: product.specifications.maximumDistance.evidence,
+    },
+    {
       field: 'specifications.heelToToeDrop',
       evidence: product.specifications.heelToToeDrop.evidence,
     },

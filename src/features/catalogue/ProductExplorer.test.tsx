@@ -46,7 +46,7 @@ describe('ProductExplorer', () => {
       within(firstCard!).getByTestId('card-best-for'),
     ).not.toHaveTextContent('All levels');
     expect(within(firstCard!).getByTestId('card-distance')).toHaveTextContent(
-      'marathon',
+      '42 km',
     );
     expect(within(firstCard!).queryByText('Surface')).not.toBeInTheDocument();
     expect(within(firstCard!).queryByText('Stability')).not.toBeInTheDocument();

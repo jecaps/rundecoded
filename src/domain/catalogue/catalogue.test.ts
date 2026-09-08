@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { confidenceForEvidence, resolveFactProvenance } from './evidence';
 import { resolveLocalizedText } from './localization';
 import type { ShoeProduct } from './schema';
 import {
@@ -54,6 +55,10 @@ function shoe(overrides: Partial<ShoeProduct> = {}): ShoeProduct {
         value: 'neutral',
         evidence: { status: 'verified', sourceIds: ['official-source'] },
       },
+      maximumDistance: {
+        value: { amount: 10, unit: 'km' },
+        evidence: { status: 'verified', sourceIds: ['official-source'] },
+      },
       heelToToeDrop: {
         value: { amount: 8, unit: 'mm' },
         evidence: { status: 'verified', sourceIds: ['official-source'] },
@@ -98,6 +103,34 @@ function shoe(overrides: Partial<ShoeProduct> = {}): ShoeProduct {
 describe('product catalogue validation', () => {
   it('accepts explicit pending research without failing the record', () => {
     expect(parseProduct(shoe()).technologies.evidence.status).toBe('pending');
+  });
+
+  it('requires provenance for non-pending facts and an explanation for derived values', () => {
+    const product = shoe();
+    product.specifications.maximumDistance.evidence = {
+      status: 'derived',
+      sourceIds: [],
+    };
+
+    expect(() => parseProduct(product)).toThrow(
+      /non-pending evidence requires at least one source|derived evidence must explain/,
+    );
+  });
+
+  it('accepts a published maximum stack when heel and forefoot are unavailable', () => {
+    const product = shoe();
+    product.specifications.stackHeight = {
+      value: { maximum: 20, unit: 'mm' },
+      evidence: { status: 'verified', sourceIds: ['official-source'] },
+    };
+
+    const parsed = parseProduct(product);
+    expect(parsed.kind).toBe('shoe');
+    if (parsed.kind !== 'shoe') throw new Error('Expected a shoe product');
+    expect(parsed.specifications.stackHeight.value).toEqual({
+      maximum: 20,
+      unit: 'mm',
+    });
   });
 
   it('reports the record name and invalid field', () => {
@@ -150,6 +183,35 @@ describe('product catalogue validation', () => {
     });
     expect(() => validateCatalogue([duplicateCategories, shoe()])).toThrow(
       /duplicate product ID|duplicate category ID or English label|unknown comparable product/,
+    );
+  });
+});
+
+describe('fact provenance and confidence', () => {
+  it('maps evidence status to a stable confidence level', () => {
+    expect(
+      ['verified', 'derived', 'fallback', 'pending'].map((status) =>
+        confidenceForEvidence({
+          status: status as 'verified' | 'derived' | 'fallback' | 'pending',
+          sourceIds: status === 'pending' ? [] : ['official-source'],
+        }),
+      ),
+    ).toEqual(['high', 'medium', 'low', 'unknown']);
+  });
+
+  it('resolves a fact to the exact supporting product source', () => {
+    const product = shoe();
+    expect(
+      resolveFactProvenance(
+        product,
+        product.specifications.maximumDistance.evidence,
+      ),
+    ).toEqual(
+      expect.objectContaining({
+        confidence: 'high',
+        status: 'verified',
+        sources: [expect.objectContaining({ id: 'official-source' })],
+      }),
     );
   });
 });
