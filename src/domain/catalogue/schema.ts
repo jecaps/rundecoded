@@ -35,11 +35,25 @@ export const evidenceSchema = z
     note: z.string().trim().min(1).optional(),
   })
   .superRefine((evidence, context) => {
-    if (evidence.status === 'verified' && evidence.sourceIds.length === 0) {
+    if (evidence.status !== 'pending' && evidence.sourceIds.length === 0) {
       context.addIssue({
         code: 'custom',
         path: ['sourceIds'],
-        message: 'verified evidence requires at least one source',
+        message: 'non-pending evidence requires at least one source',
+      });
+    }
+    if (evidence.status === 'pending' && evidence.sourceIds.length > 0) {
+      context.addIssue({
+        code: 'custom',
+        path: ['sourceIds'],
+        message: 'pending evidence cannot claim a supporting source',
+      });
+    }
+    if (evidence.status === 'derived' && !evidence.note) {
+      context.addIssue({
+        code: 'custom',
+        path: ['note'],
+        message: 'derived evidence must explain how the value was produced',
       });
     }
   });
@@ -116,11 +130,30 @@ export const weightFactSchema = factSchema(
 );
 
 export const stackHeightFactSchema = factSchema(
-  z.strictObject({
-    heel: z.number().min(0).max(100),
-    forefoot: z.number().min(0).max(100),
-    unit: z.literal('mm'),
-  }),
+  z
+    .strictObject({
+      heel: z.number().min(0).max(100).optional(),
+      forefoot: z.number().min(0).max(100).optional(),
+      maximum: z.number().min(0).max(100).optional(),
+      unit: z.literal('mm'),
+    })
+    .superRefine((value, context) => {
+      const hasPair = value.heel !== undefined && value.forefoot !== undefined;
+      const hasMaximum = value.maximum !== undefined;
+      if (hasPair === hasMaximum) {
+        context.addIssue({
+          code: 'custom',
+          message:
+            'stack height requires either heel and forefoot values or one published maximum',
+        });
+      }
+      if ((value.heel === undefined) !== (value.forefoot === undefined)) {
+        context.addIssue({
+          code: 'custom',
+          message: 'heel and forefoot stack heights must be supplied together',
+        });
+      }
+    }),
 );
 
 const sharedProductShape = {
@@ -143,6 +176,12 @@ export const shoeProductSchema = z.strictObject({
   specifications: z.strictObject({
     surfaces: factSchema(z.array(z.string().trim().min(1)).min(1)),
     stability: factSchema(z.enum(['neutral', 'stability', 'unknown'])),
+    maximumDistance: factSchema(
+      z.strictObject({
+        amount: z.number().positive().max(1000),
+        unit: z.literal('km'),
+      }),
+    ),
     heelToToeDrop: millimetreFactSchema,
     stackHeight: stackHeightFactSchema,
     weight: weightFactSchema,

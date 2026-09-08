@@ -89,6 +89,581 @@ interface RecordedWeight {
   sourceUrl: string;
 }
 
+interface RecordedProductFacts {
+  source: Omit<ProductSource, 'id'> & { idSuffix: string };
+  maximumDistanceSource?: Omit<ProductSource, 'id'> & { idSuffix: string };
+  heelToToeDrop?: number;
+  stackHeight?: { heel: number; forefoot: number } | { maximum: number };
+  weight?: { amount: number; referenceSize: string };
+  surfaces?: string[];
+  technologies?: string[];
+  construction?: string[];
+  maximumDistanceKm?: number;
+  maximumDistanceStatus?: 'verified' | 'derived';
+}
+
+const recordedProductFacts = new Map<string, RecordedProductFacts>([
+  [
+    'asics-gel-sonoma-8-gtx',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Gel-Sonoma 8 GTX product description',
+        url: 'https://www.decathlon.de/p/trailrunningschuhe-herren-asics-gel-sonoma-8-gtx-schwarz/365812/c1m8943728',
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Technical measurements, construction details, and a 40 km maximum distance are published on the supplied Decathlon product page.',
+      },
+      heelToToeDrop: 8,
+      stackHeight: { heel: 36, forefoot: 28 },
+      weight: { amount: 325, referenceSize: 'EU 42.5' },
+      surfaces: ['Trail'],
+      technologies: [
+        'Amplifoam midsole',
+        'Rearfoot GEL',
+        'Gore-Tex membrane',
+        'High-density rubber outsole',
+      ],
+      construction: [
+        'Full-length Amplifoam midsole',
+        'Strategically placed GEL cushioning',
+        'Gore-Tex upper',
+        'High-density rubber outsole',
+      ],
+      maximumDistanceKm: 40,
+    },
+  ],
+  [
+    'asics-gel-kanaku-6',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Gel-Kanaku 6 product description',
+        url: 'https://www.decathlon.de/p/trailrunningschuhe-herren-asics-gel-kanaku-6-blau-grau/364874/m9029775',
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Technical measurements are published in the Decathlon product description rather than its specifications panel.',
+      },
+      heelToToeDrop: 8,
+      stackHeight: { heel: 35, forefoot: 27 },
+      weight: { amount: 295, referenceSize: 'EU 42.5' },
+      technologies: [
+        'Amplifoam cushioning',
+        'Rearfoot GEL',
+        'Reinforced breathable mesh',
+        '3.5 mm lugs',
+      ],
+      construction: [
+        'Amplifoam midsole',
+        'Rearfoot GEL cushioning',
+        'Reinforced breathable mesh upper',
+        '3.5 mm trail lugs',
+      ],
+    },
+  ],
+  [
+    'asics-trabuco-14',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Trabuco 14 product description',
+        url: 'https://www.decathlon.de/p/trailrunningschuhe-herren-asics-trabuco-14-schwarz-khaki/381851/m9029773',
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Construction details and an 80 km maximum distance are published on the supplied Decathlon product page.',
+      },
+      surfaces: ['Trail'],
+      technologies: [
+        'FF Blast Max foam',
+        'Asicsgrip outsole',
+        'Rock Protection Plate',
+        'Engineered mesh',
+      ],
+      construction: [
+        'FF Blast Max midsole',
+        'Asicsgrip outsole',
+        'Rock Protection Plate',
+        'Engineered mesh upper with reinforced overlays',
+      ],
+      maximumDistanceKm: 80,
+    },
+  ],
+  [
+    'asics-trabuco-terra-3',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Trabuco Terra 3 product description',
+        url: 'https://www.decathlon.de/p/trailrunningschuhe-damen-asics-trabuco-terra-3-beige-rosa/362581/c30c24c9m9003170',
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Technical measurements, construction details, and an 80 km maximum distance are published on the supplied Decathlon product page.',
+      },
+      heelToToeDrop: 8,
+      stackHeight: { heel: 35, forefoot: 27 },
+      weight: { amount: 279, referenceSize: 'EU 39' },
+      surfaces: ['Trail'],
+      technologies: ['FF Blast foam', 'Asicsgrip outsole', '3.5 mm lugs'],
+      construction: [
+        'FF Blast midsole',
+        'Asicsgrip outsole',
+        '3.5 mm trail lugs',
+        'Breathable stretch upper',
+      ],
+      maximumDistanceKm: 80,
+    },
+  ],
+  [
+    'hoka-speedgoat-7',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Speedgoat 7 product description',
+        url: 'https://www.decathlon.de/p/trailrunningschuhe-damen-hoka-speedgoat-7-lila-weiss/382212/m9004597',
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page.',
+      },
+      heelToToeDrop: 4,
+      weight: { amount: 241, referenceSize: 'EU 40' },
+      surfaces: ['Trail'],
+      technologies: [
+        'SuperCriticalFoam midsole',
+        '5 mm lugs',
+        'Lightweight RPET mesh',
+      ],
+      construction: [
+        'SuperCriticalFoam midsole',
+        '5 mm trail lugs',
+        'Lightweight RPET mesh upper',
+        'Integrated debris gaiter',
+      ],
+      maximumDistanceKm: 170,
+    },
+  ],
+  [
+    'hoka-torrent-4',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Torrent 4 product description',
+        url: 'https://www.decathlon.de/p/trailrunningschuhe-damen-hoka-torrent-4-lila-grun/361366/c16c9m9004592',
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page.',
+      },
+      heelToToeDrop: 5,
+      weight: { amount: 236, referenceSize: 'EU 40' },
+      surfaces: ['Trail'],
+      technologies: ['EVA midsole', '5 mm lugs', 'Recycled polyester mesh'],
+      construction: [
+        'Thick EVA midsole',
+        'High-abrasion rubber outsole',
+        '5 mm trail lugs',
+        'Single-layer mesh upper with 35% recycled polyester',
+      ],
+      maximumDistanceKm: 60,
+    },
+  ],
+  [
+    'new-balance-hierro-v9',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Fresh Foam X Hierro v9 product description',
+        url: 'https://www.decathlon.de/p/trailrunningschuhe-herren-new-balance-fresh-foam-x-hierro-v9-grau-gelb/365842/m9029852',
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page.',
+      },
+      heelToToeDrop: 4,
+      weight: { amount: 294, referenceSize: 'Size not stated' },
+      surfaces: ['Trail'],
+      technologies: [
+        'Fresh Foam X',
+        'Vibram outsole',
+        '4.5 mm lugs',
+        'Toe Protect',
+        'Hybrid mesh',
+      ],
+      construction: [
+        'Fresh Foam X midsole',
+        'Vibram outsole with 4.5 mm lugs',
+        'Hybrid mesh upper',
+        'Toe Protect reinforcement',
+      ],
+      maximumDistanceKm: 170,
+    },
+  ],
+  [
+    'new-balance-rebel-trail',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Rebel Trail product description',
+        url: 'https://www.decathlon.de/p/trailrunningschuhe-herren-new-balance-rebel-trail-grun/381806/m9003166',
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page; the description displays an obvious typo in the drop unit while the specifications panel confirms 6 mm.',
+      },
+      heelToToeDrop: 6,
+      weight: { amount: 302, referenceSize: 'Size not stated' },
+      surfaces: ['Trail'],
+      technologies: [
+        'FuelCell foam',
+        'Vibram Megagrip outsole',
+        'Toe Protect',
+        'Hybrid mesh',
+      ],
+      construction: [
+        'Injection-moulded FuelCell midsole',
+        'Full-length Vibram Megagrip outsole',
+        'Hybrid mesh upper',
+        'Toe Protect reinforcement',
+      ],
+      maximumDistanceKm: 170,
+    },
+  ],
+  [
+    'salomon-aero-blaze-3-grvl',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Salomon comparison chart',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range.',
+      },
+      maximumDistanceSource: {
+        idSuffix: 'verified-distance-source',
+        type: 'retailer-product',
+        label: 'Decathlon Aero Blaze 3 GRVL specifications',
+        url: 'https://www.decathlon.de/p/laufschuhe-gravel-running-herren-salomon-aero-blaze-3-grvl-weiss/382331/m9005033',
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'The current product specifications publish a 0–40 km distance range; this product-specific value supersedes the 5–42 km comparison-chart range.',
+      },
+      maximumDistanceKm: 40,
+      heelToToeDrop: 8,
+      stackHeight: { heel: 35, forefoot: 27 },
+      weight: { amount: 248, referenceSize: 'EU 42' },
+      surfaces: ['Road', 'Gravel'],
+      technologies: ['optiFOAM²', 'Gravel Contagrip', 'Engineered mesh'],
+    },
+  ],
+  [
+    'salomon-genesis',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Salomon comparison chart',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range.',
+      },
+      maximumDistanceSource: {
+        idSuffix: 'verified-distance-source',
+        type: 'retailer-product',
+        label: 'Decathlon Genesis specifications',
+        url: 'https://www.decathlon.de/p/trailrunningschuhe-herren-salomon-genesis-rot-schwarz/358451/c14c1m9004858',
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'The current product specifications publish a 0–80 km distance range; this product-specific value supersedes the 5–100 km comparison-chart range.',
+      },
+      maximumDistanceKm: 80,
+      heelToToeDrop: 8,
+      stackHeight: { heel: 34, forefoot: 26 },
+      weight: { amount: 269, referenceSize: 'EU 42⅔' },
+      surfaces: ['Trail'],
+      technologies: ['optiFOAM', 'Active Chassis', 'Matryx upper'],
+    },
+  ],
+  [
+    'salomon-speedcross-peak',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Salomon comparison chart',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range.',
+      },
+      maximumDistanceKm: 42,
+      heelToToeDrop: 10,
+      stackHeight: { heel: 28, forefoot: 18 },
+      weight: { amount: 319, referenceSize: 'EU 42⅔' },
+      surfaces: ['Trail', 'Muddy trail'],
+      technologies: ['FuzeFoam'],
+    },
+  ],
+  [
+    'salomon-speedcross-peak-gtx',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Salomon comparison chart',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range.',
+      },
+      maximumDistanceKm: 42,
+      heelToToeDrop: 10,
+      stackHeight: { heel: 28, forefoot: 18 },
+      weight: { amount: 330, referenceSize: 'EU 42⅔' },
+      surfaces: ['Trail', 'Muddy trail'],
+      technologies: ['optiFOAM', 'Gore-Tex'],
+    },
+  ],
+  [
+    'salomon-ultra-flow-2',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Salomon comparison chart',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range.',
+      },
+      maximumDistanceKm: 42,
+      heelToToeDrop: 6,
+      stackHeight: { heel: 34, forefoot: 28 },
+      weight: { amount: 273, referenceSize: 'EU 42' },
+      surfaces: ['Trail'],
+      technologies: ['optiFOAM'],
+    },
+  ],
+  [
+    'salomon-supraglide',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Salomon comparison chart',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–20 km use range.',
+      },
+      maximumDistanceKm: 20,
+      heelToToeDrop: 8,
+      weight: { amount: 285, referenceSize: 'EU 42' },
+      surfaces: ['Trail'],
+      technologies: ['FuzeFoam'],
+    },
+  ],
+  [
+    'salomon-ultra-glide-4',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Salomon comparison chart',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range.',
+      },
+      maximumDistanceKm: 100,
+      heelToToeDrop: 6,
+      stackHeight: { heel: 41, forefoot: 35 },
+      weight: { amount: 285, referenceSize: 'EU 42' },
+      surfaces: ['Trail'],
+      technologies: ['optiFOAM'],
+    },
+  ],
+  [
+    'saucony-peregrine-16',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Peregrine 16 product description',
+        url: 'https://www.decathlon.de/p/trailrunningschuhe-herren-saucony-peregrine-16-grun-gelb-orange/381823/c9c22c20m9003027',
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page.',
+      },
+      heelToToeDrop: 4,
+      weight: { amount: 271, referenceSize: 'EU 42' },
+      surfaces: ['Trail'],
+      technologies: ['PWRRUN foam', 'Vibram Megagrip', '4 mm lugs'],
+      construction: [
+        'PWRRUN midsole',
+        'Vibram Megagrip outsole',
+        '4 mm trail lugs',
+      ],
+      maximumDistanceKm: 60,
+    },
+  ],
+  [
+    'adidas-runblaze',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Runblaze product slide',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit.',
+      },
+      heelToToeDrop: 10,
+      stackHeight: { heel: 33, forefoot: 23 },
+      weight: { amount: 274, referenceSize: 'Men; size not stated' },
+      technologies: ['Cloudfoam', 'Mesh upper', 'Rubber outsole'],
+      construction: ['Cloudfoam cushioning', 'Mesh upper', 'Rubber outsole'],
+    },
+  ],
+  [
+    'adidas-adizero-agravic-speed-2',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Agravic Speed 2 product slide',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit; the slide publishes a 0–100 km use range.',
+      },
+      maximumDistanceKm: 100,
+    },
+  ],
+  [
+    'adidas-terrex-agravic-4',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Agravic 4 product slide',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit; the slide publishes a 0–80 km use range.',
+      },
+      maximumDistanceKm: 80,
+    },
+  ],
+  [
+    'kiprun-kipsonic-start',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Kipsonic range slide',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit.',
+      },
+      weight: { amount: 170, referenceSize: 'Size not stated' },
+      surfaces: ['Track', 'Cross-country'],
+      heelToToeDrop: 0,
+    },
+  ],
+  [
+    'kiprun-kipsonic-x-country',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Kipsonic range slide',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit.',
+      },
+      stackHeight: { maximum: 20 },
+      weight: { amount: 158, referenceSize: 'Size not stated' },
+      surfaces: ['Cross-country'],
+      technologies: ['Softech'],
+      heelToToeDrop: 0,
+      maximumDistanceKm: 12,
+      maximumDistanceStatus: 'derived',
+    },
+  ],
+  [
+    'kiprun-kipsonic-mid',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Kipsonic Mid product slide',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the Decathlon Book Monitor Kipsonic Mid product slide, with zero-drop clarification confirmed during the catalogue audit.',
+      },
+      stackHeight: { maximum: 20 },
+      weight: { amount: 138, referenceSize: 'EU 42' },
+      surfaces: ['Track'],
+      technologies: [
+        'Fastech+ foam',
+        'Carbon plate',
+        '6 mm spikes',
+        'Seamless upper',
+      ],
+      construction: [
+        'Fastech+ foam',
+        'Carbon plate',
+        '6 mm spikes',
+        'Seamless upper',
+      ],
+      heelToToeDrop: 0,
+      maximumDistanceKm: 3,
+    },
+  ],
+  [
+    'kiprun-kipsonic-long',
+    {
+      source: {
+        idSuffix: 'book-monitor-source',
+        type: 'legacy-workbook',
+        label: 'Decathlon Book Monitor Kipsonic Long product slides',
+        url: null,
+        checkedAt: '2026-09-07',
+        status: 'verified',
+        note: 'Transcribed from the supplied Decathlon Book Monitor slides; zero drop was confirmed during the catalogue audit, and the detailed slide identifies the 158 g weight as EU 42.',
+      },
+      stackHeight: { maximum: 20 },
+      weight: { amount: 158, referenceSize: 'EU 42' },
+      surfaces: ['Track'],
+      technologies: [
+        'Fastech+ foam',
+        'TPU plate with 10% carbon fibre',
+        '6 mm aluminium spikes',
+        'Knit upper',
+      ],
+      construction: [
+        'Fastech+ foam',
+        'TPU plate with 10% carbon fibre',
+        '6 mm aluminium spikes',
+        'Knit upper',
+      ],
+      heelToToeDrop: 0,
+      maximumDistanceKm: 10,
+    },
+  ],
+]);
+
 const recordedWeights = new Map<string, RecordedWeight>([
   [
     'adidas-adistar-5',
@@ -252,6 +827,54 @@ function ensureWeightSource(
   return id;
 }
 
+function ensureRecordedProductSource(
+  productId: string,
+  sources: ProductSource[],
+  recorded: RecordedProductFacts,
+): string {
+  const existing = sources.find(
+    (source) =>
+      recorded.source.url !== null && source.url === recorded.source.url,
+  );
+  if (existing) {
+    Object.assign(existing, {
+      type: recorded.source.type,
+      label: recorded.source.label,
+      url: recorded.source.url,
+      checkedAt: recorded.source.checkedAt,
+      status: recorded.source.status,
+      note: recorded.source.note,
+    });
+    return existing.id;
+  }
+
+  const { idSuffix, ...source } = recorded.source;
+  const id = sourceId(productId, idSuffix);
+  sources.push({ id, ...source });
+  return id;
+}
+
+function ensureAdditionalRecordedSource(
+  productId: string,
+  sources: ProductSource[],
+  sourceWithId: Omit<ProductSource, 'id'> & { idSuffix: string },
+): string {
+  const existing = sources.find(
+    (source) => sourceWithId.url !== null && source.url === sourceWithId.url,
+  );
+  if (existing) {
+    const { idSuffix, ...source } = sourceWithId;
+    void idSuffix;
+    Object.assign(existing, source);
+    return existing.id;
+  }
+
+  const { idSuffix, ...source } = sourceWithId;
+  const id = sourceId(productId, idSuffix);
+  sources.push({ id, ...source });
+  return id;
+}
+
 function parseDrop(
   value: string,
   productId: string,
@@ -279,6 +902,30 @@ function parseDrop(
     value: { amount: Number(match[1]), unit: 'mm' as const },
     evidence: fallbackEvidence,
   };
+}
+
+function parseMaximumDistance(value: string) {
+  const distances: number[] = [];
+  for (const match of value.matchAll(/(\d+(?:[.,]\d+)?)\s*(km|k|m)\b/gi)) {
+    const amount = Number(match[1]?.replace(',', '.'));
+    const unit = match[2]?.toLocaleLowerCase('en');
+    if (!Number.isFinite(amount) || !unit) continue;
+    distances.push(unit === 'm' ? amount / 1000 : amount);
+  }
+  if (/\b(?:half|semi[- ]?)marathon\b/i.test(value)) distances.push(21);
+  if (/(?<!half\s)(?<!semi[- ])\bmarathon\b/i.test(value)) distances.push(42);
+
+  const maximum = distances.length > 0 ? Math.max(...distances) : null;
+  return maximum === null
+    ? pendingFact('No numerical maximum distance is published.')
+    : {
+        value: { amount: maximum, unit: 'km' as const },
+        evidence: {
+          status: 'derived' as const,
+          sourceIds: ['legacy-catalogue'],
+          note: 'Normalized from the numerical distance in the audited best-for guidance.',
+        },
+      };
 }
 
 function normalizeStability(
@@ -324,6 +971,20 @@ function comparableScore(current: ShoeProduct, candidate: ShoeProduct) {
   );
 }
 
+function sharesIntendedUse(
+  current: ShoeProduct,
+  candidate: ShoeProduct,
+): boolean {
+  const currentCategories = new Set(current.categories.map(({ id }) => id));
+  const currentSurfaces = new Set(current.specifications.surfaces.value ?? []);
+  return (
+    candidate.categories.some(({ id }) => currentCategories.has(id)) ||
+    (candidate.specifications.surfaces.value ?? []).some((surface) =>
+      currentSurfaces.has(surface),
+    )
+  );
+}
+
 function assignComparables(products: ShoeProduct[]) {
   for (const product of products) {
     const ranked = products
@@ -339,7 +1000,9 @@ function assignComparables(products: ShoeProduct[]) {
       );
     const selected = ranked.slice(0, 3).map(({ candidate }) => candidate);
     const crossBrand = ranked.find(
-      ({ candidate }) => candidate.brand.id !== product.brand.id,
+      ({ candidate }) =>
+        candidate.brand.id !== product.brand.id &&
+        sharesIntendedUse(product, candidate),
     )?.candidate;
 
     if (crossBrand && !selected.some(({ id }) => id === crossBrand.id)) {
@@ -433,16 +1096,27 @@ export function migrateRows(
     const primaryProvenance = matchingProvenance[0];
     const sources = makeSources(productId, matchingProvenance);
     const weight = recordedWeights.get(productId);
+    const recordedFacts = recordedProductFacts.get(productId);
     const weightSourceId = weight
       ? ensureWeightSource(productId, sources, weight)
       : null;
+    const recordedFactsSourceId = recordedFacts
+      ? ensureRecordedProductSource(productId, sources, recordedFacts)
+      : null;
+    const maximumDistanceSourceId = recordedFacts?.maximumDistanceSource
+      ? ensureAdditionalRecordedSource(
+          productId,
+          sources,
+          recordedFacts.maximumDistanceSource,
+        )
+      : recordedFactsSourceId;
     const imageSource = sources.find(
       (source) => source.type === 'retailer-image',
     );
     const imageVerified =
       primaryProvenance?.image_status === 'verified-image' && imageSource;
 
-    if (technologies.length === 0) {
+    if (technologies.length === 0 && !recordedFacts?.technologies) {
       warnings.push({
         severity: 'warning',
         recordId: productId,
@@ -470,16 +1144,25 @@ export function migrateRows(
         ),
       },
       technologies:
-        technologies.length > 0
-          ? { value: technologies, evidence: fallbackEvidence }
-          : {
-              value: null,
+        recordedFacts?.technologies && recordedFactsSourceId
+          ? {
+              value: recordedFacts.technologies,
               evidence: {
-                status: 'pending',
-                sourceIds: [],
-                note: 'No technology list exists in the audited legacy catalogue.',
+                status: 'verified',
+                sourceIds: [recordedFactsSourceId],
+                note: recordedFacts.source.note,
               },
-            },
+            }
+          : technologies.length > 0
+            ? { value: technologies, evidence: fallbackEvidence }
+            : {
+                value: null,
+                evidence: {
+                  status: 'pending',
+                  sourceIds: [],
+                  note: 'No technology list exists in the audited legacy catalogue.',
+                },
+              },
       images: [
         {
           id: sourceId(productId, 'primary-image'),
@@ -499,39 +1182,117 @@ export function migrateRows(
       comparables: [],
       specifications: {
         surfaces: {
-          value: splitList(row.surface, /\s*[·|]\s*/).map(titleCase),
-          evidence: fallbackEvidence,
+          value:
+            recordedFacts?.surfaces ??
+            splitList(row.surface, /\s*[·|]\s*/).map(titleCase),
+          evidence:
+            recordedFacts?.surfaces && recordedFactsSourceId
+              ? {
+                  status: 'verified',
+                  sourceIds: [recordedFactsSourceId],
+                  note: recordedFacts.source.note,
+                }
+              : fallbackEvidence,
         },
         stability: {
           value: normalizeStability(row.stability),
           evidence: fallbackEvidence,
         },
-        heelToToeDrop: parseDrop(row.drop, productId, warnings),
-        stackHeight: pendingFact(
-          'No reliable heel and forefoot stack measurements exist in the audited source.',
-        ),
-        weight: weight
-          ? {
-              value: {
-                amount: weight.amount,
-                unit: 'g',
-                referenceSize: weight.referenceSize,
-              },
-              evidence: {
-                status: 'fallback',
-                sourceIds: weightSourceId ? [weightSourceId] : [],
-                note: 'Preserved from the approved Phase 4 explorer slice.',
-              },
-            }
-          : pendingFact(
-              'No weight with a reliable reference size exists in the audited source.',
-            ),
+        maximumDistance:
+          recordedFacts?.maximumDistanceKm && maximumDistanceSourceId
+            ? {
+                value: {
+                  amount: recordedFacts.maximumDistanceKm,
+                  unit: 'km' as const,
+                },
+                evidence: {
+                  status:
+                    recordedFacts.maximumDistanceStatus ??
+                    ('verified' as const),
+                  sourceIds: [maximumDistanceSourceId],
+                  note:
+                    recordedFacts.maximumDistanceStatus === 'derived'
+                      ? 'Derived from the confirmed standard 3–12 km cross-country race range; this is guidance rather than a manufacturer limit.'
+                      : (recordedFacts.maximumDistanceSource?.note ??
+                        recordedFacts.source.note),
+                },
+              }
+            : parseMaximumDistance(row.best_for_en),
+        heelToToeDrop:
+          recordedFacts?.heelToToeDrop !== undefined && recordedFactsSourceId
+            ? {
+                value: {
+                  amount: recordedFacts.heelToToeDrop,
+                  unit: 'mm' as const,
+                },
+                evidence: {
+                  status: 'verified' as const,
+                  sourceIds: [recordedFactsSourceId],
+                  note: recordedFacts.source.note,
+                },
+              }
+            : parseDrop(row.drop, productId, warnings),
+        stackHeight:
+          recordedFacts?.stackHeight && recordedFactsSourceId
+            ? {
+                value: {
+                  ...recordedFacts.stackHeight,
+                  unit: 'mm' as const,
+                },
+                evidence: {
+                  status: 'verified' as const,
+                  sourceIds: [recordedFactsSourceId],
+                  note: recordedFacts.source.note,
+                },
+              }
+            : pendingFact(
+                'No reliable heel and forefoot stack measurements exist in the audited source.',
+              ),
+        weight:
+          recordedFacts?.weight && recordedFactsSourceId
+            ? {
+                value: {
+                  ...recordedFacts.weight,
+                  unit: 'g' as const,
+                },
+                evidence: {
+                  status: 'verified' as const,
+                  sourceIds: [recordedFactsSourceId],
+                  note: recordedFacts.source.note,
+                },
+              }
+            : weight
+              ? {
+                  value: {
+                    amount: weight.amount,
+                    unit: 'g',
+                    referenceSize: weight.referenceSize,
+                  },
+                  evidence: {
+                    status: 'fallback',
+                    sourceIds: weightSourceId ? [weightSourceId] : [],
+                    note: 'Preserved from the approved Phase 4 explorer slice.',
+                  },
+                }
+              : pendingFact(
+                  'No weight with a reliable reference size exists in the audited source.',
+                ),
         fit: pendingFact(
           'No structured fit assessment exists in the audited source.',
         ),
-        construction: pendingFact(
-          'Construction details require official-source research.',
-        ),
+        construction:
+          recordedFacts?.construction && recordedFactsSourceId
+            ? {
+                value: recordedFacts.construction,
+                evidence: {
+                  status: 'verified' as const,
+                  sourceIds: [recordedFactsSourceId],
+                  note: recordedFacts.source.note,
+                },
+              }
+            : pendingFact(
+                'Construction details require official-source research.',
+              ),
       },
     };
   });

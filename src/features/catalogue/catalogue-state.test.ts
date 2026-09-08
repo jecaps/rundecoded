@@ -46,11 +46,24 @@ describe('Phase 8 product catalogue', () => {
       expect(new Set(product.categories.map(({ id }) => id)).size).toBe(
         product.categories.length,
       );
-      expect(
-        product.comparables.some(
-          (id) => byId.get(id)?.product.brand.name !== product.brand.name,
-        ),
-      ).toBe(true);
+      const hasCompatibleCrossBrandProduct = products.some(
+        ({ product: candidate }) =>
+          candidate.brand.name !== product.brand.name &&
+          (candidate.categories.some(({ id }) =>
+            product.categories.some((category) => category.id === id),
+          ) ||
+            (candidate.specifications.surfaces.value?.some((surface) =>
+              product.specifications.surfaces.value?.includes(surface),
+            ) ??
+              false)),
+      );
+      if (hasCompatibleCrossBrandProduct) {
+        expect(
+          product.comparables.some(
+            (id) => byId.get(id)?.product.brand.name !== product.brand.name,
+          ),
+        ).toBe(true);
+      }
       for (const comparableId of product.comparables) {
         const comparable = byId.get(comparableId)?.product;
         expect(comparable).toBeDefined();

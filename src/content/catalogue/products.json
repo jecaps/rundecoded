@@ -114,6 +114,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -237,6 +245,15 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "adidas-adizero-agravic-speed-2-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Agravic Speed 2 product slide",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit; the slide publishes a 0–100 km use range."
       }
     ],
     "comparables": [
@@ -260,6 +277,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 100, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-agravic-speed-2-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit; the slide publishes a 0–100 km use range."
         }
       },
       "heelToToeDrop": {
@@ -410,6 +435,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -548,6 +581,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
         }
       },
       "heelToToeDrop": {
@@ -694,6 +735,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -764,11 +813,11 @@
       }
     },
     "technologies": {
-      "value": ["Cloudfoam", "Breathable mesh", "Adiwear outsole"],
+      "value": ["Cloudfoam", "Mesh upper", "Rubber outsole"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["adidas-runblaze-book-monitor-source"],
+        "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit."
       }
     },
     "images": [
@@ -813,12 +862,21 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "adidas-runblaze-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Runblaze product slide",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit."
       }
     ],
     "comparables": [
+      "new-balance-520-v9",
       "asics-gel-excite-11",
-      "asics-gel-windhawk-5",
-      "decathlon-jogflow-100-1"
+      "asics-gel-windhawk-5"
     ],
     "kind": "shoe",
     "specifications": {
@@ -838,28 +896,40 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
-      "heelToToeDrop": {
-        "value": null,
+      "maximumDistance": {
+        "value": { "amount": 10, "unit": "km" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable drop measurement exists in the legacy source."
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
+      "heelToToeDrop": {
+        "value": { "amount": 10, "unit": "mm" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["adidas-runblaze-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 33, "forefoot": 23, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-runblaze-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit."
         }
       },
       "weight": {
-        "value": null,
+        "value": {
+          "amount": 274,
+          "unit": "g",
+          "referenceSize": "Men; size not stated"
+        },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-runblaze-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit."
         }
       },
       "fit": {
@@ -871,11 +941,11 @@
         }
       },
       "construction": {
-        "value": null,
+        "value": ["Cloudfoam cushioning", "Mesh upper", "Rubber outsole"],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["adidas-runblaze-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit."
         }
       }
     }
@@ -980,6 +1050,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -1110,12 +1188,21 @@
         "checkedAt": null,
         "status": "fallback",
         "note": "Preserved from the approved explorer slice; re-check date is pending."
+      },
+      {
+        "id": "adidas-terrex-agravic-4-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Agravic 4 product slide",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit; the slide publishes a 0–80 km use range."
       }
     ],
     "comparables": [
+      "asics-gel-kanaku-6",
       "asics-gel-sonoma-8-gtx",
-      "asics-trabuco-14",
-      "asics-trabuco-terra-3"
+      "asics-trabuco-14"
     ],
     "kind": "shoe",
     "specifications": {
@@ -1133,6 +1220,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 80, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["adidas-terrex-agravic-4-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit; the slide publishes a 0–80 km use range."
         }
       },
       "heelToToeDrop": {
@@ -1283,6 +1378,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -1407,7 +1510,7 @@
     "comparables": [
       "asics-gel-windhawk-5",
       "adidas-galaxy-7",
-      "new-balance-520-v9"
+      "adidas-runblaze"
     ],
     "kind": "shoe",
     "specifications": {
@@ -1425,6 +1528,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -1497,11 +1608,16 @@
       }
     },
     "technologies": {
-      "value": ["AMPLIFOAM", "Rearfoot GEL", "Reinforced mesh"],
+      "value": [
+        "Amplifoam cushioning",
+        "Rearfoot GEL",
+        "Reinforced breathable mesh",
+        "3.5 mm lugs"
+      ],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["asics-gel-kanaku-6-product-page-1"],
+        "note": "Technical measurements are published in the Decathlon product description rather than its specifications panel."
       }
     },
     "images": [
@@ -1532,11 +1648,11 @@
       {
         "id": "asics-gel-kanaku-6-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Gel-Kanaku 6 product description",
         "url": "https://www.decathlon.de/p/trailrunningschuhe-herren-asics-gel-kanaku-6-blau-grau/364874/m9029775",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Technical measurements are published in the Decathlon product description rather than its specifications panel."
       },
       {
         "id": "asics-gel-kanaku-6-image-2",
@@ -1550,8 +1666,8 @@
     ],
     "comparables": [
       "adidas-terrex-agravic-4",
-      "brooks-cascadia-19",
-      "brooks-ghost-trail"
+      "brooks-ghost-trail",
+      "kiprun-kipstorm-challenger-gravel"
     ],
     "kind": "shoe",
     "specifications": {
@@ -1571,28 +1687,36 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
-      "heelToToeDrop": {
-        "value": null,
+      "maximumDistance": {
+        "value": { "amount": 40, "unit": "km" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable drop measurement exists in the legacy source."
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
+      "heelToToeDrop": {
+        "value": { "amount": 8, "unit": "mm" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["asics-gel-kanaku-6-product-page-1"],
+          "note": "Technical measurements are published in the Decathlon product description rather than its specifications panel."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 35, "forefoot": 27, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["asics-gel-kanaku-6-product-page-1"],
+          "note": "Technical measurements are published in the Decathlon product description rather than its specifications panel."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 295, "unit": "g", "referenceSize": "EU 42.5" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["asics-gel-kanaku-6-product-page-1"],
+          "note": "Technical measurements are published in the Decathlon product description rather than its specifications panel."
         }
       },
       "fit": {
@@ -1604,11 +1728,16 @@
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Amplifoam midsole",
+          "Rearfoot GEL cushioning",
+          "Reinforced breathable mesh upper",
+          "3.5 mm trail lugs"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["asics-gel-kanaku-6-product-page-1"],
+          "note": "Technical measurements are published in the Decathlon product description rather than its specifications panel."
         }
       }
     }
@@ -1717,6 +1846,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -1867,6 +2004,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -2015,6 +2160,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -2153,6 +2306,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -2303,6 +2464,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 1, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -2373,11 +2542,16 @@
       }
     },
     "technologies": {
-      "value": ["GORE-TEX", "AMPLIFOAM+", "Rearfoot GEL"],
+      "value": [
+        "Amplifoam midsole",
+        "Rearfoot GEL",
+        "Gore-Tex membrane",
+        "High-density rubber outsole"
+      ],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["asics-gel-sonoma-8-gtx-product-page-1"],
+        "note": "Technical measurements, construction details, and a 40 km maximum distance are published on the supplied Decathlon product page."
       }
     },
     "images": [
@@ -2408,11 +2582,11 @@
       {
         "id": "asics-gel-sonoma-8-gtx-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Gel-Sonoma 8 GTX product description",
         "url": "https://www.decathlon.de/p/trailrunningschuhe-herren-asics-gel-sonoma-8-gtx-schwarz/365812/c1m8943728",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Technical measurements, construction details, and a 40 km maximum distance are published on the supplied Decathlon product page."
       },
       {
         "id": "asics-gel-sonoma-8-gtx-image-2",
@@ -2434,9 +2608,9 @@
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["asics-gel-sonoma-8-gtx-product-page-1"],
+          "note": "Technical measurements, construction details, and a 40 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stability": {
@@ -2447,28 +2621,36 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 40, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["asics-gel-sonoma-8-gtx-product-page-1"],
+          "note": "Technical measurements, construction details, and a 40 km maximum distance are published on the supplied Decathlon product page."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["asics-gel-sonoma-8-gtx-product-page-1"],
+          "note": "Technical measurements, construction details, and a 40 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 36, "forefoot": 28, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["asics-gel-sonoma-8-gtx-product-page-1"],
+          "note": "Technical measurements, construction details, and a 40 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 325, "unit": "g", "referenceSize": "EU 42.5" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["asics-gel-sonoma-8-gtx-product-page-1"],
+          "note": "Technical measurements, construction details, and a 40 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "fit": {
@@ -2480,11 +2662,16 @@
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Full-length Amplifoam midsole",
+          "Strategically placed GEL cushioning",
+          "Gore-Tex upper",
+          "High-density rubber outsole"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["asics-gel-sonoma-8-gtx-product-page-1"],
+          "note": "Technical measurements, construction details, and a 40 km maximum distance are published on the supplied Decathlon product page."
         }
       }
     }
@@ -2585,6 +2772,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
         }
       },
       "heelToToeDrop": {
@@ -2735,6 +2930,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 10, "unit": "mm" },
         "evidence": {
@@ -2859,7 +3062,7 @@
     "comparables": [
       "asics-gel-excite-11",
       "adidas-galaxy-7",
-      "new-balance-520-v9"
+      "adidas-runblaze"
     ],
     "kind": "shoe",
     "specifications": {
@@ -2877,6 +3080,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 10, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
         }
       },
       "heelToToeDrop": {
@@ -3027,6 +3238,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -3173,6 +3392,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -3323,6 +3550,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -3393,11 +3628,16 @@
       }
     },
     "technologies": {
-      "value": ["FF BLAST MAX", "ASICSGRIP", "Rock protection plate"],
+      "value": [
+        "FF Blast Max foam",
+        "Asicsgrip outsole",
+        "Rock Protection Plate",
+        "Engineered mesh"
+      ],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["asics-trabuco-14-product-page-1"],
+        "note": "Construction details and an 80 km maximum distance are published on the supplied Decathlon product page."
       }
     },
     "images": [
@@ -3428,11 +3668,11 @@
       {
         "id": "asics-trabuco-14-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Trabuco 14 product description",
         "url": "https://www.decathlon.de/p/trailrunningschuhe-herren-asics-trabuco-14-schwarz-khaki/381851/m9029773",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Construction details and an 80 km maximum distance are published on the supplied Decathlon product page."
       },
       {
         "id": "asics-trabuco-14-image-2",
@@ -3454,9 +3694,9 @@
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["asics-trabuco-14-product-page-1"],
+          "note": "Construction details and an 80 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stability": {
@@ -3465,6 +3705,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 80, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["asics-trabuco-14-product-page-1"],
+          "note": "Construction details and an 80 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "heelToToeDrop": {
@@ -3500,11 +3748,16 @@
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "FF Blast Max midsole",
+          "Asicsgrip outsole",
+          "Rock Protection Plate",
+          "Engineered mesh upper with reinforced overlays"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["asics-trabuco-14-product-page-1"],
+          "note": "Construction details and an 80 km maximum distance are published on the supplied Decathlon product page."
         }
       }
     }
@@ -3537,11 +3790,11 @@
       }
     },
     "technologies": {
-      "value": ["FF BLAST", "ASICSGRIP", "Engineered mesh"],
+      "value": ["FF Blast foam", "Asicsgrip outsole", "3.5 mm lugs"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["asics-trabuco-terra-3-verified-product-source"],
+        "note": "Technical measurements, construction details, and an 80 km maximum distance are published on the supplied Decathlon product page."
       }
     },
     "images": [
@@ -3586,6 +3839,15 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "asics-trabuco-terra-3-verified-product-source",
+        "type": "retailer-product",
+        "label": "Decathlon Trabuco Terra 3 product description",
+        "url": "https://www.decathlon.de/p/trailrunningschuhe-damen-asics-trabuco-terra-3-beige-rosa/362581/c30c24c9m9003170",
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Technical measurements, construction details, and an 80 km maximum distance are published on the supplied Decathlon product page."
       }
     ],
     "comparables": [
@@ -3598,9 +3860,9 @@
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["asics-trabuco-terra-3-verified-product-source"],
+          "note": "Technical measurements, construction details, and an 80 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stability": {
@@ -3611,28 +3873,36 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 80, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["asics-trabuco-terra-3-verified-product-source"],
+          "note": "Technical measurements, construction details, and an 80 km maximum distance are published on the supplied Decathlon product page."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["asics-trabuco-terra-3-verified-product-source"],
+          "note": "Technical measurements, construction details, and an 80 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 35, "forefoot": 27, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["asics-trabuco-terra-3-verified-product-source"],
+          "note": "Technical measurements, construction details, and an 80 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 279, "unit": "g", "referenceSize": "EU 39" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["asics-trabuco-terra-3-verified-product-source"],
+          "note": "Technical measurements, construction details, and an 80 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "fit": {
@@ -3644,11 +3914,16 @@
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "FF Blast midsole",
+          "Asicsgrip outsole",
+          "3.5 mm trail lugs",
+          "Breathable stretch upper"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["asics-trabuco-terra-3-verified-product-source"],
+          "note": "Technical measurements, construction details, and an 80 km maximum distance are published on the supplied Decathlon product page."
         }
       }
     }
@@ -3757,6 +4032,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -3903,6 +4186,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -4047,6 +4338,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 10, "unit": "mm" },
         "evidence": {
@@ -4189,6 +4488,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -4339,6 +4646,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -4487,6 +4802,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -4610,8 +4933,8 @@
     ],
     "comparables": [
       "adidas-terrex-agravic-4",
-      "asics-gel-sonoma-8-gtx",
-      "asics-trabuco-14"
+      "asics-gel-kanaku-6",
+      "asics-gel-sonoma-8-gtx"
     ],
     "kind": "shoe",
     "specifications": {
@@ -4629,6 +4952,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -4779,6 +5110,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -4917,6 +5256,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -5063,6 +5410,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -5205,6 +5560,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -5355,6 +5718,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -5499,6 +5870,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 21, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 4, "unit": "mm" },
         "evidence": {
@@ -5627,7 +6006,7 @@
     "comparables": [
       "decathlon-jogflow-190-grip-wp",
       "adidas-terrex-agravic-4",
-      "asics-gel-sonoma-8-gtx"
+      "asics-gel-kanaku-6"
     ],
     "kind": "shoe",
     "specifications": {
@@ -5645,6 +6024,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 21, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
         }
       },
       "heelToToeDrop": {
@@ -5775,7 +6162,7 @@
     "comparables": [
       "decathlon-jogflow-190-grip",
       "adidas-terrex-agravic-4",
-      "asics-gel-sonoma-8-gtx"
+      "asics-gel-kanaku-6"
     ],
     "kind": "shoe",
     "specifications": {
@@ -5793,6 +6180,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 20, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
         }
       },
       "heelToToeDrop": {
@@ -5947,6 +6342,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 10, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -6089,6 +6492,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -6239,6 +6650,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -6383,6 +6802,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 5, "unit": "mm" },
         "evidence": {
@@ -6453,11 +6880,15 @@
       }
     },
     "technologies": {
-      "value": ["SuperCritical Foam", "Vibram Megagrip", "Traction Lug"],
+      "value": [
+        "SuperCriticalFoam midsole",
+        "5 mm lugs",
+        "Lightweight RPET mesh"
+      ],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["hoka-speedgoat-7-product-page-1"],
+        "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
       }
     },
     "images": [
@@ -6488,11 +6919,11 @@
       {
         "id": "hoka-speedgoat-7-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Speedgoat 7 product description",
         "url": "https://www.decathlon.de/p/trailrunningschuhe-damen-hoka-speedgoat-7-lila-weiss/382212/m9004597",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
       },
       {
         "id": "hoka-speedgoat-7-image-2",
@@ -6507,16 +6938,16 @@
     "comparables": [
       "kiprun-kipclimb-max",
       "new-balance-hierro-v9",
-      "salomon-supraglide"
+      "saucony-peregrine-16"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["hoka-speedgoat-7-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stability": {
@@ -6527,12 +6958,20 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 170, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["hoka-speedgoat-7-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 4, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["hoka-speedgoat-7-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stackHeight": {
@@ -6544,11 +6983,11 @@
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 241, "unit": "g", "referenceSize": "EU 40" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["hoka-speedgoat-7-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "fit": {
@@ -6560,11 +6999,16 @@
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "SuperCriticalFoam midsole",
+          "5 mm trail lugs",
+          "Lightweight RPET mesh upper",
+          "Integrated debris gaiter"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["hoka-speedgoat-7-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
         }
       }
     }
@@ -6597,11 +7041,11 @@
       }
     },
     "technologies": {
-      "value": ["Responsive EVA", "Early MetaRocker", "Active Foot Frame"],
+      "value": ["EVA midsole", "5 mm lugs", "Recycled polyester mesh"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["hoka-torrent-4-product-page-1"],
+        "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
       }
     },
     "images": [
@@ -6632,11 +7076,11 @@
       {
         "id": "hoka-torrent-4-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Torrent 4 product description",
         "url": "https://www.decathlon.de/p/trailrunningschuhe-damen-hoka-torrent-4-lila-grun/361366/c16c9m9004592",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
       },
       {
         "id": "hoka-torrent-4-image-2",
@@ -6658,9 +7102,9 @@
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["hoka-torrent-4-product-page-1"],
+          "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stability": {
@@ -6671,12 +7115,20 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 60, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["hoka-torrent-4-product-page-1"],
+          "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 5, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["hoka-torrent-4-product-page-1"],
+          "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stackHeight": {
@@ -6688,11 +7140,11 @@
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 236, "unit": "g", "referenceSize": "EU 40" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["hoka-torrent-4-product-page-1"],
+          "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "fit": {
@@ -6704,11 +7156,16 @@
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Thick EVA midsole",
+          "High-abrasion rubber outsole",
+          "5 mm trail lugs",
+          "Single-layer mesh upper with 35% recycled polyester"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["hoka-torrent-4-product-page-1"],
+          "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
         }
       }
     }
@@ -6813,6 +7270,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -6939,7 +7404,7 @@
     "comparables": [
       "hoka-speedgoat-7",
       "new-balance-hierro-v9",
-      "salomon-supraglide"
+      "saucony-peregrine-16"
     ],
     "kind": "shoe",
     "specifications": {
@@ -6957,6 +7422,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -7089,6 +7562,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 170, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 4, "unit": "mm" },
         "evidence": {
@@ -7213,6 +7694,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
         }
       },
       "heelToToeDrop": {
@@ -7359,6 +7848,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 10, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -7482,8 +7979,8 @@
     ],
     "comparables": [
       "adidas-terrex-agravic-4",
-      "asics-gel-sonoma-8-gtx",
-      "asics-trabuco-14"
+      "asics-gel-kanaku-6",
+      "asics-gel-sonoma-8-gtx"
     ],
     "kind": "shoe",
     "specifications": {
@@ -7501,6 +7998,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -7651,6 +8156,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -7793,6 +8306,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -7939,6 +8460,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 10, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -8083,6 +8612,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -8225,6 +8762,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -8375,6 +8920,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -8505,6 +9058,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -8629,6 +9190,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
         }
       },
       "heelToToeDrop": {
@@ -8757,6 +9326,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -8827,11 +9404,16 @@
       }
     },
     "technologies": {
-      "value": ["FASTECH+", "Carbon plate", "Five aluminium spikes"],
+      "value": [
+        "Fastech+ foam",
+        "TPU plate with 10% carbon fibre",
+        "6 mm aluminium spikes",
+        "Knit upper"
+      ],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["kiprun-kipsonic-long-book-monitor-source"],
+        "note": "Transcribed from the supplied Decathlon Book Monitor slides; zero drop was confirmed during the catalogue audit, and the detailed slide identifies the 158 g weight as EU 42."
       }
     },
     "images": [
@@ -8876,21 +9458,30 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "kiprun-kipsonic-long-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Kipsonic Long product slides",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the supplied Decathlon Book Monitor slides; zero drop was confirmed during the catalogue audit, and the detailed slide identifies the 158 g weight as EU 42."
       }
     ],
     "comparables": [
-      "kiprun-kipsonic-start",
       "kiprun-kipsonic-mid",
+      "kiprun-kipsonic-start",
       "puma-deviate-nitro-4"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
-        "value": ["Road"],
+        "value": ["Track"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-long-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor slides; zero drop was confirmed during the catalogue audit, and the detailed slide identifies the 158 g weight as EU 42."
         }
       },
       "stability": {
@@ -8901,28 +9492,36 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
-      "heelToToeDrop": {
-        "value": null,
+      "maximumDistance": {
+        "value": { "amount": 10, "unit": "km" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable drop measurement exists in the legacy source."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-long-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor slides; zero drop was confirmed during the catalogue audit, and the detailed slide identifies the 158 g weight as EU 42."
+        }
+      },
+      "heelToToeDrop": {
+        "value": { "amount": 0, "unit": "mm" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-long-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor slides; zero drop was confirmed during the catalogue audit, and the detailed slide identifies the 158 g weight as EU 42."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "maximum": 20, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-long-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor slides; zero drop was confirmed during the catalogue audit, and the detailed slide identifies the 158 g weight as EU 42."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 158, "unit": "g", "referenceSize": "EU 42" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-long-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor slides; zero drop was confirmed during the catalogue audit, and the detailed slide identifies the 158 g weight as EU 42."
         }
       },
       "fit": {
@@ -8934,11 +9533,16 @@
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Fastech+ foam",
+          "TPU plate with 10% carbon fibre",
+          "6 mm aluminium spikes",
+          "Knit upper"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-long-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor slides; zero drop was confirmed during the catalogue audit, and the detailed slide identifies the 158 g weight as EU 42."
         }
       }
     }
@@ -8971,11 +9575,16 @@
       }
     },
     "technologies": {
-      "value": null,
+      "value": [
+        "Fastech+ foam",
+        "Carbon plate",
+        "6 mm spikes",
+        "Seamless upper"
+      ],
       "evidence": {
-        "status": "pending",
-        "sourceIds": [],
-        "note": "No technology list exists in the audited legacy catalogue."
+        "status": "verified",
+        "sourceIds": ["kiprun-kipsonic-mid-book-monitor-source"],
+        "note": "Transcribed from the Decathlon Book Monitor Kipsonic Mid product slide, with zero-drop clarification confirmed during the catalogue audit."
       }
     },
     "images": [
@@ -9002,21 +9611,30 @@
         "checkedAt": null,
         "status": "fallback",
         "note": "Migration evidence only; not an official technical source."
+      },
+      {
+        "id": "kiprun-kipsonic-mid-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Kipsonic Mid product slide",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the Decathlon Book Monitor Kipsonic Mid product slide, with zero-drop clarification confirmed during the catalogue audit."
       }
     ],
     "comparables": [
-      "kiprun-kipsonic-x-country",
       "kiprun-kipsonic-long",
-      "adidas-adizero-agravic-speed-2"
+      "kiprun-kipsonic-start",
+      "kiprun-kipsonic-x-country"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
-        "value": ["Trail"],
+        "value": ["Track"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-mid-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic Mid product slide, with zero-drop clarification confirmed during the catalogue audit."
         }
       },
       "stability": {
@@ -9027,28 +9645,36 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
-      "heelToToeDrop": {
-        "value": null,
+      "maximumDistance": {
+        "value": { "amount": 3, "unit": "km" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable drop measurement exists in the legacy source."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-mid-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic Mid product slide, with zero-drop clarification confirmed during the catalogue audit."
+        }
+      },
+      "heelToToeDrop": {
+        "value": { "amount": 0, "unit": "mm" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-mid-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic Mid product slide, with zero-drop clarification confirmed during the catalogue audit."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "maximum": 20, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-mid-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic Mid product slide, with zero-drop clarification confirmed during the catalogue audit."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 138, "unit": "g", "referenceSize": "EU 42" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-mid-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic Mid product slide, with zero-drop clarification confirmed during the catalogue audit."
         }
       },
       "fit": {
@@ -9060,11 +9686,16 @@
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Fastech+ foam",
+          "Carbon plate",
+          "6 mm spikes",
+          "Seamless upper"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-mid-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic Mid product slide, with zero-drop clarification confirmed during the catalogue audit."
         }
       }
     }
@@ -9150,21 +9781,30 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "kiprun-kipsonic-start-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Kipsonic range slide",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit."
       }
     ],
     "comparables": [
       "kiprun-kipsonic-long",
       "kiprun-kipsonic-mid",
-      "adidas-adizero-boston-13"
+      "hoka-rincon-4"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
-        "value": ["Road"],
+        "value": ["Track", "Cross-country"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-start-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit."
         }
       },
       "stability": {
@@ -9175,12 +9815,20 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
-      "heelToToeDrop": {
+      "maximumDistance": {
         "value": null,
         "evidence": {
           "status": "pending",
           "sourceIds": [],
-          "note": "No reliable drop measurement exists in the legacy source."
+          "note": "No numerical maximum distance is published."
+        }
+      },
+      "heelToToeDrop": {
+        "value": { "amount": 0, "unit": "mm" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-start-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit."
         }
       },
       "stackHeight": {
@@ -9192,11 +9840,15 @@
         }
       },
       "weight": {
-        "value": null,
+        "value": {
+          "amount": 170,
+          "unit": "g",
+          "referenceSize": "Size not stated"
+        },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-start-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit."
         }
       },
       "fit": {
@@ -9245,11 +9897,11 @@
       }
     },
     "technologies": {
-      "value": null,
+      "value": ["Softech"],
       "evidence": {
-        "status": "pending",
-        "sourceIds": [],
-        "note": "No technology list exists in the audited legacy catalogue."
+        "status": "verified",
+        "sourceIds": ["kiprun-kipsonic-x-country-book-monitor-source"],
+        "note": "Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit."
       }
     },
     "images": [
@@ -9276,21 +9928,30 @@
         "checkedAt": null,
         "status": "fallback",
         "note": "Migration evidence only; not an official technical source."
+      },
+      {
+        "id": "kiprun-kipsonic-x-country-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Kipsonic range slide",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit."
       }
     ],
     "comparables": [
+      "kiprun-kipsonic-start",
       "kiprun-kipsonic-mid",
-      "kiprun-kipsonic-long",
-      "adidas-adizero-agravic-speed-2"
+      "kiprun-kipsonic-long"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
-        "value": ["Trail"],
+        "value": ["Cross-country"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-x-country-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit."
         }
       },
       "stability": {
@@ -9301,28 +9962,40 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
-      "heelToToeDrop": {
-        "value": null,
+      "maximumDistance": {
+        "value": { "amount": 12, "unit": "km" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable drop measurement exists in the legacy source."
+          "status": "derived",
+          "sourceIds": ["kiprun-kipsonic-x-country-book-monitor-source"],
+          "note": "Derived from the confirmed standard 3–12 km cross-country race range; this is guidance rather than a manufacturer limit."
+        }
+      },
+      "heelToToeDrop": {
+        "value": { "amount": 0, "unit": "mm" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-x-country-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "maximum": 20, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-x-country-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit."
         }
       },
       "weight": {
-        "value": null,
+        "value": {
+          "amount": 158,
+          "unit": "g",
+          "referenceSize": "Size not stated"
+        },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["kiprun-kipsonic-x-country-book-monitor-source"],
+          "note": "Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit."
         }
       },
       "fit": {
@@ -9441,6 +10114,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -9546,8 +10227,8 @@
     ],
     "comparables": [
       "adidas-terrex-agravic-4",
-      "asics-gel-sonoma-8-gtx",
-      "asics-trabuco-14"
+      "asics-gel-kanaku-6",
+      "asics-gel-sonoma-8-gtx"
     ],
     "kind": "shoe",
     "specifications": {
@@ -9565,6 +10246,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
         }
       },
       "heelToToeDrop": {
@@ -9707,6 +10396,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 5, "unit": "mm" },
         "evidence": {
@@ -9845,6 +10542,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -9987,6 +10692,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 5, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 4, "unit": "mm" },
         "evidence": {
@@ -10127,6 +10840,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 4, "unit": "mm" },
         "evidence": {
@@ -10247,6 +10968,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 21, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
         }
       },
       "heelToToeDrop": {
@@ -10387,6 +11116,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -10533,6 +11270,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -10675,6 +11420,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -10825,6 +11578,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -10967,6 +11728,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -11117,6 +11886,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -11255,6 +12032,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -11399,6 +12184,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -11549,6 +12342,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 10, "unit": "mm" },
         "evidence": {
@@ -11691,6 +12492,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -11841,6 +12650,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -11963,9 +12780,9 @@
       }
     ],
     "comparables": [
+      "adidas-runblaze",
       "asics-gel-excite-11",
-      "asics-gel-windhawk-5",
-      "adidas-galaxy-7"
+      "asics-gel-windhawk-5"
     ],
     "kind": "shoe",
     "specifications": {
@@ -11983,6 +12800,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 30, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
         }
       },
       "heelToToeDrop": {
@@ -12133,6 +12958,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 4, "unit": "mm" },
         "evidence": {
@@ -12275,6 +13108,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -12434,6 +13275,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -12582,6 +13431,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -12705,8 +13562,8 @@
     ],
     "comparables": [
       "adidas-terrex-agravic-4",
-      "asics-gel-sonoma-8-gtx",
-      "asics-trabuco-14"
+      "asics-gel-kanaku-6",
+      "asics-gel-sonoma-8-gtx"
     ],
     "kind": "shoe",
     "specifications": {
@@ -12724,6 +13581,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 80, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
         }
       },
       "heelToToeDrop": {
@@ -12796,11 +13661,17 @@
       }
     },
     "technologies": {
-      "value": ["Dual-density Fresh Foam X", "Vibram Megagrip", "Toe Protect"],
+      "value": [
+        "Fresh Foam X",
+        "Vibram outsole",
+        "4.5 mm lugs",
+        "Toe Protect",
+        "Hybrid mesh"
+      ],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["new-balance-hierro-v9-product-page-1"],
+        "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
       }
     },
     "images": [
@@ -12831,11 +13702,11 @@
       {
         "id": "new-balance-hierro-v9-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Fresh Foam X Hierro v9 product description",
         "url": "https://www.decathlon.de/p/trailrunningschuhe-herren-new-balance-fresh-foam-x-hierro-v9-grau-gelb/365842/m9029852",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
       },
       {
         "id": "new-balance-hierro-v9-image-2",
@@ -12850,16 +13721,16 @@
     "comparables": [
       "hoka-speedgoat-7",
       "kiprun-kipclimb-max",
-      "salomon-supraglide"
+      "saucony-peregrine-16"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["new-balance-hierro-v9-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stability": {
@@ -12870,12 +13741,20 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 170, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["new-balance-hierro-v9-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 4, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["new-balance-hierro-v9-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stackHeight": {
@@ -12887,11 +13766,15 @@
         }
       },
       "weight": {
-        "value": null,
+        "value": {
+          "amount": 294,
+          "unit": "g",
+          "referenceSize": "Size not stated"
+        },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["new-balance-hierro-v9-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "fit": {
@@ -12903,11 +13786,16 @@
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Fresh Foam X midsole",
+          "Vibram outsole with 4.5 mm lugs",
+          "Hybrid mesh upper",
+          "Toe Protect reinforcement"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["new-balance-hierro-v9-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
         }
       }
     }
@@ -13016,6 +13904,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {
@@ -13166,6 +14062,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 4, "unit": "mm" },
         "evidence": {
@@ -13236,11 +14140,16 @@
       }
     },
     "technologies": {
-      "value": ["FuelCell", "Vibram Megagrip", "Toe Protect"],
+      "value": [
+        "FuelCell foam",
+        "Vibram Megagrip outsole",
+        "Toe Protect",
+        "Hybrid mesh"
+      ],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["new-balance-rebel-trail-product-page-1"],
+        "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page; the description displays an obvious typo in the drop unit while the specifications panel confirms 6 mm."
       }
     },
     "images": [
@@ -13271,11 +14180,11 @@
       {
         "id": "new-balance-rebel-trail-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Rebel Trail product description",
         "url": "https://www.decathlon.de/p/trailrunningschuhe-herren-new-balance-rebel-trail-grun/381806/m9003166",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page; the description displays an obvious typo in the drop unit while the specifications panel confirms 6 mm."
       },
       {
         "id": "new-balance-rebel-trail-image-2",
@@ -13293,9 +14202,9 @@
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["new-balance-rebel-trail-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page; the description displays an obvious typo in the drop unit while the specifications panel confirms 6 mm."
         }
       },
       "stability": {
@@ -13306,12 +14215,20 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 170, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["new-balance-rebel-trail-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page; the description displays an obvious typo in the drop unit while the specifications panel confirms 6 mm."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["new-balance-rebel-trail-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page; the description displays an obvious typo in the drop unit while the specifications panel confirms 6 mm."
         }
       },
       "stackHeight": {
@@ -13323,11 +14240,15 @@
         }
       },
       "weight": {
-        "value": null,
+        "value": {
+          "amount": 302,
+          "unit": "g",
+          "referenceSize": "Size not stated"
+        },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["new-balance-rebel-trail-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page; the description displays an obvious typo in the drop unit while the specifications panel confirms 6 mm."
         }
       },
       "fit": {
@@ -13339,11 +14260,16 @@
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Injection-moulded FuelCell midsole",
+          "Full-length Vibram Megagrip outsole",
+          "Hybrid mesh upper",
+          "Toe Protect reinforcement"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["new-balance-rebel-trail-product-page-1"],
+          "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page; the description displays an obvious typo in the drop unit while the specifications panel confirms 6 mm."
         }
       }
     }
@@ -13448,6 +14374,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the numerical distance in the audited best-for guidance."
         }
       },
       "heelToToeDrop": {
@@ -13598,6 +14532,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 10, "unit": "mm" },
         "evidence": {
@@ -13746,6 +14688,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
@@ -13816,11 +14766,11 @@
       }
     },
     "technologies": {
-      "value": ["OptiFoam²", "Gravel Contagrip", "SensiFit"],
+      "value": ["optiFOAM²", "Gravel Contagrip", "Engineered mesh"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["salomon-aero-blaze-3-grvl-book-monitor-source"],
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
       }
     },
     "images": [
@@ -13851,11 +14801,11 @@
       {
         "id": "salomon-aero-blaze-3-grvl-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Aero Blaze 3 GRVL specifications",
         "url": "https://www.decathlon.de/p/laufschuhe-gravel-running-herren-salomon-aero-blaze-3-grvl-weiss/382331/m9005033",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "The current product specifications publish a 0–40 km distance range; this product-specific value supersedes the 5–42 km comparison-chart range."
       },
       {
         "id": "salomon-aero-blaze-3-grvl-image-2",
@@ -13865,21 +14815,30 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "salomon-aero-blaze-3-grvl-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Salomon comparison chart",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
       }
     ],
     "comparables": [
-      "salomon-ultra-flow-2",
       "kiprun-kipride-gravel",
-      "adidas-terrex-agravic-4"
+      "adidas-terrex-agravic-4",
+      "asics-gel-kanaku-6"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
-        "value": ["Road", "Firm Paths"],
+        "value": ["Road", "Gravel"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-aero-blaze-3-grvl-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "stability": {
@@ -13890,28 +14849,36 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 40, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["salomon-aero-blaze-3-grvl-product-page-1"],
+          "note": "The current product specifications publish a 0–40 km distance range; this product-specific value supersedes the 5–42 km comparison-chart range."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-aero-blaze-3-grvl-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 35, "forefoot": 27, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-aero-blaze-3-grvl-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 248, "unit": "g", "referenceSize": "EU 42" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-aero-blaze-3-grvl-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "fit": {
@@ -13960,11 +14927,11 @@
       }
     },
     "technologies": {
-      "value": ["Active Chassis", "Matryx", "Energy Foam"],
+      "value": ["optiFOAM", "Active Chassis", "Matryx upper"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["salomon-genesis-book-monitor-source"],
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
       }
     },
     "images": [
@@ -14009,21 +14976,39 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "salomon-genesis-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Salomon comparison chart",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
+      },
+      {
+        "id": "salomon-genesis-verified-distance-source",
+        "type": "retailer-product",
+        "label": "Decathlon Genesis specifications",
+        "url": "https://www.decathlon.de/p/trailrunningschuhe-herren-salomon-genesis-rot-schwarz/358451/c14c1m9004858",
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "The current product specifications publish a 0–80 km distance range; this product-specific value supersedes the 5–100 km comparison-chart range."
       }
     ],
     "comparables": [
       "adidas-terrex-agravic-4",
-      "asics-gel-sonoma-8-gtx",
-      "asics-trabuco-14"
+      "asics-gel-kanaku-6",
+      "asics-gel-sonoma-8-gtx"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-genesis-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
         }
       },
       "stability": {
@@ -14034,28 +15019,36 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 80, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["salomon-genesis-verified-distance-source"],
+          "note": "The current product specifications publish a 0–80 km distance range; this product-specific value supersedes the 5–100 km comparison-chart range."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-genesis-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 34, "forefoot": 26, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-genesis-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 269, "unit": "g", "referenceSize": "EU 42⅔" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-genesis-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
         }
       },
       "fit": {
@@ -14108,11 +15101,11 @@
       }
     },
     "technologies": {
-      "value": ["All Terrain Contagrip", "SensiFit", "Quicklace"],
+      "value": ["FuzeFoam"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["salomon-speedcross-peak-book-monitor-source"],
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
       }
     },
     "images": [
@@ -14157,6 +15150,15 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "salomon-speedcross-peak-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Salomon comparison chart",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
       }
     ],
     "comparables": [
@@ -14167,11 +15169,11 @@
     "kind": "shoe",
     "specifications": {
       "surfaces": {
-        "value": ["Trail"],
+        "value": ["Trail", "Muddy trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-speedcross-peak-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "stability": {
@@ -14182,28 +15184,36 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["salomon-speedcross-peak-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 10, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-speedcross-peak-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 28, "forefoot": 18, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-speedcross-peak-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 319, "unit": "g", "referenceSize": "EU 42⅔" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-speedcross-peak-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "fit": {
@@ -14256,11 +15266,11 @@
       }
     },
     "technologies": {
-      "value": ["GORE-TEX", "All Terrain Contagrip", "SensiFit"],
+      "value": ["optiFOAM", "Gore-Tex"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["salomon-speedcross-peak-gtx-book-monitor-source"],
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
       }
     },
     "images": [
@@ -14305,6 +15315,15 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "salomon-speedcross-peak-gtx-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Salomon comparison chart",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
       }
     ],
     "comparables": [
@@ -14315,11 +15334,11 @@
     "kind": "shoe",
     "specifications": {
       "surfaces": {
-        "value": ["Trail"],
+        "value": ["Trail", "Muddy trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-speedcross-peak-gtx-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "stability": {
@@ -14330,28 +15349,36 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["salomon-speedcross-peak-gtx-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 10, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-speedcross-peak-gtx-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 28, "forefoot": 18, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-speedcross-peak-gtx-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 330, "unit": "g", "referenceSize": "EU 42⅔" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-speedcross-peak-gtx-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "fit": {
@@ -14400,11 +15427,11 @@
       }
     },
     "technologies": {
-      "value": ["Fuze Foam", "All Terrain Contagrip", "SensiFit"],
+      "value": ["FuzeFoam"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["salomon-supraglide-book-monitor-source"],
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–20 km use range."
       }
     },
     "images": [
@@ -14449,21 +15476,30 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "salomon-supraglide-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Salomon comparison chart",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–20 km use range."
       }
     ],
     "comparables": [
-      "hoka-speedgoat-7",
-      "kiprun-kipclimb-max",
-      "new-balance-hierro-v9"
+      "adidas-terrex-agravic-4",
+      "asics-gel-kanaku-6",
+      "asics-gel-sonoma-8-gtx"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-supraglide-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–20 km use range."
         }
       },
       "stability": {
@@ -14474,12 +15510,20 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
-      "heelToToeDrop": {
-        "value": { "amount": 4, "unit": "mm" },
+      "maximumDistance": {
+        "value": { "amount": 20, "unit": "km" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-supraglide-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–20 km use range."
+        }
+      },
+      "heelToToeDrop": {
+        "value": { "amount": 8, "unit": "mm" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["salomon-supraglide-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–20 km use range."
         }
       },
       "stackHeight": {
@@ -14491,11 +15535,11 @@
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 285, "unit": "g", "referenceSize": "EU 42" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-supraglide-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–20 km use range."
         }
       },
       "fit": {
@@ -14544,11 +15588,11 @@
       }
     },
     "technologies": {
-      "value": ["OptiFoam²", "Gravel Contagrip", "SensiFit"],
+      "value": ["optiFOAM"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["salomon-ultra-flow-2-book-monitor-source"],
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
       }
     },
     "images": [
@@ -14593,21 +15637,26 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "salomon-ultra-flow-2-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Salomon comparison chart",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
       }
     ],
-    "comparables": [
-      "salomon-aero-blaze-3-grvl",
-      "adidas-terrex-agravic-4",
-      "asics-gel-sonoma-8-gtx"
-    ],
+    "comparables": ["brooks-cascadia-19", "brooks-range", "kiprun-kipclimb"],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
-        "value": ["Road", "Firm Paths"],
+        "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-ultra-flow-2-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "stability": {
@@ -14618,28 +15667,36 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
-      "heelToToeDrop": {
-        "value": { "amount": 8, "unit": "mm" },
+      "maximumDistance": {
+        "value": { "amount": 42, "unit": "km" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-ultra-flow-2-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
+        }
+      },
+      "heelToToeDrop": {
+        "value": { "amount": 6, "unit": "mm" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["salomon-ultra-flow-2-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 34, "forefoot": 28, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-ultra-flow-2-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 273, "unit": "g", "referenceSize": "EU 42" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-ultra-flow-2-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
         }
       },
       "fit": {
@@ -14688,11 +15745,11 @@
       }
     },
     "technologies": {
-      "value": ["OptiFoam", "relieveSPHERE", "All Terrain Contagrip"],
+      "value": ["optiFOAM"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["salomon-ultra-glide-4-book-monitor-source"],
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
       }
     },
     "images": [
@@ -14737,6 +15794,15 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "salomon-ultra-glide-4-book-monitor-source",
+        "type": "legacy-workbook",
+        "label": "Decathlon Book Monitor Salomon comparison chart",
+        "url": null,
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
       }
     ],
     "comparables": ["brooks-cascadia-19", "brooks-range", "kiprun-kipclimb"],
@@ -14745,9 +15811,9 @@
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-ultra-glide-4-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
         }
       },
       "stability": {
@@ -14758,28 +15824,36 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 100, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["salomon-ultra-glide-4-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["salomon-ultra-glide-4-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 41, "forefoot": 35, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-ultra-glide-4-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 285, "unit": "g", "referenceSize": "EU 42" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["salomon-ultra-glide-4-book-monitor-source"],
+          "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
         }
       },
       "fit": {
@@ -14906,6 +15980,14 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
@@ -14976,11 +16058,11 @@
       }
     },
     "technologies": {
-      "value": ["PWRRUN", "PWRRUN+ sockliner", "Vibram Megagrip"],
+      "value": ["PWRRUN foam", "Vibram Megagrip", "4 mm lugs"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["saucony-peregrine-16-product-page-1"],
+        "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
       }
     },
     "images": [
@@ -15011,11 +16093,11 @@
       {
         "id": "saucony-peregrine-16-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Peregrine 16 product description",
         "url": "https://www.decathlon.de/p/trailrunningschuhe-herren-saucony-peregrine-16-grun-gelb-orange/381823/c9c22c20m9003027",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-07",
+        "status": "verified",
+        "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
       },
       {
         "id": "saucony-peregrine-16-image-2",
@@ -15037,9 +16119,9 @@
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["saucony-peregrine-16-product-page-1"],
+          "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stability": {
@@ -15050,12 +16132,20 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "maximumDistance": {
+        "value": { "amount": 60, "unit": "km" },
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["saucony-peregrine-16-product-page-1"],
+          "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
+        }
+      },
       "heelToToeDrop": {
         "value": { "amount": 4, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["saucony-peregrine-16-product-page-1"],
+          "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "stackHeight": {
@@ -15067,11 +16157,11 @@
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 271, "unit": "g", "referenceSize": "EU 42" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["saucony-peregrine-16-product-page-1"],
+          "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
         }
       },
       "fit": {
@@ -15083,11 +16173,15 @@
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "PWRRUN midsole",
+          "Vibram Megagrip outsole",
+          "4 mm trail lugs"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["saucony-peregrine-16-product-page-1"],
+          "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
         }
       }
     }
@@ -15192,6 +16286,14 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "maximumDistance": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "No numerical maximum distance is published."
         }
       },
       "heelToToeDrop": {

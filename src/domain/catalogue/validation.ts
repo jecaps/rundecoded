@@ -140,6 +140,10 @@ export function validateCatalogue(input: unknown): {
               ids: product.specifications.stability.evidence.sourceIds,
             },
             {
+              field: 'specifications.maximumDistance.evidence.sourceIds',
+              ids: product.specifications.maximumDistance.evidence.sourceIds,
+            },
+            {
               field: 'specifications.heelToToeDrop.evidence.sourceIds',
               ids: product.specifications.heelToToeDrop.evidence.sourceIds,
             },

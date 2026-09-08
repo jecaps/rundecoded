@@ -100,45 +100,14 @@ function localizedCategoryValue(
   );
 }
 
-function dropLabel(item: ExplorerProduct, pending: string) {
+function dropLabel(item: ExplorerProduct) {
   const drop = item.product.specifications.heelToToeDrop.value;
-  return drop ? `${drop.amount} ${drop.unit}` : pending;
+  return drop ? `${drop.amount} ${drop.unit}` : '—';
 }
 
-// The current catalogue stores distance guidance in the localized best-for
-// copy. Keep the card honest by surfacing only explicit distance language and
-// leaving the value pending when the copy does not contain it.
-const explicitDistancePatterns = [
-  /\b\d+\s*(?:km|k|m)\s*[–-]\s*\d+\s*(?:km|k|m)\b/i,
-  /\b\d+\s*(?:km|k|m)\s*(?:to|through|bis zu|bis|au|à|jusqu['’]à|-)\s*(?:\d+\s*(?:km|k|m)|(?:half|semi[- ]?)?marathon|ultra)\b/i,
-  /\b(?:up to|through|from|bis zu|bis|jusqu['’]à)\s+\d+\s*(?:km|k|m)\b/i,
-  /\b\d+\s*(?:[–-]\s*\d+\s*)?(?:km|k|m)\b/i,
-  /\b(?:half|semi[- ]?)?marathon(?:\s+(?:and|to|through|bis|et|au)\s+(?:half|semi[- ]?)?marathon)?\b/i,
-  /\bultra(?:\s+distance)?\b/i,
-  /\b(?:short\s+(?:to|through)\s+(?:middle|long)|middle\s+to\s+long(?:er)?|long\s+varied|(?:short|middle|long|varied))\s+distances?\b/i,
-  /\b(?:kurze?|mittlere?|lange?)\s+Distanzen?\b/i,
-  /\b(?:courtes?|moyennes?|longues?)\s+distances?\b/i,
-] as const;
-
-const impliedDistancePattern =
-  /\b(?:short|middle|long|longer|kurz\w*|mittel\w*|lang\w*|court\w*|moyen\w*|tempo|interval\w*|marathon|ultra)\b[^·,]*(?:runs?|races?|distances?|trails?|sessions?|track|läufe?|distanzen?|sentiers?|séances?|sorties?)\b/iu;
-
-function distanceLabel(bestFor: string, pending: string) {
-  const segments = bestFor.split('·').map((segment) => segment.trim());
-
-  for (const candidate of segments) {
-    for (const pattern of explicitDistancePatterns) {
-      const match = candidate.match(pattern);
-      if (match) return match[0].replace(/\s+/g, ' ').trim();
-    }
-  }
-
-  for (const candidate of segments) {
-    const match = candidate.match(impliedDistancePattern);
-    if (match) return match[0].replace(/\s+/g, ' ').trim();
-  }
-
-  return pending;
+function distanceLabel(item: ExplorerProduct, unavailable: string) {
+  const distance = item.product.specifications.maximumDistance.value;
+  return distance ? `${distance.amount} ${distance.unit}` : unavailable;
 }
 
 function bestForSummary(bestFor: string) {
@@ -636,7 +605,7 @@ export function ProductExplorer({
                 locale,
               ).value;
               const bestForSummaryText = bestForSummary(bestFor);
-              const distance = distanceLabel(bestFor, copy.pending);
+              const distance = distanceLabel(item, copy.distanceUnavailable);
               const purpose = purposeCategory(item);
               const stability = stabilityLabel(
                 product.specifications.stability.value ?? 'unknown',
@@ -729,7 +698,7 @@ export function ProductExplorer({
                             {copy.drop}
                           </dt>
                           <dd className="mt-1 text-sm font-semibold">
-                            {dropLabel(item, copy.pending)}
+                            {dropLabel(item)}
                           </dd>
                         </div>
                       </dl>
@@ -953,7 +922,7 @@ export function ProductExplorer({
                     </dt>
                     <dd className="mt-1 font-semibold">
                       {detailProfile?.specifications.drop ??
-                        dropLabel(detailsProduct, copy.pending)}
+                        dropLabel(detailsProduct)}
                     </dd>
                   </div>
                   <div className="border-border border-b pb-3">
