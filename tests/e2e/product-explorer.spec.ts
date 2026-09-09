@@ -123,6 +123,32 @@ test('search and filters produce accurate counts and an honest empty state', asy
   await expect(page).toHaveURL(/category=surface%3Aoff-road/);
 });
 
+test('keeps filter control and result row dimensions stable', async ({
+  page,
+}) => {
+  const categoryTrigger = page.getByRole('button', {
+    name: 'All categories',
+    exact: true,
+  });
+  const resultsBar = page.getByTestId('catalogue-results-bar');
+  const initialCategoryBox = await categoryTrigger.boundingBox();
+  const initialResultsBox = await resultsBar.boundingBox();
+
+  await categoryTrigger.click();
+  await page
+    .getByRole('menuitemradio', { name: 'Trail / off-road', exact: true })
+    .click();
+  await expect(page.getByText('40 of 106 shoes')).toBeVisible();
+
+  const filteredCategoryBox = await page
+    .getByRole('button', { name: 'Trail / off-road', exact: true })
+    .boundingBox();
+  const filteredResultsBox = await resultsBar.boundingBox();
+
+  expect(filteredCategoryBox?.width).toBe(initialCategoryBox?.width);
+  expect(filteredResultsBox?.height).toBe(initialResultsBox?.height);
+});
+
 test('contains the category menu within the viewport on narrow screens', async ({
   page,
 }) => {
