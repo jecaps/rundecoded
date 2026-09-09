@@ -70,8 +70,8 @@ const categoryIdsByGoal: Record<RunningGoal, readonly string[]> = {
   'comfortable-long-runs': ['max-cushion', 'daily-trainer'],
   'faster-training': ['fast-training', 'super-trainer'],
   'road-race': ['race', 'carbon'],
-  'trail-running': ['trail', 'road-to-trail', 'technical-trail'],
-  'trail-race': ['trail-race', 'technical-trail'],
+  'trail-running': ['trail'],
+  'trail-race': ['trail-race'],
   'track-or-cross-country': ['track-spikes', 'spikes'],
 };
 
@@ -88,41 +88,45 @@ function weakestConfidence(values: ConfidenceLevel[]): ConfidenceLevel {
   );
 }
 
-function normalizedProductSurfaces(product: ShoeProduct): Set<string> {
-  return new Set(
-    (product.specifications.surfaces.value ?? []).map((surface) =>
-      surface.trim().toLocaleLowerCase('en'),
-    ),
-  );
-}
-
 function supportsSurface(
   product: ShoeProduct,
   requested: RecommendationSurface,
 ): boolean {
-  const surfaces = normalizedProductSurfaces(product);
-  const categories = new Set(product.categories.map(({ id }) => id));
+  const families = new Set(product.specifications.surfaceFamilies.value ?? []);
+  const terrain = new Set(product.specifications.terrainProfiles.value ?? []);
 
   switch (requested) {
     case 'road':
-      return surfaces.has('road');
+      return families.has('road');
     case 'gravel':
-      return (
-        surfaces.has('gravel') ||
-        surfaces.has('firm paths') ||
-        categories.has('road-to-trail')
-      );
+      return terrain.has('gravel') || terrain.has('road-to-trail');
     case 'trail':
-      return surfaces.has('trail') || surfaces.has('muddy trail');
+      return families.has('off-road');
     case 'technical-trail':
-      return surfaces.has('trail') && categories.has('technical-trail');
+      return terrain.has('technical-terrain');
     case 'muddy-trail':
-      return surfaces.has('muddy trail');
+      return terrain.has('muddy-terrain');
     case 'track':
-      return surfaces.has('track');
+      return families.has('track');
     case 'cross-country':
-      return surfaces.has('cross-country');
+      return families.has('track') && families.has('off-road');
   }
+}
+
+function surfaceEvidenceConfidence(
+  product: ShoeProduct,
+  requested: RecommendationSurface,
+): ConfidenceLevel {
+  if (
+    requested === 'gravel' ||
+    requested === 'technical-trail' ||
+    requested === 'muddy-trail'
+  ) {
+    return confidenceForEvidence(
+      product.specifications.terrainProfiles.evidence,
+    );
+  }
+  return confidenceForEvidence(product.specifications.surfaceFamilies.evidence);
 }
 
 function goalMatches(product: ShoeProduct, goal: RunningGoal): boolean {
@@ -154,7 +158,11 @@ export function evaluateShoeRecommendation(
     outcome: primarySurfaceMatch ? 'match' : 'exclude',
     points: primarySurfaceMatch ? 40 : 0,
     expected: profile.primarySurface,
-    actual: (product.specifications.surfaces.value ?? []).join(', ') || null,
+    actual:
+      [
+        ...(product.specifications.surfaceFamilies.value ?? []),
+        ...(product.specifications.terrainProfiles.value ?? []),
+      ].join(', ') || null,
   });
   internalScore += primarySurfaceMatch ? 40 : 0;
   excluded ||= !primarySurfaceMatch;
@@ -239,7 +247,7 @@ export function evaluateShoeRecommendation(
   internalScore += stabilityMatch ? 5 : 0;
 
   const confidence = weakestConfidence([
-    confidenceForEvidence(product.specifications.surfaces.evidence),
+    surfaceEvidenceConfidence(product, profile.primarySurface),
     confidenceForEvidence(product.specifications.maximumDistance.evidence),
   ]);
   const hasPreferenceTradeOff = evaluations.some(

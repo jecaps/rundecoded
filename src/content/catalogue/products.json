@@ -106,6 +106,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -178,14 +194,6 @@
           "de": "Trail-Wettkampf",
           "fr": "Compétition trail"
         }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -257,9 +265,9 @@
       }
     ],
     "comparables": [
+      "kiprun-kipsummit-race",
       "salomon-speedcross-peak",
-      "salomon-speedcross-peak-gtx",
-      "kiprun-kipclimb-race"
+      "salomon-speedcross-peak-gtx"
     ],
     "kind": "shoe",
     "specifications": {
@@ -269,6 +277,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "The available source does not describe terrain difficulty or transition use precisely enough."
         }
       },
       "stability": {
@@ -427,6 +451,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -573,6 +613,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -725,6 +781,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -888,6 +960,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -1044,6 +1132,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -1112,14 +1216,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -1201,8 +1297,8 @@
     ],
     "comparables": [
       "asics-gel-kanaku-6",
-      "asics-gel-sonoma-8-gtx",
-      "asics-trabuco-14"
+      "asics-trabuco-14",
+      "new-balance-garoe-v2"
     ],
     "kind": "shoe",
     "specifications": {
@@ -1212,6 +1308,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -1370,6 +1482,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -1522,6 +1650,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -1590,14 +1734,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -1665,9 +1801,9 @@
       }
     ],
     "comparables": [
-      "adidas-terrex-agravic-4",
-      "brooks-ghost-trail",
-      "kiprun-kipstorm-challenger-gravel"
+      "salomon-supraglide",
+      "kiprun-kipride-gravel",
+      "adidas-terrex-agravic-4"
     ],
     "kind": "shoe",
     "specifications": {
@@ -1677,6 +1813,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["easy-terrain", "mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -1840,6 +1992,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "stability",
         "evidence": {
@@ -1994,6 +2162,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -2152,6 +2336,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -2298,6 +2498,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -2456,6 +2672,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "stability",
         "evidence": {
@@ -2524,14 +2756,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -2599,9 +2823,9 @@
       }
     ],
     "comparables": [
-      "adidas-terrex-agravic-4",
       "brooks-ghost-trail",
-      "kiprun-kipstorm-challenger-gravel"
+      "decathlon-jogflow-190-grip-wp",
+      "kiprun-kipcore-gravel"
     ],
     "kind": "shoe",
     "specifications": {
@@ -2611,6 +2835,22 @@
           "status": "verified",
           "sourceIds": ["asics-gel-sonoma-8-gtx-product-page-1"],
           "note": "Technical measurements, construction details, and a 40 km maximum distance are published on the supplied Decathlon product page."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["asics-gel-sonoma-8-gtx-product-page-1"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -2764,6 +3004,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -2922,6 +3178,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "stability",
         "evidence": {
@@ -3072,6 +3344,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -3230,6 +3518,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -3384,6 +3688,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -3542,6 +3862,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -3610,14 +3946,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -3684,11 +4012,7 @@
         "note": "Preserved from the Phase 0 image provenance inventory."
       }
     ],
-    "comparables": [
-      "adidas-terrex-agravic-4",
-      "brooks-ghost-trail",
-      "kiprun-kipstorm-challenger-gravel"
-    ],
+    "comparables": ["salomon-genesis", "brooks-cascadia-19", "brooks-range"],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
@@ -3697,6 +4021,22 @@
           "status": "verified",
           "sourceIds": ["asics-trabuco-14-product-page-1"],
           "note": "Construction details and an 80 km maximum distance are published on the supplied Decathlon product page."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["asics-trabuco-14-product-page-1"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["mixed-terrain", "technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -3772,14 +4112,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -3851,9 +4183,9 @@
       }
     ],
     "comparables": [
-      "adidas-terrex-agravic-4",
       "brooks-ghost-trail",
-      "kiprun-kipstorm-challenger-gravel"
+      "decathlon-jogflow-190-grip-wp",
+      "kiprun-kipcore-gravel"
     ],
     "kind": "shoe",
     "specifications": {
@@ -3863,6 +4195,22 @@
           "status": "verified",
           "sourceIds": ["asics-trabuco-terra-3-verified-product-source"],
           "note": "Technical measurements, construction details, and an 80 km maximum distance are published on the supplied Decathlon product page."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["asics-trabuco-terra-3-verified-product-source"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -4026,6 +4374,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "stability",
         "evidence": {
@@ -4094,14 +4458,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -4163,11 +4519,7 @@
         "note": "Preserved from the Phase 0 image provenance inventory."
       }
     ],
-    "comparables": [
-      "kiprun-kipclimb",
-      "kiprun-kipclimb-wp",
-      "kiprun-kipride-wr"
-    ],
+    "comparables": ["brooks-range", "hoka-torrent-4", "asics-trabuco-14"],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
@@ -4176,6 +4528,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["mixed-terrain", "technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -4330,6 +4698,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -4480,6 +4864,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -4638,6 +5038,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -4794,6 +5210,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -4862,14 +5294,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -4932,9 +5356,9 @@
       }
     ],
     "comparables": [
-      "adidas-terrex-agravic-4",
-      "asics-gel-kanaku-6",
-      "asics-gel-sonoma-8-gtx"
+      "kiprun-kipcore-gravel",
+      "salomon-ultra-flow-2",
+      "kiprun-kipride-gravel"
     ],
     "kind": "shoe",
     "specifications": {
@@ -4944,6 +5368,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["gravel", "easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -5102,6 +5542,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -5250,6 +5706,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -5318,14 +5790,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -5387,11 +5851,7 @@
         "note": "Preserved from the Phase 0 image provenance inventory."
       }
     ],
-    "comparables": [
-      "kiprun-kipclimb",
-      "kiprun-kipclimb-wp",
-      "kiprun-kipride-wr"
-    ],
+    "comparables": ["brooks-cascadia-19", "hoka-torrent-4", "asics-trabuco-14"],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
@@ -5400,6 +5860,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["mixed-terrain", "technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -5552,6 +6028,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -5710,6 +6202,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -5862,6 +6370,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -5930,14 +6454,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "road-to-trail",
-        "label": {
-          "en": "Road-To-Trail",
-          "de": "Road-to-Trail",
-          "fr": "Route-trail"
-        }
       }
     ],
     "copy": {
@@ -6004,9 +6520,9 @@
       }
     ],
     "comparables": [
+      "salomon-aero-blaze-3-grvl",
       "decathlon-jogflow-190-grip-wp",
-      "adidas-terrex-agravic-4",
-      "asics-gel-kanaku-6"
+      "adidas-terrex-agravic-4"
     ],
     "kind": "shoe",
     "specifications": {
@@ -6016,6 +6532,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["road-to-trail"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -6086,14 +6618,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "road-to-trail",
-        "label": {
-          "en": "Road-To-Trail",
-          "de": "Road-to-Trail",
-          "fr": "Route-trail"
-        }
       }
     ],
     "copy": {
@@ -6160,9 +6684,9 @@
       }
     ],
     "comparables": [
-      "decathlon-jogflow-190-grip",
-      "adidas-terrex-agravic-4",
-      "asics-gel-kanaku-6"
+      "asics-gel-kanaku-6",
+      "asics-gel-sonoma-8-gtx",
+      "asics-trabuco-terra-3"
     ],
     "kind": "shoe",
     "specifications": {
@@ -6172,6 +6696,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["road-to-trail", "easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -6334,6 +6874,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -6484,6 +7040,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -6642,6 +7214,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -6794,6 +7382,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -6862,14 +7466,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -6950,6 +7546,22 @@
           "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
         }
       },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["hoka-speedgoat-7-product-page-1"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -7023,14 +7635,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -7092,11 +7696,7 @@
         "note": "Preserved from the Phase 0 image provenance inventory."
       }
     ],
-    "comparables": [
-      "kiprun-kipstorm-pro-gravel",
-      "brooks-cascadia-19",
-      "brooks-range"
-    ],
+    "comparables": ["brooks-cascadia-19", "brooks-range", "asics-trabuco-14"],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
@@ -7105,6 +7705,22 @@
           "status": "verified",
           "sourceIds": ["hoka-torrent-4-product-page-1"],
           "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["hoka-torrent-4-product-page-1"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["mixed-terrain", "technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -7180,14 +7796,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -7264,6 +7872,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -7332,14 +7956,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -7416,6 +8032,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -7488,14 +8120,6 @@
           "de": "Trail-Wettkampf",
           "fr": "Compétition trail"
         }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -7540,9 +8164,9 @@
       }
     ],
     "comparables": [
+      "kiprun-kipsummit-race",
       "adidas-adizero-agravic-speed-2",
-      "salomon-speedcross-peak",
-      "salomon-speedcross-peak-gtx"
+      "salomon-speedcross-peak"
     ],
     "kind": "shoe",
     "specifications": {
@@ -7552,6 +8176,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "The available source does not describe terrain difficulty or transition use precisely enough."
         }
       },
       "stability": {
@@ -7622,14 +8262,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -7686,6 +8318,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "The available source does not describe terrain difficulty or transition use precisely enough."
         }
       },
       "stability": {
@@ -7840,6 +8488,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -7978,9 +8642,9 @@
       }
     ],
     "comparables": [
-      "adidas-terrex-agravic-4",
-      "asics-gel-kanaku-6",
-      "asics-gel-sonoma-8-gtx"
+      "brooks-ghost-trail",
+      "salomon-ultra-flow-2",
+      "kiprun-kipride-gravel"
     ],
     "kind": "shoe",
     "specifications": {
@@ -7990,6 +8654,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["gravel", "easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -8148,6 +8828,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -8298,6 +8994,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -8452,6 +9164,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -8604,6 +9332,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -8742,9 +9486,9 @@
       }
     ],
     "comparables": [
-      "adidas-terrex-agravic-4",
       "asics-gel-kanaku-6",
-      "asics-gel-sonoma-8-gtx"
+      "brooks-ghost-trail",
+      "salomon-supraglide"
     ],
     "kind": "shoe",
     "specifications": {
@@ -8754,6 +9498,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["gravel", "easy-terrain", "mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -8912,6 +9672,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -9050,6 +9826,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -9184,6 +9976,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "stability",
         "evidence": {
@@ -9252,14 +10060,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -9316,6 +10116,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "The available source does not describe terrain difficulty or transition use precisely enough."
         }
       },
       "stability": {
@@ -9484,6 +10300,22 @@
           "note": "Transcribed from the supplied Decathlon Book Monitor slides; zero drop was confirmed during the catalogue audit, and the detailed slide identifies the 158 g weight as EU 42."
         }
       },
+      "surfaceFamilies": {
+        "value": ["track"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["kiprun-kipsonic-long-book-monitor-source"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -9623,9 +10455,9 @@
       }
     ],
     "comparables": [
+      "kiprun-kipsonic-x-country",
       "kiprun-kipsonic-long",
-      "kiprun-kipsonic-start",
-      "kiprun-kipsonic-x-country"
+      "kiprun-kipsonic-start"
     ],
     "kind": "shoe",
     "specifications": {
@@ -9635,6 +10467,22 @@
           "status": "verified",
           "sourceIds": ["kiprun-kipsonic-mid-book-monitor-source"],
           "note": "Transcribed from the Decathlon Book Monitor Kipsonic Mid product slide, with zero-drop clarification confirmed during the catalogue audit."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["track"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["kiprun-kipsonic-mid-book-monitor-source"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -9793,9 +10641,9 @@
       }
     ],
     "comparables": [
+      "kiprun-kipsonic-x-country",
       "kiprun-kipsonic-long",
-      "kiprun-kipsonic-mid",
-      "hoka-rincon-4"
+      "salomon-aero-blaze-3-grvl"
     ],
     "kind": "shoe",
     "specifications": {
@@ -9805,6 +10653,22 @@
           "status": "verified",
           "sourceIds": ["kiprun-kipsonic-start-book-monitor-source"],
           "note": "Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["track", "off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["kiprun-kipsonic-start-book-monitor-source"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -9942,7 +10806,7 @@
     "comparables": [
       "kiprun-kipsonic-start",
       "kiprun-kipsonic-mid",
-      "kiprun-kipsonic-long"
+      "hoka-speedgoat-7"
     ],
     "kind": "shoe",
     "specifications": {
@@ -9952,6 +10816,22 @@
           "status": "verified",
           "sourceIds": ["kiprun-kipsonic-x-country-book-monitor-source"],
           "note": "Transcribed from the Decathlon Book Monitor Kipsonic range slide, with zero-drop clarification confirmed during the catalogue audit."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["track", "off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["kiprun-kipsonic-x-country-book-monitor-source"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -10106,6 +10986,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -10174,14 +11070,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -10226,9 +11114,9 @@
       }
     ],
     "comparables": [
-      "adidas-terrex-agravic-4",
-      "asics-gel-kanaku-6",
-      "asics-gel-sonoma-8-gtx"
+      "brooks-ghost-trail",
+      "salomon-aero-blaze-3-grvl",
+      "kiprun-kipcore-gravel"
     ],
     "kind": "shoe",
     "specifications": {
@@ -10238,6 +11126,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["gravel"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -10388,6 +11292,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -10534,6 +11454,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -10684,6 +11620,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -10832,6 +11784,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -10900,14 +11868,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -10951,7 +11911,11 @@
         "note": "Migration evidence only; not an official technical source."
       }
     ],
-    "comparables": ["hoka-torrent-4", "brooks-cascadia-19", "brooks-range"],
+    "comparables": [
+      "salomon-ultra-flow-2",
+      "brooks-ghost-trail",
+      "salomon-aero-blaze-3-grvl"
+    ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
@@ -10960,6 +11924,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["gravel"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -11110,6 +12090,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -11178,14 +12174,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -11250,7 +12238,7 @@
     "comparables": [
       "brooks-cascadia-19",
       "brooks-range",
-      "new-balance-rebel-trail"
+      "salomon-ultra-glide-4"
     ],
     "kind": "shoe",
     "specifications": {
@@ -11260,6 +12248,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -11330,14 +12334,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -11412,6 +12408,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -11570,6 +12582,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": null,
+        "evidence": {
+          "status": "pending",
+          "sourceIds": [],
+          "note": "The available source does not describe terrain difficulty or transition use precisely enough."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -11638,14 +12666,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -11710,7 +12730,7 @@
     "comparables": [
       "brooks-cascadia-19",
       "brooks-range",
-      "new-balance-rebel-trail"
+      "salomon-ultra-glide-4"
     ],
     "kind": "shoe",
     "specifications": {
@@ -11720,6 +12740,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -11878,6 +12914,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -12026,6 +13078,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -12165,8 +13233,8 @@
     ],
     "comparables": [
       "kiprun-kipcore-wr",
-      "adidas-supernova-rise-3",
-      "mizuno-wave-rider-29"
+      "salomon-aero-blaze-3-grvl",
+      "adidas-supernova-rise-3"
     ],
     "kind": "shoe",
     "specifications": {
@@ -12176,6 +13244,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road", "off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["road-to-trail", "gravel", "easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -12334,6 +13418,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -12484,6 +13584,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -12642,6 +13758,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -12792,6 +13924,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -12950,6 +14098,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -13100,6 +14264,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -13267,6 +14447,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -13423,6 +14619,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -13491,14 +14703,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -13563,7 +14767,7 @@
     "comparables": [
       "adidas-terrex-agravic-4",
       "asics-gel-kanaku-6",
-      "asics-gel-sonoma-8-gtx"
+      "asics-trabuco-14"
     ],
     "kind": "shoe",
     "specifications": {
@@ -13573,6 +14777,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -13643,14 +14863,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -13731,6 +14943,22 @@
           "status": "verified",
           "sourceIds": ["new-balance-hierro-v9-product-page-1"],
           "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["new-balance-hierro-v9-product-page-1"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -13898,6 +15126,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -14054,6 +15298,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -14122,14 +15382,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -14205,6 +15457,22 @@
           "status": "verified",
           "sourceIds": ["new-balance-rebel-trail-product-page-1"],
           "note": "Technical measurements, construction details, and a 170 km maximum distance are published on the supplied Decathlon product page; the description displays an obvious typo in the drop unit while the specifications panel confirms 6 mm."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["new-balance-rebel-trail-product-page-1"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -14368,6 +15636,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -14522,6 +15806,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -14680,6 +15980,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -14828,8 +16144,8 @@
     ],
     "comparables": [
       "kiprun-kipride-gravel",
-      "adidas-terrex-agravic-4",
-      "asics-gel-kanaku-6"
+      "brooks-ghost-trail",
+      "decathlon-jogflow-190-grip"
     ],
     "kind": "shoe",
     "specifications": {
@@ -14839,6 +16155,22 @@
           "status": "verified",
           "sourceIds": ["salomon-aero-blaze-3-grvl-book-monitor-source"],
           "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road", "off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-aero-blaze-3-grvl-book-monitor-source"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["road-to-trail", "gravel"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -14909,14 +16241,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -14996,11 +16320,7 @@
         "note": "The current product specifications publish a 0–80 km distance range; this product-specific value supersedes the 5–100 km comparison-chart range."
       }
     ],
-    "comparables": [
-      "adidas-terrex-agravic-4",
-      "asics-gel-kanaku-6",
-      "asics-gel-sonoma-8-gtx"
-    ],
+    "comparables": ["asics-trabuco-14", "brooks-cascadia-19", "brooks-range"],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
@@ -15009,6 +16329,22 @@
           "status": "verified",
           "sourceIds": ["salomon-genesis-book-monitor-source"],
           "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-genesis-book-monitor-source"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["mixed-terrain", "technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -15083,14 +16419,6 @@
           "de": "Trail-Wettkampf",
           "fr": "Compétition trail"
         }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -15164,7 +16492,7 @@
     "comparables": [
       "salomon-speedcross-peak-gtx",
       "adidas-adizero-agravic-speed-2",
-      "kiprun-kipclimb-race"
+      "kiprun-kipsummit-race"
     ],
     "kind": "shoe",
     "specifications": {
@@ -15174,6 +16502,22 @@
           "status": "verified",
           "sourceIds": ["salomon-speedcross-peak-book-monitor-source"],
           "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-speedcross-peak-book-monitor-source"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["technical-terrain", "muddy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -15248,14 +16592,6 @@
           "de": "Trail-Wettkampf",
           "fr": "Compétition trail"
         }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -15329,7 +16665,7 @@
     "comparables": [
       "salomon-speedcross-peak",
       "adidas-adizero-agravic-speed-2",
-      "kiprun-kipclimb-race"
+      "kiprun-kipsummit-race"
     ],
     "kind": "shoe",
     "specifications": {
@@ -15339,6 +16675,22 @@
           "status": "verified",
           "sourceIds": ["salomon-speedcross-peak-gtx-book-monitor-source"],
           "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-speedcross-peak-gtx-book-monitor-source"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -15409,14 +16761,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -15488,9 +16832,9 @@
       }
     ],
     "comparables": [
-      "adidas-terrex-agravic-4",
       "asics-gel-kanaku-6",
-      "asics-gel-sonoma-8-gtx"
+      "kiprun-kipride-gravel",
+      "adidas-terrex-agravic-4"
     ],
     "kind": "shoe",
     "specifications": {
@@ -15500,6 +16844,22 @@
           "status": "verified",
           "sourceIds": ["salomon-supraglide-book-monitor-source"],
           "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–20 km use range."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-supraglide-book-monitor-source"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["easy-terrain", "mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -15570,14 +16930,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -15648,7 +17000,11 @@
         "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
       }
     ],
-    "comparables": ["brooks-cascadia-19", "brooks-range", "kiprun-kipclimb"],
+    "comparables": [
+      "brooks-ghost-trail",
+      "kiprun-kipcore-gravel",
+      "kiprun-kipride-gravel"
+    ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
@@ -15657,6 +17013,22 @@
           "status": "verified",
           "sourceIds": ["salomon-ultra-flow-2-book-monitor-source"],
           "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–42 km use range."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-ultra-flow-2-book-monitor-source"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["gravel", "easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -15727,14 +17099,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -15805,7 +17169,7 @@
         "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
       }
     ],
-    "comparables": ["brooks-cascadia-19", "brooks-range", "kiprun-kipclimb"],
+    "comparables": ["brooks-cascadia-19", "brooks-range", "kiprun-kipsummit"],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
@@ -15814,6 +17178,22 @@
           "status": "verified",
           "sourceIds": ["salomon-ultra-glide-4-book-monitor-source"],
           "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-ultra-glide-4-book-monitor-source"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -15972,6 +17352,22 @@
           "note": "Imported from the audited legacy catalogue; official verification is pending."
         }
       },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
       "stability": {
         "value": "stability",
         "evidence": {
@@ -16040,14 +17436,6 @@
       {
         "id": "trail",
         "label": { "en": "Trail", "de": "Trail", "fr": "Trail" }
-      },
-      {
-        "id": "technical-trail",
-        "label": {
-          "en": "Technical Trail",
-          "de": "Technischer Trail",
-          "fr": "Trail technique"
-        }
       }
     ],
     "copy": {
@@ -16122,6 +17510,22 @@
           "status": "verified",
           "sourceIds": ["saucony-peregrine-16-product-page-1"],
           "note": "Technical measurements, construction details, and a 60 km maximum distance are published on the supplied Decathlon product page."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["off-road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["saucony-peregrine-16-product-page-1"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {
@@ -16278,6 +17682,22 @@
           "status": "fallback",
           "sourceIds": ["legacy-catalogue"],
           "note": "Imported from the audited legacy catalogue; official verification is pending."
+        }
+      },
+      "surfaceFamilies": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from the recorded product surface terminology."
+        }
+      },
+      "terrainProfiles": {
+        "value": [],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
       "stability": {

@@ -1,6 +1,11 @@
 import { resolveLocalizedText, type SupportedLocale } from '@/domain/catalogue';
 
-import { categoryLabel, stabilityLabel } from './copy';
+import {
+  categoryLabel,
+  stabilityLabel,
+  surfaceFamilyLabel,
+  terrainProfileLabel,
+} from './copy';
 import type { ExplorerProduct } from './catalogue';
 
 export interface ComparisonRow {
@@ -23,8 +28,15 @@ function primaryCategory(
   );
 }
 
-function surfaces(item: ExplorerProduct): string {
-  return item.product.specifications.surfaces.value?.join(', ') ?? '—';
+function surfaces(item: ExplorerProduct, locale: SupportedLocale): string {
+  const families = item.product.specifications.surfaceFamilies.value ?? [];
+  const terrain = item.product.specifications.terrainProfiles.value ?? [];
+  return (
+    [
+      ...families.map((value) => surfaceFamilyLabel(value, locale)),
+      ...terrain.map((value) => terrainProfileLabel(value, locale)),
+    ].join(' · ') || '—'
+  );
 }
 
 function drop(item: ExplorerProduct): string {
@@ -60,9 +72,9 @@ export function compareProducts(
     },
     {
       key: 'surface',
-      left: surfaces(left),
-      right: surfaces(right),
-      difference: surfaces(left) !== surfaces(right),
+      left: surfaces(left, locale),
+      right: surfaces(right, locale),
+      difference: surfaces(left, locale) !== surfaces(right, locale),
     },
     {
       key: 'stability',
@@ -104,8 +116,8 @@ export function comparisonSummary(
 ): string {
   const leftCategory = primaryCategory(left, locale);
   const rightCategory = primaryCategory(right, locale);
-  const leftSurface = surfaces(left);
-  const rightSurface = surfaces(right);
+  const leftSurface = surfaces(left, locale);
+  const rightSurface = surfaces(right, locale);
   const leftDrop = left.product.specifications.heelToToeDrop.value?.amount;
   const rightDrop = right.product.specifications.heelToToeDrop.value?.amount;
   const dropDifference =

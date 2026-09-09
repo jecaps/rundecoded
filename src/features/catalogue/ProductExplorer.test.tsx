@@ -67,6 +67,63 @@ describe('ProductExplorer', () => {
     expect(screen.getByText('2 of 106 shoes')).toBeVisible();
   });
 
+  it('groups purpose, surface, and terrain choices in the catalogue menu', async () => {
+    window.history.replaceState({}, '', '/en/catalogue/');
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+      />,
+    );
+
+    fireEvent.pointerDown(
+      screen.getByRole('button', { name: /All categories/ }),
+    );
+    expect(await screen.findByText('Purpose')).toBeVisible();
+    expect(screen.getByText('Surface & terrain')).toBeVisible();
+    fireEvent.click(
+      screen.getByRole('menuitemradio', { name: 'Gravel & firm paths' }),
+    );
+
+    expect(
+      screen.getByRole('button', { name: /Gravel & firm paths/ }),
+    ).toBeVisible();
+    expect(window.location.search).toBe('?category=terrain%3Agravel');
+  });
+
+  it('presents the employee consultation entry and catalogue controls', async () => {
+    window.history.replaceState(
+      {},
+      '',
+      '/en/catalogue/?surface=Gravel&stability=neutral',
+    );
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+      />,
+    );
+
+    expect(
+      screen.getByRole('heading', {
+        name: 'Help a customer choose the right shoe',
+      }),
+    ).toBeVisible();
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Start customer consultation' }),
+    );
+    expect(
+      await screen.findByText('The customer questionnaire is the next step.'),
+    ).toBeVisible();
+    expect(
+      screen.getByRole('button', { name: /All categories/ }),
+    ).toBeVisible();
+    expect(screen.queryByRole('button', { name: 'Filters' })).toBeNull();
+    await waitFor(() => expect(window.location.search).toBe(''));
+  });
+
   it('lets users manage selected comparison shoes from the selection tray', async () => {
     window.history.replaceState({}, '', '/en/catalogue/');
     render(

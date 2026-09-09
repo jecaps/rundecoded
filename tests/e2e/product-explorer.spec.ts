@@ -112,33 +112,37 @@ test('search and filters produce accurate counts and an honest empty state', asy
   await page.getByRole('button', { name: 'Clear filters' }).last().click();
   await expect(page.getByTestId('product-card')).toHaveCount(12);
 
-  const trailFilter = page.getByRole('button', {
-    name: 'Trail',
-    exact: true,
-  });
-  await expect(trailFilter).toContainText('32');
-  await trailFilter.click();
+  await page
+    .getByRole('button', { name: 'All categories', exact: true })
+    .click();
+  await page
+    .getByRole('menuitemradio', { name: 'Trail / off-road', exact: true })
+    .click();
   await expect(page.getByTestId('product-card')).toHaveCount(12);
-  await expect(page.getByText('32 of 106 shoes')).toBeVisible();
+  await expect(page.getByText('40 of 106 shoes')).toBeVisible();
+  await expect(page).toHaveURL(/category=surface%3Aoff-road/);
 });
 
-test('contains category filters within the viewport on narrow screens', async ({
+test('contains the category menu within the viewport on narrow screens', async ({
   page,
 }) => {
   for (const width of [320, 390, 768]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto('./en/catalogue/');
 
-    const rail = page.getByTestId('category-filter-rail');
-    const railBox = await rail.boundingBox();
+    const categoryMenu = page.getByRole('button', {
+      name: 'All categories',
+      exact: true,
+    });
+    const categoryMenuBox = await categoryMenu.boundingBox();
     const documentWidth = await page.evaluate(() =>
       Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
     );
 
-    expect(railBox).not.toBeNull();
-    expect((railBox?.x ?? 0) + (railBox?.width ?? 0)).toBeLessThanOrEqual(
-      width,
-    );
+    expect(categoryMenuBox).not.toBeNull();
+    expect(
+      (categoryMenuBox?.x ?? 0) + (categoryMenuBox?.width ?? 0),
+    ).toBeLessThanOrEqual(width);
     expect(documentWidth).toBeLessThanOrEqual(width);
   }
 });
@@ -185,8 +189,13 @@ test('restores shareable filter state on reload and browser history', async ({
   page.on('console', (message) => {
     if (message.type() === 'error') consoleErrors.push(message.text());
   });
-  await page.getByRole('button', { name: 'Trail', exact: true }).click();
-  await expect(page).toHaveURL(/category=trail/);
+  await page
+    .getByRole('button', { name: 'All categories', exact: true })
+    .click();
+  await page
+    .getByRole('menuitemradio', { name: 'Trail / off-road', exact: true })
+    .click();
+  await expect(page).toHaveURL(/category=surface%3Aoff-road/);
   await expect(page.getByTestId('product-card')).toHaveCount(12);
 
   await page.reload();
@@ -195,16 +204,17 @@ test('restores shareable filter state on reload and browser history', async ({
     'true',
   );
   await expect(
-    page.getByRole('button', { name: 'Trail', exact: true }),
-  ).toHaveAttribute('aria-pressed', 'true');
+    page.getByRole('button', { name: 'Trail / off-road', exact: true }),
+  ).toBeVisible();
   await expect(page.getByTestId('product-card')).toHaveCount(12);
 
-  await page
-    .getByRole('button', { name: 'All categories', exact: true })
-    .click();
+  await page.getByRole('button', { name: 'Clear filters' }).click();
   await expect(page).not.toHaveURL(/category=/);
   await page.goBack();
-  await expect(page).toHaveURL(/category=trail/);
+  await expect(page).toHaveURL(/category=surface%3Aoff-road/);
+  await expect(
+    page.getByRole('button', { name: 'Trail / off-road', exact: true }),
+  ).toBeVisible();
   await expect(page.getByTestId('product-card')).toHaveCount(12);
   expect(consoleErrors.join('\n')).not.toMatch(/hydration|didn't match/i);
 });

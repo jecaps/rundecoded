@@ -14,6 +14,15 @@ export const verificationStatuses = [
   'fallback',
   'pending',
 ] as const;
+export const surfaceFamilies = ['road', 'off-road', 'track'] as const;
+export const terrainProfiles = [
+  'gravel',
+  'road-to-trail',
+  'easy-terrain',
+  'mixed-terrain',
+  'technical-terrain',
+  'muddy-terrain',
+] as const;
 
 const idSchema = z
   .string()
@@ -175,6 +184,8 @@ export const shoeProductSchema = z.strictObject({
   kind: z.literal('shoe'),
   specifications: z.strictObject({
     surfaces: factSchema(z.array(z.string().trim().min(1)).min(1)),
+    surfaceFamilies: factSchema(z.array(z.enum(surfaceFamilies)).min(1)),
+    terrainProfiles: factSchema(z.array(z.enum(terrainProfiles))),
     stability: factSchema(z.enum(['neutral', 'stability', 'unknown'])),
     maximumDistance: factSchema(
       z.strictObject({
@@ -208,6 +219,8 @@ export const catalogueSchema = z.array(productSchema);
 
 export type SupportedLocale = (typeof supportedLocales)[number];
 export type VerificationStatus = (typeof verificationStatuses)[number];
+export type SurfaceFamily = (typeof surfaceFamilies)[number];
+export type TerrainProfile = (typeof terrainProfiles)[number];
 export type LocalizedText = z.infer<typeof localizedTextSchema>;
 export type Evidence = z.infer<typeof evidenceSchema>;
 export type ProductSource = z.infer<typeof sourceSchema>;

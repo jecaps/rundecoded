@@ -51,6 +51,22 @@ function shoe(overrides: Partial<ShoeProduct> = {}): ShoeProduct {
         value: ['Road'],
         evidence: { status: 'verified', sourceIds: ['official-source'] },
       },
+      surfaceFamilies: {
+        value: ['road'],
+        evidence: {
+          status: 'derived',
+          sourceIds: ['official-source'],
+          note: 'Normalized from the published surface.',
+        },
+      },
+      terrainProfiles: {
+        value: [],
+        evidence: {
+          status: 'derived',
+          sourceIds: ['official-source'],
+          note: 'Terrain profiles do not apply to this road shoe.',
+        },
+      },
       stability: {
         value: 'neutral',
         evidence: { status: 'verified', sourceIds: ['official-source'] },

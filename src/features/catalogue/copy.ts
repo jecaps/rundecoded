@@ -6,11 +6,17 @@ export const catalogueCopy = {
     intro:
       'Search and compare the complete catalogue by purpose, surface, guidance, and construction.',
     searchLabel: 'Search products',
-    searchPlaceholder: 'Brand, model, category, benefit…',
+    searchPlaceholder: 'Search by brand, model or technology',
     suggestions: 'Search suggestions',
     searchDecathlon: (query: string) => `Search Decathlon for “${query}”`,
+    consultationTitle: 'Help a customer choose the right shoe',
+    consultationDescription:
+      'Answer a short questionnaire with the customer to find explainable matches.',
+    consultationAction: 'Start customer consultation',
+    consultationPending: 'The customer questionnaire is the next step.',
     allCategories: 'All categories',
-    filters: 'Categories',
+    purposeCategories: 'Purpose',
+    surfaceAndTerrain: 'Surface & terrain',
     results: (shown: number, total: number) => `${shown} of ${total} shoes`,
     noResults: 'No shoes match these filters.',
     clearFilters: 'Clear filters',
@@ -28,9 +34,11 @@ export const catalogueCopy = {
     distance: 'Distance',
     distanceUnavailable: 'Not published',
     surface: 'Surface',
+    terrain: 'Terrain',
     stability: 'Stability',
     drop: 'Drop',
     pending: 'Pending',
+    notApplicable: 'Not applicable',
     technologies: 'Construction & technologies',
     ride: 'Ride & intended use',
     sources: 'Sources',
@@ -81,11 +89,17 @@ export const catalogueCopy = {
     intro:
       'Durchsuche und vergleiche den vollständigen Katalog nach Einsatzzweck, Untergrund, Führung und Konstruktion.',
     searchLabel: 'Produkte suchen',
-    searchPlaceholder: 'Marke, Modell, Kategorie, Vorteil…',
+    searchPlaceholder: 'Nach Marke, Modell oder Technologie suchen',
     suggestions: 'Suchvorschläge',
     searchDecathlon: (query: string) => `Bei Decathlon nach „${query}“ suchen`,
+    consultationTitle: 'Den passenden Schuh für einen Kunden finden',
+    consultationDescription:
+      'Beantworte gemeinsam mit dem Kunden einige Fragen und erhalte nachvollziehbare Empfehlungen.',
+    consultationAction: 'Kundenberatung starten',
+    consultationPending: 'Der Kundenfragebogen folgt als nächster Schritt.',
     allCategories: 'Alle Kategorien',
-    filters: 'Kategorien',
+    purposeCategories: 'Einsatzzweck',
+    surfaceAndTerrain: 'Untergrund & Gelände',
     results: (shown: number, total: number) => `${shown} von ${total} Schuhen`,
     noResults: 'Keine Schuhe passen zu diesen Filtern.',
     clearFilters: 'Filter löschen',
@@ -103,9 +117,11 @@ export const catalogueCopy = {
     distance: 'Distanz',
     distanceUnavailable: 'Nicht veröffentlicht',
     surface: 'Untergrund',
+    terrain: 'Gelände',
     stability: 'Stabilität',
     drop: 'Sprengung',
     pending: 'Ausstehend',
+    notApplicable: 'Nicht zutreffend',
     technologies: 'Konstruktion & Technologien',
     ride: 'Laufgefühl & Einsatzzweck',
     sources: 'Quellen',
@@ -156,11 +172,18 @@ export const catalogueCopy = {
     intro:
       'Recherchez et comparez le catalogue complet selon l’usage, le terrain, le guidage et la construction.',
     searchLabel: 'Rechercher des produits',
-    searchPlaceholder: 'Marque, modèle, catégorie, avantage…',
+    searchPlaceholder: 'Rechercher par marque, modèle ou technologie',
     suggestions: 'Suggestions de recherche',
     searchDecathlon: (query: string) => `Rechercher « ${query} » sur Decathlon`,
+    consultationTitle: 'Aider un client à choisir la bonne chaussure',
+    consultationDescription:
+      'Répondez à quelques questions avec le client pour obtenir des recommandations explicables.',
+    consultationAction: 'Démarrer le conseil client',
+    consultationPending:
+      'Le questionnaire client constitue la prochaine étape.',
     allCategories: 'Toutes les catégories',
-    filters: 'Catégories',
+    purposeCategories: 'Usage',
+    surfaceAndTerrain: 'Surface et terrain',
     results: (shown: number, total: number) =>
       `${shown} chaussures sur ${total}`,
     noResults: 'Aucune chaussure ne correspond à ces filtres.',
@@ -179,9 +202,11 @@ export const catalogueCopy = {
     distance: 'Distance',
     distanceUnavailable: 'Non publiée',
     surface: 'Terrain',
+    terrain: 'Profil de terrain',
     stability: 'Stabilité',
     drop: 'Drop',
     pending: 'En attente',
+    notApplicable: 'Non applicable',
     technologies: 'Construction et technologies',
     ride: 'Sensations et usage',
     sources: 'Sources',
@@ -293,4 +318,61 @@ export function stabilityLabel(value: string, locale: SupportedLocale): string {
     unknown: { en: 'Pending', de: 'Ausstehend', fr: 'En attente' },
   } as const;
   return labels[value as keyof typeof labels]?.[locale] ?? value;
+}
+
+const surfaceFamilyLabels = {
+  road: { en: 'Road', de: 'Straße', fr: 'Route' },
+  'off-road': {
+    en: 'Trail / off-road',
+    de: 'Trail / Gelände',
+    fr: 'Trail / hors route',
+  },
+  track: { en: 'Track / spikes', de: 'Bahn / Spikes', fr: 'Piste / pointes' },
+} as const;
+
+const terrainProfileLabels = {
+  gravel: {
+    en: 'Gravel & firm paths',
+    de: 'Gravel & feste Wege',
+    fr: 'Gravel et chemins fermes',
+  },
+  'road-to-trail': {
+    en: 'Road-to-trail',
+    de: 'Road-to-Trail',
+    fr: 'Route-trail',
+  },
+  'easy-terrain': {
+    en: 'Easy terrain',
+    de: 'Einfaches Gelände',
+    fr: 'Terrain facile',
+  },
+  'mixed-terrain': {
+    en: 'Mixed terrain',
+    de: 'Gemischtes Gelände',
+    fr: 'Terrain mixte',
+  },
+  'technical-terrain': {
+    en: 'Technical terrain',
+    de: 'Technisches Gelände',
+    fr: 'Terrain technique',
+  },
+  'muddy-terrain': {
+    en: 'Muddy terrain',
+    de: 'Schlammiges Gelände',
+    fr: 'Terrain boueux',
+  },
+} as const;
+
+export function surfaceFamilyLabel(
+  value: keyof typeof surfaceFamilyLabels,
+  locale: SupportedLocale,
+): string {
+  return surfaceFamilyLabels[value][locale];
+}
+
+export function terrainProfileLabel(
+  value: keyof typeof terrainProfileLabels,
+  locale: SupportedLocale,
+): string {
+  return terrainProfileLabels[value][locale];
 }

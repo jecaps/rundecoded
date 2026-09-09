@@ -62,6 +62,8 @@ function countEvidence(
     count(product.technologies.evidence.status);
     if (product.kind === 'shoe') {
       count(product.specifications.surfaces.evidence.status);
+      count(product.specifications.surfaceFamilies.evidence.status);
+      count(product.specifications.terrainProfiles.evidence.status);
       count(product.specifications.stability.evidence.status);
       count(product.specifications.heelToToeDrop.evidence.status);
       count(product.specifications.stackHeight.evidence.status);
@@ -100,6 +102,14 @@ function evidenceFields(product: ShoeProduct) {
     {
       field: 'specifications.surfaces',
       evidence: product.specifications.surfaces.evidence,
+    },
+    {
+      field: 'specifications.surfaceFamilies',
+      evidence: product.specifications.surfaceFamilies.evidence,
+    },
+    {
+      field: 'specifications.terrainProfiles',
+      evidence: product.specifications.terrainProfiles.evidence,
     },
     {
       field: 'specifications.stability',

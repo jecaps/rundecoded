@@ -25,7 +25,6 @@ export function parseCatalogueUrlState(
   const requestedPage = Number.parseInt(searchParams.get('page') ?? '1', 10);
   const page =
     Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1;
-
   return { categoryId, page, query };
 }
 

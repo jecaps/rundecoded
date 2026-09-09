@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest';
 import type {
   Evidence,
   ShoeProduct,
+  SurfaceFamily,
+  TerrainProfile,
   VerificationStatus,
 } from '@/domain/catalogue';
 
@@ -33,13 +35,33 @@ function shoe(
     id?: string;
     model?: string;
     stability?: 'neutral' | 'stability' | 'unknown';
+    surfaceFamilies?: SurfaceFamily[];
     surfaces?: string[];
     surfaceStatus?: VerificationStatus;
+    terrainProfiles?: TerrainProfile[] | null;
   } = {},
 ): ShoeProduct {
   const distanceStatus = overrides.distanceStatus ?? 'verified';
   const maximumDistance =
     overrides.distance === null ? null : (overrides.distance ?? 42);
+  const surfaces = overrides.surfaces ?? ['Road', 'Gravel'];
+  const surfaceFamilies = overrides.surfaceFamilies ?? [
+    ...(surfaces.includes('Road') ? (['road'] as const) : []),
+    ...(surfaces.some((surface) =>
+      ['Gravel', 'Trail', 'Cross-country'].includes(surface),
+    )
+      ? (['off-road'] as const)
+      : []),
+    ...(surfaces.some((surface) => ['Track', 'Cross-country'].includes(surface))
+      ? (['track'] as const)
+      : []),
+  ];
+  const terrainProfiles =
+    overrides.terrainProfiles === undefined
+      ? surfaces.includes('Gravel')
+        ? (['gravel'] as TerrainProfile[])
+        : []
+      : overrides.terrainProfiles;
   return {
     schemaVersion: 1,
     id: overrides.id ?? 'example-daily-shoe',
@@ -72,8 +94,20 @@ function shoe(
     comparables: [],
     specifications: {
       surfaces: {
-        value: overrides.surfaces ?? ['Road', 'Gravel'],
+        value: surfaces,
         evidence: evidence(overrides.surfaceStatus ?? 'verified'),
+      },
+      surfaceFamilies: {
+        value: surfaceFamilies,
+        evidence: evidence(overrides.surfaceStatus ?? 'verified'),
+      },
+      terrainProfiles: {
+        value: terrainProfiles,
+        evidence: evidence(
+          terrainProfiles === null
+            ? 'pending'
+            : (overrides.surfaceStatus ?? 'verified'),
+        ),
       },
       stability: {
         value: overrides.stability ?? 'neutral',
