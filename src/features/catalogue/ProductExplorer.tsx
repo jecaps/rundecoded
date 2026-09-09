@@ -628,7 +628,7 @@ export function ProductExplorer({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className="tablet:w-auto h-11 w-full justify-between"
+                className="tablet:w-52 h-11 w-full shrink-0 justify-between"
                 variant="outline"
               >
                 {selectedCategoryLabel}
@@ -670,7 +670,10 @@ export function ProductExplorer({
           </DropdownMenu>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <div
+          className="mt-4 flex min-h-8 flex-wrap items-center justify-between gap-3"
+          data-testid="catalogue-results-bar"
+        >
           <p aria-live="polite" className="text-muted-foreground m-0 text-sm">
             {copy.results(filtered.length, products.length)}
           </p>
