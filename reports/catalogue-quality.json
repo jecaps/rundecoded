@@ -18,9 +18,9 @@
   },
   "evidence": {
     "verified": 226,
-    "derived": 0,
+    "derived": 207,
     "fallback": 558,
-    "pending": 383
+    "pending": 388
   },
   "brands": {
     "Adidas": 8,
@@ -43,20 +43,18 @@
     "max-cushion": 15,
     "neutral": 9,
     "race": 4,
-    "road-to-trail": 2,
     "spikes": 2,
     "stability-and-guidance": 8,
     "super-trainer": 2,
     "support": 6,
-    "technical-trail": 31,
     "track-spikes": 4,
     "trail": 32,
     "trail-race": 5
   },
   "languages": {
-    "en": { "values": 419, "complete": 419, "missing": 0 },
-    "de": { "values": 419, "complete": 419, "missing": 0 },
-    "fr": { "values": 419, "complete": 419, "missing": 0 }
+    "en": { "values": 386, "complete": 386, "missing": 0 },
+    "de": { "values": 386, "complete": 386, "missing": 0 },
+    "fr": { "values": 386, "complete": 386, "missing": 0 }
   },
   "issueTypes": {
     "pending": {
@@ -66,6 +64,7 @@
       "maximumDistance": 53,
       "stackHeight": 93,
       "technologies": 7,
+      "terrainProfiles": 5,
       "weight": 82
     },
     "fallback": {
@@ -801,6 +800,12 @@
     },
     {
       "productId": "adidas-adizero-agravic-speed-2",
+      "field": "specifications.terrainProfiles",
+      "issueType": "terrainProfiles",
+      "status": "pending"
+    },
+    {
+      "productId": "adidas-adizero-agravic-speed-2",
       "field": "specifications.weight",
       "issueType": "weight",
       "status": "pending"
@@ -2961,6 +2966,12 @@
     },
     {
       "productId": "kiprun-kipclimb-race",
+      "field": "specifications.terrainProfiles",
+      "issueType": "terrainProfiles",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-race",
       "field": "specifications.weight",
       "issueType": "weight",
       "status": "pending"
@@ -3009,6 +3020,12 @@
     },
     {
       "productId": "kiprun-kipclimb-wp",
+      "field": "specifications.terrainProfiles",
+      "issueType": "terrainProfiles",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipclimb-wp",
       "field": "specifications.weight",
       "issueType": "weight",
       "status": "pending"
@@ -3573,6 +3590,12 @@
     },
     {
       "productId": "kiprun-kipride-wr",
+      "field": "specifications.terrainProfiles",
+      "issueType": "terrainProfiles",
+      "status": "pending"
+    },
+    {
+      "productId": "kiprun-kipride-wr",
       "field": "specifications.weight",
       "issueType": "weight",
       "status": "pending"
@@ -4206,6 +4229,12 @@
       "field": "specifications.surfaces",
       "issueType": "surfaces",
       "status": "fallback"
+    },
+    {
+      "productId": "kiprun-kipsummit-race",
+      "field": "specifications.terrainProfiles",
+      "issueType": "terrainProfiles",
+      "status": "pending"
     },
     {
       "productId": "kiprun-kipsummit-race",

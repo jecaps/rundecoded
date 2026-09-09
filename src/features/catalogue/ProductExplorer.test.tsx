@@ -11,7 +11,6 @@ import { afterEach, describe, expect, it } from 'vitest';
 
 import { ProductExplorer } from './ProductExplorer';
 import { getProductCatalogue } from './catalogue';
-import { filterProducts } from './state';
 
 const products = getProductCatalogue();
 
@@ -68,8 +67,37 @@ describe('ProductExplorer', () => {
     expect(screen.getByText('2 of 106 shoes')).toBeVisible();
   });
 
-  it('presents the employee consultation entry and consolidated filters', async () => {
+  it('groups purpose, surface, and terrain choices in the catalogue menu', async () => {
     window.history.replaceState({}, '', '/en/catalogue/');
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+      />,
+    );
+
+    fireEvent.pointerDown(
+      screen.getByRole('button', { name: /All categories/ }),
+    );
+    expect(await screen.findByText('Purpose')).toBeVisible();
+    expect(screen.getByText('Surface & terrain')).toBeVisible();
+    fireEvent.click(
+      screen.getByRole('menuitemradio', { name: 'Gravel & firm paths' }),
+    );
+
+    expect(
+      screen.getByRole('button', { name: /Gravel & firm paths/ }),
+    ).toBeVisible();
+    expect(window.location.search).toBe('?category=terrain%3Agravel');
+  });
+
+  it('presents the employee consultation entry and catalogue controls', async () => {
+    window.history.replaceState(
+      {},
+      '',
+      '/en/catalogue/?surface=Gravel&stability=neutral',
+    );
     render(
       <ProductExplorer
         assetBase="/rundecoded/"
@@ -92,21 +120,8 @@ describe('ProductExplorer', () => {
     expect(
       screen.getByRole('button', { name: /All categories/ }),
     ).toBeVisible();
-
-    fireEvent.click(screen.getByRole('button', { name: 'Filters' }));
-    expect(
-      screen.getByRole('group', { name: 'Additional catalogue filters' }),
-    ).toBeVisible();
-    fireEvent.change(screen.getByLabelText('Surface'), {
-      target: { value: 'Track' },
-    });
-
-    const expected = filterProducts(products, '', 'all', 'en', {
-      stability: 'all',
-      surface: 'Track',
-    }).length;
-    expect(screen.getByText(`${expected} of 106 shoes`)).toBeVisible();
-    expect(window.location.search).toContain('surface=Track');
+    expect(screen.queryByRole('button', { name: 'Filters' })).toBeNull();
+    await waitFor(() => expect(window.location.search).toBe(''));
   });
 
   it('lets users manage selected comparison shoes from the selection tray', async () => {

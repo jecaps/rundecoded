@@ -24,6 +24,19 @@ describe('Phase 8 product catalogue', () => {
     }
   });
 
+  it('provides a surface family for every shoe and keeps uncertain terrain pending', () => {
+    for (const { product } of products) {
+      expect(
+        product.specifications.surfaceFamilies.value?.length,
+      ).toBeGreaterThan(0);
+      if (product.specifications.terrainProfiles.value === null) {
+        expect(product.specifications.surfaceFamilies.value).toContain(
+          'off-road',
+        );
+      }
+    }
+  });
+
   it('includes complete and intentionally pending presentation states', () => {
     expect(
       products.some(({ product }) => product.images[0]?.status === 'pending'),
@@ -52,8 +65,12 @@ describe('Phase 8 product catalogue', () => {
           (candidate.categories.some(({ id }) =>
             product.categories.some((category) => category.id === id),
           ) ||
-            (candidate.specifications.surfaces.value?.some((surface) =>
-              product.specifications.surfaces.value?.includes(surface),
+            (candidate.specifications.surfaceFamilies.value?.some((surface) =>
+              product.specifications.surfaceFamilies.value?.includes(surface),
+            ) ??
+              false) ||
+            (candidate.specifications.terrainProfiles.value?.some((terrain) =>
+              product.specifications.terrainProfiles.value?.includes(terrain),
             ) ??
               false)),
       );
@@ -71,10 +88,14 @@ describe('Phase 8 product catalogue', () => {
           product.categories.some((category) => category.id === id),
         );
         const sharesSurface =
-          comparable!.specifications.surfaces.value?.some((surface) =>
-            product.specifications.surfaces.value?.includes(surface),
+          comparable!.specifications.surfaceFamilies.value?.some((surface) =>
+            product.specifications.surfaceFamilies.value?.includes(surface),
           ) ?? false;
-        expect(sharesCategory || sharesSurface).toBe(true);
+        const sharesTerrain =
+          comparable!.specifications.terrainProfiles.value?.some((terrain) =>
+            product.specifications.terrainProfiles.value?.includes(terrain),
+          ) ?? false;
+        expect(sharesCategory || sharesSurface || sharesTerrain).toBe(true);
       }
     }
   });
@@ -138,8 +159,6 @@ describe('catalogue state', () => {
         categoryId: 'trail',
         page: 2,
         query: 'grip',
-        stability: 'stability',
-        surface: 'Trail',
       },
     );
     expect(url.pathname).toBe('/de/catalogue/');
@@ -147,35 +166,22 @@ describe('catalogue state', () => {
     expect(url.searchParams.get('q')).toBe('grip');
     expect(url.searchParams.get('category')).toBe('trail');
     expect(url.searchParams.get('page')).toBe('2');
-    expect(url.searchParams.get('surface')).toBe('Trail');
-    expect(url.searchParams.get('stability')).toBe('stability');
     expect(
-      parseCatalogueUrlState(
-        url.searchParams,
-        new Set(['trail']),
-        new Set(['Trail']),
-      ),
+      parseCatalogueUrlState(url.searchParams, new Set(['trail'])),
     ).toEqual({
       categoryId: 'trail',
       page: 2,
       query: 'grip',
-      stability: 'stability',
-      surface: 'Trail',
     });
     expect(
       parseCatalogueUrlState(
-        new URLSearchParams(
-          'category=unknown&page=-2&surface=Moon&stability=unknown',
-        ),
+        new URLSearchParams('category=unknown&page=-2'),
         new Set(['trail']),
-        new Set(['Trail']),
       ),
     ).toEqual({
       categoryId: 'all',
       page: 1,
       query: '',
-      stability: 'all',
-      surface: '',
     });
     expect(externalSearchUrl('unknown shoe', 'fr')).toContain(
       'decathlon.fr/search',
@@ -193,18 +199,19 @@ describe('catalogue state', () => {
     expect(paginateProducts(trail, 99).page).toBe(Math.ceil(trail.length / 12));
   });
 
-  it('combines surface and stability filters', () => {
-    const trailStability = filterProducts(products, '', 'all', 'en', {
-      surface: 'Road',
-      stability: 'stability',
-    });
+  it('filters independently by broad surface and specific terrain', () => {
+    const offRoad = filterProducts(products, '', 'surface:off-road', 'en');
+    const gravel = filterProducts(products, '', 'terrain:gravel', 'en');
 
-    expect(trailStability.length).toBeGreaterThan(0);
+    expect(offRoad.length).toBeGreaterThan(gravel.length);
     expect(
-      trailStability.every(
-        ({ product }) =>
-          product.specifications.surfaces.value?.includes('Road') &&
-          product.specifications.stability.value === 'stability',
+      offRoad.every(({ product }) =>
+        product.specifications.surfaceFamilies.value?.includes('off-road'),
+      ),
+    ).toBe(true);
+    expect(
+      gravel.every(({ product }) =>
+        product.specifications.terrainProfiles.value?.includes('gravel'),
       ),
     ).toBe(true);
   });

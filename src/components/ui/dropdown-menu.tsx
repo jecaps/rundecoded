@@ -84,6 +84,18 @@ export function DropdownMenuRadioItem({
   );
 }
 
+export function DropdownMenuSeparator({
+  className,
+  ...props
+}: ComponentProps<typeof DropdownMenuPrimitive.Separator>) {
+  return (
+    <DropdownMenuPrimitive.Separator
+      className={cn('bg-border -mx-1 my-1 h-px', className)}
+      {...props}
+    />
+  );
+}
+
 export function DropdownMenuSubTrigger({
   children,
   className,

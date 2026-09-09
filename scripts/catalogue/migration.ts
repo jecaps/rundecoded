@@ -3,6 +3,8 @@ import type {
   LocalizedText,
   ProductSource,
   ShoeProduct,
+  SurfaceFamily,
+  TerrainProfile,
 } from '../../src/domain/catalogue';
 import {
   validateCatalogue,
@@ -938,18 +940,98 @@ function normalizeStability(
   return 'unknown';
 }
 
+function deriveSurfaceFamilies(surfaces: string[]): SurfaceFamily[] {
+  const families = new Set<SurfaceFamily>();
+  for (const surface of surfaces.map((value) =>
+    value.toLocaleLowerCase('en'),
+  )) {
+    if (surface === 'road') families.add('road');
+    if (surface === 'track' || surface === 'cross-country') {
+      families.add('track');
+    }
+    if (
+      surface === 'trail' ||
+      surface === 'muddy trail' ||
+      surface === 'gravel' ||
+      surface === 'firm paths' ||
+      surface === 'cross-country'
+    ) {
+      families.add('off-road');
+    }
+  }
+  return [...families];
+}
+
+function deriveTerrainProfiles(
+  row: Row,
+  surfaceFamilies: SurfaceFamily[],
+): TerrainProfile[] | null {
+  if (!surfaceFamilies.includes('off-road')) return [];
+
+  const normalizedSurfaces = splitList(row.surface, /\s*[·|]\s*/).map((value) =>
+    value.toLocaleLowerCase('en'),
+  );
+  if (
+    normalizedSurfaces.length > 0 &&
+    normalizedSurfaces.every((surface) =>
+      ['track', 'cross-country'].includes(surface),
+    )
+  ) {
+    return [];
+  }
+
+  const text = [row.model, row.surface, row.best_for_en]
+    .join(' ')
+    .toLocaleLowerCase('en');
+  const secondaryCategory = slugify(row.secondary_category);
+  const profiles = new Set<TerrainProfile>();
+
+  if (
+    text.includes('road-to-trail') ||
+    secondaryCategory === 'road-to-trail' ||
+    (surfaceFamilies.includes('road') && surfaceFamilies.includes('off-road'))
+  ) {
+    profiles.add('road-to-trail');
+  }
+  if (/\b(gravel|firm paths?|park paths?)\b/.test(text)) {
+    profiles.add('gravel');
+  }
+  if (/\b(easy|light|groomed)\b/.test(text)) {
+    profiles.add('easy-terrain');
+  }
+  if (/\b(mixed|varied|versatile)\b/.test(text)) {
+    profiles.add('mixed-terrain');
+  }
+  if (/\b(technical|rugged|steep|mountain)\b/.test(text)) {
+    profiles.add('technical-terrain');
+  }
+  if (/\b(muddy|soft trails?)\b/.test(text) || text.includes('muddy trail')) {
+    profiles.add('muddy-terrain');
+  }
+
+  if (profiles.size > 0) return [...profiles];
+  return text.includes('cross-country') ? [] : null;
+}
+
 function comparableScore(current: ShoeProduct, candidate: ShoeProduct) {
   const currentCategories = current.categories.map(({ id }) => id);
   const candidateCategories = new Set(candidate.categories.map(({ id }) => id));
   const sharedCategories = currentCategories.filter((id) =>
     candidateCategories.has(id),
   ).length;
-  const currentSurfaces = current.specifications.surfaces.value ?? [];
+  const currentSurfaces = current.specifications.surfaceFamilies.value ?? [];
   const candidateSurfaces = new Set(
-    candidate.specifications.surfaces.value ?? [],
+    candidate.specifications.surfaceFamilies.value ?? [],
   );
   const sharedSurfaces = currentSurfaces.filter((surface) =>
     candidateSurfaces.has(surface),
+  ).length;
+  const currentTerrain = current.specifications.terrainProfiles.value ?? [];
+  const candidateTerrain = new Set(
+    candidate.specifications.terrainProfiles.value ?? [],
+  );
+  const sharedTerrain = currentTerrain.filter((terrain) =>
+    candidateTerrain.has(terrain),
   ).length;
   const currentDrop = current.specifications.heelToToeDrop.value?.amount;
   const candidateDrop = candidate.specifications.heelToToeDrop.value?.amount;
@@ -962,6 +1044,7 @@ function comparableScore(current: ShoeProduct, candidate: ShoeProduct) {
     (currentCategories[0] === candidate.categories[0]?.id ? 16 : 0) +
     sharedCategories * 6 +
     sharedSurfaces * 8 +
+    sharedTerrain * 10 +
     (current.specifications.stability.value ===
     candidate.specifications.stability.value
       ? 3
@@ -976,11 +1059,19 @@ function sharesIntendedUse(
   candidate: ShoeProduct,
 ): boolean {
   const currentCategories = new Set(current.categories.map(({ id }) => id));
-  const currentSurfaces = new Set(current.specifications.surfaces.value ?? []);
+  const currentSurfaces = new Set(
+    current.specifications.surfaceFamilies.value ?? [],
+  );
+  const currentTerrain = new Set(
+    current.specifications.terrainProfiles.value ?? [],
+  );
   return (
     candidate.categories.some(({ id }) => currentCategories.has(id)) ||
-    (candidate.specifications.surfaces.value ?? []).some((surface) =>
+    (candidate.specifications.surfaceFamilies.value ?? []).some((surface) =>
       currentSurfaces.has(surface),
+    ) ||
+    (candidate.specifications.terrainProfiles.value ?? []).some((terrain) =>
+      currentTerrain.has(terrain),
     )
   );
 }
@@ -1078,7 +1169,9 @@ export function migrateRows(
     }
 
     const rawCategories = [row.primary_category, row.secondary_category].filter(
-      Boolean,
+      (category) =>
+        Boolean(category) &&
+        !['road-to-trail', 'technical-trail'].includes(slugify(category)),
     );
     const categoryLabels = [
       ...new Set(rawCategories.map((value) => titleCase(value))),
@@ -1115,6 +1208,19 @@ export function migrateRows(
     );
     const imageVerified =
       primaryProvenance?.image_status === 'verified-image' && imageSource;
+    const surfaces =
+      recordedFacts?.surfaces ??
+      splitList(row.surface, /\s*[·|]\s*/).map(titleCase);
+    const surfaceEvidence =
+      recordedFacts?.surfaces && recordedFactsSourceId
+        ? {
+            status: 'verified' as const,
+            sourceIds: [recordedFactsSourceId],
+            note: recordedFacts.source.note,
+          }
+        : fallbackEvidence;
+    const surfaceFamilies = deriveSurfaceFamilies(surfaces);
+    const terrainProfiles = deriveTerrainProfiles(row, surfaceFamilies);
 
     if (technologies.length === 0 && !recordedFacts?.technologies) {
       warnings.push({
@@ -1182,18 +1288,30 @@ export function migrateRows(
       comparables: [],
       specifications: {
         surfaces: {
-          value:
-            recordedFacts?.surfaces ??
-            splitList(row.surface, /\s*[·|]\s*/).map(titleCase),
-          evidence:
-            recordedFacts?.surfaces && recordedFactsSourceId
-              ? {
-                  status: 'verified',
-                  sourceIds: [recordedFactsSourceId],
-                  note: recordedFacts.source.note,
-                }
-              : fallbackEvidence,
+          value: surfaces,
+          evidence: surfaceEvidence,
         },
+        surfaceFamilies: {
+          value: surfaceFamilies,
+          evidence: {
+            status: 'derived',
+            sourceIds: surfaceEvidence.sourceIds,
+            note: 'Normalized from the recorded product surface terminology.',
+          },
+        },
+        terrainProfiles:
+          terrainProfiles === null
+            ? pendingFact(
+                'The available source does not describe terrain difficulty or transition use precisely enough.',
+              )
+            : {
+                value: terrainProfiles,
+                evidence: {
+                  status: 'derived',
+                  sourceIds: ['legacy-catalogue'],
+                  note: 'Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance.',
+                },
+              },
         stability: {
           value: normalizeStability(row.stability),
           evidence: fallbackEvidence,

@@ -1,6 +1,7 @@
 ---
 import { ProductExplorer } from '@/features/catalogue/ProductExplorer';
 import { getProductCatalogue } from '@/features/catalogue/catalogue';
+import { taxonomyFilterIds } from '@/features/catalogue/state';
 import { parseCatalogueUrlState } from '@/features/catalogue/url-state';
 import type { Locale } from '@/i18n/config';
 import { sharedMessages } from '@/i18n/messages';
@@ -13,18 +14,13 @@ interface Props {
 const { locale } = Astro.props;
 const metadata = sharedMessages[locale].pages.catalogue;
 const products = getProductCatalogue();
-const validCategoryIds = new Set(
-  products.flatMap(({ product }) => product.categories.map(({ id }) => id)),
-);
-const validSurfaces = new Set(
-  products.flatMap(
-    ({ product }) => product.specifications.surfaces.value ?? [],
-  ),
-);
+const validCategoryIds = new Set([
+  ...products.flatMap(({ product }) => product.categories.map(({ id }) => id)),
+  ...taxonomyFilterIds,
+]);
 const initialState = parseCatalogueUrlState(
   Astro.url.searchParams,
   validCategoryIds,
-  validSurfaces,
 );
 ---
 
@@ -40,8 +36,6 @@ const initialState = parseCatalogueUrlState(
     initialLocale={locale}
     initialPage={initialState.page}
     initialQuery={initialState.query}
-    initialStability={initialState.stability}
-    initialSurface={initialState.surface}
     products={products}
     client:load
   />

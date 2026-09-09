@@ -7,7 +7,6 @@ import {
   ChevronDown,
   ImageOff,
   Search,
-  SlidersHorizontal,
   Sparkles,
   X,
 } from 'lucide-react';
@@ -32,10 +31,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Toaster } from '@/components/ui/sonner';
-import { resolveLocalizedText, type SupportedLocale } from '@/domain/catalogue';
+import {
+  resolveLocalizedText,
+  surfaceFamilies,
+  terrainProfiles,
+  type SupportedLocale,
+} from '@/domain/catalogue';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
@@ -43,7 +48,8 @@ import {
   catalogueCopy,
   categoryLabel,
   stabilityLabel,
-  surfaceLabel,
+  surfaceFamilyLabel,
+  terrainProfileLabel,
 } from './copy';
 import { rankComparableProducts } from './comparables';
 import { compareProducts, comparisonSummary } from './comparison';
@@ -53,7 +59,13 @@ import {
   searchSuggestionKindLabel,
 } from './search';
 import type { ExplorerProduct } from './catalogue';
-import { filterProducts, paginateProducts } from './state';
+import {
+  filterProducts,
+  paginateProducts,
+  surfaceFilterId,
+  taxonomyFilterIds,
+  terrainFilterId,
+} from './state';
 import {
   parseCatalogueUrlState,
   writeCatalogueUrlState,
@@ -66,8 +78,6 @@ interface ProductExplorerProps {
   initialLocale: SupportedLocale;
   initialPage?: number;
   initialQuery?: string;
-  initialStability?: 'all' | 'neutral' | 'stability';
-  initialSurface?: string;
   products: ExplorerProduct[];
 }
 
@@ -77,26 +87,20 @@ function imagePath(item: ExplorerProduct, assetBase: string): string | null {
   return `${assetBase}${image.localPath}`;
 }
 
-function localizedCategory(
-  item: ExplorerProduct,
-  locale: SupportedLocale,
-  index = 0,
-) {
-  const category = item.product.categories[index];
-  if (!category) return null;
-  return categoryLabel(
-    category.id,
-    resolveLocalizedText(category.label, locale).value,
-    locale,
-  );
-}
-
 const specificationCategoryIds = new Set([
   'carbon',
   'neutral',
   'stability-and-guidance',
   'support',
 ]);
+
+const retiredFilterParams = [
+  'brand',
+  'distance',
+  'drop',
+  'stability',
+  'surface',
+] as const;
 
 function purposeCategory(item: ExplorerProduct) {
   return (
@@ -176,26 +180,16 @@ export function ProductExplorer({
   initialLocale,
   initialPage = 1,
   initialQuery = '',
-  initialStability = 'all',
-  initialSurface = '',
   products,
 }: ProductExplorerProps) {
   const validCategoryIds = useMemo(
     () =>
-      new Set(
-        products.flatMap(({ product }) =>
+      new Set([
+        ...products.flatMap(({ product }) =>
           product.categories.map(({ id }) => id),
         ),
-      ),
-    [products],
-  );
-  const validSurfaces = useMemo(
-    () =>
-      new Set(
-        products.flatMap(
-          ({ product }) => product.specifications.surfaces.value ?? [],
-        ),
-      ),
+        ...taxonomyFilterIds,
+      ]),
     [products],
   );
   const initialBrowserState = () =>
@@ -204,7 +198,6 @@ export function ProductExplorer({
       : parseCatalogueUrlState(
           new URL(window.location.href).searchParams,
           validCategoryIds,
-          validSurfaces,
         );
   const [locale, setLocale] = useState(initialLocale);
   const [hydrated, setHydrated] = useState(false);
@@ -217,13 +210,6 @@ export function ProductExplorer({
   const [page, setPage] = useState(
     () => initialBrowserState()?.page ?? initialPage,
   );
-  const [surface, setSurface] = useState(
-    () => initialBrowserState()?.surface ?? initialSurface,
-  );
-  const [stability, setStability] = useState<'all' | 'neutral' | 'stability'>(
-    () => initialBrowserState()?.stability ?? initialStability,
-  );
-  const [filtersOpen, setFiltersOpen] = useState(false);
   const [pageDirection, setPageDirection] = useState<
     'backward' | 'forward' | null
   >(null);
@@ -260,16 +246,25 @@ export function ProductExplorer({
   }, [initialLocale]);
 
   useEffect(() => {
+    const currentUrl = new URL(window.location.href);
+    const hadRetiredFilters = retiredFilterParams.some((parameter) =>
+      currentUrl.searchParams.has(parameter),
+    );
+    if (!hadRetiredFilters) return;
+    for (const parameter of retiredFilterParams) {
+      currentUrl.searchParams.delete(parameter);
+    }
+    window.history.replaceState({}, '', currentUrl);
+  }, []);
+
+  useEffect(() => {
     function onPopState() {
       const restored = parseCatalogueUrlState(
         new URL(window.location.href).searchParams,
         validCategoryIds,
-        validSurfaces,
       );
       setQuery(restored.query);
       setCategoryId(restored.categoryId);
-      setSurface(restored.surface);
-      setStability(restored.stability);
       setPageDirection(
         restored.page === pageRef.current
           ? null
@@ -284,7 +279,7 @@ export function ProductExplorer({
     }
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
-  }, [validCategoryIds, validSurfaces]);
+  }, [validCategoryIds]);
 
   const productsById = useMemo(
     () => new Map(products.map((item) => [item.product.id, item])),
@@ -293,44 +288,53 @@ export function ProductExplorer({
   const categoryOptions = useMemo(() => {
     const categories = new Map<string, string>();
     for (const item of products) {
-      const category = item.product.categories[0];
+      const category = purposeCategory(item);
       if (category)
-        categories.set(
-          category.id,
-          localizedCategory(item, locale) ?? category.label.en,
-        );
+        categories.set(category.id, localizedCategoryValue(category, locale));
     }
     return [...categories.entries()].sort((left, right) =>
       left[1].localeCompare(right[1], locale),
     );
   }, [locale, products]);
-  const surfaceOptions = useMemo(
-    () =>
-      [...validSurfaces].sort((left, right) =>
-        left.localeCompare(right, locale),
+  const surfaceOptions = surfaceFamilies
+    .filter((family) =>
+      products.some(({ product }) =>
+        product.specifications.surfaceFamilies.value?.includes(family),
       ),
-    [locale, validSurfaces],
-  );
+    )
+    .map(
+      (family) =>
+        [surfaceFilterId(family), surfaceFamilyLabel(family, locale)] as const,
+    );
+  const terrainOptions = terrainProfiles
+    .filter((terrain) =>
+      products.some(({ product }) =>
+        product.specifications.terrainProfiles.value?.includes(terrain),
+      ),
+    )
+    .map(
+      (terrain) =>
+        [
+          terrainFilterId(terrain),
+          terrainProfileLabel(terrain, locale),
+        ] as const,
+    );
+  const taxonomyOptions = [...surfaceOptions, ...terrainOptions];
   const selectedCategoryLabel =
     categoryId === 'all'
       ? copy.allCategories
       : (categoryOptions.find(([id]) => id === categoryId)?.[1] ??
+        taxonomyOptions.find(([id]) => id === categoryId)?.[1] ??
         copy.allCategories);
   const filtered = useMemo(
-    () =>
-      filterProducts(products, query, categoryId, locale, {
-        stability,
-        surface,
-      }),
-    [categoryId, locale, products, query, stability, surface],
+    () => filterProducts(products, query, categoryId, locale),
+    [categoryId, locale, products, query],
   );
   const pagination = paginateProducts(filtered, page);
   const suggestions = useMemo(
     () => buildSearchSuggestions(products, query, locale),
     [locale, products, query],
   );
-  const appliedAttributeFilterCount =
-    Number(Boolean(surface)) + Number(stability !== 'all');
   const detailsProduct = detailsId
     ? (productsById.get(detailsId) ?? null)
     : null;
@@ -370,10 +374,7 @@ export function ProductExplorer({
     setPageDirection(null);
     setSuggestionsOpen(nextQuery.trim().length >= 2);
     setActiveSuggestion(-1);
-    updateUrlState(
-      { categoryId, page: 1, query: nextQuery, stability, surface },
-      'replace',
-    );
+    updateUrlState({ categoryId, page: 1, query: nextQuery }, 'replace');
   }
 
   function updateCategory(nextCategory: string) {
@@ -387,36 +388,6 @@ export function ProductExplorer({
         categoryId: nextCategory,
         page: 1,
         query,
-        stability,
-        surface,
-      },
-      'push',
-    );
-  }
-
-  function updateSurface(nextSurface: string) {
-    setSurface(nextSurface);
-    pageRef.current = 1;
-    setPage(1);
-    setPageDirection(null);
-    updateUrlState(
-      { categoryId, page: 1, query, stability, surface: nextSurface },
-      'push',
-    );
-  }
-
-  function updateStability(nextStability: 'all' | 'neutral' | 'stability') {
-    setStability(nextStability);
-    pageRef.current = 1;
-    setPage(1);
-    setPageDirection(null);
-    updateUrlState(
-      {
-        categoryId,
-        page: 1,
-        query,
-        stability: nextStability,
-        surface,
       },
       'push',
     );
@@ -425,8 +396,6 @@ export function ProductExplorer({
   function clearFilters() {
     setQuery('');
     setCategoryId('all');
-    setSurface('');
-    setStability('all');
     pageRef.current = 1;
     setPage(1);
     setPageDirection(null);
@@ -437,8 +406,6 @@ export function ProductExplorer({
         categoryId: 'all',
         page: 1,
         query: '',
-        stability: 'all',
-        surface: '',
       },
       'push',
     );
@@ -451,10 +418,7 @@ export function ProductExplorer({
     setPageDirection(null);
     setSuggestionsOpen(false);
     setActiveSuggestion(-1);
-    updateUrlState(
-      { categoryId, page: 1, query: value, stability, surface },
-      'push',
-    );
+    updateUrlState({ categoryId, page: 1, query: value }, 'push');
     searchInputRef.current?.focus();
   }
 
@@ -500,10 +464,7 @@ export function ProductExplorer({
     setPageDirection(nextPage > pageRef.current ? 'forward' : 'backward');
     pageRef.current = nextPage;
     setPage(nextPage);
-    updateUrlState(
-      { categoryId, page: nextPage, query, stability, surface },
-      'push',
-    );
+    updateUrlState({ categoryId, page: nextPage, query }, 'push');
   }
 
   const comparisonRows =
@@ -568,7 +529,7 @@ export function ProductExplorer({
       </div>
 
       <div className="mt-5">
-        <div className="tablet:grid-cols-[minmax(16rem,1fr)_auto_auto] grid gap-2">
+        <div className="tablet:grid-cols-[minmax(16rem,1fr)_auto] grid gap-2">
           <div className="relative min-w-0">
             <label className="sr-only" htmlFor="catalogue-search">
               {copy.searchLabel}
@@ -678,7 +639,6 @@ export function ProductExplorer({
               align="end"
               className="max-h-80 overflow-y-auto"
             >
-              <DropdownMenuLabel>{copy.allCategories}</DropdownMenuLabel>
               <DropdownMenuRadioGroup
                 onValueChange={updateCategory}
                 value={categoryId}
@@ -686,81 +646,35 @@ export function ProductExplorer({
                 <DropdownMenuRadioItem value="all">
                   {copy.allCategories}
                 </DropdownMenuRadioItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>{copy.purposeCategories}</DropdownMenuLabel>
                 {categoryOptions.map(([id, label]) => (
                   <DropdownMenuRadioItem key={id} value={id}>
+                    {label}
+                  </DropdownMenuRadioItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>{copy.surfaceAndTerrain}</DropdownMenuLabel>
+                {surfaceOptions.map(([id, label]) => (
+                  <DropdownMenuRadioItem key={id} value={id}>
+                    {label}
+                  </DropdownMenuRadioItem>
+                ))}
+                {terrainOptions.map(([id, label]) => (
+                  <DropdownMenuRadioItem className="pl-10" key={id} value={id}>
                     {label}
                   </DropdownMenuRadioItem>
                 ))}
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <Button
-            aria-controls="catalogue-attribute-filters"
-            aria-expanded={filtersOpen}
-            className="tablet:w-auto h-11 w-full"
-            onClick={() => setFiltersOpen((current) => !current)}
-            variant="outline"
-          >
-            <SlidersHorizontal aria-hidden="true" className="size-4" />
-            {copy.filters}
-            {appliedAttributeFilterCount > 0 ? (
-              <span className="bg-primary text-primary-foreground inline-flex size-5 items-center justify-center rounded-full text-[0.68rem]">
-                {appliedAttributeFilterCount}
-              </span>
-            ) : null}
-          </Button>
         </div>
-
-        {filtersOpen ? (
-          <fieldset
-            className="border-border bg-surface tablet:grid-cols-2 mt-3 grid gap-4 rounded-[var(--radius-panel)] border p-4"
-            id="catalogue-attribute-filters"
-          >
-            <legend className="sr-only">{copy.filterPanel}</legend>
-            <label className="grid gap-2 text-sm font-semibold">
-              {copy.surfaceFilter}
-              <select
-                className="border-border bg-background h-11 rounded-[var(--radius-control)] border px-3 font-normal"
-                onChange={(event) => updateSurface(event.target.value)}
-                value={surface}
-              >
-                <option value="">{copy.anySurface}</option>
-                {surfaceOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {surfaceLabel(option, locale)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="grid gap-2 text-sm font-semibold">
-              {copy.stabilityFilter}
-              <select
-                className="border-border bg-background h-11 rounded-[var(--radius-control)] border px-3 font-normal"
-                onChange={(event) =>
-                  updateStability(
-                    event.target.value as 'all' | 'neutral' | 'stability',
-                  )
-                }
-                value={stability}
-              >
-                <option value="all">{copy.anyStability}</option>
-                <option value="neutral">
-                  {stabilityLabel('neutral', locale)}
-                </option>
-                <option value="stability">
-                  {stabilityLabel('stability', locale)}
-                </option>
-              </select>
-            </label>
-          </fieldset>
-        ) : null}
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
           <p aria-live="polite" className="text-muted-foreground m-0 text-sm">
             {copy.results(filtered.length, products.length)}
           </p>
-          {query || categoryId !== 'all' || surface || stability !== 'all' ? (
+          {query || categoryId !== 'all' ? (
             <Button onClick={clearFilters} size="sm" variant="ghost">
               {copy.clearFilters}
             </Button>
@@ -794,6 +708,10 @@ export function ProductExplorer({
                 product.specifications.stability.value ?? 'unknown',
                 locale,
               );
+              const terrain = product.specifications.terrainProfiles.value?.[0];
+              const secondaryBadge = terrain
+                ? terrainProfileLabel(terrain, locale)
+                : stability;
 
               return (
                 <Card
@@ -846,9 +764,9 @@ export function ProductExplorer({
                         ) : null}
                         <span
                           className="bg-surface-subtle text-muted-foreground rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
-                          data-card-badge="stability"
+                          data-card-badge={terrain ? 'terrain' : 'stability'}
                         >
-                          {stability}
+                          {secondaryBadge}
                         </span>
                       </div>
 
@@ -1071,9 +989,24 @@ export function ProductExplorer({
                       {copy.surface}
                     </dt>
                     <dd className="mt-1 font-semibold">
-                      {detailsProduct.product.specifications.surfaces.value?.join(
-                        ', ',
-                      ) ?? copy.pending}
+                      {detailsProduct.product.specifications.surfaceFamilies.value
+                        ?.map((family) => surfaceFamilyLabel(family, locale))
+                        .join(', ') ?? copy.pending}
+                    </dd>
+                  </div>
+                  <div className="border-border border-b pb-3">
+                    <dt className="text-muted-foreground text-xs font-bold uppercase">
+                      {copy.terrain}
+                    </dt>
+                    <dd className="mt-1 font-semibold">
+                      {detailsProduct.product.specifications.terrainProfiles
+                        .value === null
+                        ? copy.pending
+                        : detailsProduct.product.specifications.terrainProfiles.value
+                            .map((terrain) =>
+                              terrainProfileLabel(terrain, locale),
+                            )
+                            .join(', ') || copy.notApplicable}
                     </dd>
                   </div>
                   <div className="border-border border-b pb-3">

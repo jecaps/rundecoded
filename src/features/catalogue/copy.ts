@@ -15,12 +15,8 @@ export const catalogueCopy = {
     consultationAction: 'Start customer consultation',
     consultationPending: 'The customer questionnaire is the next step.',
     allCategories: 'All categories',
-    filters: 'Filters',
-    filterPanel: 'Additional catalogue filters',
-    surfaceFilter: 'Surface',
-    anySurface: 'Any surface',
-    stabilityFilter: 'Stability',
-    anyStability: 'Any stability',
+    purposeCategories: 'Purpose',
+    surfaceAndTerrain: 'Surface & terrain',
     results: (shown: number, total: number) => `${shown} of ${total} shoes`,
     noResults: 'No shoes match these filters.',
     clearFilters: 'Clear filters',
@@ -38,9 +34,11 @@ export const catalogueCopy = {
     distance: 'Distance',
     distanceUnavailable: 'Not published',
     surface: 'Surface',
+    terrain: 'Terrain',
     stability: 'Stability',
     drop: 'Drop',
     pending: 'Pending',
+    notApplicable: 'Not applicable',
     technologies: 'Construction & technologies',
     ride: 'Ride & intended use',
     sources: 'Sources',
@@ -100,12 +98,8 @@ export const catalogueCopy = {
     consultationAction: 'Kundenberatung starten',
     consultationPending: 'Der Kundenfragebogen folgt als nächster Schritt.',
     allCategories: 'Alle Kategorien',
-    filters: 'Filter',
-    filterPanel: 'Zusätzliche Katalogfilter',
-    surfaceFilter: 'Untergrund',
-    anySurface: 'Alle Untergründe',
-    stabilityFilter: 'Stabilität',
-    anyStability: 'Alle Stabilitätsarten',
+    purposeCategories: 'Einsatzzweck',
+    surfaceAndTerrain: 'Untergrund & Gelände',
     results: (shown: number, total: number) => `${shown} von ${total} Schuhen`,
     noResults: 'Keine Schuhe passen zu diesen Filtern.',
     clearFilters: 'Filter löschen',
@@ -123,9 +117,11 @@ export const catalogueCopy = {
     distance: 'Distanz',
     distanceUnavailable: 'Nicht veröffentlicht',
     surface: 'Untergrund',
+    terrain: 'Gelände',
     stability: 'Stabilität',
     drop: 'Sprengung',
     pending: 'Ausstehend',
+    notApplicable: 'Nicht zutreffend',
     technologies: 'Konstruktion & Technologien',
     ride: 'Laufgefühl & Einsatzzweck',
     sources: 'Quellen',
@@ -186,12 +182,8 @@ export const catalogueCopy = {
     consultationPending:
       'Le questionnaire client constitue la prochaine étape.',
     allCategories: 'Toutes les catégories',
-    filters: 'Filtres',
-    filterPanel: 'Filtres supplémentaires du catalogue',
-    surfaceFilter: 'Terrain',
-    anySurface: 'Tous les terrains',
-    stabilityFilter: 'Stabilité',
-    anyStability: 'Tous les types de stabilité',
+    purposeCategories: 'Usage',
+    surfaceAndTerrain: 'Surface et terrain',
     results: (shown: number, total: number) =>
       `${shown} chaussures sur ${total}`,
     noResults: 'Aucune chaussure ne correspond à ces filtres.',
@@ -210,9 +202,11 @@ export const catalogueCopy = {
     distance: 'Distance',
     distanceUnavailable: 'Non publiée',
     surface: 'Terrain',
+    terrain: 'Profil de terrain',
     stability: 'Stabilité',
     drop: 'Drop',
     pending: 'En attente',
+    notApplicable: 'Non applicable',
     technologies: 'Construction et technologies',
     ride: 'Sensations et usage',
     sources: 'Sources',
@@ -326,23 +320,59 @@ export function stabilityLabel(value: string, locale: SupportedLocale): string {
   return labels[value as keyof typeof labels]?.[locale] ?? value;
 }
 
-export function surfaceLabel(value: string, locale: SupportedLocale): string {
-  const labels = {
-    Road: { en: 'Road', de: 'Straße', fr: 'Route' },
-    Gravel: { en: 'Gravel', de: 'Schotter', fr: 'Gravier' },
-    'Firm Paths': { en: 'Firm paths', de: 'Feste Wege', fr: 'Chemins fermes' },
-    Trail: { en: 'Trail', de: 'Trail', fr: 'Trail' },
-    'Muddy trail': {
-      en: 'Muddy trail',
-      de: 'Schlammige Trails',
-      fr: 'Trail boueux',
-    },
-    Track: { en: 'Track', de: 'Bahn', fr: 'Piste' },
-    'Cross-country': {
-      en: 'Cross-country',
-      de: 'Crosslauf',
-      fr: 'Cross-country',
-    },
-  } as const;
-  return labels[value as keyof typeof labels]?.[locale] ?? value;
+const surfaceFamilyLabels = {
+  road: { en: 'Road', de: 'Straße', fr: 'Route' },
+  'off-road': {
+    en: 'Trail / off-road',
+    de: 'Trail / Gelände',
+    fr: 'Trail / hors route',
+  },
+  track: { en: 'Track / spikes', de: 'Bahn / Spikes', fr: 'Piste / pointes' },
+} as const;
+
+const terrainProfileLabels = {
+  gravel: {
+    en: 'Gravel & firm paths',
+    de: 'Gravel & feste Wege',
+    fr: 'Gravel et chemins fermes',
+  },
+  'road-to-trail': {
+    en: 'Road-to-trail',
+    de: 'Road-to-Trail',
+    fr: 'Route-trail',
+  },
+  'easy-terrain': {
+    en: 'Easy terrain',
+    de: 'Einfaches Gelände',
+    fr: 'Terrain facile',
+  },
+  'mixed-terrain': {
+    en: 'Mixed terrain',
+    de: 'Gemischtes Gelände',
+    fr: 'Terrain mixte',
+  },
+  'technical-terrain': {
+    en: 'Technical terrain',
+    de: 'Technisches Gelände',
+    fr: 'Terrain technique',
+  },
+  'muddy-terrain': {
+    en: 'Muddy terrain',
+    de: 'Schlammiges Gelände',
+    fr: 'Terrain boueux',
+  },
+} as const;
+
+export function surfaceFamilyLabel(
+  value: keyof typeof surfaceFamilyLabels,
+  locale: SupportedLocale,
+): string {
+  return surfaceFamilyLabels[value][locale];
+}
+
+export function terrainProfileLabel(
+  value: keyof typeof terrainProfileLabels,
+  locale: SupportedLocale,
+): string {
+  return terrainProfileLabels[value][locale];
 }

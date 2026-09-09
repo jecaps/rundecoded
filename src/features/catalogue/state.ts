@@ -1,4 +1,10 @@
-import type { SupportedLocale } from '@/domain/catalogue';
+import {
+  surfaceFamilies,
+  terrainProfiles,
+  type SupportedLocale,
+  type SurfaceFamily,
+  type TerrainProfile,
+} from '@/domain/catalogue';
 
 import { searchProducts } from './search';
 import type { ExplorerProduct } from './catalogue';
@@ -6,36 +12,44 @@ import type { ExplorerProduct } from './catalogue';
 export { normalizeSearch } from './search';
 
 export const PAGE_SIZE = 12;
+export const SURFACE_FILTER_PREFIX = 'surface:';
+export const TERRAIN_FILTER_PREFIX = 'terrain:';
 
-export interface CatalogueAttributeFilters {
-  stability?: 'all' | 'neutral' | 'stability';
-  surface?: string;
+export function surfaceFilterId(value: SurfaceFamily): string {
+  return `${SURFACE_FILTER_PREFIX}${value}`;
 }
+
+export function terrainFilterId(value: TerrainProfile): string {
+  return `${TERRAIN_FILTER_PREFIX}${value}`;
+}
+
+export const taxonomyFilterIds = [
+  ...surfaceFamilies.map(surfaceFilterId),
+  ...terrainProfiles.map(terrainFilterId),
+] as const;
 
 export function filterProducts(
   products: ExplorerProduct[],
   query: string,
   categoryId: string,
   locale: SupportedLocale,
-  attributeFilters: CatalogueAttributeFilters = {},
 ): ExplorerProduct[] {
   return searchProducts(products, query, locale).filter(({ product }) => {
+    if (categoryId.startsWith(SURFACE_FILTER_PREFIX)) {
+      const family = categoryId.slice(SURFACE_FILTER_PREFIX.length);
+      return product.specifications.surfaceFamilies.value?.includes(
+        family as SurfaceFamily,
+      );
+    }
+    if (categoryId.startsWith(TERRAIN_FILTER_PREFIX)) {
+      const terrain = categoryId.slice(TERRAIN_FILTER_PREFIX.length);
+      return product.specifications.terrainProfiles.value?.includes(
+        terrain as TerrainProfile,
+      );
+    }
     if (
       categoryId !== 'all' &&
       !product.categories.some(({ id }) => id === categoryId)
-    ) {
-      return false;
-    }
-    if (
-      attributeFilters.surface &&
-      !product.specifications.surfaces.value?.includes(attributeFilters.surface)
-    ) {
-      return false;
-    }
-    if (
-      attributeFilters.stability &&
-      attributeFilters.stability !== 'all' &&
-      product.specifications.stability.value !== attributeFilters.stability
     ) {
       return false;
     }

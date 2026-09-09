@@ -2,7 +2,12 @@ import Fuse from 'fuse.js';
 
 import { resolveLocalizedText, type SupportedLocale } from '@/domain/catalogue';
 
-import { categoryLabel, stabilityLabel } from './copy';
+import {
+  categoryLabel,
+  stabilityLabel,
+  surfaceFamilyLabel,
+  terrainProfileLabel,
+} from './copy';
 import type { ExplorerProduct } from './catalogue';
 
 interface ProductSearchDocument {
@@ -13,6 +18,7 @@ interface ProductSearchDocument {
   model: string;
   stability: string;
   surfaces: string[];
+  terrain: string[];
   technologies: string[];
 }
 
@@ -52,6 +58,14 @@ function productDocument(
       locale,
     ),
     surfaces: product.specifications.surfaces.value ?? [],
+    terrain: [
+      ...(product.specifications.surfaceFamilies.value ?? []).map((family) =>
+        surfaceFamilyLabel(family, locale),
+      ),
+      ...(product.specifications.terrainProfiles.value ?? []).map((terrain) =>
+        terrainProfileLabel(terrain, locale),
+      ),
+    ],
     technologies: product.technologies.value ?? [],
   };
 }
@@ -73,6 +87,7 @@ function productSearch(products: ExplorerProduct[], locale: SupportedLocale) {
         { name: 'technologies', weight: 0.06 },
         { name: 'stability', weight: 0.03 },
         { name: 'surfaces', weight: 0.02 },
+        { name: 'terrain', weight: 0.04 },
       ],
     },
   );
@@ -162,6 +177,12 @@ export function buildSearchSuggestions(
     }
     for (const surface of product.specifications.surfaces.value ?? []) {
       add('attribute', surface);
+    }
+    for (const family of product.specifications.surfaceFamilies.value ?? []) {
+      add('attribute', surfaceFamilyLabel(family, locale));
+    }
+    for (const terrain of product.specifications.terrainProfiles.value ?? []) {
+      add('attribute', terrainProfileLabel(terrain, locale));
     }
   }
 
