@@ -112,6 +112,10 @@ function evidenceFields(product: ShoeProduct) {
       evidence: product.specifications.terrainProfiles.evidence,
     },
     {
+      field: 'specifications.surfaceTags',
+      evidence: product.specifications.surfaceTags.evidence,
+    },
+    {
       field: 'specifications.stability',
       evidence: product.specifications.stability.evidence,
     },

@@ -66,10 +66,10 @@ The generated catalogue is structurally valid. Pending research is reported rath
 
 | Status   | Count |
 | -------- | ----: |
-| Verified |   226 |
-| Derived  |   207 |
-| Fallback |   558 |
-| Pending  |   388 |
+| Verified |   310 |
+| Derived  |   192 |
+| Fallback |   520 |
+| Pending  |   361 |
 
 ## Research issue types
 
@@ -77,24 +77,24 @@ The generated catalogue is structurally valid. Pending research is reported rath
 
 | Field           | Count |
 | --------------- | ----: |
-| construction    |    94 |
-| fit             |   106 |
+| construction    |    87 |
+| fit             |    98 |
 | heelToToeDrop   |     1 |
-| maximumDistance |    53 |
-| stackHeight     |    93 |
+| maximumDistance |    51 |
+| stackHeight     |    87 |
 | technologies    |     7 |
-| terrainProfiles |     5 |
-| weight          |    82 |
+| terrainProfiles |     4 |
+| weight          |    77 |
 
 ### Fallback verification
 
 | Field         | Count |
 | ------------- | ----: |
-| heelToToeDrop |    85 |
-| stability     |   106 |
-| surfaces      |    87 |
-| technologies  |    79 |
-| weight        |     4 |
+| heelToToeDrop |    78 |
+| stability     |    98 |
+| surfaces      |    79 |
+| technologies  |    72 |
+| weight        |     3 |
 
 ## Product research queue
 
@@ -102,14 +102,7 @@ These fields are intentionally pending and can be converted into focused future 
 
 | Product                           | Pending fields                                                                                                                                                     |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| adidas-adistar-5                  | specifications.construction, specifications.fit, specifications.stackHeight                                                                                        |
-| adidas-adizero-agravic-speed-2    | specifications.construction, specifications.fit, specifications.stackHeight, specifications.terrainProfiles, specifications.weight                                 |
-| adidas-adizero-boston-13          | specifications.construction, specifications.fit, specifications.stackHeight, specifications.weight                                                                 |
-| adidas-adizero-evo-sl             | specifications.construction, specifications.fit, specifications.stackHeight, specifications.weight                                                                 |
-| adidas-galaxy-7                   | specifications.construction, specifications.fit, specifications.maximumDistance, specifications.stackHeight, specifications.weight                                 |
-| adidas-runblaze                   | specifications.fit                                                                                                                                                 |
-| adidas-supernova-rise-3           | specifications.construction, specifications.fit, specifications.maximumDistance, specifications.stackHeight, specifications.weight                                 |
-| adidas-terrex-agravic-4           | specifications.construction, specifications.fit, specifications.stackHeight                                                                                        |
+| adidas-supernova-rise-3           | specifications.stackHeight                                                                                                                                         |
 | asics-dynablast-5                 | specifications.construction, specifications.fit, specifications.maximumDistance, specifications.stackHeight, specifications.weight                                 |
 | asics-gel-excite-11               | specifications.construction, specifications.fit, specifications.maximumDistance, specifications.stackHeight, specifications.weight                                 |
 | asics-gel-kanaku-6                | specifications.fit                                                                                                                                                 |

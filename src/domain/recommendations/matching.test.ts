@@ -4,6 +4,7 @@ import type {
   Evidence,
   ShoeProduct,
   SurfaceFamily,
+  SurfaceTag,
   TerrainProfile,
   VerificationStatus,
 } from '@/domain/catalogue';
@@ -38,6 +39,7 @@ function shoe(
     surfaceFamilies?: SurfaceFamily[];
     surfaces?: string[];
     surfaceStatus?: VerificationStatus;
+    surfaceTags?: SurfaceTag[];
     terrainProfiles?: TerrainProfile[] | null;
   } = {},
 ): ShoeProduct {
@@ -62,6 +64,15 @@ function shoe(
         ? (['gravel'] as TerrainProfile[])
         : []
       : overrides.terrainProfiles;
+  const surfaceTags =
+    overrides.surfaceTags ??
+    ([
+      ...(surfaces.includes('Road') ? ['road', 'asphalt'] : []),
+      ...(surfaces.includes('Gravel') ? ['gravel'] : []),
+      ...(surfaces.includes('Trail') ? ['mixed-terrain'] : []),
+      ...(surfaces.includes('Track') ? ['track'] : []),
+      ...(surfaces.includes('Cross-country') ? ['cross-country'] : []),
+    ] as SurfaceTag[]);
   return {
     schemaVersion: 1,
     id: overrides.id ?? 'example-daily-shoe',
@@ -108,6 +119,10 @@ function shoe(
             ? 'pending'
             : (overrides.surfaceStatus ?? 'verified'),
         ),
+      },
+      surfaceTags: {
+        value: surfaceTags,
+        evidence: evidence(overrides.surfaceStatus ?? 'verified'),
       },
       stability: {
         value: overrides.stability ?? 'neutral',
@@ -223,7 +238,7 @@ describe('transparent shoe recommendation rules', () => {
     );
   });
 
-  it('keeps missing or fallback essentials out of the strong-match tier', () => {
+  it('reports evidence confidence separately from suitability', () => {
     const fallback = evaluateShoeRecommendation(
       roadProfile,
       shoe({ distanceStatus: 'fallback' }),
@@ -235,7 +250,7 @@ describe('transparent shoe recommendation rules', () => {
 
     expect(fallback).toEqual(
       expect.objectContaining({
-        tier: 'good-alternative',
+        tier: 'strong-match',
         confidence: 'low',
       }),
     );
@@ -251,6 +266,71 @@ describe('transparent shoe recommendation rules', () => {
         outcome: 'unavailable',
       }),
     );
+  });
+
+  it('allows a complete derived-data match into the strong-match tier', () => {
+    const result = evaluateShoeRecommendation(
+      roadProfile,
+      shoe({ distanceStatus: 'derived', surfaceStatus: 'derived' }),
+    );
+
+    expect(result).toEqual(
+      expect.objectContaining({
+        tier: 'strong-match',
+        confidence: 'medium',
+      }),
+    );
+  });
+
+  it('keeps unanswered essential questions neutral instead of excluding shoes', () => {
+    const result = evaluateShoeRecommendation(
+      {
+        goal: 'daily-fitness',
+        stabilityPreference: 'no-preference',
+      },
+      shoe({ surfaces: ['Trail'], distance: 5 }),
+    );
+
+    expect(result.tier).toBe('good-alternative');
+    expect(result.confidence).toBe('unknown');
+    expect(result.evaluations).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          rule: 'primary-surface',
+          outcome: 'unavailable',
+        }),
+        expect.objectContaining({
+          rule: 'distance',
+          outcome: 'unavailable',
+        }),
+      ]),
+    );
+  });
+
+  it('uses the customer priority as a ranking bonus rather than an unsupported penalty', () => {
+    const comfort = evaluateShoeRecommendation(
+      { ...roadProfile, priority: 'comfort' },
+      shoe({ categories: ['max-cushion'] }),
+    );
+    const speed = evaluateShoeRecommendation(
+      { ...roadProfile, priority: 'speed' },
+      shoe({ categories: ['max-cushion'] }),
+    );
+
+    expect(comfort.evaluations).toContainEqual(
+      expect.objectContaining({
+        rule: 'priority',
+        outcome: 'preference-match',
+        points: 10,
+      }),
+    );
+    expect(speed.evaluations).toContainEqual(
+      expect.objectContaining({
+        rule: 'priority',
+        outcome: 'unavailable',
+      }),
+    );
+    expect(speed.tier).toBe(comfort.tier);
   });
 
   it('ranks matches deterministically and omits exclusions from recommendations', () => {
@@ -270,7 +350,7 @@ describe('transparent shoe recommendation rules', () => {
       ),
     ).toEqual([
       ['verified-road', 'strong-match'],
-      ['fallback-road', 'good-alternative'],
+      ['fallback-road', 'strong-match'],
       ['trail-only', 'not-a-match'],
     ]);
     expect(

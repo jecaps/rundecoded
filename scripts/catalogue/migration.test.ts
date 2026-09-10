@@ -140,7 +140,7 @@ describe('legacy catalogue migration', () => {
     );
   });
 
-  it('records the Book Monitor maximum distances for Adidas trail shoes', () => {
+  it('prefers the current product page over the Book Monitor distance', () => {
     const result = migrateRows(
       [
         {
@@ -165,7 +165,7 @@ describe('legacy catalogue migration', () => {
 
     expect(speed?.specifications.maximumDistance).toEqual(
       expect.objectContaining({
-        value: { amount: 100, unit: 'km' },
+        value: { amount: 40, unit: 'km' },
         evidence: expect.objectContaining({ status: 'verified' }),
       }),
     );

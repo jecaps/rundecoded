@@ -111,12 +111,9 @@ describe('ProductExplorer', () => {
         name: 'Help a customer choose the right shoe',
       }),
     ).toBeVisible();
-    fireEvent.click(
-      screen.getByRole('button', { name: 'Start customer consultation' }),
-    );
     expect(
-      await screen.findByText('The customer questionnaire is the next step.'),
-    ).toBeVisible();
+      screen.getByRole('link', { name: 'Start customer consultation' }),
+    ).toHaveAttribute('href', '/en/consultation/');
     expect(
       screen.getByRole('button', { name: /All categories/ }),
     ).toBeVisible();

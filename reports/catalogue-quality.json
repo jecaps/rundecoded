@@ -17,10 +17,10 @@
     "comparableLinks": 318
   },
   "evidence": {
-    "verified": 226,
-    "derived": 207,
-    "fallback": 558,
-    "pending": 388
+    "verified": 310,
+    "derived": 192,
+    "fallback": 520,
+    "pending": 361
   },
   "brands": {
     "Adidas": 8,
@@ -58,21 +58,21 @@
   },
   "issueTypes": {
     "pending": {
-      "construction": 94,
-      "fit": 106,
+      "construction": 87,
+      "fit": 98,
       "heelToToeDrop": 1,
-      "maximumDistance": 53,
-      "stackHeight": 93,
+      "maximumDistance": 51,
+      "stackHeight": 87,
       "technologies": 7,
-      "terrainProfiles": 5,
-      "weight": 82
+      "terrainProfiles": 4,
+      "weight": 77
     },
     "fallback": {
-      "heelToToeDrop": 85,
-      "stability": 106,
-      "surfaces": 87,
-      "technologies": 79,
-      "weight": 4
+      "heelToToeDrop": 78,
+      "stability": 98,
+      "surfaces": 79,
+      "technologies": 72,
+      "weight": 3
     }
   },
   "assets": [
@@ -715,375 +715,15 @@
   ],
   "research": [
     {
-      "productId": "adidas-adistar-5",
-      "field": "specifications.construction",
-      "issueType": "construction",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adistar-5",
-      "field": "specifications.fit",
-      "issueType": "fit",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adistar-5",
-      "field": "specifications.heelToToeDrop",
-      "issueType": "heelToToeDrop",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adistar-5",
-      "field": "specifications.stability",
-      "issueType": "stability",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adistar-5",
-      "field": "specifications.stackHeight",
-      "issueType": "stackHeight",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adistar-5",
-      "field": "specifications.surfaces",
-      "issueType": "surfaces",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adistar-5",
-      "field": "specifications.weight",
-      "issueType": "weight",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adistar-5",
-      "field": "technologies",
-      "issueType": "technologies",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adizero-agravic-speed-2",
-      "field": "specifications.construction",
-      "issueType": "construction",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-agravic-speed-2",
-      "field": "specifications.fit",
-      "issueType": "fit",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-agravic-speed-2",
-      "field": "specifications.heelToToeDrop",
-      "issueType": "heelToToeDrop",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adizero-agravic-speed-2",
-      "field": "specifications.stability",
-      "issueType": "stability",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adizero-agravic-speed-2",
-      "field": "specifications.stackHeight",
-      "issueType": "stackHeight",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-agravic-speed-2",
-      "field": "specifications.surfaces",
-      "issueType": "surfaces",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adizero-agravic-speed-2",
-      "field": "specifications.terrainProfiles",
-      "issueType": "terrainProfiles",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-agravic-speed-2",
-      "field": "specifications.weight",
-      "issueType": "weight",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-agravic-speed-2",
-      "field": "technologies",
-      "issueType": "technologies",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adizero-boston-13",
-      "field": "specifications.construction",
-      "issueType": "construction",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-boston-13",
-      "field": "specifications.fit",
-      "issueType": "fit",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-boston-13",
-      "field": "specifications.heelToToeDrop",
-      "issueType": "heelToToeDrop",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adizero-boston-13",
-      "field": "specifications.stability",
-      "issueType": "stability",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adizero-boston-13",
-      "field": "specifications.stackHeight",
-      "issueType": "stackHeight",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-boston-13",
-      "field": "specifications.surfaces",
-      "issueType": "surfaces",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adizero-boston-13",
-      "field": "specifications.weight",
-      "issueType": "weight",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-boston-13",
-      "field": "technologies",
-      "issueType": "technologies",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adizero-evo-sl",
-      "field": "specifications.construction",
-      "issueType": "construction",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-evo-sl",
-      "field": "specifications.fit",
-      "issueType": "fit",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-evo-sl",
-      "field": "specifications.heelToToeDrop",
-      "issueType": "heelToToeDrop",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adizero-evo-sl",
-      "field": "specifications.stability",
-      "issueType": "stability",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adizero-evo-sl",
-      "field": "specifications.stackHeight",
-      "issueType": "stackHeight",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-evo-sl",
-      "field": "specifications.surfaces",
-      "issueType": "surfaces",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-adizero-evo-sl",
-      "field": "specifications.weight",
-      "issueType": "weight",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-adizero-evo-sl",
-      "field": "technologies",
-      "issueType": "technologies",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-galaxy-7",
-      "field": "specifications.construction",
-      "issueType": "construction",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-galaxy-7",
-      "field": "specifications.fit",
-      "issueType": "fit",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-galaxy-7",
-      "field": "specifications.heelToToeDrop",
-      "issueType": "heelToToeDrop",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-galaxy-7",
-      "field": "specifications.maximumDistance",
-      "issueType": "maximumDistance",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-galaxy-7",
-      "field": "specifications.stability",
-      "issueType": "stability",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-galaxy-7",
-      "field": "specifications.stackHeight",
-      "issueType": "stackHeight",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-galaxy-7",
-      "field": "specifications.surfaces",
-      "issueType": "surfaces",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-galaxy-7",
-      "field": "specifications.weight",
-      "issueType": "weight",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-galaxy-7",
-      "field": "technologies",
-      "issueType": "technologies",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-runblaze",
-      "field": "specifications.fit",
-      "issueType": "fit",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-runblaze",
-      "field": "specifications.stability",
-      "issueType": "stability",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-runblaze",
-      "field": "specifications.surfaces",
-      "issueType": "surfaces",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-supernova-rise-3",
-      "field": "specifications.construction",
-      "issueType": "construction",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-supernova-rise-3",
-      "field": "specifications.fit",
-      "issueType": "fit",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-supernova-rise-3",
-      "field": "specifications.heelToToeDrop",
-      "issueType": "heelToToeDrop",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-supernova-rise-3",
-      "field": "specifications.maximumDistance",
-      "issueType": "maximumDistance",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-supernova-rise-3",
-      "field": "specifications.stability",
-      "issueType": "stability",
-      "status": "fallback"
-    },
-    {
       "productId": "adidas-supernova-rise-3",
       "field": "specifications.stackHeight",
       "issueType": "stackHeight",
       "status": "pending"
     },
     {
-      "productId": "adidas-supernova-rise-3",
-      "field": "specifications.surfaces",
-      "issueType": "surfaces",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-supernova-rise-3",
-      "field": "specifications.weight",
-      "issueType": "weight",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-supernova-rise-3",
-      "field": "technologies",
-      "issueType": "technologies",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-terrex-agravic-4",
-      "field": "specifications.construction",
-      "issueType": "construction",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-terrex-agravic-4",
-      "field": "specifications.fit",
-      "issueType": "fit",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-terrex-agravic-4",
-      "field": "specifications.heelToToeDrop",
-      "issueType": "heelToToeDrop",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-terrex-agravic-4",
-      "field": "specifications.stability",
-      "issueType": "stability",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-terrex-agravic-4",
-      "field": "specifications.stackHeight",
-      "issueType": "stackHeight",
-      "status": "pending"
-    },
-    {
-      "productId": "adidas-terrex-agravic-4",
-      "field": "specifications.surfaces",
-      "issueType": "surfaces",
-      "status": "fallback"
-    },
-    {
       "productId": "adidas-terrex-agravic-4",
       "field": "specifications.weight",
       "issueType": "weight",
-      "status": "fallback"
-    },
-    {
-      "productId": "adidas-terrex-agravic-4",
-      "field": "technologies",
-      "issueType": "technologies",
       "status": "fallback"
     },
     {

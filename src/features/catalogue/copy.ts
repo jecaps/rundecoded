@@ -13,7 +13,6 @@ export const catalogueCopy = {
     consultationDescription:
       'Answer a short questionnaire with the customer to find explainable matches.',
     consultationAction: 'Start customer consultation',
-    consultationPending: 'The customer questionnaire is the next step.',
     allCategories: 'All categories',
     purposeCategories: 'Purpose',
     surfaceAndTerrain: 'Surface & terrain',
@@ -96,7 +95,6 @@ export const catalogueCopy = {
     consultationDescription:
       'Beantworte gemeinsam mit dem Kunden einige Fragen und erhalte nachvollziehbare Empfehlungen.',
     consultationAction: 'Kundenberatung starten',
-    consultationPending: 'Der Kundenfragebogen folgt als nächster Schritt.',
     allCategories: 'Alle Kategorien',
     purposeCategories: 'Einsatzzweck',
     surfaceAndTerrain: 'Untergrund & Gelände',
@@ -179,8 +177,6 @@ export const catalogueCopy = {
     consultationDescription:
       'Répondez à quelques questions avec le client pour obtenir des recommandations explicables.',
     consultationAction: 'Démarrer le conseil client',
-    consultationPending:
-      'Le questionnaire client constitue la prochaine étape.',
     allCategories: 'Toutes les catégories',
     purposeCategories: 'Usage',
     surfaceAndTerrain: 'Surface et terrain',

@@ -181,6 +181,9 @@ export function buildSearchSuggestions(
     for (const family of product.specifications.surfaceFamilies.value ?? []) {
       add('attribute', surfaceFamilyLabel(family, locale));
     }
+    for (const surfaceTag of product.specifications.surfaceTags.value ?? []) {
+      add('attribute', surfaceTag.replaceAll('-', ' '));
+    }
     for (const terrain of product.specifications.terrainProfiles.value ?? []) {
       add('attribute', terrainProfileLabel(terrain, locale));
     }

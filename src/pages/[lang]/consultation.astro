@@ -1,0 +1,10 @@
+---
+import ConsultationPage from '@/components/pages/ConsultationPage.astro';
+import { getLocaleStaticPaths, type Locale } from '@/i18n/config';
+
+export const getStaticPaths = getLocaleStaticPaths;
+
+const locale = Astro.params.lang as Locale;
+---
+
+<ConsultationPage locale={locale} />

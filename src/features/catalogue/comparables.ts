@@ -15,22 +15,19 @@ export function rankComparableProducts(
 ): ExplorerProduct[] {
   const currentCategories = current.product.categories.map(({ id }) => id);
   const currentSurfaces =
-    current.product.specifications.surfaceFamilies.value ?? [];
-  const currentTerrain =
-    current.product.specifications.terrainProfiles.value ?? [];
+    current.product.specifications.surfaceTags.value ?? [];
   const currentDrop =
     current.product.specifications.heelToToeDrop.value?.amount ?? null;
 
-  return candidates
+  const primaryCategory = current.product.categories[0]?.id;
+  const rankedCandidates = candidates
     .filter(({ product }) => product.id !== current.product.id)
     .map((candidate) => {
       const candidateCategories = candidate.product.categories.map(
         ({ id }) => id,
       );
       const candidateSurfaces =
-        candidate.product.specifications.surfaceFamilies.value ?? [];
-      const candidateTerrain =
-        candidate.product.specifications.terrainProfiles.value ?? [];
+        candidate.product.specifications.surfaceTags.value ?? [];
       const candidateDrop =
         candidate.product.specifications.heelToToeDrop.value?.amount ?? null;
       const sharedCategories = sharedValues(
@@ -38,7 +35,6 @@ export function rankComparableProducts(
         candidateCategories,
       );
       const sharedSurfaces = sharedValues(currentSurfaces, candidateSurfaces);
-      const sharedTerrain = sharedValues(currentTerrain, candidateTerrain);
       const sameStability =
         current.product.specifications.stability.value ===
         candidate.product.specifications.stability.value;
@@ -54,8 +50,7 @@ export function rankComparableProducts(
         candidate,
         score:
           sharedCategories * 5 +
-          sharedSurfaces * 3 +
-          sharedTerrain * 5 +
+          sharedSurfaces * 5 +
           (sameStability ? 2 : 0) +
           (dropDistance === null ? 0 : Math.max(0, 2 - dropDistance / 2)) +
           (explicitComparable ? 12 : 0) +
@@ -71,7 +66,20 @@ export function rankComparableProducts(
           right.candidate.product.model,
           locale,
         ),
-    )
-    .slice(0, limit)
-    .map(({ candidate }) => candidate);
+    );
+  const samePrimaryCategory = rankedCandidates.filter(
+    ({ candidate }) => candidate.product.categories[0]?.id === primaryCategory,
+  );
+  const preferredCandidates =
+    samePrimaryCategory.length >= limit
+      ? samePrimaryCategory
+      : [
+          ...samePrimaryCategory,
+          ...rankedCandidates.filter(
+            ({ candidate }) =>
+              candidate.product.categories[0]?.id !== primaryCategory,
+          ),
+        ];
+
+  return preferredCandidates.slice(0, limit).map(({ candidate }) => candidate);
 }

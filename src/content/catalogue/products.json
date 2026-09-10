@@ -31,11 +31,11 @@
       }
     },
     "technologies": {
-      "value": ["Dreamstrike foam", "Distance Last", "Internal fit panel"],
+      "value": ["Dreamstrike foam", "Internal fit panel", "Adiwear outsole"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["adidas-adistar-5-product-page-1"],
+        "note": "The supplied Decathlon page identifies road and path use, neutral gait, regular width, marathon use, and the published construction details."
       }
     },
     "images": [
@@ -66,11 +66,11 @@
       {
         "id": "adidas-adistar-5-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Adistar 5 product page",
         "url": "https://www.decathlon.de/p/laufschuhe-strasse-herren-adidas-adistar-5-weiss-beige-orange/386393/c4c30c20m9026814",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-09",
+        "status": "verified",
+        "note": "The supplied Decathlon page identifies road and path use, neutral gait, regular width, marathon use, and the published construction details."
       },
       {
         "id": "adidas-adistar-5-image-2",
@@ -84,11 +84,11 @@
       {
         "id": "adidas-adistar-5-weight-source",
         "type": "manufacturer",
-        "label": "Phase 4 recorded weight source",
+        "label": "Adidas Adistar 5 product details",
         "url": "https://www.adidas.de/en/adistar-5-running-shoes/KI4355.html",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from the approved explorer slice; re-check date is pending."
+        "checkedAt": "2026-09-09",
+        "status": "verified",
+        "note": "Adidas publishes a 6 mm drop, 45/39 mm stack, and 264 g weight at EU 42⅔ for the Adistar 5. Decathlon currently lists a conflicting 10 mm drop."
       }
     ],
     "comparables": [
@@ -101,81 +101,94 @@
       "surfaces": {
         "value": ["Road"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-adistar-5-product-page-1"],
+          "note": "The supplied Decathlon page identifies road and path use, neutral gait, regular width, marathon use, and the published construction details."
         }
       },
       "surfaceFamilies": {
         "value": ["road"],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the recorded product surface terminology."
+          "status": "verified",
+          "sourceIds": ["adidas-adistar-5-product-page-1"],
+          "note": "The supplied Decathlon page identifies road and path use, neutral gait, regular width, marathon use, and the published construction details."
         }
       },
       "terrainProfiles": {
         "value": [],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+          "status": "verified",
+          "sourceIds": ["adidas-adistar-5-product-page-1"],
+          "note": "The supplied Decathlon page identifies road and path use, neutral gait, regular width, marathon use, and the published construction details."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road", "asphalt"],
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["adidas-adistar-5-product-page-1"],
+          "note": "The supplied Decathlon page identifies road and path use, neutral gait, regular width, marathon use, and the published construction details."
         }
       },
       "stability": {
         "value": "neutral",
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-adistar-5-product-page-1"],
+          "note": "The supplied Decathlon page identifies road and path use, neutral gait, regular width, marathon use, and the published construction details."
         }
       },
       "maximumDistance": {
         "value": { "amount": 42, "unit": "km" },
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the numerical distance in the audited best-for guidance."
+          "status": "verified",
+          "sourceIds": ["adidas-adistar-5-product-page-1"],
+          "note": "The supplied Decathlon page identifies road and path use, neutral gait, regular width, marathon use, and the published construction details."
         }
       },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-adistar-5-weight-source"],
+          "note": "Adidas publishes a 6 mm drop, 45/39 mm stack, and 264 g weight at EU 42⅔ for the Adistar 5. Decathlon currently lists a conflicting 10 mm drop."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 45, "forefoot": 39, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-adistar-5-weight-source"],
+          "note": "Adidas publishes a 6 mm drop, 45/39 mm stack, and 264 g weight at EU 42⅔ for the Adistar 5. Decathlon currently lists a conflicting 10 mm drop."
         }
       },
       "weight": {
         "value": { "amount": 264, "unit": "g", "referenceSize": "EU 42⅔" },
         "evidence": {
-          "status": "fallback",
+          "status": "verified",
           "sourceIds": ["adidas-adistar-5-weight-source"],
-          "note": "Preserved from the approved Phase 4 explorer slice."
+          "note": "Adidas publishes a 6 mm drop, 45/39 mm stack, and 264 g weight at EU 42⅔ for the Adistar 5. Decathlon currently lists a conflicting 10 mm drop."
         }
       },
       "fit": {
-        "value": null,
+        "value": ["Regular"],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No structured fit assessment exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-adistar-5-product-page-1"],
+          "note": "The supplied Decathlon page identifies road and path use, neutral gait, regular width, marathon use, and the published construction details."
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Dreamstrike foam midsole",
+          "Rockered midsole geometry",
+          "Technical mono-mesh upper with internal fit panel",
+          "Adiwear rubber outsole"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["adidas-adistar-5-product-page-1"],
+          "note": "The supplied Decathlon page identifies road and path use, neutral gait, regular width, marathon use, and the published construction details."
         }
       }
     }
@@ -204,11 +217,11 @@
       }
     },
     "technologies": {
-      "value": ["LIGHTSTRIKE PRO", "LIGHTSTRIKE rim", "Continental™ rubber"],
+      "value": ["Lightstrike Pro", "Lightstrike", "Continental rubber"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["adidas-adizero-agravic-speed-2-product-page-1"],
+        "note": "The supplied Decathlon page publishes trail racing use up to 40 km, neutral gait, regular fit, and easy, mixed, and technical terrain."
       }
     },
     "images": [
@@ -239,11 +252,11 @@
       {
         "id": "adidas-adizero-agravic-speed-2-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Agravic Speed 2 product page",
         "url": "https://www.decathlon.de/p/trailrunningschuhe-herren-adidas-terrex-agravic-speed-2-orange/382059/c20m9004460",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-09",
+        "status": "verified",
+        "note": "The supplied Decathlon page publishes trail racing use up to 40 km, neutral gait, regular fit, and easy, mixed, and technical terrain."
       },
       {
         "id": "adidas-adizero-agravic-speed-2-image-2",
@@ -255,100 +268,122 @@
         "note": "Preserved from the Phase 0 image provenance inventory."
       },
       {
-        "id": "adidas-adizero-agravic-speed-2-book-monitor-source",
-        "type": "legacy-workbook",
-        "label": "Decathlon Book Monitor Agravic Speed 2 product slide",
-        "url": null,
-        "checkedAt": "2026-09-07",
+        "id": "adidas-adizero-agravic-speed-2-manufacturer-measurements",
+        "type": "manufacturer",
+        "label": "Adidas Agravic Speed 2 product details",
+        "url": "https://www.adidas.de/terrex-agravic-speed-2-trailrunning-schuh/JR9102.html",
+        "checkedAt": "2026-09-09",
         "status": "verified",
-        "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit; the slide publishes a 0–100 km use range."
+        "note": "Adidas publishes an 8 mm drop, 35/27 mm stack, and 220.6 g weight."
       }
     ],
     "comparables": [
       "kiprun-kipsummit-race",
-      "salomon-speedcross-peak",
-      "salomon-speedcross-peak-gtx"
+      "kiprun-kipclimb-race",
+      "salomon-speedcross-peak"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-agravic-speed-2-product-page-1"],
+          "note": "The supplied Decathlon page publishes trail racing use up to 40 km, neutral gait, regular fit, and easy, mixed, and technical terrain."
         }
       },
       "surfaceFamilies": {
         "value": ["off-road"],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the recorded product surface terminology."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-agravic-speed-2-product-page-1"],
+          "note": "The supplied Decathlon page publishes trail racing use up to 40 km, neutral gait, regular fit, and easy, mixed, and technical terrain."
         }
       },
       "terrainProfiles": {
-        "value": null,
+        "value": ["easy-terrain", "mixed-terrain", "technical-terrain"],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "The available source does not describe terrain difficulty or transition use precisely enough."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-agravic-speed-2-product-page-1"],
+          "note": "The supplied Decathlon page publishes trail racing use up to 40 km, neutral gait, regular fit, and easy, mixed, and technical terrain."
+        }
+      },
+      "surfaceTags": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-agravic-speed-2-product-page-1"],
+          "note": "The supplied Decathlon page publishes trail racing use up to 40 km, neutral gait, regular fit, and easy, mixed, and technical terrain."
         }
       },
       "stability": {
         "value": "neutral",
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-agravic-speed-2-product-page-1"],
+          "note": "The supplied Decathlon page publishes trail racing use up to 40 km, neutral gait, regular fit, and easy, mixed, and technical terrain."
         }
       },
       "maximumDistance": {
-        "value": { "amount": 100, "unit": "km" },
+        "value": { "amount": 40, "unit": "km" },
         "evidence": {
           "status": "verified",
-          "sourceIds": ["adidas-adizero-agravic-speed-2-book-monitor-source"],
-          "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit; the slide publishes a 0–100 km use range."
+          "sourceIds": ["adidas-adizero-agravic-speed-2-product-page-1"],
+          "note": "The supplied Decathlon page publishes trail racing use up to 40 km, neutral gait, regular fit, and easy, mixed, and technical terrain."
         }
       },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": [
+            "adidas-adizero-agravic-speed-2-manufacturer-measurements"
+          ],
+          "note": "Adidas publishes an 8 mm drop, 35/27 mm stack, and 220.6 g weight."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 35, "forefoot": 27, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": [
+            "adidas-adizero-agravic-speed-2-manufacturer-measurements"
+          ],
+          "note": "Adidas publishes an 8 mm drop, 35/27 mm stack, and 220.6 g weight."
         }
       },
       "weight": {
-        "value": null,
+        "value": {
+          "amount": 220.6,
+          "unit": "g",
+          "referenceSize": "Size not stated"
+        },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": [
+            "adidas-adizero-agravic-speed-2-manufacturer-measurements"
+          ],
+          "note": "Adidas publishes an 8 mm drop, 35/27 mm stack, and 220.6 g weight."
         }
       },
       "fit": {
-        "value": null,
+        "value": ["Regular"],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No structured fit assessment exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-agravic-speed-2-product-page-1"],
+          "note": "The supplied Decathlon page publishes trail racing use up to 40 km, neutral gait, regular fit, and easy, mixed, and technical terrain."
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Lightstrike Pro and Lightstrike dual-density midsole",
+          "Technical mono-mesh upper",
+          "Continental rubber outsole"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-agravic-speed-2-product-page-1"],
+          "note": "The supplied Decathlon page publishes trail racing use up to 40 km, neutral gait, regular fit, and easy, mixed, and technical terrain."
         }
       }
     }
@@ -385,11 +420,17 @@
       }
     },
     "technologies": {
-      "value": ["LIGHTSTRIKE PRO", "LIGHTSTRIKE", "ENERGYRODS 2.0"],
+      "value": [
+        "Lightstrike 2.0",
+        "Lightstrike Pro",
+        "Energyrods 2.0",
+        "Lighttraxion outsole",
+        "Continental rubber"
+      ],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["adidas-adizero-boston-13-product-page-1"],
+        "note": "The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight."
       }
     },
     "images": [
@@ -420,11 +461,11 @@
       {
         "id": "adidas-adizero-boston-13-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Adizero Boston 13 product page",
         "url": "https://www.decathlon.de/p/laufschuhe-herren-leicht-dynamisch-adidas-adizero-boston-13-gelb/372901/c22m8999870",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-09",
+        "status": "verified",
+        "note": "The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight."
       },
       {
         "id": "adidas-adizero-boston-13-image-2",
@@ -434,93 +475,119 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "adidas-adizero-boston-13-manufacturer-stack-source",
+        "type": "manufacturer",
+        "label": "Adidas Adizero Boston 13 product details",
+        "url": "https://www.adidas.de/adizero-boston-13-schuh/JP9246.html",
+        "checkedAt": "2026-09-09",
+        "status": "verified",
+        "note": "This Adidas product variant matches the linked Decathlon page’s published 8 mm drop and specifies a 36/28 mm stack."
       }
     ],
     "comparables": [
       "puma-deviate-nitro-4",
-      "kiprun-kipride",
-      "kiprun-kipstorm-interval"
+      "adidas-adizero-evo-sl",
+      "adidas-adistar-5"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
         "value": ["Road"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-boston-13-product-page-1"],
+          "note": "The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight."
         }
       },
       "surfaceFamilies": {
         "value": ["road"],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the recorded product surface terminology."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-boston-13-product-page-1"],
+          "note": "The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight."
         }
       },
       "terrainProfiles": {
         "value": [],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-boston-13-product-page-1"],
+          "note": "The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road", "asphalt"],
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-boston-13-product-page-1"],
+          "note": "The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight."
         }
       },
       "stability": {
         "value": "neutral",
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-boston-13-product-page-1"],
+          "note": "The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight."
         }
       },
       "maximumDistance": {
         "value": { "amount": 42, "unit": "km" },
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the numerical distance in the audited best-for guidance."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-boston-13-product-page-1"],
+          "note": "The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight."
         }
       },
       "heelToToeDrop": {
-        "value": { "amount": 6, "unit": "mm" },
+        "value": { "amount": 8, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-boston-13-product-page-1"],
+          "note": "The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 36, "forefoot": 28, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-boston-13-manufacturer-stack-source"],
+          "note": "This Adidas product variant matches the linked Decathlon page’s published 8 mm drop and specifies a 36/28 mm stack."
         }
       },
       "weight": {
-        "value": null,
+        "value": {
+          "amount": 260,
+          "unit": "g",
+          "referenceSize": "Size not stated"
+        },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-boston-13-product-page-1"],
+          "note": "The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight."
         }
       },
       "fit": {
-        "value": null,
+        "value": ["Regular"],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No structured fit assessment exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-boston-13-product-page-1"],
+          "note": "The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight."
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Lightstrike 2.0 and Lightstrike Pro midsole",
+          "Glass-fibre Energyrods 2.0",
+          "Technical mesh upper",
+          "Lighttraxion outsole with Continental rubber toe-off"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-boston-13-product-page-1"],
+          "note": "The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight."
         }
       }
     }
@@ -549,11 +616,11 @@
       }
     },
     "technologies": {
-      "value": ["LIGHTSTRIKE PRO", "Lightweight mesh", "Continental™ forefoot"],
+      "value": ["Lightstrike Pro", "Continental rubber"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["adidas-adizero-evo-sl-product-page-1"],
+        "note": "The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42."
       }
     },
     "images": [
@@ -584,11 +651,11 @@
       {
         "id": "adidas-adizero-evo-sl-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Adizero Evo SL product page",
         "url": "https://www.decathlon.de/p/laufschuhe-herren-leicht-adidas-adizero-evo-sl-beige-schwarz/372979/c30c27m9026813",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-09",
+        "status": "verified",
+        "note": "The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42."
       },
       {
         "id": "adidas-adizero-evo-sl-image-2",
@@ -598,6 +665,15 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "adidas-adizero-evo-sl-manufacturer-stack-source",
+        "type": "manufacturer",
+        "label": "Adidas Adizero Evo SL product details",
+        "url": "https://www.adidas.de/en/adizero-evo-sl-shoes/JS4494.html",
+        "checkedAt": "2026-09-09",
+        "status": "verified",
+        "note": "This Adidas product variant matches the supplied Decathlon page’s 224 g weight and 6 mm drop and specifies a 38/32 mm stack."
       }
     ],
     "comparables": [
@@ -610,81 +686,93 @@
       "surfaces": {
         "value": ["Road"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-evo-sl-product-page-1"],
+          "note": "The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42."
         }
       },
       "surfaceFamilies": {
         "value": ["road"],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the recorded product surface terminology."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-evo-sl-product-page-1"],
+          "note": "The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42."
         }
       },
       "terrainProfiles": {
         "value": [],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-evo-sl-product-page-1"],
+          "note": "The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road", "asphalt"],
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-evo-sl-product-page-1"],
+          "note": "The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42."
         }
       },
       "stability": {
         "value": "neutral",
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-evo-sl-product-page-1"],
+          "note": "The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42."
         }
       },
       "maximumDistance": {
-        "value": { "amount": 42, "unit": "km" },
+        "value": { "amount": 21.1, "unit": "km" },
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the numerical distance in the audited best-for guidance."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-evo-sl-product-page-1"],
+          "note": "The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42."
         }
       },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-evo-sl-product-page-1"],
+          "note": "The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 38, "forefoot": 32, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-evo-sl-manufacturer-stack-source"],
+          "note": "This Adidas product variant matches the supplied Decathlon page’s 224 g weight and 6 mm drop and specifies a 38/32 mm stack."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 224, "unit": "g", "referenceSize": "EU 42" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-evo-sl-product-page-1"],
+          "note": "The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42."
         }
       },
       "fit": {
-        "value": null,
+        "value": ["Regular"],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No structured fit assessment exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-evo-sl-product-page-1"],
+          "note": "The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42."
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Lightstrike Pro midsole",
+          "Technical mesh upper",
+          "Continental rubber forefoot patch"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["adidas-adizero-evo-sl-product-page-1"],
+          "note": "The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42."
         }
       }
     }
@@ -717,11 +805,11 @@
       }
     },
     "technologies": {
-      "value": ["Cloudfoam", "Durable textile upper", "TPU outsole"],
+      "value": ["Cloudfoam", "TPU outsole"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["adidas-galaxy-7-manufacturer-product-source"],
+        "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
       }
     },
     "images": [
@@ -766,93 +854,114 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "adidas-galaxy-7-manufacturer-product-source",
+        "type": "manufacturer",
+        "label": "Adidas Galaxy 7 product details",
+        "url": "https://www.adidas.de/en/galaxy-7-running-shoes/ID8754.html",
+        "checkedAt": "2026-09-09",
+        "status": "verified",
+        "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
       }
     ],
     "comparables": [
+      "adidas-runblaze",
       "asics-gel-excite-11",
-      "asics-gel-windhawk-5",
-      "decathlon-jogflow-100-1"
+      "asics-gel-windhawk-5"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
         "value": ["Road"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-galaxy-7-manufacturer-product-source"],
+          "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
         }
       },
       "surfaceFamilies": {
         "value": ["road"],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the recorded product surface terminology."
+          "status": "verified",
+          "sourceIds": ["adidas-galaxy-7-manufacturer-product-source"],
+          "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
         }
       },
       "terrainProfiles": {
         "value": [],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+          "status": "verified",
+          "sourceIds": ["adidas-galaxy-7-manufacturer-product-source"],
+          "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road", "asphalt"],
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["adidas-galaxy-7-manufacturer-product-source"],
+          "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
         }
       },
       "stability": {
         "value": "neutral",
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-galaxy-7-manufacturer-product-source"],
+          "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
         }
       },
       "maximumDistance": {
-        "value": null,
+        "value": { "amount": 10, "unit": "km" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No numerical maximum distance is published."
+          "status": "verified",
+          "sourceIds": ["adidas-galaxy-7-manufacturer-product-source"],
+          "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
         }
       },
       "heelToToeDrop": {
         "value": { "amount": 6, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-galaxy-7-manufacturer-product-source"],
+          "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 35, "forefoot": 29, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-galaxy-7-manufacturer-product-source"],
+          "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 319, "unit": "g", "referenceSize": "UK 8.5" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-galaxy-7-manufacturer-product-source"],
+          "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
         }
       },
       "fit": {
-        "value": null,
+        "value": ["Regular"],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No structured fit assessment exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-galaxy-7-manufacturer-product-source"],
+          "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Cloudfoam midsole",
+          "Textile upper and lining",
+          "TPU outsole"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["adidas-galaxy-7-manufacturer-product-source"],
+          "note": "Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5."
         }
       }
     }
@@ -888,8 +997,8 @@
       "value": ["Cloudfoam", "Mesh upper", "Rubber outsole"],
       "evidence": {
         "status": "verified",
-        "sourceIds": ["adidas-runblaze-book-monitor-source"],
-        "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit."
+        "sourceIds": ["adidas-runblaze-verified-product-source"],
+        "note": "The Decathlon specifications publish beginner road and easy-ground training use, neutral gait, regular width, and a 1–10 km distance range."
       }
     },
     "images": [
@@ -936,6 +1045,15 @@
         "note": "Preserved from the Phase 0 image provenance inventory."
       },
       {
+        "id": "adidas-runblaze-verified-product-source",
+        "type": "retailer-product",
+        "label": "Decathlon Runblaze product page",
+        "url": "https://www.decathlon.it/p/scarpe-running-uomo-adidas-runblaze-nere/361354/c1m8929086",
+        "checkedAt": "2026-09-09",
+        "status": "verified",
+        "note": "The Decathlon specifications publish beginner road and easy-ground training use, neutral gait, regular width, and a 1–10 km distance range."
+      },
+      {
         "id": "adidas-runblaze-book-monitor-source",
         "type": "legacy-workbook",
         "label": "Decathlon Book Monitor Runblaze product slide",
@@ -946,50 +1064,58 @@
       }
     ],
     "comparables": [
+      "adidas-galaxy-7",
       "new-balance-520-v9",
-      "asics-gel-excite-11",
-      "asics-gel-windhawk-5"
+      "asics-gel-excite-11"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
         "value": ["Road"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-runblaze-verified-product-source"],
+          "note": "The Decathlon specifications publish beginner road and easy-ground training use, neutral gait, regular width, and a 1–10 km distance range."
         }
       },
       "surfaceFamilies": {
         "value": ["road"],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the recorded product surface terminology."
+          "status": "verified",
+          "sourceIds": ["adidas-runblaze-verified-product-source"],
+          "note": "The Decathlon specifications publish beginner road and easy-ground training use, neutral gait, regular width, and a 1–10 km distance range."
         }
       },
       "terrainProfiles": {
         "value": [],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+          "status": "verified",
+          "sourceIds": ["adidas-runblaze-verified-product-source"],
+          "note": "The Decathlon specifications publish beginner road and easy-ground training use, neutral gait, regular width, and a 1–10 km distance range."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road", "asphalt"],
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["adidas-runblaze-verified-product-source"],
+          "note": "The Decathlon specifications publish beginner road and easy-ground training use, neutral gait, regular width, and a 1–10 km distance range."
         }
       },
       "stability": {
         "value": "neutral",
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-runblaze-verified-product-source"],
+          "note": "The Decathlon specifications publish beginner road and easy-ground training use, neutral gait, regular width, and a 1–10 km distance range."
         }
       },
       "maximumDistance": {
         "value": { "amount": 10, "unit": "km" },
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the numerical distance in the audited best-for guidance."
+          "status": "verified",
+          "sourceIds": ["adidas-runblaze-verified-product-source"],
+          "note": "The Decathlon specifications publish beginner road and easy-ground training use, neutral gait, regular width, and a 1–10 km distance range."
         }
       },
       "heelToToeDrop": {
@@ -1021,19 +1147,19 @@
         }
       },
       "fit": {
-        "value": null,
+        "value": ["Regular"],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No structured fit assessment exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-runblaze-verified-product-source"],
+          "note": "The Decathlon specifications publish beginner road and easy-ground training use, neutral gait, regular width, and a 1–10 km distance range."
         }
       },
       "construction": {
         "value": ["Cloudfoam cushioning", "Mesh upper", "Rubber outsole"],
         "evidence": {
           "status": "verified",
-          "sourceIds": ["adidas-runblaze-book-monitor-source"],
-          "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit."
+          "sourceIds": ["adidas-runblaze-verified-product-source"],
+          "note": "The Decathlon specifications publish beginner road and easy-ground training use, neutral gait, regular width, and a 1–10 km distance range."
         }
       }
     }
@@ -1066,11 +1192,11 @@
       }
     },
     "technologies": {
-      "value": ["Dreamstrike+", "Primeweave upper", "Lighttraxion"],
+      "value": ["Dreamstrike+", "Primeweave", "Lighttraxion"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["adidas-supernova-rise-3-product-page-1"],
+        "note": "The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3."
       }
     },
     "images": [
@@ -1101,11 +1227,11 @@
       {
         "id": "adidas-supernova-rise-3-product-page-1",
         "type": "retailer-product",
-        "label": "Recorded Decathlon product page",
+        "label": "Decathlon Supernova Rise 3 product page",
         "url": "https://www.decathlon.de/p/laufschuhe-damen-adidas-supernova-rise-3-weiss-rosa/381630/c4c24m9002353",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from legacy provenance; re-check date is pending."
+        "checkedAt": "2026-09-09",
+        "status": "verified",
+        "note": "The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3."
       },
       {
         "id": "adidas-supernova-rise-3-image-2",
@@ -1118,58 +1244,66 @@
       }
     ],
     "comparables": [
+      "mizuno-wave-rider-29",
       "kiprun-kipcore-wr",
-      "mizuno-wave-impulse",
-      "mizuno-wave-rider-29"
+      "mizuno-wave-impulse"
     ],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
         "value": ["Road"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-supernova-rise-3-product-page-1"],
+          "note": "The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3."
         }
       },
       "surfaceFamilies": {
         "value": ["road"],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the recorded product surface terminology."
+          "status": "verified",
+          "sourceIds": ["adidas-supernova-rise-3-product-page-1"],
+          "note": "The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3."
         }
       },
       "terrainProfiles": {
         "value": [],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+          "status": "verified",
+          "sourceIds": ["adidas-supernova-rise-3-product-page-1"],
+          "note": "The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road", "asphalt"],
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["adidas-supernova-rise-3-product-page-1"],
+          "note": "The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3."
         }
       },
       "stability": {
         "value": "neutral",
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-supernova-rise-3-product-page-1"],
+          "note": "The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3."
         }
       },
       "maximumDistance": {
-        "value": null,
+        "value": { "amount": 42, "unit": "km" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No numerical maximum distance is published."
+          "status": "verified",
+          "sourceIds": ["adidas-supernova-rise-3-product-page-1"],
+          "note": "The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3."
         }
       },
       "heelToToeDrop": {
-        "value": { "amount": 7, "unit": "mm" },
+        "value": { "amount": 10, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-supernova-rise-3-product-page-1"],
+          "note": "The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3."
         }
       },
       "stackHeight": {
@@ -1181,27 +1315,31 @@
         }
       },
       "weight": {
-        "value": null,
+        "value": { "amount": 230, "unit": "g", "referenceSize": "EU 38 2/3" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No weight with a reliable reference size exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-supernova-rise-3-product-page-1"],
+          "note": "The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3."
         }
       },
       "fit": {
-        "value": null,
+        "value": ["Regular"],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No structured fit assessment exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-supernova-rise-3-product-page-1"],
+          "note": "The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3."
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Dreamstrike+ midsole",
+          "Primeweave technical upper",
+          "Lighttraxion road outsole"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["adidas-supernova-rise-3-product-page-1"],
+          "note": "The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3."
         }
       }
     }
@@ -1226,11 +1364,11 @@
       }
     },
     "technologies": {
-      "value": ["LIGHTSTRIKE", "Continental™ rubber", "TPU overlays"],
+      "value": ["Lightstrike", "Continental rubber", "TPU overlays"],
       "evidence": {
-        "status": "fallback",
-        "sourceIds": ["legacy-catalogue"],
-        "note": "Imported from the audited legacy catalogue; official verification is pending."
+        "status": "verified",
+        "sourceIds": ["adidas-terrex-agravic-4-weight-source"],
+        "note": "Adidas publishes multi-terrain trail use, regular fit, an 8 mm drop, 35/27 mm stack, 276.8 g weight, and the product construction."
       }
     },
     "images": [
@@ -1279,11 +1417,11 @@
       {
         "id": "adidas-terrex-agravic-4-weight-source",
         "type": "manufacturer",
-        "label": "Phase 4 recorded weight source",
+        "label": "Adidas Terrex Agravic 4 product details",
         "url": "https://www.adidas.de/en/terrex-agravic-4-trail-running-shoes/KJ1291.html",
-        "checkedAt": null,
-        "status": "fallback",
-        "note": "Preserved from the approved explorer slice; re-check date is pending."
+        "checkedAt": "2026-09-09",
+        "status": "verified",
+        "note": "Adidas publishes multi-terrain trail use, regular fit, an 8 mm drop, 35/27 mm stack, 276.8 g weight, and the product construction."
       },
       {
         "id": "adidas-terrex-agravic-4-book-monitor-source",
@@ -1292,7 +1430,7 @@
         "url": null,
         "checkedAt": "2026-09-07",
         "status": "verified",
-        "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit; the slide publishes a 0–80 km use range."
+        "note": "The supplied Decathlon Book Monitor slide publishes a 0–80 km use range."
       }
     ],
     "comparables": [
@@ -1305,33 +1443,41 @@
       "surfaces": {
         "value": ["Trail"],
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-terrex-agravic-4-weight-source"],
+          "note": "Adidas publishes multi-terrain trail use, regular fit, an 8 mm drop, 35/27 mm stack, 276.8 g weight, and the product construction."
         }
       },
       "surfaceFamilies": {
         "value": ["off-road"],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the recorded product surface terminology."
+          "status": "verified",
+          "sourceIds": ["adidas-terrex-agravic-4-weight-source"],
+          "note": "Adidas publishes multi-terrain trail use, regular fit, an 8 mm drop, 35/27 mm stack, 276.8 g weight, and the product construction."
         }
       },
       "terrainProfiles": {
+        "value": ["mixed-terrain", "technical-terrain", "muddy-terrain"],
+        "evidence": {
+          "status": "verified",
+          "sourceIds": ["adidas-terrex-agravic-4-weight-source"],
+          "note": "Adidas publishes multi-terrain trail use, regular fit, an 8 mm drop, 35/27 mm stack, 276.8 g weight, and the product construction."
+        }
+      },
+      "surfaceTags": {
         "value": ["mixed-terrain"],
         "evidence": {
-          "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+          "status": "verified",
+          "sourceIds": ["adidas-terrex-agravic-4-weight-source"],
+          "note": "Adidas publishes multi-terrain trail use, regular fit, an 8 mm drop, 35/27 mm stack, 276.8 g weight, and the product construction."
         }
       },
       "stability": {
         "value": "neutral",
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-terrex-agravic-4-weight-source"],
+          "note": "Adidas publishes multi-terrain trail use, regular fit, an 8 mm drop, 35/27 mm stack, 276.8 g weight, and the product construction."
         }
       },
       "maximumDistance": {
@@ -1339,23 +1485,23 @@
         "evidence": {
           "status": "verified",
           "sourceIds": ["adidas-terrex-agravic-4-book-monitor-source"],
-          "note": "Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit; the slide publishes a 0–80 km use range."
+          "note": "The supplied Decathlon Book Monitor slide publishes a 0–80 km use range."
         }
       },
       "heelToToeDrop": {
         "value": { "amount": 8, "unit": "mm" },
         "evidence": {
-          "status": "fallback",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Imported from the audited legacy catalogue; official verification is pending."
+          "status": "verified",
+          "sourceIds": ["adidas-terrex-agravic-4-weight-source"],
+          "note": "Adidas publishes multi-terrain trail use, regular fit, an 8 mm drop, 35/27 mm stack, 276.8 g weight, and the product construction."
         }
       },
       "stackHeight": {
-        "value": null,
+        "value": { "heel": 35, "forefoot": 27, "unit": "mm" },
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No reliable heel and forefoot stack measurements exist in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-terrex-agravic-4-weight-source"],
+          "note": "Adidas publishes multi-terrain trail use, regular fit, an 8 mm drop, 35/27 mm stack, 276.8 g weight, and the product construction."
         }
       },
       "weight": {
@@ -1367,19 +1513,23 @@
         }
       },
       "fit": {
-        "value": null,
+        "value": ["Regular"],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "No structured fit assessment exists in the audited source."
+          "status": "verified",
+          "sourceIds": ["adidas-terrex-agravic-4-weight-source"],
+          "note": "Adidas publishes multi-terrain trail use, regular fit, an 8 mm drop, 35/27 mm stack, 276.8 g weight, and the product construction."
         }
       },
       "construction": {
-        "value": null,
+        "value": [
+          "Lightstrike midsole",
+          "Mesh upper with TPU overlays",
+          "Continental rubber outsole"
+        ],
         "evidence": {
-          "status": "pending",
-          "sourceIds": [],
-          "note": "Construction details require official-source research."
+          "status": "verified",
+          "sourceIds": ["adidas-terrex-agravic-4-weight-source"],
+          "note": "Adidas publishes multi-terrain trail use, regular fit, an 8 mm drop, 35/27 mm stack, 276.8 g weight, and the product construction."
         }
       }
     }
@@ -1496,6 +1646,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -1666,6 +1824,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -1831,6 +1997,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["easy-terrain", "mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -1980,7 +2154,7 @@
     "comparables": [
       "asics-gel-kayano-33",
       "asics-gel-roadmiles-4",
-      "brooks-adrenaline-gts-25"
+      "asics-gt-2000-13"
     ],
     "kind": "shoe",
     "specifications": {
@@ -2006,6 +2180,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -2152,7 +2334,7 @@
     "comparables": [
       "asics-gel-kayano-32",
       "asics-gel-roadmiles-4",
-      "brooks-adrenaline-gts-25"
+      "asics-gt-2000-13"
     ],
     "kind": "shoe",
     "specifications": {
@@ -2178,6 +2360,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -2352,6 +2542,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -2516,6 +2714,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -2660,7 +2866,7 @@
     "comparables": [
       "asics-gel-kayano-32",
       "asics-gel-kayano-33",
-      "brooks-adrenaline-gts-25"
+      "asics-gt-2000-13"
     ],
     "kind": "shoe",
     "specifications": {
@@ -2686,6 +2892,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -2851,6 +3065,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["asics-gel-sonoma-8-gtx-product-page-1"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -3020,6 +3242,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -3194,6 +3424,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "stability",
         "evidence": {
@@ -3360,6 +3598,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -3534,6 +3780,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -3678,7 +3932,7 @@
     "comparables": [
       "asics-gel-kayano-32",
       "asics-gel-kayano-33",
-      "brooks-adrenaline-gts-25"
+      "asics-gel-roadmiles-4"
     ],
     "kind": "shoe",
     "specifications": {
@@ -3704,6 +3958,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -3878,6 +4140,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -4037,6 +4307,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["mixed-terrain", "technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["asics-trabuco-14-product-page-1"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -4211,6 +4489,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["asics-trabuco-terra-3-verified-product-source"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -4390,6 +4676,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "stability",
         "evidence": {
@@ -4544,6 +4838,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["mixed-terrain", "technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -4714,6 +5016,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -4880,6 +5190,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -5054,6 +5372,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -5226,6 +5552,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -5384,6 +5718,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["gravel", "easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -5558,6 +5900,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -5722,6 +6072,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -5876,6 +6234,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["mixed-terrain", "technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -6044,6 +6410,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -6218,6 +6592,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -6386,6 +6768,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -6550,6 +6940,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["firm-paths"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -6712,6 +7110,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["firm-paths", "easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -6890,6 +7296,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -7056,6 +7470,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -7230,6 +7652,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -7398,6 +7828,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -7562,6 +8000,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["hoka-speedgoat-7-product-page-1"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -7721,6 +8167,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["mixed-terrain", "technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["hoka-torrent-4-product-page-1"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -7888,6 +8342,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -8048,6 +8510,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -8194,6 +8664,14 @@
           "note": "The available source does not describe terrain difficulty or transition use precisely enough."
         }
       },
+      "surfaceTags": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -8308,7 +8786,7 @@
     "comparables": [
       "brooks-cascadia-19",
       "brooks-range",
-      "new-balance-rebel-trail"
+      "salomon-ultra-glide-4"
     ],
     "kind": "shoe",
     "specifications": {
@@ -8334,6 +8812,14 @@
           "status": "pending",
           "sourceIds": [],
           "note": "The available source does not describe terrain difficulty or transition use precisely enough."
+        }
+      },
+      "surfaceTags": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -8504,6 +8990,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -8670,6 +9164,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["gravel", "easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -8844,6 +9346,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -9010,6 +9520,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -9180,6 +9698,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -9348,6 +9874,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -9514,6 +10048,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["gravel", "easy-terrain", "mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -9688,6 +10230,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -9842,6 +10392,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -9992,6 +10550,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "stability",
         "evidence": {
@@ -10106,7 +10672,7 @@
     "comparables": [
       "brooks-cascadia-19",
       "brooks-range",
-      "new-balance-rebel-trail"
+      "salomon-ultra-glide-4"
     ],
     "kind": "shoe",
     "specifications": {
@@ -10132,6 +10698,14 @@
           "status": "pending",
           "sourceIds": [],
           "note": "The available source does not describe terrain difficulty or transition use precisely enough."
+        }
+      },
+      "surfaceTags": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -10288,7 +10862,7 @@
     "comparables": [
       "kiprun-kipsonic-mid",
       "kiprun-kipsonic-start",
-      "puma-deviate-nitro-4"
+      "kiprun-kipsonic-x-country"
     ],
     "kind": "shoe",
     "specifications": {
@@ -10314,6 +10888,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["track"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["kiprun-kipsonic-long-book-monitor-source"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -10485,6 +11067,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["track"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["kiprun-kipsonic-mid-book-monitor-source"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -10643,7 +11233,7 @@
     "comparables": [
       "kiprun-kipsonic-x-country",
       "kiprun-kipsonic-long",
-      "salomon-aero-blaze-3-grvl"
+      "kiprun-kipsonic-mid"
     ],
     "kind": "shoe",
     "specifications": {
@@ -10669,6 +11259,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["track", "cross-country"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["kiprun-kipsonic-start-book-monitor-source"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -10806,7 +11404,7 @@
     "comparables": [
       "kiprun-kipsonic-start",
       "kiprun-kipsonic-mid",
-      "hoka-speedgoat-7"
+      "kiprun-kipsonic-long"
     ],
     "kind": "shoe",
     "specifications": {
@@ -10832,6 +11430,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["track", "cross-country"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["kiprun-kipsonic-x-country-book-monitor-source"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -10974,7 +11580,7 @@
     "comparables": [
       "kiprun-kipstorm-elite",
       "kiprun-kipstorm-lab",
-      "puma-deviate-nitro-4"
+      "kiprun-kipstorm-pro"
     ],
     "kind": "shoe",
     "specifications": {
@@ -11000,6 +11606,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -11144,6 +11758,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["gravel"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -11280,7 +11902,7 @@
     "comparables": [
       "kiprun-kipstorm-lab",
       "kiprun-kipstorm-pro",
-      "puma-deviate-nitro-4"
+      "kiprun-kipstorm-challenger"
     ],
     "kind": "shoe",
     "specifications": {
@@ -11306,6 +11928,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -11472,6 +12102,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -11608,7 +12246,7 @@
     "comparables": [
       "kiprun-kipstorm-pro",
       "kiprun-kipstorm-elite",
-      "puma-deviate-nitro-4"
+      "kiprun-kipstorm-challenger"
     ],
     "kind": "shoe",
     "specifications": {
@@ -11634,6 +12272,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -11772,7 +12418,7 @@
     "comparables": [
       "kiprun-kipstorm-lab",
       "kiprun-kipstorm-elite",
-      "puma-deviate-nitro-4"
+      "kiprun-kipstorm-challenger"
     ],
     "kind": "shoe",
     "specifications": {
@@ -11798,6 +12444,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -11940,6 +12594,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["gravel"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -12106,6 +12768,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -12266,6 +12936,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -12424,6 +13102,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -12598,6 +13284,14 @@
           "note": "The available source does not describe terrain difficulty or transition use precisely enough."
         }
       },
+      "surfaceTags": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -12756,6 +13450,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -12930,6 +13632,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -13094,6 +13804,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -13233,8 +13951,8 @@
     ],
     "comparables": [
       "kiprun-kipcore-wr",
-      "salomon-aero-blaze-3-grvl",
-      "adidas-supernova-rise-3"
+      "adidas-supernova-rise-3",
+      "mizuno-wave-rider-29"
     ],
     "kind": "shoe",
     "specifications": {
@@ -13260,6 +13978,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road", "firm-paths", "gravel", "easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -13404,9 +14130,9 @@
       }
     ],
     "comparables": [
+      "adidas-supernova-rise-3",
       "kiprun-kipcore-wr",
-      "mizuno-wave-impulse",
-      "mizuno-wave-ultima-17"
+      "mizuno-wave-impulse"
     ],
     "kind": "shoe",
     "specifications": {
@@ -13432,6 +14158,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -13572,9 +14306,9 @@
       }
     ],
     "comparables": [
+      "adidas-supernova-rise-3",
       "mizuno-wave-rider-29",
-      "kiprun-kipcore-wr",
-      "mizuno-wave-impulse"
+      "kiprun-kipcore-wr"
     ],
     "kind": "shoe",
     "specifications": {
@@ -13600,6 +14334,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -13774,6 +14516,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -13940,6 +14690,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -14114,6 +14872,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -14280,6 +15046,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -14463,6 +15237,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -14635,6 +15417,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -14793,6 +15583,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -14959,6 +15757,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["new-balance-hierro-v9-product-page-1"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -15142,6 +15948,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -15314,6 +16128,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -15473,6 +16295,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["new-balance-rebel-trail-product-page-1"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -15652,6 +16482,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -15824,6 +16662,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -15994,6 +16840,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -16173,6 +17027,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road", "gravel", "firm-paths"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-aero-blaze-3-grvl-book-monitor-source"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -16345,6 +17207,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["mixed-terrain", "technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-genesis-book-monitor-source"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -16520,6 +17390,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["technical-terrain", "muddy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-speedcross-peak-book-monitor-source"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -16693,6 +17571,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-speedcross-peak-gtx-book-monitor-source"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -16860,6 +17746,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["easy-terrain", "mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-supraglide-book-monitor-source"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -17031,6 +17925,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["gravel", "easy-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-ultra-flow-2-book-monitor-source"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "neutral",
         "evidence": {
@@ -17169,7 +18071,7 @@
         "note": "Transcribed from the supplied Decathlon Book Monitor Salomon comparison chart, which publishes a 5–100 km use range."
       }
     ],
-    "comparables": ["brooks-cascadia-19", "brooks-range", "kiprun-kipsummit"],
+    "comparables": ["brooks-cascadia-19", "brooks-range", "kiprun-kipclimb-wp"],
     "kind": "shoe",
     "specifications": {
       "surfaces": {
@@ -17194,6 +18096,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["mixed-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["salomon-ultra-glide-4-book-monitor-source"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -17368,6 +18278,14 @@
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
         }
       },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
+        }
+      },
       "stability": {
         "value": "stability",
         "evidence": {
@@ -17526,6 +18444,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["technical-terrain"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["saucony-peregrine-16-product-page-1"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {
@@ -17698,6 +18624,14 @@
           "status": "derived",
           "sourceIds": ["legacy-catalogue"],
           "note": "Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance."
+        }
+      },
+      "surfaceTags": {
+        "value": ["road"],
+        "evidence": {
+          "status": "derived",
+          "sourceIds": ["legacy-catalogue"],
+          "note": "Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending."
         }
       },
       "stability": {

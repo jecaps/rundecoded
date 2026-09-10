@@ -52,50 +52,33 @@ describe('Phase 8 product catalogue', () => {
     ).toBe(true);
   });
 
-  it('uses stable unique IDs, distinct categories, and intended-use comparables', () => {
+  it('uses stable unique IDs, distinct categories, and category-first comparables', () => {
     expect(new Set(products.map(({ product }) => product.id)).size).toBe(106);
 
     for (const { product } of products) {
       expect(new Set(product.categories.map(({ id }) => id)).size).toBe(
         product.categories.length,
       );
-      const hasCompatibleCrossBrandProduct = products.some(
+      const primaryCategory = product.categories[0]?.id;
+      const samePrimaryCategoryCount = products.filter(
         ({ product: candidate }) =>
-          candidate.brand.name !== product.brand.name &&
-          (candidate.categories.some(({ id }) =>
-            product.categories.some((category) => category.id === id),
-          ) ||
-            (candidate.specifications.surfaceFamilies.value?.some((surface) =>
-              product.specifications.surfaceFamilies.value?.includes(surface),
-            ) ??
-              false) ||
-            (candidate.specifications.terrainProfiles.value?.some((terrain) =>
-              product.specifications.terrainProfiles.value?.includes(terrain),
-            ) ??
-              false)),
-      );
-      if (hasCompatibleCrossBrandProduct) {
-        expect(
-          product.comparables.some(
-            (id) => byId.get(id)?.product.brand.name !== product.brand.name,
-          ),
-        ).toBe(true);
-      }
+          candidate.id !== product.id &&
+          candidate.categories[0]?.id === primaryCategory,
+      ).length;
       for (const comparableId of product.comparables) {
         const comparable = byId.get(comparableId)?.product;
         expect(comparable).toBeDefined();
-        const sharesCategory = comparable!.categories.some(({ id }) =>
-          product.categories.some((category) => category.id === id),
-        );
+        const sharesPrimaryCategory =
+          comparable!.categories[0]?.id === primaryCategory;
         const sharesSurface =
-          comparable!.specifications.surfaceFamilies.value?.some((surface) =>
-            product.specifications.surfaceFamilies.value?.includes(surface),
+          comparable!.specifications.surfaceTags.value?.some((surface) =>
+            product.specifications.surfaceTags.value?.includes(surface),
           ) ?? false;
-        const sharesTerrain =
-          comparable!.specifications.terrainProfiles.value?.some((terrain) =>
-            product.specifications.terrainProfiles.value?.includes(terrain),
-          ) ?? false;
-        expect(sharesCategory || sharesSurface || sharesTerrain).toBe(true);
+        if (samePrimaryCategoryCount >= 3) {
+          expect(sharesPrimaryCategory).toBe(true);
+        } else {
+          expect(sharesPrimaryCategory || sharesSurface).toBe(true);
+        }
       }
     }
   });

@@ -4,6 +4,7 @@ import type {
   ProductSource,
   ShoeProduct,
   SurfaceFamily,
+  SurfaceTag,
   TerrainProfile,
 } from '../../src/domain/catalogue';
 import {
@@ -93,11 +94,18 @@ interface RecordedWeight {
 
 interface RecordedProductFacts {
   source: Omit<ProductSource, 'id'> & { idSuffix: string };
+  measurementSource?: Omit<ProductSource, 'id'> & { idSuffix: string };
+  stackHeightSource?: Omit<ProductSource, 'id'> & { idSuffix: string };
   maximumDistanceSource?: Omit<ProductSource, 'id'> & { idSuffix: string };
   heelToToeDrop?: number;
   stackHeight?: { heel: number; forefoot: number } | { maximum: number };
   weight?: { amount: number; referenceSize: string };
   surfaces?: string[];
+  surfaceFamilies?: SurfaceFamily[];
+  surfaceTags?: SurfaceTag[];
+  terrainProfiles?: TerrainProfile[];
+  stability?: 'neutral' | 'stability' | 'unknown';
+  fit?: string[];
   technologies?: string[];
   construction?: string[];
   maximumDistanceKm?: number;
@@ -105,6 +113,194 @@ interface RecordedProductFacts {
 }
 
 const recordedProductFacts = new Map<string, RecordedProductFacts>([
+  [
+    'adidas-adistar-5',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Adistar 5 product page',
+        url: 'https://www.decathlon.de/p/laufschuhe-strasse-herren-adidas-adistar-5-weiss-beige-orange/386393/c4c30c20m9026814',
+        checkedAt: '2026-09-09',
+        status: 'verified',
+        note: 'The supplied Decathlon page identifies road and path use, neutral gait, regular width, marathon use, and the published construction details.',
+      },
+      measurementSource: {
+        idSuffix: 'manufacturer-measurements',
+        type: 'manufacturer',
+        label: 'Adidas Adistar 5 product details',
+        url: 'https://www.adidas.de/en/adistar-5-running-shoes/KI4355.html',
+        checkedAt: '2026-09-09',
+        status: 'verified',
+        note: 'Adidas publishes a 6 mm drop, 45/39 mm stack, and 264 g weight at EU 42⅔ for the Adistar 5. Decathlon currently lists a conflicting 10 mm drop.',
+      },
+      heelToToeDrop: 6,
+      stackHeight: { heel: 45, forefoot: 39 },
+      weight: { amount: 264, referenceSize: 'EU 42⅔' },
+      surfaces: ['Road'],
+      surfaceFamilies: ['road'],
+      surfaceTags: ['road', 'asphalt'],
+      terrainProfiles: [],
+      stability: 'neutral',
+      fit: ['Regular'],
+      technologies: [
+        'Dreamstrike foam',
+        'Internal fit panel',
+        'Adiwear outsole',
+      ],
+      construction: [
+        'Dreamstrike foam midsole',
+        'Rockered midsole geometry',
+        'Technical mono-mesh upper with internal fit panel',
+        'Adiwear rubber outsole',
+      ],
+      maximumDistanceKm: 42,
+    },
+  ],
+  [
+    'adidas-adizero-boston-13',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Adizero Boston 13 product page',
+        url: 'https://www.decathlon.de/p/laufschuhe-herren-leicht-dynamisch-adidas-adizero-boston-13-gelb/372901/c22m8999870',
+        checkedAt: '2026-09-09',
+        status: 'verified',
+        note: 'The supplied Decathlon page describes road training through marathon racing and publishes neutral construction, regular width, an 8 mm drop, and 260 g weight.',
+      },
+      stackHeightSource: {
+        idSuffix: 'manufacturer-stack-source',
+        type: 'manufacturer',
+        label: 'Adidas Adizero Boston 13 product details',
+        url: 'https://www.adidas.de/adizero-boston-13-schuh/JP9246.html',
+        checkedAt: '2026-09-09',
+        status: 'verified',
+        note: 'This Adidas product variant matches the linked Decathlon page’s published 8 mm drop and specifies a 36/28 mm stack.',
+      },
+      heelToToeDrop: 8,
+      stackHeight: { heel: 36, forefoot: 28 },
+      weight: { amount: 260, referenceSize: 'Size not stated' },
+      surfaces: ['Road'],
+      surfaceFamilies: ['road'],
+      surfaceTags: ['road', 'asphalt'],
+      terrainProfiles: [],
+      stability: 'neutral',
+      fit: ['Regular'],
+      technologies: [
+        'Lightstrike 2.0',
+        'Lightstrike Pro',
+        'Energyrods 2.0',
+        'Lighttraxion outsole',
+        'Continental rubber',
+      ],
+      construction: [
+        'Lightstrike 2.0 and Lightstrike Pro midsole',
+        'Glass-fibre Energyrods 2.0',
+        'Technical mesh upper',
+        'Lighttraxion outsole with Continental rubber toe-off',
+      ],
+      maximumDistanceKm: 42,
+    },
+  ],
+  [
+    'adidas-adizero-evo-sl',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Adizero Evo SL product page',
+        url: 'https://www.decathlon.de/p/laufschuhe-herren-leicht-adidas-adizero-evo-sl-beige-schwarz/372979/c30c27m9026813',
+        checkedAt: '2026-09-09',
+        status: 'verified',
+        note: 'The supplied Decathlon specifications publish road use through half marathon, regular width, a 6 mm drop, and 224 g at EU 42.',
+      },
+      stackHeightSource: {
+        idSuffix: 'manufacturer-stack-source',
+        type: 'manufacturer',
+        label: 'Adidas Adizero Evo SL product details',
+        url: 'https://www.adidas.de/en/adizero-evo-sl-shoes/JS4494.html',
+        checkedAt: '2026-09-09',
+        status: 'verified',
+        note: 'This Adidas product variant matches the supplied Decathlon page’s 224 g weight and 6 mm drop and specifies a 38/32 mm stack.',
+      },
+      heelToToeDrop: 6,
+      stackHeight: { heel: 38, forefoot: 32 },
+      weight: { amount: 224, referenceSize: 'EU 42' },
+      surfaces: ['Road'],
+      surfaceFamilies: ['road'],
+      surfaceTags: ['road', 'asphalt'],
+      terrainProfiles: [],
+      stability: 'neutral',
+      fit: ['Regular'],
+      technologies: ['Lightstrike Pro', 'Continental rubber'],
+      construction: [
+        'Lightstrike Pro midsole',
+        'Technical mesh upper',
+        'Continental rubber forefoot patch',
+      ],
+      maximumDistanceKm: 21.1,
+    },
+  ],
+  [
+    'adidas-galaxy-7',
+    {
+      source: {
+        idSuffix: 'manufacturer-product-source',
+        type: 'manufacturer',
+        label: 'Adidas Galaxy 7 product details',
+        url: 'https://www.adidas.de/en/galaxy-7-running-shoes/ID8754.html',
+        checkedAt: '2026-09-09',
+        status: 'verified',
+        note: 'Adidas publishes road use, a 10 km maximum distance, neutral gait, regular fit, 6 mm drop, 35/29 mm stack, and 319 g at UK 8.5.',
+      },
+      heelToToeDrop: 6,
+      stackHeight: { heel: 35, forefoot: 29 },
+      weight: { amount: 319, referenceSize: 'UK 8.5' },
+      surfaces: ['Road'],
+      surfaceFamilies: ['road'],
+      surfaceTags: ['road', 'asphalt'],
+      terrainProfiles: [],
+      stability: 'neutral',
+      fit: ['Regular'],
+      technologies: ['Cloudfoam', 'TPU outsole'],
+      construction: [
+        'Cloudfoam midsole',
+        'Textile upper and lining',
+        'TPU outsole',
+      ],
+      maximumDistanceKm: 10,
+    },
+  ],
+  [
+    'adidas-supernova-rise-3',
+    {
+      source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Supernova Rise 3 product page',
+        url: 'https://www.decathlon.de/p/laufschuhe-damen-adidas-supernova-rise-3-weiss-rosa/381630/c4c24m9002353',
+        checkedAt: '2026-09-09',
+        status: 'verified',
+        note: 'The supplied Decathlon page publishes road and easy-ground use, neutral gait, marathon distance, regular width, a 10 mm drop, and 230 g at EU 38 2/3.',
+      },
+      heelToToeDrop: 10,
+      weight: { amount: 230, referenceSize: 'EU 38 2/3' },
+      surfaces: ['Road'],
+      surfaceFamilies: ['road'],
+      surfaceTags: ['road', 'asphalt'],
+      terrainProfiles: [],
+      stability: 'neutral',
+      fit: ['Regular'],
+      technologies: ['Dreamstrike+', 'Primeweave', 'Lighttraxion'],
+      construction: [
+        'Dreamstrike+ midsole',
+        'Primeweave technical upper',
+        'Lighttraxion road outsole',
+      ],
+      maximumDistanceKm: 42,
+    },
+  ],
   [
     'asics-gel-sonoma-8-gtx',
     {
@@ -519,6 +715,15 @@ const recordedProductFacts = new Map<string, RecordedProductFacts>([
     'adidas-runblaze',
     {
       source: {
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Runblaze product page',
+        url: 'https://www.decathlon.it/p/scarpe-running-uomo-adidas-runblaze-nere/361354/c1m8929086',
+        checkedAt: '2026-09-09',
+        status: 'verified',
+        note: 'The Decathlon specifications publish beginner road and easy-ground training use, neutral gait, regular width, and a 1–10 km distance range.',
+      },
+      measurementSource: {
         idSuffix: 'book-monitor-source',
         type: 'legacy-workbook',
         label: 'Decathlon Book Monitor Runblaze product slide',
@@ -530,37 +735,91 @@ const recordedProductFacts = new Map<string, RecordedProductFacts>([
       heelToToeDrop: 10,
       stackHeight: { heel: 33, forefoot: 23 },
       weight: { amount: 274, referenceSize: 'Men; size not stated' },
+      surfaces: ['Road'],
+      surfaceFamilies: ['road'],
+      surfaceTags: ['road', 'asphalt'],
+      terrainProfiles: [],
+      stability: 'neutral',
+      fit: ['Regular'],
       technologies: ['Cloudfoam', 'Mesh upper', 'Rubber outsole'],
       construction: ['Cloudfoam cushioning', 'Mesh upper', 'Rubber outsole'],
+      maximumDistanceKm: 10,
     },
   ],
   [
     'adidas-adizero-agravic-speed-2',
     {
       source: {
-        idSuffix: 'book-monitor-source',
-        type: 'legacy-workbook',
-        label: 'Decathlon Book Monitor Agravic Speed 2 product slide',
-        url: null,
-        checkedAt: '2026-09-07',
+        idSuffix: 'verified-product-source',
+        type: 'retailer-product',
+        label: 'Decathlon Agravic Speed 2 product page',
+        url: 'https://www.decathlon.de/p/trailrunningschuhe-herren-adidas-terrex-agravic-speed-2-orange/382059/c20m9004460',
+        checkedAt: '2026-09-09',
         status: 'verified',
-        note: 'Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit; the slide publishes a 0–100 km use range.',
+        note: 'The supplied Decathlon page publishes trail racing use up to 40 km, neutral gait, regular fit, and easy, mixed, and technical terrain.',
       },
-      maximumDistanceKm: 100,
+      measurementSource: {
+        idSuffix: 'manufacturer-measurements',
+        type: 'manufacturer',
+        label: 'Adidas Agravic Speed 2 product details',
+        url: 'https://www.adidas.de/terrex-agravic-speed-2-trailrunning-schuh/JR9102.html',
+        checkedAt: '2026-09-09',
+        status: 'verified',
+        note: 'Adidas publishes an 8 mm drop, 35/27 mm stack, and 220.6 g weight.',
+      },
+      heelToToeDrop: 8,
+      stackHeight: { heel: 35, forefoot: 27 },
+      weight: { amount: 220.6, referenceSize: 'Size not stated' },
+      surfaces: ['Trail'],
+      surfaceFamilies: ['off-road'],
+      surfaceTags: ['mixed-terrain'],
+      terrainProfiles: ['easy-terrain', 'mixed-terrain', 'technical-terrain'],
+      stability: 'neutral',
+      fit: ['Regular'],
+      technologies: ['Lightstrike Pro', 'Lightstrike', 'Continental rubber'],
+      construction: [
+        'Lightstrike Pro and Lightstrike dual-density midsole',
+        'Technical mono-mesh upper',
+        'Continental rubber outsole',
+      ],
+      maximumDistanceKm: 40,
     },
   ],
   [
     'adidas-terrex-agravic-4',
     {
       source: {
+        idSuffix: 'manufacturer-product-source',
+        type: 'manufacturer',
+        label: 'Adidas Terrex Agravic 4 product details',
+        url: 'https://www.adidas.de/en/terrex-agravic-4-trail-running-shoes/KJ1291.html',
+        checkedAt: '2026-09-09',
+        status: 'verified',
+        note: 'Adidas publishes multi-terrain trail use, regular fit, an 8 mm drop, 35/27 mm stack, 276.8 g weight, and the product construction.',
+      },
+      maximumDistanceSource: {
         idSuffix: 'book-monitor-source',
         type: 'legacy-workbook',
         label: 'Decathlon Book Monitor Agravic 4 product slide',
         url: null,
         checkedAt: '2026-09-07',
         status: 'verified',
-        note: 'Transcribed from the Decathlon Book Monitor slide supplied for this catalogue audit; the slide publishes a 0–80 km use range.',
+        note: 'The supplied Decathlon Book Monitor slide publishes a 0–80 km use range.',
       },
+      heelToToeDrop: 8,
+      stackHeight: { heel: 35, forefoot: 27 },
+      surfaces: ['Trail'],
+      surfaceFamilies: ['off-road'],
+      surfaceTags: ['mixed-terrain'],
+      terrainProfiles: ['mixed-terrain', 'technical-terrain', 'muddy-terrain'],
+      stability: 'neutral',
+      fit: ['Regular'],
+      technologies: ['Lightstrike', 'Continental rubber', 'TPU overlays'],
+      construction: [
+        'Lightstrike midsole',
+        'Mesh upper with TPU overlays',
+        'Continental rubber outsole',
+      ],
       maximumDistanceKm: 80,
     },
   ],
@@ -1013,25 +1272,57 @@ function deriveTerrainProfiles(
   return text.includes('cross-country') ? [] : null;
 }
 
+function deriveSurfaceTags(
+  surfaces: string[],
+  surfaceFamilies: SurfaceFamily[],
+  terrainProfiles: TerrainProfile[] | null,
+): SurfaceTag[] {
+  const tags = new Set<SurfaceTag>();
+  const normalizedSurfaces = surfaces.map((surface) =>
+    surface.toLocaleLowerCase('en'),
+  );
+
+  if (surfaceFamilies.includes('road')) tags.add('road');
+  if (surfaceFamilies.includes('track')) tags.add('track');
+  if (normalizedSurfaces.includes('cross-country')) tags.add('cross-country');
+  if (normalizedSurfaces.includes('gravel')) tags.add('gravel');
+  if (
+    normalizedSurfaces.some((surface) =>
+      ['firm paths', 'easy terrain'].includes(surface),
+    )
+  ) {
+    tags.add('firm-paths');
+  }
+
+  for (const profile of terrainProfiles ?? []) {
+    if (profile === 'gravel') tags.add('gravel');
+    if (profile === 'road-to-trail') {
+      tags.add('firm-paths');
+    }
+    if (profile === 'easy-terrain') tags.add('easy-terrain');
+    if (profile === 'mixed-terrain') tags.add('mixed-terrain');
+    if (profile === 'technical-terrain') tags.add('technical-terrain');
+    if (profile === 'muddy-terrain') tags.add('muddy-terrain');
+  }
+
+  if (tags.size === 0 && surfaceFamilies.includes('off-road')) {
+    tags.add('mixed-terrain');
+  }
+  return [...tags];
+}
+
 function comparableScore(current: ShoeProduct, candidate: ShoeProduct) {
   const currentCategories = current.categories.map(({ id }) => id);
   const candidateCategories = new Set(candidate.categories.map(({ id }) => id));
   const sharedCategories = currentCategories.filter((id) =>
     candidateCategories.has(id),
   ).length;
-  const currentSurfaces = current.specifications.surfaceFamilies.value ?? [];
+  const currentSurfaces = current.specifications.surfaceTags.value ?? [];
   const candidateSurfaces = new Set(
-    candidate.specifications.surfaceFamilies.value ?? [],
+    candidate.specifications.surfaceTags.value ?? [],
   );
   const sharedSurfaces = currentSurfaces.filter((surface) =>
     candidateSurfaces.has(surface),
-  ).length;
-  const currentTerrain = current.specifications.terrainProfiles.value ?? [];
-  const candidateTerrain = new Set(
-    candidate.specifications.terrainProfiles.value ?? [],
-  );
-  const sharedTerrain = currentTerrain.filter((terrain) =>
-    candidateTerrain.has(terrain),
   ).length;
   const currentDrop = current.specifications.heelToToeDrop.value?.amount;
   const candidateDrop = candidate.specifications.heelToToeDrop.value?.amount;
@@ -1043,36 +1334,13 @@ function comparableScore(current: ShoeProduct, candidate: ShoeProduct) {
   return (
     (currentCategories[0] === candidate.categories[0]?.id ? 16 : 0) +
     sharedCategories * 6 +
-    sharedSurfaces * 8 +
-    sharedTerrain * 10 +
+    sharedSurfaces * 10 +
     (current.specifications.stability.value ===
     candidate.specifications.stability.value
       ? 3
       : 0) +
     dropAffinity +
     (current.brand.id !== candidate.brand.id ? 0.25 : 0)
-  );
-}
-
-function sharesIntendedUse(
-  current: ShoeProduct,
-  candidate: ShoeProduct,
-): boolean {
-  const currentCategories = new Set(current.categories.map(({ id }) => id));
-  const currentSurfaces = new Set(
-    current.specifications.surfaceFamilies.value ?? [],
-  );
-  const currentTerrain = new Set(
-    current.specifications.terrainProfiles.value ?? [],
-  );
-  return (
-    candidate.categories.some(({ id }) => currentCategories.has(id)) ||
-    (candidate.specifications.surfaceFamilies.value ?? []).some((surface) =>
-      currentSurfaces.has(surface),
-    ) ||
-    (candidate.specifications.terrainProfiles.value ?? []).some((terrain) =>
-      currentTerrain.has(terrain),
-    )
   );
 }
 
@@ -1089,16 +1357,21 @@ function assignComparables(products: ShoeProduct[]) {
           right.score - left.score ||
           left.candidate.id.localeCompare(right.candidate.id, 'en'),
       );
-    const selected = ranked.slice(0, 3).map(({ candidate }) => candidate);
-    const crossBrand = ranked.find(
-      ({ candidate }) =>
-        candidate.brand.id !== product.brand.id &&
-        sharesIntendedUse(product, candidate),
-    )?.candidate;
-
-    if (crossBrand && !selected.some(({ id }) => id === crossBrand.id)) {
-      selected[selected.length - 1] = crossBrand;
-    }
+    const primaryCategory = product.categories[0]?.id;
+    const samePrimaryCategory = ranked.filter(
+      ({ candidate }) => candidate.categories[0]?.id === primaryCategory,
+    );
+    const preferred =
+      samePrimaryCategory.length >= 3
+        ? samePrimaryCategory
+        : [
+            ...samePrimaryCategory,
+            ...ranked.filter(
+              ({ candidate }) =>
+                candidate.categories[0]?.id !== primaryCategory,
+            ),
+          ];
+    const selected = preferred.slice(0, 3).map(({ candidate }) => candidate);
     product.comparables = selected.map(({ id }) => id);
   }
 }
@@ -1196,6 +1469,20 @@ export function migrateRows(
     const recordedFactsSourceId = recordedFacts
       ? ensureRecordedProductSource(productId, sources, recordedFacts)
       : null;
+    const measurementSourceId = recordedFacts?.measurementSource
+      ? ensureAdditionalRecordedSource(
+          productId,
+          sources,
+          recordedFacts.measurementSource,
+        )
+      : recordedFactsSourceId;
+    const stackHeightSourceId = recordedFacts?.stackHeightSource
+      ? ensureAdditionalRecordedSource(
+          productId,
+          sources,
+          recordedFacts.stackHeightSource,
+        )
+      : measurementSourceId;
     const maximumDistanceSourceId = recordedFacts?.maximumDistanceSource
       ? ensureAdditionalRecordedSource(
           productId,
@@ -1219,8 +1506,14 @@ export function migrateRows(
             note: recordedFacts.source.note,
           }
         : fallbackEvidence;
-    const surfaceFamilies = deriveSurfaceFamilies(surfaces);
-    const terrainProfiles = deriveTerrainProfiles(row, surfaceFamilies);
+    const surfaceFamilies =
+      recordedFacts?.surfaceFamilies ?? deriveSurfaceFamilies(surfaces);
+    const terrainProfiles =
+      recordedFacts?.terrainProfiles ??
+      deriveTerrainProfiles(row, surfaceFamilies);
+    const productSurfaceTags =
+      recordedFacts?.surfaceTags ??
+      deriveSurfaceTags(surfaces, surfaceFamilies, terrainProfiles);
 
     if (technologies.length === 0 && !recordedFacts?.technologies) {
       warnings.push({
@@ -1293,11 +1586,18 @@ export function migrateRows(
         },
         surfaceFamilies: {
           value: surfaceFamilies,
-          evidence: {
-            status: 'derived',
-            sourceIds: surfaceEvidence.sourceIds,
-            note: 'Normalized from the recorded product surface terminology.',
-          },
+          evidence:
+            recordedFacts?.surfaceFamilies && recordedFactsSourceId
+              ? {
+                  status: 'verified',
+                  sourceIds: [recordedFactsSourceId],
+                  note: recordedFacts.source.note,
+                }
+              : {
+                  status: 'derived',
+                  sourceIds: surfaceEvidence.sourceIds,
+                  note: 'Normalized from the recorded product surface terminology.',
+                },
         },
         terrainProfiles:
           terrainProfiles === null
@@ -1306,16 +1606,49 @@ export function migrateRows(
               )
             : {
                 value: terrainProfiles,
-                evidence: {
-                  status: 'derived',
-                  sourceIds: ['legacy-catalogue'],
-                  note: 'Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance.',
-                },
+                evidence:
+                  recordedFacts?.terrainProfiles !== undefined &&
+                  recordedFactsSourceId
+                    ? {
+                        status: 'verified',
+                        sourceIds: [recordedFactsSourceId],
+                        note: recordedFacts.source.note,
+                      }
+                    : {
+                        status: 'derived',
+                        sourceIds: ['legacy-catalogue'],
+                        note: 'Normalized from explicit terrain wording in the audited model name, surface, and intended-use guidance.',
+                      },
               },
-        stability: {
-          value: normalizeStability(row.stability),
-          evidence: fallbackEvidence,
+        surfaceTags: {
+          value: productSurfaceTags,
+          evidence:
+            recordedFacts?.surfaceTags && recordedFactsSourceId
+              ? {
+                  status: 'verified',
+                  sourceIds: [recordedFactsSourceId],
+                  note: recordedFacts.source.note,
+                }
+              : {
+                  status: 'derived',
+                  sourceIds: surfaceEvidence.sourceIds,
+                  note: 'Normalized into controlled surface tags from the recorded surface and terrain terminology; shoe-by-shoe verification is pending.',
+                },
         },
+        stability:
+          recordedFacts?.stability && recordedFactsSourceId
+            ? {
+                value: recordedFacts.stability,
+                evidence: {
+                  status: 'verified',
+                  sourceIds: [recordedFactsSourceId],
+                  note: recordedFacts.source.note,
+                },
+              }
+            : {
+                value: normalizeStability(row.stability),
+                evidence: fallbackEvidence,
+              },
         maximumDistance:
           recordedFacts?.maximumDistanceKm && maximumDistanceSourceId
             ? {
@@ -1337,7 +1670,7 @@ export function migrateRows(
               }
             : parseMaximumDistance(row.best_for_en),
         heelToToeDrop:
-          recordedFacts?.heelToToeDrop !== undefined && recordedFactsSourceId
+          recordedFacts?.heelToToeDrop !== undefined && measurementSourceId
             ? {
                 value: {
                   amount: recordedFacts.heelToToeDrop,
@@ -1345,13 +1678,15 @@ export function migrateRows(
                 },
                 evidence: {
                   status: 'verified' as const,
-                  sourceIds: [recordedFactsSourceId],
-                  note: recordedFacts.source.note,
+                  sourceIds: [measurementSourceId],
+                  note:
+                    recordedFacts.measurementSource?.note ??
+                    recordedFacts.source.note,
                 },
               }
             : parseDrop(row.drop, productId, warnings),
         stackHeight:
-          recordedFacts?.stackHeight && recordedFactsSourceId
+          recordedFacts?.stackHeight && stackHeightSourceId
             ? {
                 value: {
                   ...recordedFacts.stackHeight,
@@ -1359,15 +1694,18 @@ export function migrateRows(
                 },
                 evidence: {
                   status: 'verified' as const,
-                  sourceIds: [recordedFactsSourceId],
-                  note: recordedFacts.source.note,
+                  sourceIds: [stackHeightSourceId],
+                  note:
+                    recordedFacts.stackHeightSource?.note ??
+                    recordedFacts.measurementSource?.note ??
+                    recordedFacts.source.note,
                 },
               }
             : pendingFact(
                 'No reliable heel and forefoot stack measurements exist in the audited source.',
               ),
         weight:
-          recordedFacts?.weight && recordedFactsSourceId
+          recordedFacts?.weight && measurementSourceId
             ? {
                 value: {
                   ...recordedFacts.weight,
@@ -1375,8 +1713,10 @@ export function migrateRows(
                 },
                 evidence: {
                   status: 'verified' as const,
-                  sourceIds: [recordedFactsSourceId],
-                  note: recordedFacts.source.note,
+                  sourceIds: [measurementSourceId],
+                  note:
+                    recordedFacts.measurementSource?.note ??
+                    recordedFacts.source.note,
                 },
               }
             : weight
@@ -1395,9 +1735,19 @@ export function migrateRows(
               : pendingFact(
                   'No weight with a reliable reference size exists in the audited source.',
                 ),
-        fit: pendingFact(
-          'No structured fit assessment exists in the audited source.',
-        ),
+        fit:
+          recordedFacts?.fit && recordedFactsSourceId
+            ? {
+                value: recordedFacts.fit,
+                evidence: {
+                  status: 'verified',
+                  sourceIds: [recordedFactsSourceId],
+                  note: recordedFacts.source.note,
+                },
+              }
+            : pendingFact(
+                'No structured fit assessment exists in the audited source.',
+              ),
         construction:
           recordedFacts?.construction && recordedFactsSourceId
             ? {

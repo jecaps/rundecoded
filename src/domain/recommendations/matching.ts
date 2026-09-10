@@ -27,16 +27,19 @@ export const runningGoals = [
 
 export type RecommendationSurface = (typeof recommendationSurfaces)[number];
 export type RunningGoal = (typeof runningGoals)[number];
+export type RecommendationPriority =
+  'comfort' | 'versatility' | 'speed' | 'guidance';
 export type StabilityPreference = 'neutral' | 'stability' | 'no-preference';
 export type RecommendationTier =
   'strong-match' | 'good-alternative' | 'not-a-match';
 
 export interface RunnerProfile {
   goal?: RunningGoal;
-  primarySurface: RecommendationSurface;
+  primarySurface?: RecommendationSurface;
+  priority?: RecommendationPriority;
   secondarySurfaces?: RecommendationSurface[];
   stabilityPreference?: StabilityPreference;
-  typicalDistanceKm: number;
+  typicalDistanceKm?: number;
 }
 
 export type RecommendationRule =
@@ -45,6 +48,7 @@ export type RecommendationRule =
   | 'secondary-surface'
   | 'distance'
   | 'goal'
+  | 'priority'
   | 'stability';
 
 export interface RuleEvaluation {
@@ -75,6 +79,14 @@ const categoryIdsByGoal: Record<RunningGoal, readonly string[]> = {
   'track-or-cross-country': ['track-spikes', 'spikes'],
 };
 
+const categoryIdsByPriority: Record<RecommendationPriority, readonly string[]> =
+  {
+    comfort: ['max-cushion', 'daily-trainer'],
+    versatility: ['daily-trainer', 'entry-level'],
+    speed: ['fast-training', 'super-trainer', 'race', 'carbon'],
+    guidance: ['stability-and-guidance', 'support'],
+  };
+
 const confidenceRank: Record<ConfidenceLevel, number> = {
   unknown: 0,
   low: 1,
@@ -92,41 +104,33 @@ function supportsSurface(
   product: ShoeProduct,
   requested: RecommendationSurface,
 ): boolean {
-  const families = new Set(product.specifications.surfaceFamilies.value ?? []);
-  const terrain = new Set(product.specifications.terrainProfiles.value ?? []);
+  const tags = new Set(product.specifications.surfaceTags.value ?? []);
 
   switch (requested) {
     case 'road':
-      return families.has('road');
+      return tags.has('road') || tags.has('asphalt');
     case 'gravel':
-      return terrain.has('gravel') || terrain.has('road-to-trail');
+      return tags.has('gravel') || tags.has('firm-paths');
     case 'trail':
-      return families.has('off-road');
+      return (
+        tags.has('easy-terrain') ||
+        tags.has('mixed-terrain') ||
+        tags.has('technical-terrain') ||
+        tags.has('muddy-terrain')
+      );
     case 'technical-trail':
-      return terrain.has('technical-terrain');
+      return tags.has('mixed-terrain') || tags.has('technical-terrain');
     case 'muddy-trail':
-      return terrain.has('muddy-terrain');
+      return tags.has('muddy-terrain');
     case 'track':
-      return families.has('track');
+      return tags.has('track');
     case 'cross-country':
-      return families.has('track') && families.has('off-road');
+      return tags.has('cross-country');
   }
 }
 
-function surfaceEvidenceConfidence(
-  product: ShoeProduct,
-  requested: RecommendationSurface,
-): ConfidenceLevel {
-  if (
-    requested === 'gravel' ||
-    requested === 'technical-trail' ||
-    requested === 'muddy-trail'
-  ) {
-    return confidenceForEvidence(
-      product.specifications.terrainProfiles.evidence,
-    );
-  }
-  return confidenceForEvidence(product.specifications.surfaceFamilies.evidence);
+function surfaceEvidenceConfidence(product: ShoeProduct): ConfidenceLevel {
+  return confidenceForEvidence(product.specifications.surfaceTags.evidence);
 }
 
 function goalMatches(product: ShoeProduct, goal: RunningGoal): boolean {
@@ -152,20 +156,23 @@ export function evaluateShoeRecommendation(
   });
   excluded ||= !active;
 
-  const primarySurfaceMatch = supportsSurface(product, profile.primarySurface);
+  const primarySurfaceMatch = profile.primarySurface
+    ? supportsSurface(product, profile.primarySurface)
+    : null;
   evaluations.push({
     rule: 'primary-surface',
-    outcome: primarySurfaceMatch ? 'match' : 'exclude',
+    outcome:
+      primarySurfaceMatch === null
+        ? 'unavailable'
+        : primarySurfaceMatch
+          ? 'match'
+          : 'exclude',
     points: primarySurfaceMatch ? 40 : 0,
-    expected: profile.primarySurface,
-    actual:
-      [
-        ...(product.specifications.surfaceFamilies.value ?? []),
-        ...(product.specifications.terrainProfiles.value ?? []),
-      ].join(', ') || null,
+    expected: profile.primarySurface ?? null,
+    actual: (product.specifications.surfaceTags.value ?? []).join(', ') || null,
   });
   internalScore += primarySurfaceMatch ? 40 : 0;
-  excluded ||= !primarySurfaceMatch;
+  excluded ||= primarySurfaceMatch === false;
 
   const secondarySurfaces = [
     ...new Set(
@@ -194,21 +201,26 @@ export function evaluateShoeRecommendation(
 
   const maximumDistance = product.specifications.maximumDistance.value?.amount;
   const distanceKnown = maximumDistance !== undefined;
+  const requestedDistance = profile.typicalDistanceKm;
+  const distanceRequested = requestedDistance !== undefined;
   const distanceMatch =
-    distanceKnown && maximumDistance >= profile.typicalDistanceKm;
+    requestedDistance !== undefined &&
+    maximumDistance !== undefined &&
+    maximumDistance >= requestedDistance;
   evaluations.push({
     rule: 'distance',
-    outcome: !distanceKnown
-      ? 'unavailable'
-      : distanceMatch
-        ? 'match'
-        : 'exclude',
+    outcome:
+      !distanceRequested || !distanceKnown
+        ? 'unavailable'
+        : distanceMatch
+          ? 'match'
+          : 'exclude',
     points: distanceMatch ? 30 : 0,
-    expected: profile.typicalDistanceKm,
+    expected: profile.typicalDistanceKm ?? null,
     actual: maximumDistance ?? null,
   });
   internalScore += distanceMatch ? 30 : 0;
-  excluded ||= distanceKnown && !distanceMatch;
+  excluded ||= distanceRequested && distanceKnown && !distanceMatch;
 
   const matchedGoal = profile.goal ? goalMatches(product, profile.goal) : null;
   evaluations.push({
@@ -224,6 +236,26 @@ export function evaluateShoeRecommendation(
     actual: product.categories.map(({ id }) => id).join(', '),
   });
   internalScore += matchedGoal ? 15 : 0;
+
+  const acceptedPriorityCategories = profile.priority
+    ? new Set(categoryIdsByPriority[profile.priority])
+    : null;
+  const matchedPriority = acceptedPriorityCategories
+    ? product.categories.some(({ id }) => acceptedPriorityCategories.has(id))
+    : null;
+  evaluations.push({
+    rule: 'priority',
+    outcome:
+      matchedPriority === null
+        ? 'unavailable'
+        : matchedPriority
+          ? 'preference-match'
+          : 'unavailable',
+    points: matchedPriority ? 10 : 0,
+    expected: profile.priority ?? null,
+    actual: product.categories.map(({ id }) => id).join(', '),
+  });
+  internalScore += matchedPriority ? 10 : 0;
 
   const requestedStability = profile.stabilityPreference;
   const actualStability = product.specifications.stability.value;
@@ -246,12 +278,23 @@ export function evaluateShoeRecommendation(
   });
   internalScore += stabilityMatch ? 5 : 0;
 
-  const confidence = weakestConfidence([
-    surfaceEvidenceConfidence(product, profile.primarySurface),
-    confidenceForEvidence(product.specifications.maximumDistance.evidence),
-  ]);
+  const confidenceInputs = [
+    ...(profile.primarySurface ? [surfaceEvidenceConfidence(product)] : []),
+    ...(distanceRequested
+      ? [confidenceForEvidence(product.specifications.maximumDistance.evidence)]
+      : []),
+  ];
+  const confidence =
+    confidenceInputs.length > 0
+      ? weakestConfidence(confidenceInputs)
+      : 'unknown';
   const hasPreferenceTradeOff = evaluations.some(
     ({ outcome }) => outcome === 'trade-off',
+  );
+  const hasEssentialUncertainty = evaluations.some(
+    ({ outcome, rule }) =>
+      (rule === 'primary-surface' || rule === 'distance') &&
+      outcome === 'unavailable',
   );
 
   return {
@@ -261,7 +304,7 @@ export function evaluateShoeRecommendation(
     confidence,
     tier: excluded
       ? 'not-a-match'
-      : confidence === 'high' && !hasPreferenceTradeOff
+      : !hasPreferenceTradeOff && !hasEssentialUncertainty
         ? 'strong-match'
         : 'good-alternative',
   };
