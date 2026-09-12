@@ -35,6 +35,10 @@ export interface ConsultationCopy {
     title: string;
   }>;
   resultDisclaimer: string;
+  resultGroups: {
+    alternative: { empty: string; title: string };
+    strong: { empty: string; title: string };
+  };
   resultIntro: string;
   resultReasons: {
     distance: string;
@@ -269,6 +273,17 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     resultDisclaimer:
       'Recommendations describe product suitability from available product data. They do not diagnose injuries or replace professional medical advice.',
+    resultGroups: {
+      alternative: {
+        empty: 'No good alternatives are available for these answers.',
+        title: 'Good alternatives',
+      },
+      strong: {
+        empty:
+          'No shoe meets every essential criterion for a strong match yet.',
+        title: 'Strong matches',
+      },
+    },
     resultIntro:
       'The reasons are shown so the employee can explain each recommendation.',
     resultReasons: {
@@ -520,6 +535,17 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     resultDisclaimer:
       'Empfehlungen beschreiben die Produkteignung anhand verfügbarer Produktdaten. Sie stellen keine Diagnose dar und ersetzen keine medizinische Beratung.',
+    resultGroups: {
+      alternative: {
+        empty: 'Für diese Antworten sind keine guten Alternativen verfügbar.',
+        title: 'Gute Alternativen',
+      },
+      strong: {
+        empty:
+          'Noch kein Schuh erfüllt alle wesentlichen Kriterien für eine starke Übereinstimmung.',
+        title: 'Starke Übereinstimmungen',
+      },
+    },
     resultIntro:
       'Die Gründe werden angezeigt, damit Mitarbeitende jede Empfehlung erklären können.',
     resultReasons: {
@@ -766,6 +792,17 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     resultDisclaimer:
       'Les recommandations décrivent l’adéquation des produits à partir des données disponibles. Elles ne diagnostiquent pas les blessures et ne remplacent pas un avis médical.',
+    resultGroups: {
+      alternative: {
+        empty: 'Aucune bonne alternative n’est disponible pour ces réponses.',
+        title: 'Bonnes alternatives',
+      },
+      strong: {
+        empty:
+          'Aucune chaussure ne remplit encore tous les critères essentiels.',
+        title: 'Très bonnes correspondances',
+      },
+    },
     resultIntro:
       'Les raisons sont affichées afin que l’employé puisse expliquer chaque recommandation.',
     resultReasons: {

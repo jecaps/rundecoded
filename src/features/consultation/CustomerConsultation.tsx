@@ -229,9 +229,27 @@ export function CustomerConsultation({
   }, [distance, goal, priority, stability, surfaces]);
 
   const recommendations = useMemo(
-    () => recommendShoes(profile, products, 3),
+    () => recommendShoes(profile, products, products.length),
     [profile, products],
   );
+  const recommendationGroups = [
+    {
+      empty: copy.resultGroups.strong.empty,
+      id: 'strong-matches',
+      recommendations: recommendations
+        .filter(({ tier }) => tier === 'strong-match')
+        .slice(0, 3),
+      title: copy.resultGroups.strong.title,
+    },
+    {
+      empty: copy.resultGroups.alternative.empty,
+      id: 'good-alternatives',
+      recommendations: recommendations
+        .filter(({ tier }) => tier === 'good-alternative')
+        .slice(0, 3),
+      title: copy.resultGroups.alternative.title,
+    },
+  ];
 
   function toggleMultiple(
     value: string,
@@ -319,88 +337,112 @@ export function CustomerConsultation({
           </Button>
         </div>
 
-        <div className="mt-8 grid gap-4">
-          {recommendations.map((recommendation) => {
-            const product = recommendation.product;
-            const src = imagePath(product, assetBase);
-            const reasons = recommendation.evaluations
-              .filter(
-                ({ outcome }) =>
-                  outcome === 'match' || outcome === 'preference-match',
-              )
-              .map(({ rule }) => {
-                if (rule === 'primary-surface')
-                  return copy.resultReasons.surface;
-                if (rule === 'distance') return copy.resultReasons.distance;
-                if (rule === 'goal') return copy.resultReasons.goal;
-                if (rule === 'priority') return copy.resultReasons.priority;
-                if (rule === 'stability') return copy.resultReasons.stability;
-                return null;
-              })
-              .filter((reason): reason is string => Boolean(reason));
-            const href = `${catalogueUrl}?${new URLSearchParams({ q: product.model })}`;
+        <div className="mt-8 grid gap-10">
+          {recommendationGroups.map((group) => (
+            <section aria-labelledby={group.id} key={group.id}>
+              <h2 className="mb-0 text-2xl font-bold" id={group.id}>
+                {group.title}
+              </h2>
+              {group.recommendations.length > 0 ? (
+                <div className="mt-4 grid gap-4">
+                  {group.recommendations.map((recommendation) => {
+                    const product = recommendation.product;
+                    const src = imagePath(product, assetBase);
+                    const reasons = recommendation.evaluations
+                      .filter(
+                        ({ outcome }) =>
+                          outcome === 'match' || outcome === 'preference-match',
+                      )
+                      .map(({ rule }) => {
+                        if (rule === 'primary-surface')
+                          return copy.resultReasons.surface;
+                        if (rule === 'distance')
+                          return copy.resultReasons.distance;
+                        if (rule === 'goal') return copy.resultReasons.goal;
+                        if (rule === 'priority')
+                          return copy.resultReasons.priority;
+                        if (rule === 'stability')
+                          return copy.resultReasons.stability;
+                        return null;
+                      })
+                      .filter((reason): reason is string => Boolean(reason));
+                    const href = `${catalogueUrl}?${new URLSearchParams({ q: product.model })}`;
 
-            return (
-              <Card key={product.id}>
-                <CardContent className="tablet:grid-cols-[8rem_minmax(0,1fr)_auto] grid items-center gap-5 p-5">
-                  <div className="bg-surface-subtle flex min-h-28 items-center justify-center overflow-hidden rounded-[var(--radius-control)] p-2">
-                    {src ? (
-                      <img
-                        alt=""
-                        className="h-24 w-full object-contain"
-                        src={src}
-                      />
-                    ) : (
-                      <Sparkles
-                        aria-hidden="true"
-                        className="text-muted-foreground size-7"
-                      />
-                    )}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-primary m-0 text-xs font-bold uppercase">
-                      {recommendation.tier === 'strong-match'
-                        ? copy.tiers.strong
-                        : copy.tiers.alternative}
-                    </p>
-                    <h2 className="mt-1 mb-0 text-xl font-bold">
-                      {product.model}
-                    </h2>
-                    <p className="text-muted-foreground mt-1 mb-0 text-sm">
-                      {product.brand.name}
-                    </p>
-                    <p className="bg-surface-subtle text-muted-foreground mt-2 mb-0 inline-flex rounded-full px-2.5 py-1 text-xs">
-                      {copy.evidenceConfidence.label}:{' '}
-                      {copy.evidenceConfidence[recommendation.confidence]}
-                    </p>
-                    {reasons.length > 0 ? (
-                      <ul className="mt-3 mb-0 flex flex-wrap gap-x-5 gap-y-1 p-0 text-sm">
-                        {reasons.slice(0, 3).map((reason) => (
-                          <li
-                            className="flex items-center gap-1.5"
-                            key={reason}
+                    return (
+                      <Card key={product.id}>
+                        <CardContent className="tablet:grid-cols-[8rem_minmax(0,1fr)_auto] grid items-center gap-5 p-5">
+                          <div className="bg-surface-subtle flex min-h-28 items-center justify-center overflow-hidden rounded-[var(--radius-control)] p-2">
+                            {src ? (
+                              <img
+                                alt=""
+                                className="h-24 w-full object-contain"
+                                src={src}
+                              />
+                            ) : (
+                              <Sparkles
+                                aria-hidden="true"
+                                className="text-muted-foreground size-7"
+                              />
+                            )}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-primary m-0 text-xs font-bold uppercase">
+                              {recommendation.tier === 'strong-match'
+                                ? copy.tiers.strong
+                                : copy.tiers.alternative}
+                            </p>
+                            <h3 className="mt-1 mb-0 text-xl font-bold">
+                              {product.model}
+                            </h3>
+                            <p className="text-muted-foreground mt-1 mb-0 text-sm">
+                              {product.brand.name}
+                            </p>
+                            <p className="bg-surface-subtle text-muted-foreground mt-2 mb-0 inline-flex rounded-full px-2.5 py-1 text-xs">
+                              {copy.evidenceConfidence.label}:{' '}
+                              {
+                                copy.evidenceConfidence[
+                                  recommendation.confidence
+                                ]
+                              }
+                            </p>
+                            {reasons.length > 0 ? (
+                              <ul className="mt-3 mb-0 flex flex-wrap gap-x-5 gap-y-1 p-0 text-sm">
+                                {reasons.slice(0, 3).map((reason) => (
+                                  <li
+                                    className="flex items-center gap-1.5"
+                                    key={reason}
+                                  >
+                                    <Check
+                                      aria-hidden="true"
+                                      className="text-primary size-4"
+                                    />
+                                    {reason}
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : null}
+                          </div>
+                          <a
+                            className={buttonVariants({ variant: 'primary' })}
+                            href={href}
                           >
-                            <Check
-                              aria-hidden="true"
-                              className="text-primary size-4"
-                            />
-                            {reason}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
-                  </div>
-                  <a
-                    className={buttonVariants({ variant: 'primary' })}
-                    href={href}
-                  >
-                    {copy.actions.viewCatalogue}
-                    <ArrowRight aria-hidden="true" className="size-4" />
-                  </a>
-                </CardContent>
-              </Card>
-            );
-          })}
+                            {copy.actions.viewCatalogue}
+                            <ArrowRight aria-hidden="true" className="size-4" />
+                          </a>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              ) : (
+                <Card className="mt-4 border-dashed">
+                  <CardContent className="text-muted-foreground p-5 text-sm leading-6">
+                    {group.empty}
+                  </CardContent>
+                </Card>
+              )}
+            </section>
+          ))}
         </div>
 
         <p className="border-border text-muted-foreground mt-6 border-t pt-5 text-sm leading-6">
