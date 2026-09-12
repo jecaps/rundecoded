@@ -240,17 +240,25 @@ export function CustomerConsultation({
     {
       empty: copy.resultGroups.strong.empty,
       id: 'strong-matches',
-      recommendations: recommendations
-        .filter(({ tier }) => tier === 'strong-match')
-        .slice(0, 3),
+      recommendations: recommendations.filter(
+        ({ tier }) => tier === 'strong-match',
+      ),
       title: copy.resultGroups.strong.title,
+    },
+    {
+      empty: copy.resultGroups.great.empty,
+      id: 'great-matches',
+      recommendations: recommendations.filter(
+        ({ tier }) => tier === 'great-match',
+      ),
+      title: copy.resultGroups.great.title,
     },
     {
       empty: copy.resultGroups.alternative.empty,
       id: 'good-alternatives',
-      recommendations: recommendations
-        .filter(({ tier }) => tier === 'good-alternative')
-        .slice(0, 3),
+      recommendations: recommendations.filter(
+        ({ tier }) => tier === 'good-alternative',
+      ),
       title: copy.resultGroups.alternative.title,
     },
   ];
@@ -393,7 +401,9 @@ export function CustomerConsultation({
                             <p className="text-primary m-0 text-xs font-bold uppercase">
                               {recommendation.tier === 'strong-match'
                                 ? copy.tiers.strong
-                                : copy.tiers.alternative}
+                                : recommendation.tier === 'great-match'
+                                  ? copy.tiers.great
+                                  : copy.tiers.alternative}
                             </p>
                             <h3 className="mt-1 mb-0 text-xl font-bold">
                               {product.model}

@@ -53,6 +53,9 @@ describe('customer consultation', () => {
       screen.getByRole('heading', { name: 'Strong matches' }),
     ).toBeVisible();
     expect(
+      screen.getByRole('heading', { name: 'Great matches' }),
+    ).toBeVisible();
+    expect(
       screen.getByRole('heading', { name: 'Good alternatives' }),
     ).toBeVisible();
   });

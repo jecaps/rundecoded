@@ -31,7 +31,7 @@ export type RecommendationPriority =
   'comfort' | 'versatility' | 'speed' | 'guidance';
 export type StabilityPreference = 'neutral' | 'stability' | 'no-preference';
 export type RecommendationTier =
-  'strong-match' | 'good-alternative' | 'not-a-match';
+  'strong-match' | 'great-match' | 'good-alternative' | 'not-a-match';
 
 export interface RunnerProfile {
   goal?: RunningGoal;
@@ -304,9 +304,11 @@ export function evaluateShoeRecommendation(
     confidence,
     tier: excluded
       ? 'not-a-match'
-      : !hasPreferenceTradeOff && !hasEssentialUncertainty
-        ? 'strong-match'
-        : 'good-alternative',
+      : hasEssentialUncertainty
+        ? 'good-alternative'
+        : hasPreferenceTradeOff
+          ? 'great-match'
+          : 'strong-match',
   };
 }
 
@@ -315,7 +317,8 @@ export function rankShoeRecommendations(
   products: ShoeProduct[],
 ): ShoeRecommendation[] {
   const tierRank: Record<RecommendationTier, number> = {
-    'strong-match': 2,
+    'strong-match': 3,
+    'great-match': 2,
     'good-alternative': 1,
     'not-a-match': 0,
   };

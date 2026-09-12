@@ -282,6 +282,21 @@ describe('transparent shoe recommendation rules', () => {
     );
   });
 
+  it('uses the great-match tier when essentials match but a preference differs', () => {
+    const result = evaluateShoeRecommendation(
+      roadProfile,
+      shoe({ surfaces: ['Road'] }),
+    );
+
+    expect(result.tier).toBe('great-match');
+    expect(result.evaluations).toContainEqual(
+      expect.objectContaining({
+        rule: 'secondary-surface',
+        outcome: 'trade-off',
+      }),
+    );
+  });
+
   it('keeps unanswered essential questions neutral instead of excluding shoes', () => {
     const result = evaluateShoeRecommendation(
       {

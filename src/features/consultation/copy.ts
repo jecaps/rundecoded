@@ -37,6 +37,7 @@ export interface ConsultationCopy {
   resultDisclaimer: string;
   resultGroups: {
     alternative: { empty: string; title: string };
+    great: { empty: string; title: string };
     strong: { empty: string; title: string };
   };
   resultIntro: string;
@@ -51,7 +52,7 @@ export interface ConsultationCopy {
   reviewIntro: string;
   reviewMissing: string;
   steps: string[];
-  tiers: { alternative: string; strong: string };
+  tiers: { alternative: string; great: string; strong: string };
   title: string;
 }
 
@@ -286,6 +287,10 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         empty: 'No good alternatives are available for these answers.',
         title: 'Good alternatives',
       },
+      great: {
+        empty: 'No great matches are available for these answers.',
+        title: 'Great matches',
+      },
       strong: {
         empty:
           'No shoe meets every essential criterion for a strong match yet.',
@@ -314,7 +319,11 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       'Comfort history',
       'Review',
     ],
-    tiers: { alternative: 'Good alternative', strong: 'Strong match' },
+    tiers: {
+      alternative: 'Good alternative',
+      great: 'Great match',
+      strong: 'Strong match',
+    },
     title: 'Customer running needs',
   },
   de: {
@@ -556,6 +565,11 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         empty: 'Für diese Antworten sind keine guten Alternativen verfügbar.',
         title: 'Gute Alternativen',
       },
+      great: {
+        empty:
+          'Für diese Antworten sind keine sehr guten Übereinstimmungen verfügbar.',
+        title: 'Sehr gute Übereinstimmungen',
+      },
       strong: {
         empty:
           'Noch kein Schuh erfüllt alle wesentlichen Kriterien für eine starke Übereinstimmung.',
@@ -586,6 +600,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     tiers: {
       alternative: 'Gute Alternative',
+      great: 'Sehr gute Übereinstimmung',
       strong: 'Starke Übereinstimmung',
     },
     title: 'Laufbedürfnisse des Kunden',
@@ -821,6 +836,10 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         empty: 'Aucune bonne alternative n’est disponible pour ces réponses.',
         title: 'Bonnes alternatives',
       },
+      great: {
+        empty: 'Aucune excellente correspondance n’est disponible.',
+        title: 'Excellentes correspondances',
+      },
       strong: {
         empty:
           'Aucune chaussure ne remplit encore tous les critères essentiels.',
@@ -850,6 +869,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     tiers: {
       alternative: 'Bonne alternative',
+      great: 'Excellente correspondance',
       strong: 'Très bonne correspondance',
     },
     title: 'Besoins de course du client',
