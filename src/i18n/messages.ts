@@ -15,6 +15,7 @@ export interface SharedMessages {
   };
   pages: {
     catalogue: { description: string; title: string };
+    consultation: { description: string; title: string };
     designSystem: { description: string; title: string };
     runningBasics: { description: string; title: string };
   };
@@ -39,6 +40,11 @@ export const sharedMessages = {
         description:
           'Explore and compare running shoes by purpose, surface, guidance, and construction.',
         title: 'Running shoe catalogue',
+      },
+      consultation: {
+        description:
+          'Guide a customer through a short questionnaire and review explainable running shoe recommendations.',
+        title: 'Customer shoe consultation',
       },
       designSystem: {
         description:
@@ -71,6 +77,11 @@ export const sharedMessages = {
           'Entdecke und vergleiche Laufschuhe nach Einsatzzweck, Untergrund, Führung und Konstruktion.',
         title: 'Laufschuh-Katalog',
       },
+      consultation: {
+        description:
+          'Führe Kunden durch einen kurzen Fragebogen und prüfe nachvollziehbare Laufschuh-Empfehlungen.',
+        title: 'Laufschuh-Kundenberatung',
+      },
       designSystem: {
         description:
           'Vorschau der RunDecoded-Design-Tokens, Farbschemata und barrierearmen Komponenten.',
@@ -101,6 +112,11 @@ export const sharedMessages = {
         description:
           'Découvrez et comparez des chaussures de course selon l’usage, le terrain, le guidage et la construction.',
         title: 'Catalogue de chaussures de course',
+      },
+      consultation: {
+        description:
+          'Guidez un client dans un court questionnaire et examinez des recommandations de chaussures explicables.',
+        title: 'Conseil client chaussures',
       },
       designSystem: {
         description:

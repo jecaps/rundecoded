@@ -119,7 +119,7 @@ test('search and filters produce accurate counts and an honest empty state', asy
     .getByRole('menuitemradio', { name: 'Trail / off-road', exact: true })
     .click();
   await expect(page.getByTestId('product-card')).toHaveCount(12);
-  await expect(page.getByText('40 of 106 shoes')).toBeVisible();
+  await expect(page.getByText('43 of 106 shoes')).toBeVisible();
   await expect(page).toHaveURL(/category=surface%3Aoff-road/);
 });
 
@@ -138,7 +138,7 @@ test('keeps filter control and result row dimensions stable', async ({
   await page
     .getByRole('menuitemradio', { name: 'Trail / off-road', exact: true })
     .click();
-  await expect(page.getByText('40 of 106 shoes')).toBeVisible();
+  await expect(page.getByText('43 of 106 shoes')).toBeVisible();
 
   const filteredCategoryBox = await page
     .getByRole('button', { name: 'Trail / off-road', exact: true })

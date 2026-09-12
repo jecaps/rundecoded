@@ -9,13 +9,20 @@ import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
+  compactBanner?: boolean;
   description: string;
   locale: Locale;
   route: LocalizedRouteKey;
   title: string;
 }
 
-const { description, locale, route, title } = Astro.props;
+const {
+  compactBanner = false,
+  description,
+  locale,
+  route,
+  title,
+} = Astro.props;
 const messages = sharedMessages[locale];
 const siteOrigin = Astro.site ?? Astro.url.origin;
 const canonicalUrl = new URL(localizedRoute(locale, route), siteOrigin);
@@ -85,7 +92,11 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
   <body>
     <a class="skip-link" href="#main-content">{messages.skipLink}</a>
     <div class="app-frame">
-      <AppBanner currentPath={Astro.url.pathname} locale={locale} />
+      <AppBanner
+        compact={compactBanner}
+        currentPath={Astro.url.pathname}
+        locale={locale}
+      />
       <main id="main-content" class="page-container" tabindex="-1">
         <slot />
       </main>

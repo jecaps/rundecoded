@@ -5,7 +5,13 @@ import { site } from '../site.config.mjs';
 
 const base = `${site.base.replace(/\/+$/, '')}/`;
 const locales = ['en', 'de', 'fr'];
-const routeSegments = ['catalogue', 'design-system', 'running-basics'];
+const routeSegments = [
+  'catalogue',
+  'consultation',
+  'design-system',
+  'running-basics',
+];
+const linkedRouteSegments = ['catalogue', 'design-system', 'running-basics'];
 const localizedRoute = (locale, segment) => `${base}${locale}/${segment}/`;
 const routeFiles = locales.flatMap((locale) =>
   routeSegments.map((segment) => [
@@ -28,7 +34,12 @@ for (const [routeName, relativePath, locale, segment] of routeFiles) {
     }
   }
 
-  for (const expectedRoute of routeSegments.map((routeSegment) =>
+  const expectedLinkedRoutes =
+    segment === 'consultation'
+      ? ['catalogue', 'design-system']
+      : linkedRouteSegments;
+
+  for (const expectedRoute of expectedLinkedRoutes.map((routeSegment) =>
     localizedRoute(locale, routeSegment),
   )) {
     if (!html.includes(`href="${expectedRoute}`)) {

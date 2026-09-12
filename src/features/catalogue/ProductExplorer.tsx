@@ -42,6 +42,7 @@ import {
   type SupportedLocale,
 } from '@/domain/catalogue';
 import { cn } from '@/lib/utils';
+import { localizedRoute } from '@/lib/routes';
 import { toast } from 'sonner';
 
 import {
@@ -519,13 +520,13 @@ export function ProductExplorer({
             {copy.consultationDescription}
           </p>
         </div>
-        <Button
-          onClick={() => toast.info(copy.consultationPending)}
-          type="button"
+        <a
+          className={buttonVariants({ variant: 'primary' })}
+          href={localizedRoute(initialLocale, 'consultation')}
         >
           {copy.consultationAction}
           <ArrowRight aria-hidden="true" className="size-4" />
-        </Button>
+        </a>
       </div>
 
       <div className="mt-5">

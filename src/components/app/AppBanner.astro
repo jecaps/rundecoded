@@ -4,11 +4,12 @@ import { sharedMessages } from '@/i18n/messages';
 import { isCurrentRoute, localizedRoute } from '@/lib/routes';
 
 interface Props {
+  compact?: boolean;
   currentPath: string;
   locale: Locale;
 }
 
-const { currentPath, locale } = Astro.props;
+const { compact = false, currentPath, locale } = Astro.props;
 const messages = sharedMessages[locale];
 const navigation = [
   { key: 'catalogue', label: messages.navigation.catalogue },
@@ -20,7 +21,9 @@ const navigationLinks = navigation.map((item) => ({
 }));
 ---
 
-<header class="app-banner page-container">
+<header
+  class:list={['app-banner page-container', { 'app-banner--compact': compact }]}
+>
   <div class="app-banner__hero">
     <a
       class="app-banner__brand"
@@ -36,24 +39,26 @@ const navigationLinks = navigation.map((item) => ({
     <span class="app-banner__watermark" aria-hidden="true">RUN</span>
   </div>
 
-  <nav class="primary-tabs" aria-label="Primary navigation">
-    <ul>
-      {
-        navigationLinks.map((item) => (
-          <li>
-            <a
-              aria-current={
-                isCurrentRoute(currentPath, item.key) ? 'page' : undefined
-              }
-              href={item.href}
-            >
-              {item.label}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
+  {
+    !compact && (
+      <nav class="primary-tabs" aria-label="Primary navigation">
+        <ul>
+          {navigationLinks.map((item) => (
+            <li>
+              <a
+                aria-current={
+                  isCurrentRoute(currentPath, item.key) ? 'page' : undefined
+                }
+                href={item.href}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )
+  }
 </header>
 
 <style>
@@ -143,6 +148,32 @@ const navigationLinks = navigation.map((item) => ({
     user-select: none;
   }
 
+  .app-banner--compact .app-banner__hero {
+    display: grid;
+    grid-template-columns: minmax(12rem, auto) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    min-height: 0;
+    padding: 1.25rem clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .app-banner--compact .app-banner__title {
+    margin-top: 0.3rem;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    line-height: 0.95;
+  }
+
+  .app-banner--compact .app-banner__description {
+    max-width: 43rem;
+    margin: 0;
+    font-size: clamp(0.9rem, 1.7vw, 1.05rem);
+  }
+
+  .app-banner--compact .app-banner__watermark {
+    bottom: -0.5em;
+    font-size: clamp(6rem, 15vw, 10rem);
+  }
+
   .primary-tabs {
     min-height: 4.5rem;
     padding-inline: clamp(1rem, 3vw, 2.25rem);
@@ -209,6 +240,11 @@ const navigationLinks = navigation.map((item) => ({
     .primary-tabs,
     .primary-tabs ul {
       min-height: 4rem;
+    }
+
+    .app-banner--compact .app-banner__hero {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
     }
   }
 

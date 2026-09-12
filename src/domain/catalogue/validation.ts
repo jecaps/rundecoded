@@ -144,6 +144,10 @@ export function validateCatalogue(input: unknown): {
               ids: product.specifications.terrainProfiles.evidence.sourceIds,
             },
             {
+              field: 'specifications.surfaceTags.evidence.sourceIds',
+              ids: product.specifications.surfaceTags.evidence.sourceIds,
+            },
+            {
               field: 'specifications.stability.evidence.sourceIds',
               ids: product.specifications.stability.evidence.sourceIds,
             },

@@ -67,6 +67,10 @@ function shoe(overrides: Partial<ShoeProduct> = {}): ShoeProduct {
           note: 'Terrain profiles do not apply to this road shoe.',
         },
       },
+      surfaceTags: {
+        value: ['road', 'asphalt'],
+        evidence: { status: 'verified', sourceIds: ['official-source'] },
+      },
       stability: {
         value: 'neutral',
         evidence: { status: 'verified', sourceIds: ['official-source'] },
