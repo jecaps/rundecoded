@@ -240,25 +240,25 @@ export function CustomerConsultation({
     {
       empty: copy.resultGroups.strong.empty,
       id: 'strong-matches',
-      recommendations: recommendations.filter(
-        ({ tier }) => tier === 'strong-match',
-      ),
+      recommendations: recommendations
+        .filter(({ tier }) => tier === 'strong-match')
+        .slice(0, 5),
       title: copy.resultGroups.strong.title,
     },
     {
       empty: copy.resultGroups.great.empty,
       id: 'great-matches',
-      recommendations: recommendations.filter(
-        ({ tier }) => tier === 'great-match',
-      ),
+      recommendations: recommendations
+        .filter(({ tier }) => tier === 'great-match')
+        .slice(0, 5),
       title: copy.resultGroups.great.title,
     },
     {
       empty: copy.resultGroups.alternative.empty,
       id: 'good-alternatives',
-      recommendations: recommendations.filter(
-        ({ tier }) => tier === 'good-alternative',
-      ),
+      recommendations: recommendations
+        .filter(({ tier }) => tier === 'good-alternative')
+        .slice(0, 5),
       title: copy.resultGroups.alternative.title,
     },
   ];

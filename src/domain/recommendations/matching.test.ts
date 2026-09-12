@@ -174,7 +174,7 @@ describe('transparent shoe recommendation rules', () => {
         expect.objectContaining({
           rule: 'secondary-surface',
           outcome: 'preference-match',
-          points: 5,
+          points: 20,
         }),
         expect.objectContaining({
           rule: 'distance',
@@ -201,8 +201,45 @@ describe('transparent shoe recommendation rules', () => {
       expect.objectContaining({
         actual: 'gravel, trail',
         outcome: 'preference-match',
-        points: 10,
+        points: 40,
       }),
+    );
+  });
+
+  it('prioritizes true gravel shoes over road shoes that only tolerate firm paths', () => {
+    const exactGravel = evaluateShoeRecommendation(
+      roadProfile,
+      shoe({
+        categories: ['trail'],
+        surfaceTags: ['road', 'firm-paths'],
+      }),
+    );
+    const compatibleRoad = evaluateShoeRecommendation(
+      roadProfile,
+      shoe({
+        categories: ['daily-trainer'],
+        surfaceTags: ['road', 'firm-paths'],
+      }),
+    );
+
+    expect(exactGravel.tier).toBe('great-match');
+    expect(exactGravel.evaluations).toContainEqual(
+      expect.objectContaining({
+        rule: 'secondary-surface',
+        outcome: 'preference-match',
+        points: 20,
+      }),
+    );
+    expect(compatibleRoad.tier).toBe('great-match');
+    expect(compatibleRoad.evaluations).toContainEqual(
+      expect.objectContaining({
+        rule: 'secondary-surface',
+        outcome: 'trade-off',
+        points: 3,
+      }),
+    );
+    expect(exactGravel.internalScore).toBeGreaterThan(
+      compatibleRoad.internalScore,
     );
   });
 

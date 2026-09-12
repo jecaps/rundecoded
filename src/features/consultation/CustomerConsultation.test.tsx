@@ -58,5 +58,43 @@ describe('customer consultation', () => {
     expect(
       screen.getByRole('heading', { name: 'Good alternatives' }),
     ).toBeVisible();
+    expect(screen.getAllByText('Good alternative')).toHaveLength(5);
+  });
+
+  it('puts purpose-built gravel options ahead of ordinary road shoes', () => {
+    render(
+      <CustomerConsultation
+        assetBase="/rundecoded/"
+        locale="en"
+        products={getProductCatalogue().map(({ product }) => product)}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /^Under 5 km/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    fireEvent.click(screen.getByRole('button', { name: /^Road/ }));
+    fireEvent.click(screen.getByRole('button', { name: /^Parks & gravel/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    fireEvent.click(screen.getByRole('button', { name: /Not sure yet/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    fireEvent.click(screen.getByRole('button', { name: /^Start running/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    fireEvent.click(screen.getByRole('button', { name: /^No preference/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: /^No current concern/ }),
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Show recommendations' }),
+    );
+
+    expect(screen.getByText('Jogflow 190 Grip')).toBeVisible();
+    expect(screen.getByText('Jogflow 190 Grip WP')).toBeVisible();
+    expect(screen.getByText('Kipcore Gravel')).toBeVisible();
+    expect(screen.getByText('Kipride Gravel')).toBeVisible();
+    expect(screen.getByText('Aero Blaze 3 Grvl')).toBeVisible();
+    expect(screen.getAllByText('Strong match')).toHaveLength(3);
+    expect(screen.getAllByText('Great match')).toHaveLength(5);
   });
 });

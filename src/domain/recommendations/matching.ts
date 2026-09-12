@@ -100,32 +100,46 @@ function weakestConfidence(values: ConfidenceLevel[]): ConfidenceLevel {
   );
 }
 
-function supportsSurface(
+type SurfaceMatchQuality = 'exact' | 'compatible' | 'none';
+
+function surfaceMatchQuality(
   product: ShoeProduct,
   requested: RecommendationSurface,
-): boolean {
+): SurfaceMatchQuality {
   const tags = new Set(product.specifications.surfaceTags.value ?? []);
+  const categories = new Set(product.categories.map(({ id }) => id));
 
   switch (requested) {
     case 'road':
-      return tags.has('road') || tags.has('asphalt');
+      return tags.has('road') || tags.has('asphalt') ? 'exact' : 'none';
     case 'gravel':
-      return tags.has('gravel') || tags.has('firm-paths');
+      if (
+        tags.has('gravel') ||
+        (tags.has('firm-paths') &&
+          (categories.has('trail') || categories.has('trail-race')))
+      ) {
+        return 'exact';
+      }
+      return tags.has('firm-paths') ? 'compatible' : 'none';
     case 'trail':
-      return (
-        tags.has('easy-terrain') ||
+      return tags.has('easy-terrain') ||
         tags.has('mixed-terrain') ||
         tags.has('technical-terrain') ||
         tags.has('muddy-terrain')
-      );
+        ? 'exact'
+        : 'none';
     case 'technical-trail':
-      return tags.has('mixed-terrain') || tags.has('technical-terrain');
+      return tags.has('technical-terrain')
+        ? 'exact'
+        : tags.has('mixed-terrain')
+          ? 'compatible'
+          : 'none';
     case 'muddy-trail':
-      return tags.has('muddy-terrain');
+      return tags.has('muddy-terrain') ? 'exact' : 'none';
     case 'track':
-      return tags.has('track');
+      return tags.has('track') ? 'exact' : 'none';
     case 'cross-country':
-      return tags.has('cross-country');
+      return tags.has('cross-country') ? 'exact' : 'none';
   }
 }
 
@@ -156,23 +170,35 @@ export function evaluateShoeRecommendation(
   });
   excluded ||= !active;
 
-  const primarySurfaceMatch = profile.primarySurface
-    ? supportsSurface(product, profile.primarySurface)
+  const primarySurfaceQuality = profile.primarySurface
+    ? surfaceMatchQuality(product, profile.primarySurface)
     : null;
   evaluations.push({
     rule: 'primary-surface',
     outcome:
-      primarySurfaceMatch === null
+      primarySurfaceQuality === null
         ? 'unavailable'
-        : primarySurfaceMatch
+        : primarySurfaceQuality === 'exact'
           ? 'match'
-          : 'exclude',
-    points: primarySurfaceMatch ? 40 : 0,
+          : primarySurfaceQuality === 'compatible'
+            ? 'trade-off'
+            : 'exclude',
+    points:
+      primarySurfaceQuality === 'exact'
+        ? 40
+        : primarySurfaceQuality === 'compatible'
+          ? 30
+          : 0,
     expected: profile.primarySurface ?? null,
     actual: (product.specifications.surfaceTags.value ?? []).join(', ') || null,
   });
-  internalScore += primarySurfaceMatch ? 40 : 0;
-  excluded ||= primarySurfaceMatch === false;
+  internalScore +=
+    primarySurfaceQuality === 'exact'
+      ? 40
+      : primarySurfaceQuality === 'compatible'
+        ? 30
+        : 0;
+  excluded ||= primarySurfaceQuality === 'none';
 
   const secondarySurfaces = [
     ...new Set(
@@ -181,21 +207,37 @@ export function evaluateShoeRecommendation(
       ),
     ),
   ];
-  const matchingSecondarySurfaces = secondarySurfaces.filter((surface) =>
-    supportsSurface(product, surface),
+  const secondarySurfaceMatches = secondarySurfaces.map((surface) => ({
+    quality: surfaceMatchQuality(product, surface),
+    surface,
+  }));
+  const matchingSecondarySurfaces = secondarySurfaceMatches.filter(
+    ({ quality }) => quality !== 'none',
   );
-  const secondaryPoints = Math.min(matchingSecondarySurfaces.length * 5, 10);
+  const allSecondarySurfacesMatchExactly = secondarySurfaceMatches.every(
+    ({ quality }) => quality === 'exact',
+  );
+  const secondaryPoints = Math.min(
+    secondarySurfaceMatches.reduce(
+      (points, { quality }) =>
+        points + (quality === 'exact' ? 20 : quality === 'compatible' ? 3 : 0),
+      0,
+    ),
+    40,
+  );
   evaluations.push({
     rule: 'secondary-surface',
     outcome:
       secondarySurfaces.length === 0
         ? 'unavailable'
-        : matchingSecondarySurfaces.length > 0
+        : allSecondarySurfacesMatchExactly
           ? 'preference-match'
           : 'trade-off',
     points: secondaryPoints,
     expected: secondarySurfaces.join(', ') || null,
-    actual: matchingSecondarySurfaces.join(', ') || null,
+    actual:
+      matchingSecondarySurfaces.map(({ surface }) => surface).join(', ') ||
+      null,
   });
   internalScore += secondaryPoints;
 
