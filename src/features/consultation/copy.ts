@@ -105,9 +105,17 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: '10–21 km',
             description: 'Longer training sessions',
           },
-          over21: {
-            label: 'Over 21 km',
-            description: 'Half marathon and beyond',
+          upTo42: {
+            label: '21–42 km',
+            description: 'Marathon-distance training',
+          },
+          upTo60: {
+            label: '42–60 km',
+            description: 'Long trail and ultra sessions',
+          },
+          over60: {
+            label: 'Over 60 km',
+            description: 'Ultra-distance running',
           },
           unknown: {
             label: 'Not sure yet',
@@ -358,9 +366,17 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: '10–21 km',
             description: 'Längere Trainingseinheiten',
           },
-          over21: {
-            label: 'Über 21 km',
-            description: 'Halbmarathon und weiter',
+          upTo42: {
+            label: '21–42 km',
+            description: 'Training bis zur Marathondistanz',
+          },
+          upTo60: {
+            label: '42–60 km',
+            description: 'Lange Trail- und Ultraeinheiten',
+          },
+          over60: {
+            label: 'Über 60 km',
+            description: 'Ultradistanzläufe',
           },
           unknown: {
             label: 'Noch nicht sicher',
@@ -621,9 +637,17 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'Distance quotidienne habituelle',
           },
           upTo21: { label: '10–21 km', description: 'Séances plus longues' },
-          over21: {
-            label: 'Plus de 21 km',
-            description: 'Semi-marathon et au-delà',
+          upTo42: {
+            label: '21–42 km',
+            description: 'Entraînement jusqu’au marathon',
+          },
+          upTo60: {
+            label: '42–60 km',
+            description: 'Longues sorties trail et ultra',
+          },
+          over60: {
+            label: 'Plus de 60 km',
+            description: 'Course d’ultra-distance',
           },
           unknown: {
             label: 'Pas encore sûr',

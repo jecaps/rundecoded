@@ -15,6 +15,10 @@ describe('customer consultation', () => {
       />,
     );
 
+    expect(screen.getByRole('button', { name: /^21–42 km/ })).toBeVisible();
+    expect(screen.getByRole('button', { name: /^42–60 km/ })).toBeVisible();
+    expect(screen.getByRole('button', { name: /^Over 60 km/ })).toBeVisible();
+
     fireEvent.click(screen.getByRole('button', { name: /Not sure yet/ }));
     expect(screen.getByText(/will not exclude a shoe/i)).toBeVisible();
     fireEvent.click(screen.getByRole('button', { name: 'Next' }));

@@ -50,7 +50,9 @@ const distanceChoices = [
   ['under5', Gauge],
   ['upTo10', Route],
   ['upTo21', Map],
-  ['over21', Mountain],
+  ['upTo42', Mountain],
+  ['upTo60', Mountain],
+  ['over60', Mountain],
   ['unknown', CircleHelp],
 ] as const;
 
@@ -106,7 +108,9 @@ const distanceValues: Record<string, number | undefined> = {
   under5: 5,
   upTo10: 10,
   upTo21: 21,
-  over21: 42,
+  upTo42: 42,
+  upTo60: 60,
+  over60: 80,
   unknown: undefined,
 };
 
