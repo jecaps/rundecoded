@@ -7034,6 +7034,15 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "decathlon-jogflow-100-1-customer-distance-guidance",
+        "type": "legacy-workbook",
+        "label": "Customer-confirmed Jogflow distance guidance",
+        "url": null,
+        "checkedAt": "2026-09-12",
+        "status": "derived",
+        "note": "All Jogflow models are capped at 10 km following customer-confirmed product range guidance."
       }
     ],
     "comparables": [
@@ -7084,11 +7093,11 @@
         }
       },
       "maximumDistance": {
-        "value": { "amount": 21, "unit": "km" },
+        "value": { "amount": 10, "unit": "km" },
         "evidence": {
           "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the numerical distance in the audited best-for guidance."
+          "sourceIds": ["decathlon-jogflow-100-1-customer-distance-guidance"],
+          "note": "All Jogflow models are capped at 10 km following customer-confirmed product range guidance."
         }
       },
       "heelToToeDrop": {
@@ -7210,6 +7219,15 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "decathlon-jogflow-190-grip-customer-distance-guidance",
+        "type": "legacy-workbook",
+        "label": "Customer-confirmed Jogflow distance guidance",
+        "url": null,
+        "checkedAt": "2026-09-12",
+        "status": "derived",
+        "note": "All Jogflow models are capped at 10 km following customer-confirmed product range guidance."
       }
     ],
     "comparables": [
@@ -7260,11 +7278,13 @@
         }
       },
       "maximumDistance": {
-        "value": { "amount": 21, "unit": "km" },
+        "value": { "amount": 10, "unit": "km" },
         "evidence": {
           "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the numerical distance in the audited best-for guidance."
+          "sourceIds": [
+            "decathlon-jogflow-190-grip-customer-distance-guidance"
+          ],
+          "note": "All Jogflow models are capped at 10 km following customer-confirmed product range guidance."
         }
       },
       "heelToToeDrop": {
@@ -7386,6 +7406,15 @@
         "checkedAt": "2026-09-11",
         "status": "verified",
         "note": "The Decathlon specifications explicitly publish road, trail and urban surfaces together with marshland, forest and park use for this waterproof beginner model."
+      },
+      {
+        "id": "decathlon-jogflow-190-grip-wp-customer-distance-guidance",
+        "type": "legacy-workbook",
+        "label": "Customer-confirmed Jogflow distance guidance",
+        "url": null,
+        "checkedAt": "2026-09-12",
+        "status": "derived",
+        "note": "All Jogflow models are capped at 10 km following customer-confirmed product range guidance."
       }
     ],
     "comparables": [
@@ -7442,11 +7471,13 @@
         }
       },
       "maximumDistance": {
-        "value": { "amount": 20, "unit": "km" },
+        "value": { "amount": 10, "unit": "km" },
         "evidence": {
           "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the numerical distance in the audited best-for guidance."
+          "sourceIds": [
+            "decathlon-jogflow-190-grip-wp-customer-distance-guidance"
+          ],
+          "note": "All Jogflow models are capped at 10 km following customer-confirmed product range guidance."
         }
       },
       "heelToToeDrop": {
@@ -7576,6 +7607,15 @@
         "checkedAt": null,
         "status": "verified",
         "note": "Preserved from the Phase 0 image provenance inventory."
+      },
+      {
+        "id": "decathlon-jogflow-190-max-customer-distance-guidance",
+        "type": "legacy-workbook",
+        "label": "Customer-confirmed Jogflow distance guidance",
+        "url": null,
+        "checkedAt": "2026-09-12",
+        "status": "derived",
+        "note": "All Jogflow models are capped at 10 km following customer-confirmed product range guidance."
       }
     ],
     "comparables": [
@@ -7629,8 +7669,8 @@
         "value": { "amount": 10, "unit": "km" },
         "evidence": {
           "status": "derived",
-          "sourceIds": ["legacy-catalogue"],
-          "note": "Normalized from the numerical distance in the audited best-for guidance."
+          "sourceIds": ["decathlon-jogflow-190-max-customer-distance-guidance"],
+          "note": "All Jogflow models are capped at 10 km following customer-confirmed product range guidance."
         }
       },
       "heelToToeDrop": {
@@ -7754,13 +7794,13 @@
         "note": "Preserved from the Phase 0 image provenance inventory."
       },
       {
-        "id": "decathlon-jogflow-190-premium-range-table-distance",
+        "id": "decathlon-jogflow-190-premium-customer-distance-guidance",
         "type": "legacy-workbook",
-        "label": "Supplied running-shoe range table",
+        "label": "Customer-confirmed Jogflow distance guidance",
         "url": null,
-        "checkedAt": "2026-09-11",
-        "status": "verified",
-        "note": "Fallback distance only, transcribed from the supplied running-shoe range table when no existing product-page or catalogue distance is available. For a range, the upper listed distance is stored; for a plus value, the stated threshold is stored."
+        "checkedAt": "2026-09-12",
+        "status": "derived",
+        "note": "All Jogflow models are capped at 10 km following customer-confirmed product range guidance."
       }
     ],
     "comparables": [
@@ -7811,11 +7851,13 @@
         }
       },
       "maximumDistance": {
-        "value": { "amount": 21, "unit": "km" },
+        "value": { "amount": 10, "unit": "km" },
         "evidence": {
-          "status": "verified",
-          "sourceIds": ["decathlon-jogflow-190-premium-range-table-distance"],
-          "note": "Fallback distance only, transcribed from the supplied running-shoe range table when no existing product-page or catalogue distance is available. For a range, the upper listed distance is stored; for a plus value, the stated threshold is stored."
+          "status": "derived",
+          "sourceIds": [
+            "decathlon-jogflow-190-premium-customer-distance-guidance"
+          ],
+          "note": "All Jogflow models are capped at 10 km following customer-confirmed product range guidance."
         }
       },
       "heelToToeDrop": {

@@ -601,6 +601,20 @@ describe('legacy catalogue migration', () => {
     expect(
       getProduct('brooks-revel-max')?.specifications.surfaceTags.value,
     ).toEqual(['road', 'asphalt', 'firm-paths']);
+    for (const id of [
+      'decathlon-jogflow-100-1',
+      'decathlon-jogflow-190-grip',
+      'decathlon-jogflow-190-grip-wp',
+      'decathlon-jogflow-190-max',
+      'decathlon-jogflow-190-premium',
+    ]) {
+      expect(getProduct(id)?.specifications.maximumDistance).toEqual(
+        expect.objectContaining({
+          value: { amount: 10, unit: 'km' },
+          evidence: expect.objectContaining({ status: 'derived' }),
+        }),
+      );
+    }
   });
 
   it('records verified Hoka and Kiprun terrain profiles without filling unsupported models', () => {
