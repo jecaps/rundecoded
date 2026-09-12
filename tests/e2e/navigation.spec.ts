@@ -151,15 +151,19 @@ test('design-system primitives support keyboard interaction', async ({
 }) => {
   await page.goto('./en/design-system/');
 
-  await page.getByRole('button', { name: 'Open dialog' }).click();
+  const dialogTrigger = page.getByRole('button', { name: 'Open dialog' });
+  await dialogTrigger.click();
   await expect(page.getByRole('dialog')).toBeVisible();
   await expect(
     page.getByRole('heading', { name: 'Accessible by default' }),
   ).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog')).toBeHidden();
+  await expect(dialogTrigger).toBeFocused();
 
-  await page.getByRole('tab', { name: 'Usage' }).focus();
+  const usageTab = page.getByRole('tab', { name: 'Usage' });
+  await usageTab.focus();
+  await expect(usageTab).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('tabpanel')).toContainText('Prefer native HTML');
 });
