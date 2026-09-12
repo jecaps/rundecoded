@@ -65,7 +65,7 @@ describe('legacy catalogue migration', () => {
     const product = result.products[0];
     expect(
       product?.sources.filter((source) => source.type === 'retailer-product'),
-    ).toHaveLength(2);
+    ).toHaveLength(3);
     expect(product?.images[0]).toEqual(
       expect.objectContaining({
         status: 'verified',
@@ -75,7 +75,10 @@ describe('legacy catalogue migration', () => {
   });
 
   it('keeps missing measurements as explicit pending research', () => {
-    const result = migrateRows([{ ...productRow, drop: '–' }], provenanceRows);
+    const result = migrateRows(
+      [{ ...productRow, model: 'Unrecorded Test Shoe', drop: '–' }],
+      [],
+    );
     const specifications = result.products[0]?.specifications;
     expect(specifications?.heelToToeDrop).toEqual(
       expect.objectContaining({
@@ -140,7 +143,7 @@ describe('legacy catalogue migration', () => {
     );
   });
 
-  it('prefers the current product page over the Book Monitor distance', () => {
+  it('preserves existing product-page distances ahead of the fallback table', () => {
     const result = migrateRows(
       [
         {
@@ -175,6 +178,81 @@ describe('legacy catalogue migration', () => {
         evidence: expect.objectContaining({ status: 'verified' }),
       }),
     );
+  });
+
+  it('uses the supplied range table when no distance is already available', () => {
+    const result = migrateRows(
+      [
+        {
+          ...productRow,
+          brand: 'ASICS',
+          model: 'Gel Nimbus 28',
+          best_for_en: 'Maximum-cushion daily trainer',
+        },
+      ],
+      [],
+    );
+    const distance = result.products[0]?.specifications.maximumDistance;
+
+    expect(distance).toEqual(
+      expect.objectContaining({
+        value: { amount: 42, unit: 'km' },
+        evidence: expect.objectContaining({
+          status: 'verified',
+          sourceIds: ['asics-gel-nimbus-28-range-table-distance'],
+        }),
+      }),
+    );
+  });
+
+  it('carries the Kayano 31 distance forward to Kayano 32 and 33', () => {
+    const result = migrateRows(
+      ['Gel Kayano 32', 'Gel Kayano 33'].map((model) => ({
+        ...productRow,
+        brand: 'ASICS',
+        model,
+      })),
+      [],
+    );
+
+    for (const product of result.products) {
+      expect(product.specifications.maximumDistance).toEqual(
+        expect.objectContaining({
+          value: { amount: 42, unit: 'km' },
+          evidence: expect.objectContaining({
+            status: 'derived',
+            sourceIds: [`${product.id}-kayano-31-distance-reference`],
+          }),
+        }),
+      );
+    }
+  });
+
+  it('records the confirmed remaining catalogue distances', () => {
+    const cases = [
+      ['BROOKS', 'Ghost 18', 42, 'derived'],
+      ['BROOKS', 'Ghost Max 4', 42, 'derived'],
+      ['BROOKS', 'Range', 170, 'verified'],
+      ['PUMA', 'Velocity Nitro 5', 42, 'derived'],
+    ] as const;
+    const result = migrateRows(
+      cases.map(([brand, model]) => ({ ...productRow, brand, model })),
+      [],
+    );
+
+    for (const [brand, model, amount, status] of cases) {
+      const product = result.products.find(
+        (item) =>
+          item.brand.name === brand[0] + brand.slice(1).toLowerCase() &&
+          item.model === model,
+      );
+      expect(product?.specifications.maximumDistance).toEqual(
+        expect.objectContaining({
+          value: { amount, unit: 'km' },
+          evidence: expect.objectContaining({ status }),
+        }),
+      );
+    }
   });
 
   it('records the confirmed Kipsonic zero drop', () => {
@@ -268,12 +346,13 @@ describe('legacy catalogue migration', () => {
       [
         {
           ...productRow,
+          model: 'Stability Test Shoe',
           primary_category: 'STABILITY & GUIDANCE',
           secondary_category: 'DAILY TRAINER',
           stability: 'Stability shoe',
         },
       ],
-      provenanceRows,
+      [],
     );
     const product = result.products[0];
     expect(product?.specifications.stability.value).toBe('stability');
@@ -366,7 +445,7 @@ describe('legacy catalogue migration', () => {
     );
   });
 
-  it('prefers supplied product-page distances over range-chart fallbacks', () => {
+  it('prefers supplied product-page distances over range-table fallbacks', () => {
     const cases = [
       ['hoka-speedgoat-7', 'HOKA', 'Speedgoat 7', 170],
       ['hoka-torrent-4', 'HOKA', 'Torrent 4', 60],
@@ -403,7 +482,7 @@ describe('legacy catalogue migration', () => {
     }
   });
 
-  it('uses Book Monitor distances only when no product page was supplied', () => {
+  it('preserves Book Monitor distances when already available', () => {
     const cases = [
       ['salomon-speedcross-peak', 'Speedcross Peak', 42],
       ['salomon-speedcross-peak-gtx', 'Speedcross Peak GTX', 42],
@@ -425,5 +504,471 @@ describe('legacy catalogue migration', () => {
         }),
       );
     }
+  });
+
+  it('records Brooks category and terrain distinctions for recommendations', () => {
+    const result = migrateRows(
+      [
+        { ...productRow, brand: 'BROOKS', model: 'Ghost 17' },
+        {
+          ...productRow,
+          brand: 'BROOKS',
+          model: 'Ghost Trail',
+          primary_category: 'TRAIL',
+          secondary_category: 'TRAIL',
+        },
+        {
+          ...productRow,
+          brand: 'BROOKS',
+          model: 'Hyperion 3',
+          primary_category: 'FAST TRAINING',
+          secondary_category: 'RACE',
+        },
+        {
+          ...productRow,
+          brand: 'BROOKS',
+          model: 'Range',
+          primary_category: 'TRAIL',
+          secondary_category: 'TRAIL',
+        },
+      ],
+      [],
+    );
+    const getProduct = (id: string) =>
+      result.products.find((product) => product.id === id);
+
+    expect(
+      getProduct('brooks-ghost-17')?.specifications.surfaceTags.value,
+    ).toEqual(['road', 'asphalt']);
+    expect(
+      getProduct('brooks-ghost-trail')?.specifications.surfaceFamilies.value,
+    ).toEqual(['road', 'off-road']);
+    expect(
+      getProduct('brooks-ghost-trail')?.specifications.terrainProfiles.value,
+    ).toEqual(['gravel', 'road-to-trail', 'easy-terrain']);
+    expect(
+      getProduct('brooks-hyperion-3')?.categories.map(({ id }) => id),
+    ).toEqual(['fast-training', 'race']);
+    expect(
+      getProduct('brooks-range')?.specifications.terrainProfiles.value,
+    ).toEqual(['mixed-terrain', 'technical-terrain', 'muddy-terrain']);
+  });
+
+  it('records the next Brooks, Decathlon, and Hoka surface taxonomy batch', () => {
+    const cases = [
+      ['BROOKS', 'Revel 9'],
+      ['BROOKS', 'Revel Max'],
+      ['DECATHLON', 'Jogflow 100.1'],
+      ['DECATHLON', 'Jogflow 190 Grip'],
+      ['DECATHLON', 'Jogflow 190 Grip WP'],
+      ['DECATHLON', 'Jogflow 190 Max'],
+      ['DECATHLON', 'Jogflow 190 Premium'],
+      ['HOKA', 'Clifton 10'],
+      ['HOKA', 'Rincon 4'],
+      ['HOKA', 'Speedgoat 7'],
+    ] as const;
+    const result = migrateRows(
+      cases.map(([brand, model]) => ({ ...productRow, brand, model })),
+      [],
+    );
+    const getProduct = (id: string) =>
+      result.products.find((product) => product.id === id);
+
+    expect(
+      getProduct('decathlon-jogflow-190-grip')?.specifications.surfaceFamilies
+        .value,
+    ).toEqual(['road', 'off-road']);
+    expect(
+      getProduct('decathlon-jogflow-190-grip')?.specifications.terrainProfiles
+        .value,
+    ).toEqual(['road-to-trail', 'easy-terrain']);
+    expect(
+      getProduct('decathlon-jogflow-190-grip-wp')?.specifications.surfaceTags
+        .value,
+    ).toEqual([
+      'road',
+      'asphalt',
+      'firm-paths',
+      'easy-terrain',
+      'muddy-terrain',
+    ]);
+    expect(
+      getProduct('hoka-speedgoat-7')?.specifications.terrainProfiles.value,
+    ).toEqual(['technical-terrain', 'muddy-terrain']);
+    expect(
+      getProduct('hoka-clifton-10')?.specifications.surfaceTags.value,
+    ).toEqual(['road', 'asphalt']);
+    expect(
+      getProduct('brooks-revel-max')?.specifications.surfaceTags.value,
+    ).toEqual(['road', 'asphalt', 'firm-paths']);
+  });
+
+  it('records verified Hoka and Kiprun terrain profiles without filling unsupported models', () => {
+    const cases = [
+      ['HOKA', 'Torrent 4', 'TRAIL'],
+      ['KIPRUN', 'Kipclimb', 'TRAIL'],
+      ['KIPRUN', 'Kipclimb Max', 'TRAIL'],
+      ['KIPRUN', 'Kipclimb Race', 'TRAIL RACE'],
+      ['KIPRUN', 'Kipclimb WP', 'TRAIL'],
+      ['KIPRUN', 'Kipcore', 'DAILY TRAINER'],
+      ['KIPRUN', 'Kipcore Gravel', 'TRAIL'],
+      ['KIPRUN', 'Kipcore Premium', 'DAILY TRAINER'],
+      ['KIPRUN', 'Kipcore WR', 'DAILY TRAINER'],
+      ['KIPRUN', 'Kipnext', 'DAILY TRAINER'],
+    ] as const;
+    const result = migrateRows(
+      cases.map(([brand, model, primary_category]) => ({
+        ...productRow,
+        brand,
+        model,
+        primary_category,
+      })),
+      [],
+    );
+    const getProduct = (id: string) =>
+      result.products.find((product) => product.id === id);
+
+    expect(
+      getProduct('hoka-torrent-4')?.specifications.terrainProfiles.value,
+    ).toEqual(['mixed-terrain', 'technical-terrain']);
+    expect(
+      getProduct('kiprun-kipclimb')?.specifications.terrainProfiles.value,
+    ).toEqual(['technical-terrain', 'muddy-terrain']);
+    expect(
+      getProduct('kiprun-kipclimb-max')?.specifications.terrainProfiles.value,
+    ).toEqual(['mixed-terrain', 'technical-terrain', 'muddy-terrain']);
+    expect(
+      getProduct('kiprun-kipcore-gravel')?.specifications.surfaceFamilies.value,
+    ).toEqual(['road', 'off-road']);
+    expect(
+      getProduct('kiprun-kipcore-gravel')?.specifications.surfaceTags.value,
+    ).toEqual(['road', 'asphalt', 'gravel', 'firm-paths', 'easy-terrain']);
+    expect(
+      getProduct('kiprun-kipcore-wr')?.specifications.surfaceTags.value,
+    ).toEqual(['road', 'asphalt', 'firm-paths']);
+    expect(
+      getProduct('kiprun-kipclimb-race')?.specifications.terrainProfiles.value,
+    ).toEqual(['technical-terrain']);
+    expect(
+      getProduct('kiprun-kipclimb-wp')?.specifications.terrainProfiles.value,
+    ).toEqual(['muddy-terrain']);
+  });
+
+  it('records the Kipride and Kipsonic taxonomy batch', () => {
+    const cases = [
+      ['KIPRUN', 'Kipride', 'DAILY TRAINER', 'FAST TRAINING'],
+      ['KIPRUN', 'Kipride Gravel', 'TRAIL', 'FAST TRAINING'],
+      ['KIPRUN', 'Kipride Max', 'MAX CUSHION', 'DAILY TRAINER'],
+      ['KIPRUN', 'Kipride Max Wide', 'MAX CUSHION', 'DAILY TRAINER'],
+      ['KIPRUN', 'Kipride Support', 'STABILITY & GUIDANCE', 'SUPPORT'],
+      ['KIPRUN', 'Kipride WR', 'DAILY TRAINER', 'NEUTRAL'],
+      ['KIPRUN', 'Kipsonic Start', 'TRACK / SPIKES', 'ENTRY LEVEL'],
+      ['KIPRUN', 'Kipsonic X-Country', 'TRACK / SPIKES', 'SPIKES'],
+      ['KIPRUN', 'Kipsonic Mid', 'TRACK / SPIKES', 'SPIKES'],
+      ['KIPRUN', 'Kipsonic Long', 'TRACK / SPIKES', 'CARBON'],
+    ] as const;
+    const result = migrateRows(
+      cases.map(([brand, model, primary_category, secondary_category]) => ({
+        ...productRow,
+        brand,
+        model,
+        primary_category,
+        secondary_category,
+      })),
+      [],
+    );
+    const getProduct = (id: string) =>
+      result.products.find((product) => product.id === id);
+
+    expect(
+      getProduct('kiprun-kipride-gravel')?.specifications.surfaceFamilies.value,
+    ).toEqual(['road', 'off-road']);
+    expect(
+      getProduct('kiprun-kipride-gravel')?.specifications.surfaceTags.value,
+    ).toEqual(['road', 'asphalt', 'gravel', 'firm-paths', 'easy-terrain']);
+    expect(
+      getProduct('kiprun-kipride-gravel')?.specifications.terrainProfiles.value,
+    ).toEqual(['gravel', 'road-to-trail', 'easy-terrain']);
+    expect(
+      getProduct('kiprun-kipride-wr')?.specifications.surfaceTags.value,
+    ).toEqual(['road', 'asphalt']);
+    expect(
+      getProduct('kiprun-kipsonic-start')?.specifications.surfaceTags.value,
+    ).toEqual(['track', 'cross-country']);
+    expect(
+      getProduct('kiprun-kipsonic-x-country')?.specifications.surfaceFamilies
+        .value,
+    ).toEqual(['off-road']);
+    expect(
+      getProduct('kiprun-kipsonic-mid')?.specifications.surfaceTags.value,
+    ).toEqual(['track']);
+    expect(
+      getProduct('kiprun-kipsonic-long')?.specifications.surfaceTags.value,
+    ).toEqual(['track']);
+    expect(
+      getProduct('kiprun-kipride-max-wide')?.specifications.stackHeight.value,
+    ).toEqual({ heel: 42, forefoot: 36, unit: 'mm' });
+    expect(
+      getProduct('kiprun-kipride-max-wide')?.specifications.weight.value,
+    ).toEqual({ amount: 220, referenceSize: 'Size not stated', unit: 'g' });
+    expect(
+      getProduct('kiprun-kipride-support')?.specifications.stackHeight.value,
+    ).toEqual({ heel: 40, forefoot: 34, unit: 'mm' });
+    expect(
+      getProduct('kiprun-kipride-support')?.specifications.weight.value,
+    ).toEqual({ amount: 319, referenceSize: 'EU 42', unit: 'g' });
+    expect(
+      getProduct('kiprun-kipride-support')?.specifications.surfaceTags.value,
+    ).toEqual(['road']);
+    expect(
+      getProduct('kiprun-kipride-max')?.specifications.weight.value,
+    ).toEqual({ amount: 271, referenceSize: 'EU 42', unit: 'g' });
+  });
+
+  it('records the verified Kipstorm and Kipsummit taxonomy batch', () => {
+    const cases = [
+      ['KIPRUN', 'Kipstorm Challenger', 'RACE', 'CARBON'],
+      ['KIPRUN', 'Kipstorm Elite', 'RACE', 'CARBON'],
+      ['KIPRUN', 'Kipstorm Interval', 'FAST TRAINING', 'NEUTRAL'],
+      ['KIPRUN', 'Kipstorm Lab', 'RACE', 'CARBON'],
+      ['KIPRUN', 'Kipstorm Pro', 'RACE', 'CARBON'],
+      ['KIPRUN', 'Kipstorm Tempo', 'FAST TRAINING', 'NEUTRAL'],
+      ['KIPRUN', 'Kipsummit', 'TRAIL', 'TECHNICAL TRAIL'],
+      ['KIPRUN', 'Kipsummit Max', 'TRAIL', 'MAX CUSHION'],
+    ] as const;
+    const result = migrateRows(
+      cases.map(([brand, model, primary_category, secondary_category]) => ({
+        ...productRow,
+        brand,
+        model,
+        primary_category,
+        secondary_category,
+      })),
+      [],
+    );
+    const getProduct = (id: string) =>
+      result.products.find((product) => product.id === id);
+
+    expect(
+      getProduct('kiprun-kipstorm-challenger')?.specifications.surfaceTags
+        .value,
+    ).toEqual(['road', 'asphalt']);
+    expect(
+      getProduct('kiprun-kipstorm-interval')?.specifications.surfaceFamilies
+        .value,
+    ).toEqual(['road', 'track']);
+    expect(
+      getProduct('kiprun-kipstorm-lab')?.specifications.surfaceTags.value,
+    ).toEqual(['road', 'asphalt', 'track']);
+    expect(
+      getProduct('kiprun-kipstorm-tempo')?.specifications.surfaceTags.value,
+    ).toEqual(['road', 'asphalt']);
+    expect(
+      getProduct('kiprun-kipsummit')?.specifications.terrainProfiles.value,
+    ).toEqual(['mixed-terrain', 'technical-terrain']);
+    expect(
+      getProduct('kiprun-kipsummit-max')?.specifications.terrainProfiles.value,
+    ).toEqual(['mixed-terrain']);
+    expect(
+      getProduct('kiprun-kipstorm-elite')?.specifications.stackHeight.value,
+    ).toEqual({ heel: 39, forefoot: 34, unit: 'mm' });
+  });
+
+  it('records the Kipsummit, Mizuno, and New Balance taxonomy batch', () => {
+    const cases = [
+      ['KIPRUN', 'Kipsummit Race', 'TRAIL RACE', 'CARBON'],
+      ['KIPRUN', 'Kipsummit WP', 'TRAIL', 'TECHNICAL TRAIL'],
+      ['MIZUNO', 'Neo Cosmo', 'FAST TRAINING', 'DAILY TRAINER'],
+      ['MIZUNO', 'Neo Zen 2', 'FAST TRAINING', 'DAILY TRAINER'],
+      ['MIZUNO', 'Wave Impulse', 'DAILY TRAINER', 'NEUTRAL'],
+      ['MIZUNO', 'Wave Rider 29', 'DAILY TRAINER', 'NEUTRAL'],
+      ['MIZUNO', 'Wave Ultima 17', 'DAILY TRAINER', 'MAX CUSHION'],
+      ['NEW BALANCE', '1080 v15', 'MAX CUSHION', 'DAILY TRAINER'],
+      ['NEW BALANCE', '520 v9', 'ENTRY LEVEL', 'DAILY TRAINER'],
+      ['NEW BALANCE', '840 v1', 'MAX CUSHION', 'DAILY TRAINER'],
+    ] as const;
+    const result = migrateRows(
+      cases.map(([brand, model, primary_category, secondary_category]) => ({
+        ...productRow,
+        brand,
+        model,
+        primary_category,
+        secondary_category,
+      })),
+      [],
+    );
+    const getProduct = (id: string) =>
+      result.products.find((product) => product.id === id);
+
+    expect(
+      getProduct('kiprun-kipsummit-race')?.specifications.terrainProfiles.value,
+    ).toEqual(['mixed-terrain']);
+    expect(
+      getProduct('kiprun-kipsummit-wp')?.specifications.terrainProfiles.value,
+    ).toEqual(['mixed-terrain', 'technical-terrain', 'muddy-terrain']);
+    expect(
+      getProduct('mizuno-wave-impulse')?.specifications.surfaceTags.value,
+    ).toEqual(['road', 'firm-paths', 'easy-terrain']);
+    expect(
+      getProduct('mizuno-wave-impulse')?.specifications.terrainProfiles.value,
+    ).toEqual(['road-to-trail', 'easy-terrain']);
+    expect(getProduct('mizuno-wave-rider-29')?.categories).not.toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 'support' })]),
+    );
+    expect(getProduct('mizuno-wave-ultima-17')?.categories).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 'max-cushion' })]),
+    );
+    expect(
+      getProduct('mizuno-neo-zen-2')?.specifications.maximumDistance.value,
+    ).toEqual({ amount: 21, unit: 'km' });
+    expect(
+      getProduct('new-balance-520-v9')?.specifications.maximumDistance.value,
+    ).toEqual({ amount: 10, unit: 'km' });
+  });
+
+  it('records the New Balance and Puma taxonomy batch', () => {
+    const cases = [
+      ['NEW BALANCE', 'Ellipse', 'DAILY TRAINER', 'NEUTRAL'],
+      ['NEW BALANCE', 'FuelCell Propel v5', 'FAST TRAINING', 'DAILY TRAINER'],
+      ['NEW BALANCE', 'FuelCell Rebel v5', 'FAST TRAINING', 'DAILY TRAINER'],
+      ['NEW BALANCE', 'Garoe v2', 'TRAIL', 'TECHNICAL TRAIL'],
+      ['NEW BALANCE', 'Hierro v9', 'TRAIL', 'MAX CUSHION'],
+      ['NEW BALANCE', 'Kaiha v2', 'MAX CUSHION', 'DAILY TRAINER'],
+      ['NEW BALANCE', 'More v6', 'MAX CUSHION', 'DAILY TRAINER'],
+      ['NEW BALANCE', 'Rebel Trail', 'TRAIL', 'TECHNICAL TRAIL'],
+      ['PUMA', 'Deviate Nitro 4', 'SUPER TRAINER', 'CARBON'],
+      ['PUMA', 'Velocity Nitro 4', 'DAILY TRAINER', 'FAST TRAINING'],
+    ] as const;
+    const result = migrateRows(
+      cases.map(([brand, model, primary_category, secondary_category]) => ({
+        ...productRow,
+        brand,
+        model,
+        primary_category,
+        secondary_category,
+      })),
+      [],
+    );
+    const getProduct = (id: string) =>
+      result.products.find((product) => product.id === id);
+
+    expect(
+      getProduct('new-balance-ellipse')?.specifications.surfaceTags.value,
+    ).toEqual(['road', 'asphalt', 'firm-paths', 'easy-terrain']);
+    expect(
+      getProduct('new-balance-fuelcell-rebel-v5')?.specifications.surfaceTags
+        .value,
+    ).toEqual(['road', 'asphalt', 'track']);
+    expect(
+      getProduct('new-balance-fuelcell-rebel-v5')?.specifications
+        .maximumDistance.value,
+    ).toEqual({ amount: 21, unit: 'km' });
+    expect(
+      getProduct('new-balance-garoe-v2')?.specifications.terrainProfiles.value,
+    ).toEqual(['mixed-terrain', 'technical-terrain', 'muddy-terrain']);
+    expect(getProduct('new-balance-hierro-v9')?.categories).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 'max-cushion' })]),
+    );
+    expect(
+      getProduct('new-balance-rebel-trail')?.specifications.terrainProfiles
+        .value,
+    ).toEqual(['technical-terrain', 'muddy-terrain']);
+    expect(
+      getProduct('new-balance-kaiha-v2')?.specifications.maximumDistance.value,
+    ).toEqual({ amount: 21, unit: 'km' });
+    expect(
+      getProduct('puma-deviate-nitro-4')?.specifications.surfaceTags.value,
+    ).toEqual(['road', 'asphalt', 'track']);
+    expect(
+      getProduct('puma-velocity-nitro-4')?.specifications.stackHeight.value,
+    ).toEqual({ heel: 36, forefoot: 26, unit: 'mm' });
+  });
+
+  it('records the Puma, Salomon, and Saucony taxonomy batch with canonical terrain tags', () => {
+    const cases = [
+      ['PUMA', 'Velocity Nitro 5', 'DAILY TRAINER', 'FAST TRAINING'],
+      ['SALOMON', 'Aero Blaze 3 Grvl', 'TRAIL', 'FAST TRAINING'],
+      ['SALOMON', 'Genesis', 'TRAIL', 'TECHNICAL TRAIL'],
+      ['SALOMON', 'Speedcross Peak', 'TRAIL RACE', 'TECHNICAL TRAIL'],
+      ['SALOMON', 'Speedcross Peak GTX', 'TRAIL RACE', 'TECHNICAL TRAIL'],
+      ['SALOMON', 'Supraglide', 'TRAIL', 'TECHNICAL TRAIL'],
+      ['SALOMON', 'Ultra Flow 2', 'TRAIL', 'TECHNICAL TRAIL'],
+      ['SALOMON', 'Ultra Glide 4', 'TRAIL', 'TECHNICAL TRAIL'],
+      ['SAUCONY', 'Guide 19', 'STABILITY & GUIDANCE', 'MAX CUSHION'],
+      ['SAUCONY', 'Peregrine 16', 'TRAIL', 'TECHNICAL TRAIL'],
+    ] as const;
+    const result = migrateRows(
+      cases.map(([brand, model, primary_category, secondary_category]) => ({
+        ...productRow,
+        brand,
+        model,
+        primary_category,
+        secondary_category,
+      })),
+      [],
+    );
+    const getProduct = (id: string) =>
+      result.products.find((product) => product.id === id);
+    const allSurfaceTags = result.products.flatMap(
+      (product) => product.specifications.surfaceTags.value ?? [],
+    );
+
+    expect(allSurfaceTags).not.toContain('mixed');
+    expect(
+      getProduct('salomon-aero-blaze-3-grvl')?.specifications.terrainProfiles
+        .value,
+    ).toEqual(['gravel', 'road-to-trail', 'easy-terrain', 'mixed-terrain']);
+    expect(
+      getProduct('salomon-genesis')?.specifications.terrainProfiles.value,
+    ).toEqual(['mixed-terrain', 'technical-terrain', 'muddy-terrain']);
+    expect(
+      getProduct('salomon-speedcross-peak-gtx')?.specifications.terrainProfiles
+        .value,
+    ).toEqual(['technical-terrain', 'muddy-terrain']);
+    expect(
+      getProduct('salomon-supraglide')?.specifications.terrainProfiles.value,
+    ).toEqual(['easy-terrain']);
+    expect(
+      getProduct('salomon-ultra-flow-2')?.specifications.surfaceFamilies.value,
+    ).toEqual(['road', 'off-road']);
+    expect(getProduct('saucony-guide-19')?.categories).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 'max-cushion' })]),
+    );
+    expect(
+      getProduct('saucony-guide-19')?.specifications.heelToToeDrop.value,
+    ).toEqual({ amount: 6, unit: 'mm' });
+    expect(
+      getProduct('saucony-peregrine-16')?.specifications.terrainProfiles.value,
+    ).toEqual(['mixed-terrain', 'technical-terrain', 'muddy-terrain']);
+  });
+
+  it('records the final Saucony Ride 19 catalogue classification', () => {
+    const result = migrateRows(
+      [
+        {
+          ...productRow,
+          brand: 'SAUCONY',
+          model: 'Ride 19',
+          primary_category: 'DAILY TRAINER',
+          secondary_category: 'NEUTRAL',
+        },
+      ],
+      [],
+    );
+    const product = result.products[0];
+
+    expect(product?.specifications.surfaceTags.value).toEqual([
+      'road',
+      'asphalt',
+    ]);
+    expect(product?.specifications.terrainProfiles.value).toEqual([]);
+    expect(product?.specifications.maximumDistance.value).toEqual({
+      amount: 21,
+      unit: 'km',
+    });
+    expect(product?.specifications.fit.value).toEqual([
+      'Regular',
+      'Medium width',
+    ]);
   });
 });
