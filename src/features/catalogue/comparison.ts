@@ -1,4 +1,8 @@
-import { resolveLocalizedText, type SupportedLocale } from '@/domain/catalogue';
+import {
+  surfaceFamiliesForShoe,
+  terrainProfilesForShoe,
+  type SupportedLocale,
+} from '@/domain/catalogue';
 
 import {
   categoryLabel,
@@ -21,16 +25,12 @@ function primaryCategory(
 ): string {
   const category = item.product.categories[0];
   if (!category) return '—';
-  return categoryLabel(
-    category.id,
-    resolveLocalizedText(category.label, locale).value,
-    locale,
-  );
+  return categoryLabel(category, category, locale);
 }
 
 function surfaces(item: ExplorerProduct, locale: SupportedLocale): string {
-  const families = item.product.specifications.surfaceFamilies.value ?? [];
-  const terrain = item.product.specifications.terrainProfiles.value ?? [];
+  const families = surfaceFamiliesForShoe(item.product);
+  const terrain = terrainProfilesForShoe(item.product);
   return (
     [
       ...families.map((value) => surfaceFamilyLabel(value, locale)),
@@ -40,13 +40,13 @@ function surfaces(item: ExplorerProduct, locale: SupportedLocale): string {
 }
 
 function drop(item: ExplorerProduct): string {
-  const value = item.product.specifications.heelToToeDrop.value;
-  return value ? `${value.amount} ${value.unit}` : '—';
+  const value = item.product.specifications.dropMm;
+  return value === null ? '—' : `${value} mm`;
 }
 
 function weight(item: ExplorerProduct): string {
   return item.weight
-    ? `${item.weight.amount} ${item.weight.unit} (${item.weight.referenceSize})`
+    ? `${item.weight.amount} ${item.weight.unit}${item.weight.referenceSize ? ` (${item.weight.referenceSize})` : ''}`
     : '—';
 }
 
@@ -60,6 +60,7 @@ export function compareProducts(
   const comparableWeight =
     leftWeight !== null &&
     rightWeight !== null &&
+    leftWeight.referenceSize !== null &&
     leftWeight.referenceSize === rightWeight.referenceSize;
 
   const rows: ComparisonRow[] = [
@@ -78,17 +79,9 @@ export function compareProducts(
     },
     {
       key: 'stability',
-      left: stabilityLabel(
-        left.product.specifications.stability.value ?? 'unknown',
-        locale,
-      ),
-      right: stabilityLabel(
-        right.product.specifications.stability.value ?? 'unknown',
-        locale,
-      ),
-      difference:
-        left.product.specifications.stability.value !==
-        right.product.specifications.stability.value,
+      left: stabilityLabel(left.product.stability, locale),
+      right: stabilityLabel(right.product.stability, locale),
+      difference: left.product.stability !== right.product.stability,
     },
     {
       key: 'drop',
@@ -118,10 +111,10 @@ export function comparisonSummary(
   const rightCategory = primaryCategory(right, locale);
   const leftSurface = surfaces(left, locale);
   const rightSurface = surfaces(right, locale);
-  const leftDrop = left.product.specifications.heelToToeDrop.value?.amount;
-  const rightDrop = right.product.specifications.heelToToeDrop.value?.amount;
+  const leftDrop = left.product.specifications.dropMm;
+  const rightDrop = right.product.specifications.dropMm;
   const dropDifference =
-    leftDrop !== undefined && rightDrop !== undefined
+    leftDrop !== null && rightDrop !== null
       ? Math.abs(leftDrop - rightDrop)
       : null;
 

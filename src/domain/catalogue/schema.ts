@@ -26,6 +26,7 @@ export const terrainProfiles = [
 export const surfaceTags = [
   'road',
   'asphalt',
+  'treadmill',
   'track',
   'cross-country',
   'gravel',

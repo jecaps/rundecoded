@@ -1,11 +1,45 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, describe, expect, it } from 'vitest';
 
 import { getProductCatalogue } from '@/features/catalogue/catalogue';
 
 import { CustomerConsultation } from './CustomerConsultation';
 
+afterEach(cleanup);
+
 describe('customer consultation', () => {
+  it('allows up to two priorities and keeps the neutral answer exclusive', () => {
+    render(
+      <CustomerConsultation
+        assetBase="/rundecoded/"
+        locale="en"
+        products={getProductCatalogue().map(({ product }) => product)}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /Not sure yet/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    fireEvent.click(screen.getByRole('button', { name: /Not sure yet/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    const value = screen.getByRole('button', {
+      name: /^Value \/ simple first shoe/,
+    });
+    const comfort = screen.getByRole('button', { name: /^Comfort/ });
+    const speed = screen.getByRole('button', { name: /^Speed/ });
+    fireEvent.click(value);
+    fireEvent.click(comfort);
+    fireEvent.click(speed);
+
+    expect(value).toHaveAttribute('aria-pressed', 'true');
+    expect(comfort).toHaveAttribute('aria-pressed', 'true');
+    expect(speed).toHaveAttribute('aria-pressed', 'false');
+
+    fireEvent.click(screen.getByRole('button', { name: /Not sure yet/ }));
+    expect(value).toHaveAttribute('aria-pressed', 'false');
+    expect(comfort).toHaveAttribute('aria-pressed', 'false');
+  });
+
   it('keeps unknown answers neutral and supports an optional other surface note', () => {
     render(
       <CustomerConsultation

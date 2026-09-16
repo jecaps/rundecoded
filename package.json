@@ -23,6 +23,7 @@
     "catalogue:migrate": "node --import tsx scripts/catalogue/transform-legacy.ts",
     "catalogue:assets": "node --import tsx scripts/catalogue/copy-verified-assets.ts",
     "catalogue:check": "node --import tsx scripts/catalogue/transform-legacy.ts --check",
+    "catalogue:facets": "node --import tsx scripts/catalogue/migrate-facets.ts",
     "verify:pages": "node scripts/verify-pages-build.mjs",
     "verify:performance": "node scripts/verify-production-budget.mjs",
     "quality": "pnpm catalogue:check && pnpm check && pnpm lint && pnpm format:check && pnpm test:unit && pnpm build && pnpm verify:pages && pnpm verify:performance"

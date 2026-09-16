@@ -1,49 +1,30 @@
 import productsJson from '@/content/catalogue/products.json';
-import {
-  prototypeProductDetails,
-  type PrototypeProductDetails,
-} from '@/content/catalogue/prototype-product-details';
-import {
-  validateCatalogue,
-  type ShoeProduct,
-  type VerificationStatus,
-} from '@/domain/catalogue';
+import { catalogueShoesSchema, type CatalogueShoe } from '@/domain/catalogue';
 
 export interface ExplorerWeight {
   amount: number;
-  referenceSize: string;
-  sourceUrl: string | null;
-  status: VerificationStatus;
+  referenceSize: string | null;
   unit: 'g';
 }
 
 export interface ExplorerProduct {
-  details: PrototypeProductDetails | null;
-  product: ShoeProduct;
+  product: CatalogueShoe;
   weight: ExplorerWeight | null;
 }
 
-function explorerWeight(product: ShoeProduct): ExplorerWeight | null {
-  const value = product.specifications.weight.value;
-  if (!value) return null;
-  const source = product.sources.find((candidate) =>
-    product.specifications.weight.evidence.sourceIds.includes(candidate.id),
-  );
+function explorerWeight(product: CatalogueShoe): ExplorerWeight | null {
+  const amount = product.specifications.weightG;
+  if (amount === null) return null;
   return {
-    ...value,
-    sourceUrl: source?.url ?? null,
-    status: product.specifications.weight.evidence.status,
+    amount,
+    referenceSize: product.specifications.weightReferenceSize,
+    unit: 'g',
   };
 }
 
 export function getProductCatalogue(): ExplorerProduct[] {
-  return validateCatalogue(productsJson)
-    .products.filter(
-      (product): product is ShoeProduct => product.kind === 'shoe',
-    )
-    .map((product) => ({
-      details: prototypeProductDetails[product.id] ?? null,
-      product,
-      weight: explorerWeight(product),
-    }));
+  return catalogueShoesSchema.parse(productsJson).map((product) => ({
+    product,
+    weight: explorerWeight(product),
+  }));
 }

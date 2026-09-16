@@ -1,13 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import type {
-  Evidence,
-  ShoeProduct,
-  SurfaceFamily,
-  SurfaceTag,
-  TerrainProfile,
-  VerificationStatus,
-} from '@/domain/catalogue';
+import type { CatalogueShoe, SurfaceTag } from '@/domain/catalogue';
 
 import {
   evaluateShoeRecommendation,
@@ -16,54 +9,18 @@ import {
   type RunnerProfile,
 } from './matching';
 
-function evidence(status: VerificationStatus): Evidence {
-  return status === 'pending'
-    ? { status, sourceIds: [], note: 'Research is pending.' }
-    : {
-        status,
-        sourceIds: ['product-source'],
-        ...(status === 'derived'
-          ? { note: 'Derived from the published distance range.' }
-          : {}),
-      };
-}
-
 function shoe(
   overrides: {
     categories?: string[];
     distance?: number | null;
-    distanceStatus?: VerificationStatus;
     id?: string;
     model?: string;
     stability?: 'neutral' | 'stability' | 'unknown';
-    surfaceFamilies?: SurfaceFamily[];
     surfaces?: string[];
-    surfaceStatus?: VerificationStatus;
     surfaceTags?: SurfaceTag[];
-    terrainProfiles?: TerrainProfile[] | null;
   } = {},
-): ShoeProduct {
-  const distanceStatus = overrides.distanceStatus ?? 'verified';
-  const maximumDistance =
-    overrides.distance === null ? null : (overrides.distance ?? 42);
+): CatalogueShoe {
   const surfaces = overrides.surfaces ?? ['Road', 'Gravel'];
-  const surfaceFamilies = overrides.surfaceFamilies ?? [
-    ...(surfaces.includes('Road') ? (['road'] as const) : []),
-    ...(surfaces.some((surface) =>
-      ['Gravel', 'Trail', 'Cross-country'].includes(surface),
-    )
-      ? (['off-road'] as const)
-      : []),
-    ...(surfaces.some((surface) => ['Track', 'Cross-country'].includes(surface))
-      ? (['track'] as const)
-      : []),
-  ];
-  const terrainProfiles =
-    overrides.terrainProfiles === undefined
-      ? surfaces.includes('Gravel')
-        ? (['gravel'] as TerrainProfile[])
-        : []
-      : overrides.terrainProfiles;
   const surfaceTags =
     overrides.surfaceTags ??
     ([
@@ -74,78 +31,48 @@ function shoe(
       ...(surfaces.includes('Cross-country') ? ['cross-country'] : []),
     ] as SurfaceTag[]);
   return {
-    schemaVersion: 1,
     id: overrides.id ?? 'example-daily-shoe',
     kind: 'shoe',
-    lifecycle: 'active',
-    brand: { id: 'example', name: 'Example' },
+    brand: 'Example',
     model: overrides.model ?? 'Daily Shoe',
-    categories: (overrides.categories ?? ['daily-trainer']).map((id) => ({
-      id,
-      label: { en: id, de: null, fr: null },
-    })),
-    copy: {
-      bestFor: { en: 'Daily running', de: null, fr: null },
+    categories: overrides.categories ?? ['daily-trainer'],
+    surfaceTags,
+    stability: overrides.stability ?? 'neutral',
+    factsReviewed: false,
+    facets: {
+      experienceTags: [],
+      useCase: ['daily-trainer'],
+      cushioningLevel: null,
+      stability:
+        overrides.stability === 'unknown'
+          ? null
+          : (overrides.stability ?? 'neutral'),
+      supportFeatures: [],
+      surfaceTags,
+      distanceRangeKm:
+        overrides.distance === null
+          ? null
+          : { min: 0, max: overrides.distance ?? 42 },
+      priorityTags: [],
+      fit: [],
     },
-    technologies: {
-      value: null,
-      evidence: evidence('pending'),
+    details: {
+      bestFor: { en: 'Daily running', de: null, fr: null },
+      overview: { en: 'Daily running', de: null, fr: null },
+      bestAt: { en: 'Daily running', de: null, fr: null },
+      lessSuitableFor: { en: 'Technical trails', de: null, fr: null },
     },
     images: [],
-    sources: [
-      {
-        id: 'product-source',
-        type: 'retailer-product',
-        label: 'Product source',
-        url: 'https://example.com/product',
-        checkedAt: '2026-09-08',
-        status: 'verified',
-      },
-    ],
-    comparables: [],
+    sourceUrl: 'https://example.com/product',
     specifications: {
-      surfaces: {
-        value: surfaces,
-        evidence: evidence(overrides.surfaceStatus ?? 'verified'),
-      },
-      surfaceFamilies: {
-        value: surfaceFamilies,
-        evidence: evidence(overrides.surfaceStatus ?? 'verified'),
-      },
-      terrainProfiles: {
-        value: terrainProfiles,
-        evidence: evidence(
-          terrainProfiles === null
-            ? 'pending'
-            : (overrides.surfaceStatus ?? 'verified'),
-        ),
-      },
-      surfaceTags: {
-        value: surfaceTags,
-        evidence: evidence(overrides.surfaceStatus ?? 'verified'),
-      },
-      stability: {
-        value: overrides.stability ?? 'neutral',
-        evidence: evidence('verified'),
-      },
-      maximumDistance: {
-        value:
-          maximumDistance === null
-            ? null
-            : { amount: maximumDistance, unit: 'km' },
-        evidence: evidence(distanceStatus),
-      },
-      heelToToeDrop: {
-        value: null,
-        evidence: evidence('pending'),
-      },
-      stackHeight: {
-        value: null,
-        evidence: evidence('pending'),
-      },
-      weight: { value: null, evidence: evidence('pending') },
-      fit: { value: null, evidence: evidence('pending') },
-      construction: { value: null, evidence: evidence('pending') },
+      maximumDistanceKm:
+        overrides.distance === null ? null : (overrides.distance ?? 42),
+      dropMm: null,
+      stackHeightMm: null,
+      weightG: null,
+      weightReferenceSize: null,
+      fit: [],
+      technologies: [],
     },
   };
 }
@@ -159,11 +86,10 @@ const roadProfile: RunnerProfile = {
 };
 
 describe('transparent shoe recommendation rules', () => {
-  it('creates a strong match only when essential evidence is verified', () => {
+  it('creates a strong match when the essential requirements match', () => {
     const result = evaluateShoeRecommendation(roadProfile, shoe());
 
     expect(result.tier).toBe('strong-match');
-    expect(result.confidence).toBe('high');
     expect(result.evaluations).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -275,46 +201,17 @@ describe('transparent shoe recommendation rules', () => {
     );
   });
 
-  it('reports evidence confidence separately from suitability', () => {
-    const fallback = evaluateShoeRecommendation(
-      roadProfile,
-      shoe({ distanceStatus: 'fallback' }),
-    );
+  it('keeps missing distance information neutral instead of excluding a shoe', () => {
     const pending = evaluateShoeRecommendation(
       roadProfile,
-      shoe({ distance: null, distanceStatus: 'pending' }),
+      shoe({ distance: null }),
     );
 
-    expect(fallback).toEqual(
-      expect.objectContaining({
-        tier: 'strong-match',
-        confidence: 'low',
-      }),
-    );
-    expect(pending).toEqual(
-      expect.objectContaining({
-        tier: 'good-alternative',
-        confidence: 'unknown',
-      }),
-    );
+    expect(pending.tier).toBe('good-alternative');
     expect(pending.evaluations).toContainEqual(
       expect.objectContaining({
         rule: 'distance',
         outcome: 'unavailable',
-      }),
-    );
-  });
-
-  it('allows a complete derived-data match into the strong-match tier', () => {
-    const result = evaluateShoeRecommendation(
-      roadProfile,
-      shoe({ distanceStatus: 'derived', surfaceStatus: 'derived' }),
-    );
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        tier: 'strong-match',
-        confidence: 'medium',
       }),
     );
   });
@@ -344,7 +241,6 @@ describe('transparent shoe recommendation rules', () => {
     );
 
     expect(result.tier).toBe('good-alternative');
-    expect(result.confidence).toBe('unknown');
     expect(result.evaluations).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -385,13 +281,28 @@ describe('transparent shoe recommendation rules', () => {
     expect(speed.tier).toBe(comfort.tier);
   });
 
+  it('shares the legacy preview priority bonus across two selections', () => {
+    const result = evaluateShoeRecommendation(
+      { ...roadProfile, priorities: ['value', 'comfort'] },
+      shoe({ categories: ['entry-level'] }),
+    );
+
+    expect(result.evaluations).toContainEqual(
+      expect.objectContaining({
+        rule: 'priority',
+        expected: 'value, comfort',
+        outcome: 'preference-match',
+        points: 5,
+      }),
+    );
+  });
+
   it('ranks matches deterministically and omits exclusions from recommendations', () => {
     const candidates = [
       shoe({ id: 'trail-only', model: 'Trail Only', surfaces: ['Trail'] }),
       shoe({
         id: 'fallback-road',
         model: 'Fallback Road',
-        distanceStatus: 'fallback',
       }),
       shoe({ id: 'verified-road', model: 'Verified Road' }),
     ];
@@ -401,12 +312,12 @@ describe('transparent shoe recommendation rules', () => {
         ({ product, tier }) => [product.id, tier],
       ),
     ).toEqual([
-      ['verified-road', 'strong-match'],
       ['fallback-road', 'strong-match'],
+      ['verified-road', 'strong-match'],
       ['trail-only', 'not-a-match'],
     ]);
     expect(
       recommendShoes(roadProfile, candidates).map(({ product }) => product.id),
-    ).toEqual(['verified-road', 'fallback-road']);
+    ).toEqual(['fallback-road', 'verified-road']);
   });
 });

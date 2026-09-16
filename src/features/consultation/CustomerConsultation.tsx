@@ -23,7 +23,7 @@ import {
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import type { ShoeProduct } from '@/domain/catalogue';
+import type { CatalogueShoe } from '@/domain/catalogue';
 import {
   recommendShoes,
   type RecommendationPriority,
@@ -41,7 +41,7 @@ import { consultationCopy } from './copy';
 interface CustomerConsultationProps {
   assetBase: string;
   locale: Locale;
-  products: ShoeProduct[];
+  products: CatalogueShoe[];
 }
 
 type ChoiceIcon = LucideIcon;
@@ -68,6 +68,7 @@ const surfaceChoices = [
 ] as const;
 
 const priorityChoices = [
+  ['value', Sparkles],
   ['comfort', Cloud],
   ['versatility', Repeat2],
   ['speed', Zap],
@@ -97,7 +98,8 @@ const stabilityChoices = [
 
 const comfortChoices = [
   ['none', Check],
-  ['kneesHips', HeartPulse],
+  ['knees', HeartPulse],
+  ['hips', HeartPulse],
   ['achillesCalves', HeartPulse],
   ['other', Pencil],
   ['private', ShieldCheck],
@@ -135,6 +137,7 @@ const goalValues: Partial<Record<string, RunningGoal>> = {
 };
 
 const priorityValues: Partial<Record<string, RecommendationPriority>> = {
+  value: 'value',
   comfort: 'comfort',
   versatility: 'versatility',
   speed: 'speed',
@@ -147,11 +150,9 @@ const stabilityValues: Partial<Record<string, StabilityPreference>> = {
   noPreference: 'no-preference',
 };
 
-function imagePath(product: ShoeProduct, assetBase: string) {
+function imagePath(product: CatalogueShoe, assetBase: string) {
   const image = product.images[0];
-  return image?.status !== 'pending' && image?.localPath
-    ? `${assetBase}${image.localPath}`
-    : null;
+  return image ? `${assetBase}${image}` : null;
 }
 
 function AnswerButton({
@@ -208,29 +209,34 @@ export function CustomerConsultation({
   const [distance, setDistance] = useState<string>();
   const [surfaces, setSurfaces] = useState<string[]>([]);
   const [otherSurface, setOtherSurface] = useState('');
-  const [priority, setPriority] = useState<string>();
+  const [priorities, setPriorities] = useState<string[]>([]);
   const [goal, setGoal] = useState<string>();
   const [otherGoal, setOtherGoal] = useState('');
   const [stability, setStability] = useState<string>();
   const [comfort, setComfort] = useState<string[]>([]);
   const [otherComfort, setOtherComfort] = useState('');
 
-  const answers = [distance, surfaces, priority, goal, stability, comfort];
+  const answers = [distance, surfaces, priorities, goal, stability, comfort];
   const canContinue = step === 6 || Boolean(answers[step]?.length);
 
   const profile = useMemo<RunnerProfile>(() => {
     const mappedSurfaces = surfaces
       .map((answer) => surfaceValues[answer])
       .filter((surface): surface is RecommendationSurface => Boolean(surface));
+    const mappedPriorities = priorities
+      .map((answer) => priorityValues[answer])
+      .filter((priority): priority is RecommendationPriority =>
+        Boolean(priority),
+      );
     return {
       primarySurface: mappedSurfaces[0],
       secondarySurfaces: mappedSurfaces.slice(1),
       typicalDistanceKm: distance ? distanceValues[distance] : undefined,
-      priority: priority ? priorityValues[priority] : undefined,
+      priorities: mappedPriorities,
       goal: goal ? goalValues[goal] : undefined,
       stabilityPreference: stability ? stabilityValues[stability] : undefined,
     };
-  }, [distance, goal, priority, stability, surfaces]);
+  }, [distance, goal, priorities, stability, surfaces]);
 
   const recommendations = useMemo(
     () => recommendShoes(profile, products, products.length),
@@ -268,6 +274,7 @@ export function CustomerConsultation({
     selected: string[],
     update: (values: string[]) => void,
     exclusive: string[],
+    maxSelections?: number,
   ) {
     if (exclusive.includes(value)) {
       update(selected.includes(value) ? [] : [value]);
@@ -276,11 +283,12 @@ export function CustomerConsultation({
     const withoutExclusive = selected.filter(
       (answer) => !exclusive.includes(answer),
     );
-    update(
-      withoutExclusive.includes(value)
-        ? withoutExclusive.filter((answer) => answer !== value)
-        : [...withoutExclusive, value],
-    );
+    if (withoutExclusive.includes(value)) {
+      update(withoutExclusive.filter((answer) => answer !== value));
+      return;
+    }
+    if (maxSelections && withoutExclusive.length >= maxSelections) return;
+    update([...withoutExclusive, value]);
   }
 
   function reset() {
@@ -289,7 +297,7 @@ export function CustomerConsultation({
     setDistance(undefined);
     setSurfaces([]);
     setOtherSurface('');
-    setPriority(undefined);
+    setPriorities([]);
     setGoal(undefined);
     setOtherGoal('');
     setStability(undefined);
@@ -409,15 +417,7 @@ export function CustomerConsultation({
                               {product.model}
                             </h3>
                             <p className="text-muted-foreground mt-1 mb-0 text-sm">
-                              {product.brand.name}
-                            </p>
-                            <p className="bg-surface-subtle text-muted-foreground mt-2 mb-0 inline-flex rounded-full px-2.5 py-1 text-xs">
-                              {copy.evidenceConfidence.label}:{' '}
-                              {
-                                copy.evidenceConfidence[
-                                  recommendation.confidence
-                                ]
-                              }
+                              {product.brand}
                             </p>
                             {reasons.length > 0 ? (
                               <ul className="mt-3 mb-0 flex flex-wrap gap-x-5 gap-y-1 p-0 text-sm">
@@ -567,6 +567,11 @@ export function CustomerConsultation({
                   {copy.multipleHelp}
                 </p>
               ) : null}
+              {step === 2 ? (
+                <p className="text-muted-foreground mt-2 mb-0 text-sm">
+                  {copy.priorityMultipleHelp}
+                </p>
+              ) : null}
 
               {step === 0
                 ? renderChoices(
@@ -581,10 +586,14 @@ export function CustomerConsultation({
                   )
                 : null}
               {step === 2
-                ? renderChoices(
-                    priorityChoices,
-                    priority ? [priority] : [],
-                    setPriority,
+                ? renderChoices(priorityChoices, priorities, (value) =>
+                    toggleMultiple(
+                      value,
+                      priorities,
+                      setPriorities,
+                      ['unknown'],
+                      2,
+                    ),
                   )
                 : null}
               {step === 3

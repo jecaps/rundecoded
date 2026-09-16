@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
+import {
+  surfaceFamiliesForShoe,
+  terrainProfilesForShoe,
+} from '@/domain/catalogue';
+
 import { rankComparableProducts } from './comparables';
 import { compareProducts, comparisonSummary } from './comparison';
 import {
@@ -15,78 +20,42 @@ const products = getProductCatalogue();
 const byId = new Map(products.map((item) => [item.product.id, item]));
 
 describe('Phase 8 product catalogue', () => {
-  it('contains all 106 validated products with resolvable comparables', () => {
+  it('contains all 106 products during the progressive migration', () => {
     expect(products).toHaveLength(106);
+  });
+
+  it('derives a surface family from the readable surface tags', () => {
     for (const { product } of products) {
-      expect(product.comparables.length).toBeGreaterThan(0);
-      for (const comparable of product.comparables)
-        expect(byId.has(comparable)).toBe(true);
+      expect(surfaceFamiliesForShoe(product).length).toBeGreaterThan(0);
     }
   });
 
-  it('provides a surface family for every shoe and keeps uncertain terrain pending', () => {
-    for (const { product } of products) {
-      expect(
-        product.specifications.surfaceFamilies.value?.length,
-      ).toBeGreaterThan(0);
-      if (product.specifications.terrainProfiles.value === null) {
-        expect(product.specifications.surfaceFamilies.value).toContain(
-          'off-road',
-        );
-      }
-    }
-  });
-
-  it('includes complete and intentionally pending presentation states', () => {
-    expect(
-      products.some(({ product }) => product.images[0]?.status === 'pending'),
-    ).toBe(true);
-    expect(
-      products.some(({ product }) => product.images[0]?.status === 'verified'),
-    ).toBe(true);
+  it('represents missing optional information with empty arrays or null', () => {
+    expect(products.some(({ product }) => product.images.length === 0)).toBe(
+      true,
+    );
     expect(
       products.some(
-        ({ product }) =>
-          product.specifications.stackHeight.evidence.status === 'pending',
+        ({ product }) => product.specifications.stackHeightMm === null,
       ),
     ).toBe(true);
   });
 
-  it('uses stable unique IDs, distinct categories, and category-first comparables', () => {
+  it('uses stable unique IDs and distinct category tags', () => {
     expect(new Set(products.map(({ product }) => product.id)).size).toBe(106);
 
     for (const { product } of products) {
-      expect(new Set(product.categories.map(({ id }) => id)).size).toBe(
-        product.categories.length,
-      );
-      const primaryCategory = product.categories[0]?.id;
-      const samePrimaryCategoryCount = products.filter(
-        ({ product: candidate }) =>
-          candidate.id !== product.id &&
-          candidate.categories[0]?.id === primaryCategory,
-      ).length;
-      for (const comparableId of product.comparables) {
-        const comparable = byId.get(comparableId)?.product;
-        expect(comparable).toBeDefined();
-        const sharesPrimaryCategory =
-          comparable!.categories[0]?.id === primaryCategory;
-        const sharesSurface =
-          comparable!.specifications.surfaceTags.value?.some((surface) =>
-            product.specifications.surfaceTags.value?.includes(surface),
-          ) ?? false;
-        if (samePrimaryCategoryCount >= 3) {
-          expect(sharesPrimaryCategory).toBe(true);
-        } else {
-          expect(sharesPrimaryCategory || sharesSurface).toBe(true);
-        }
-      }
+      expect(new Set(product.categories).size).toBe(product.categories.length);
     }
   });
 
-  it('records a reference size for every available weight', () => {
+  it('stores weight and its optional reference size independently', () => {
     for (const { product } of products) {
-      const weight = product.specifications.weight.value;
-      if (weight) expect(weight.referenceSize).not.toHaveLength(0);
+      const { weightG, weightReferenceSize } = product.specifications;
+      if (weightReferenceSize !== null) {
+        expect(weightG).not.toBeNull();
+        expect(weightReferenceSize).not.toHaveLength(0);
+      }
     }
   });
 });
@@ -175,9 +144,7 @@ describe('catalogue state', () => {
     const trail = filterProducts(products, '', 'trail', 'en');
     expect(trail.length).toBeGreaterThan(0);
     expect(
-      trail.every(({ product }) =>
-        product.categories.some(({ id }) => id === 'trail'),
-      ),
+      trail.every(({ product }) => product.categories.includes('trail')),
     ).toBe(true);
     expect(paginateProducts(trail, 99).page).toBe(Math.ceil(trail.length / 12));
   });
@@ -189,12 +156,12 @@ describe('catalogue state', () => {
     expect(offRoad.length).toBeGreaterThan(gravel.length);
     expect(
       offRoad.every(({ product }) =>
-        product.specifications.surfaceFamilies.value?.includes('off-road'),
+        surfaceFamiliesForShoe(product).includes('off-road'),
       ),
     ).toBe(true);
     expect(
       gravel.every(({ product }) =>
-        product.specifications.terrainProfiles.value?.includes('gravel'),
+        terrainProfilesForShoe(product).includes('gravel'),
       ),
     ).toBe(true);
   });
@@ -252,11 +219,7 @@ describe('comparison', () => {
     expect(current).toBeTruthy();
     const ranked = rankComparableProducts(current!, products, 'en');
     expect(ranked).toHaveLength(3);
-    expect(ranked.some(({ product }) => product.brand.name !== 'Asics')).toBe(
-      true,
-    );
-    expect(ranked[0]?.product.categories.some(({ id }) => id === 'trail')).toBe(
-      true,
-    );
+    expect(ranked.some(({ product }) => product.brand !== 'Asics')).toBe(true);
+    expect(ranked[0]?.product.categories.includes('trail')).toBe(true);
   });
 });

@@ -21,6 +21,7 @@ export interface ConsultationCopy {
   };
   eyebrow: string;
   multipleHelp: string;
+  priorityMultipleHelp: string;
   notSureNotice: string;
   otherComfortLabel: string;
   otherComfortPlaceholder: string;
@@ -69,7 +70,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     },
     answerRequired: 'Choose an answer to continue.',
     comfortNotice:
-      'Comfort history adds context for the employee. It does not diagnose an injury or automatically prescribe a heel-to-toe drop.',
+      'Comfort history adds a small ranking preference for the employee. It does not diagnose an injury or promise relief.',
     evidenceConfidence: {
       high: 'High',
       label: 'Evidence confidence',
@@ -80,6 +81,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     eyebrow: 'Employee customer consultation',
     multipleHelp:
       'Multiple answers are allowed. Select the customer’s most frequent surface first.',
+    priorityMultipleHelp:
+      'Choose one or two priorities. When two are selected, they share the same total influence.',
     notSureNotice:
       '“Not sure yet” keeps this criterion neutral. It will not exclude a shoe, but the recommendation will be less specific.',
     otherComfortLabel: 'Add a short comfort note · optional',
@@ -160,6 +163,10 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         title: 'What matters most for this customer?',
         help: 'This preference helps rank compatible shoes.',
         choices: {
+          value: {
+            label: 'Value / simple first shoe',
+            description: 'An accessible choice for beginning regular running',
+          },
           comfort: {
             label: 'Comfort',
             description: 'Soft and protective feel',
@@ -252,13 +259,17 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: 'No current concern',
             description: 'Nothing relevant reported',
           },
-          kneesHips: {
-            label: 'Knees or hips',
-            description: 'Customer reports sensitivity here',
+          knees: {
+            label: 'Knees',
+            description: 'Light preference for more cushioning and 0–6 mm drop',
+          },
+          hips: {
+            label: 'Hips',
+            description: 'Light preference for 0–6 mm drop',
           },
           achillesCalves: {
             label: 'Achilles or calves',
-            description: 'Customer reports sensitivity here',
+            description: 'Light preference for drop above 6 mm',
           },
           other: {
             label: 'Other concern',
@@ -338,7 +349,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     },
     answerRequired: 'Wähle eine Antwort, um fortzufahren.',
     comfortNotice:
-      'Beschwerden dienen nur als Gesprächskontext. Sie stellen keine Diagnose dar und bestimmen nicht automatisch die Sprengung.',
+      'Komforterfahrungen beeinflussen die Rangfolge nur leicht. Sie stellen keine Diagnose dar und versprechen keine Linderung.',
     evidenceConfidence: {
       high: 'Hoch',
       label: 'Datenvertrauen',
@@ -349,6 +360,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     eyebrow: 'Kundenberatung für Mitarbeitende',
     multipleHelp:
       'Mehrere Antworten sind möglich. Wähle den häufigsten Untergrund zuerst.',
+    priorityMultipleHelp:
+      'Wähle eine oder zwei Prioritäten. Bei zwei Antworten teilen sie sich denselben Gesamteinfluss.',
     notSureNotice:
       '„Noch nicht sicher“ lässt dieses Kriterium neutral. Dadurch wird kein Schuh ausgeschlossen, die Empfehlung ist aber weniger spezifisch.',
     otherComfortLabel: 'Kurze Komfortnotiz ergänzen · optional',
@@ -432,6 +445,10 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         title: 'Was ist dem Kunden am wichtigsten?',
         help: 'Diese Präferenz hilft, geeignete Schuhe zu sortieren.',
         choices: {
+          value: {
+            label: 'Preiswert / einfacher erster Schuh',
+            description: 'Ein zugänglicher Einstieg ins regelmäßige Laufen',
+          },
           comfort: {
             label: 'Komfort',
             description: 'Weiches und schützendes Laufgefühl',
@@ -530,13 +547,18 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: 'Aktuell keine Beschwerden',
             description: 'Nichts Relevantes angegeben',
           },
-          kneesHips: {
-            label: 'Knie oder Hüfte',
-            description: 'Kunde berichtet hier Empfindlichkeit',
+          knees: {
+            label: 'Knie',
+            description:
+              'Leichte Präferenz für mehr Dämpfung und 0–6 mm Sprengung',
+          },
+          hips: {
+            label: 'Hüfte',
+            description: 'Leichte Präferenz für 0–6 mm Sprengung',
           },
           achillesCalves: {
             label: 'Achilles oder Waden',
-            description: 'Kunde berichtet hier Empfindlichkeit',
+            description: 'Leichte Präferenz für mehr als 6 mm Sprengung',
           },
           other: {
             label: 'Andere Beschwerden',
@@ -617,7 +639,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     },
     answerRequired: 'Choisissez une réponse pour continuer.',
     comfortNotice:
-      'L’historique de confort apporte seulement du contexte. Il ne constitue pas un diagnostic et ne prescrit pas automatiquement un drop.',
+      'L’historique de confort influence légèrement le classement. Il ne constitue pas un diagnostic et ne promet aucun soulagement.',
     evidenceConfidence: {
       high: 'Élevée',
       label: 'Fiabilité des données',
@@ -628,6 +650,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     eyebrow: 'Conseil client pour les employés',
     multipleHelp:
       'Plusieurs réponses sont possibles. Sélectionnez d’abord la surface la plus fréquente.',
+    priorityMultipleHelp:
+      'Choisissez une ou deux priorités. Avec deux réponses, elles partagent la même influence totale.',
     notSureNotice:
       '« Pas encore sûr » laisse ce critère neutre. Aucune chaussure ne sera exclue, mais la recommandation sera moins précise.',
     otherComfortLabel: 'Ajouter une courte note de confort · facultatif',
@@ -706,6 +730,11 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         title: 'Qu’est-ce qui compte le plus pour le client ?',
         help: 'Cette préférence aide à classer les chaussures compatibles.',
         choices: {
+          value: {
+            label: 'Bon rapport qualité-prix / première chaussure simple',
+            description:
+              'Un choix accessible pour commencer à courir régulièrement',
+          },
           comfort: {
             label: 'Confort',
             description: 'Sensation douce et protectrice',
@@ -801,13 +830,18 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: 'Aucune gêne actuelle',
             description: 'Rien de pertinent signalé',
           },
-          kneesHips: {
-            label: 'Genoux ou hanches',
-            description: 'Le client signale une sensibilité',
+          knees: {
+            label: 'Genoux',
+            description:
+              'Légère préférence pour plus d’amorti et un drop de 0–6 mm',
+          },
+          hips: {
+            label: 'Hanches',
+            description: 'Légère préférence pour un drop de 0–6 mm',
           },
           achillesCalves: {
             label: 'Achille ou mollets',
-            description: 'Le client signale une sensibilité',
+            description: 'Légère préférence pour un drop supérieur à 6 mm',
           },
           other: {
             label: 'Autre gêne',

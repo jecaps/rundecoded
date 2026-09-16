@@ -15,7 +15,7 @@ const { locale } = Astro.props;
 const metadata = sharedMessages[locale].pages.catalogue;
 const products = getProductCatalogue();
 const validCategoryIds = new Set([
-  ...products.flatMap(({ product }) => product.categories.map(({ id }) => id)),
+  ...products.flatMap(({ product }) => product.categories),
   ...taxonomyFilterIds,
 ]);
 const initialState = parseCatalogueUrlState(

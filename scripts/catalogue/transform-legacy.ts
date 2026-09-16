@@ -18,7 +18,7 @@ const projectRoot = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const paths = {
   productsInput: resolve(projectRoot, 'docs/baseline/legacy-products.csv'),
   provenanceInput: resolve(projectRoot, 'docs/baseline/image-provenance.csv'),
-  catalogue: resolve(projectRoot, 'src/content/catalogue/products.json'),
+  catalogue: resolve(projectRoot, 'src/content/catalogue/legacy-products.json'),
   reconciliation: resolve(projectRoot, 'reports/catalogue-reconciliation.json'),
   qualityJson: resolve(projectRoot, 'reports/catalogue-quality.json'),
   qualityMarkdown: resolve(projectRoot, 'reports/catalogue-quality.md'),
