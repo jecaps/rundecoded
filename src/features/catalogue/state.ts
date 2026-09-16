@@ -1,6 +1,8 @@
 import {
   surfaceFamilies,
+  surfaceFamiliesForShoe,
   terrainProfiles,
+  terrainProfilesForShoe,
   type SupportedLocale,
   type SurfaceFamily,
   type TerrainProfile,
@@ -37,20 +39,15 @@ export function filterProducts(
   return searchProducts(products, query, locale).filter(({ product }) => {
     if (categoryId.startsWith(SURFACE_FILTER_PREFIX)) {
       const family = categoryId.slice(SURFACE_FILTER_PREFIX.length);
-      return product.specifications.surfaceFamilies.value?.includes(
-        family as SurfaceFamily,
-      );
+      return surfaceFamiliesForShoe(product).includes(family as SurfaceFamily);
     }
     if (categoryId.startsWith(TERRAIN_FILTER_PREFIX)) {
       const terrain = categoryId.slice(TERRAIN_FILTER_PREFIX.length);
-      return product.specifications.terrainProfiles.value?.includes(
+      return terrainProfilesForShoe(product).includes(
         terrain as TerrainProfile,
       );
     }
-    if (
-      categoryId !== 'all' &&
-      !product.categories.some(({ id }) => id === categoryId)
-    ) {
+    if (categoryId !== 'all' && !product.categories.includes(categoryId)) {
       return false;
     }
     return true;

@@ -23,7 +23,7 @@ import {
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import type { ShoeProduct } from '@/domain/catalogue';
+import type { CatalogueShoe } from '@/domain/catalogue';
 import {
   recommendShoes,
   type RecommendationPriority,
@@ -41,7 +41,7 @@ import { consultationCopy } from './copy';
 interface CustomerConsultationProps {
   assetBase: string;
   locale: Locale;
-  products: ShoeProduct[];
+  products: CatalogueShoe[];
 }
 
 type ChoiceIcon = LucideIcon;
@@ -50,7 +50,9 @@ const distanceChoices = [
   ['under5', Gauge],
   ['upTo10', Route],
   ['upTo21', Map],
-  ['over21', Mountain],
+  ['upTo42', Mountain],
+  ['upTo60', Mountain],
+  ['over60', Mountain],
   ['unknown', CircleHelp],
 ] as const;
 
@@ -66,6 +68,7 @@ const surfaceChoices = [
 ] as const;
 
 const priorityChoices = [
+  ['value', Sparkles],
   ['comfort', Cloud],
   ['versatility', Repeat2],
   ['speed', Zap],
@@ -95,7 +98,8 @@ const stabilityChoices = [
 
 const comfortChoices = [
   ['none', Check],
-  ['kneesHips', HeartPulse],
+  ['knees', HeartPulse],
+  ['hips', HeartPulse],
   ['achillesCalves', HeartPulse],
   ['other', Pencil],
   ['private', ShieldCheck],
@@ -106,7 +110,9 @@ const distanceValues: Record<string, number | undefined> = {
   under5: 5,
   upTo10: 10,
   upTo21: 21,
-  over21: 42,
+  upTo42: 42,
+  upTo60: 60,
+  over60: 80,
   unknown: undefined,
 };
 
@@ -131,6 +137,7 @@ const goalValues: Partial<Record<string, RunningGoal>> = {
 };
 
 const priorityValues: Partial<Record<string, RecommendationPriority>> = {
+  value: 'value',
   comfort: 'comfort',
   versatility: 'versatility',
   speed: 'speed',
@@ -143,11 +150,9 @@ const stabilityValues: Partial<Record<string, StabilityPreference>> = {
   noPreference: 'no-preference',
 };
 
-function imagePath(product: ShoeProduct, assetBase: string) {
+function imagePath(product: CatalogueShoe, assetBase: string) {
   const image = product.images[0];
-  return image?.status !== 'pending' && image?.localPath
-    ? `${assetBase}${image.localPath}`
-    : null;
+  return image ? `${assetBase}${image}` : null;
 }
 
 function AnswerButton({
@@ -204,40 +209,72 @@ export function CustomerConsultation({
   const [distance, setDistance] = useState<string>();
   const [surfaces, setSurfaces] = useState<string[]>([]);
   const [otherSurface, setOtherSurface] = useState('');
-  const [priority, setPriority] = useState<string>();
+  const [priorities, setPriorities] = useState<string[]>([]);
   const [goal, setGoal] = useState<string>();
   const [otherGoal, setOtherGoal] = useState('');
   const [stability, setStability] = useState<string>();
   const [comfort, setComfort] = useState<string[]>([]);
   const [otherComfort, setOtherComfort] = useState('');
 
-  const answers = [distance, surfaces, priority, goal, stability, comfort];
+  const answers = [distance, surfaces, priorities, goal, stability, comfort];
   const canContinue = step === 6 || Boolean(answers[step]?.length);
 
   const profile = useMemo<RunnerProfile>(() => {
     const mappedSurfaces = surfaces
       .map((answer) => surfaceValues[answer])
       .filter((surface): surface is RecommendationSurface => Boolean(surface));
+    const mappedPriorities = priorities
+      .map((answer) => priorityValues[answer])
+      .filter((priority): priority is RecommendationPriority =>
+        Boolean(priority),
+      );
     return {
       primarySurface: mappedSurfaces[0],
       secondarySurfaces: mappedSurfaces.slice(1),
       typicalDistanceKm: distance ? distanceValues[distance] : undefined,
-      priority: priority ? priorityValues[priority] : undefined,
+      priorities: mappedPriorities,
       goal: goal ? goalValues[goal] : undefined,
       stabilityPreference: stability ? stabilityValues[stability] : undefined,
     };
-  }, [distance, goal, priority, stability, surfaces]);
+  }, [distance, goal, priorities, stability, surfaces]);
 
   const recommendations = useMemo(
-    () => recommendShoes(profile, products, 3),
+    () => recommendShoes(profile, products, products.length),
     [profile, products],
   );
+  const recommendationGroups = [
+    {
+      empty: copy.resultGroups.strong.empty,
+      id: 'strong-matches',
+      recommendations: recommendations
+        .filter(({ tier }) => tier === 'strong-match')
+        .slice(0, 5),
+      title: copy.resultGroups.strong.title,
+    },
+    {
+      empty: copy.resultGroups.great.empty,
+      id: 'great-matches',
+      recommendations: recommendations
+        .filter(({ tier }) => tier === 'great-match')
+        .slice(0, 5),
+      title: copy.resultGroups.great.title,
+    },
+    {
+      empty: copy.resultGroups.alternative.empty,
+      id: 'good-alternatives',
+      recommendations: recommendations
+        .filter(({ tier }) => tier === 'good-alternative')
+        .slice(0, 5),
+      title: copy.resultGroups.alternative.title,
+    },
+  ];
 
   function toggleMultiple(
     value: string,
     selected: string[],
     update: (values: string[]) => void,
     exclusive: string[],
+    maxSelections?: number,
   ) {
     if (exclusive.includes(value)) {
       update(selected.includes(value) ? [] : [value]);
@@ -246,11 +283,12 @@ export function CustomerConsultation({
     const withoutExclusive = selected.filter(
       (answer) => !exclusive.includes(answer),
     );
-    update(
-      withoutExclusive.includes(value)
-        ? withoutExclusive.filter((answer) => answer !== value)
-        : [...withoutExclusive, value],
-    );
+    if (withoutExclusive.includes(value)) {
+      update(withoutExclusive.filter((answer) => answer !== value));
+      return;
+    }
+    if (maxSelections && withoutExclusive.length >= maxSelections) return;
+    update([...withoutExclusive, value]);
   }
 
   function reset() {
@@ -259,7 +297,7 @@ export function CustomerConsultation({
     setDistance(undefined);
     setSurfaces([]);
     setOtherSurface('');
-    setPriority(undefined);
+    setPriorities([]);
     setGoal(undefined);
     setOtherGoal('');
     setStability(undefined);
@@ -319,88 +357,106 @@ export function CustomerConsultation({
           </Button>
         </div>
 
-        <div className="mt-8 grid gap-4">
-          {recommendations.map((recommendation) => {
-            const product = recommendation.product;
-            const src = imagePath(product, assetBase);
-            const reasons = recommendation.evaluations
-              .filter(
-                ({ outcome }) =>
-                  outcome === 'match' || outcome === 'preference-match',
-              )
-              .map(({ rule }) => {
-                if (rule === 'primary-surface')
-                  return copy.resultReasons.surface;
-                if (rule === 'distance') return copy.resultReasons.distance;
-                if (rule === 'goal') return copy.resultReasons.goal;
-                if (rule === 'priority') return copy.resultReasons.priority;
-                if (rule === 'stability') return copy.resultReasons.stability;
-                return null;
-              })
-              .filter((reason): reason is string => Boolean(reason));
-            const href = `${catalogueUrl}?${new URLSearchParams({ q: product.model })}`;
+        <div className="mt-8 grid gap-10">
+          {recommendationGroups.map((group) => (
+            <section aria-labelledby={group.id} key={group.id}>
+              <h2 className="mb-0 text-2xl font-bold" id={group.id}>
+                {group.title}
+              </h2>
+              {group.recommendations.length > 0 ? (
+                <div className="mt-4 grid gap-4">
+                  {group.recommendations.map((recommendation) => {
+                    const product = recommendation.product;
+                    const src = imagePath(product, assetBase);
+                    const reasons = recommendation.evaluations
+                      .filter(
+                        ({ outcome }) =>
+                          outcome === 'match' || outcome === 'preference-match',
+                      )
+                      .map(({ rule }) => {
+                        if (rule === 'primary-surface')
+                          return copy.resultReasons.surface;
+                        if (rule === 'distance')
+                          return copy.resultReasons.distance;
+                        if (rule === 'goal') return copy.resultReasons.goal;
+                        if (rule === 'priority')
+                          return copy.resultReasons.priority;
+                        if (rule === 'stability')
+                          return copy.resultReasons.stability;
+                        return null;
+                      })
+                      .filter((reason): reason is string => Boolean(reason));
+                    const href = `${catalogueUrl}?${new URLSearchParams({ q: product.model })}`;
 
-            return (
-              <Card key={product.id}>
-                <CardContent className="tablet:grid-cols-[8rem_minmax(0,1fr)_auto] grid items-center gap-5 p-5">
-                  <div className="bg-surface-subtle flex min-h-28 items-center justify-center overflow-hidden rounded-[var(--radius-control)] p-2">
-                    {src ? (
-                      <img
-                        alt=""
-                        className="h-24 w-full object-contain"
-                        src={src}
-                      />
-                    ) : (
-                      <Sparkles
-                        aria-hidden="true"
-                        className="text-muted-foreground size-7"
-                      />
-                    )}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-primary m-0 text-xs font-bold uppercase">
-                      {recommendation.tier === 'strong-match'
-                        ? copy.tiers.strong
-                        : copy.tiers.alternative}
-                    </p>
-                    <h2 className="mt-1 mb-0 text-xl font-bold">
-                      {product.model}
-                    </h2>
-                    <p className="text-muted-foreground mt-1 mb-0 text-sm">
-                      {product.brand.name}
-                    </p>
-                    <p className="bg-surface-subtle text-muted-foreground mt-2 mb-0 inline-flex rounded-full px-2.5 py-1 text-xs">
-                      {copy.evidenceConfidence.label}:{' '}
-                      {copy.evidenceConfidence[recommendation.confidence]}
-                    </p>
-                    {reasons.length > 0 ? (
-                      <ul className="mt-3 mb-0 flex flex-wrap gap-x-5 gap-y-1 p-0 text-sm">
-                        {reasons.slice(0, 3).map((reason) => (
-                          <li
-                            className="flex items-center gap-1.5"
-                            key={reason}
+                    return (
+                      <Card key={product.id}>
+                        <CardContent className="tablet:grid-cols-[8rem_minmax(0,1fr)_auto] grid items-center gap-5 p-5">
+                          <div className="bg-surface-subtle flex min-h-28 items-center justify-center overflow-hidden rounded-[var(--radius-control)] p-2">
+                            {src ? (
+                              <img
+                                alt=""
+                                className="h-24 w-full object-contain"
+                                src={src}
+                              />
+                            ) : (
+                              <Sparkles
+                                aria-hidden="true"
+                                className="text-muted-foreground size-7"
+                              />
+                            )}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-primary m-0 text-xs font-bold uppercase">
+                              {recommendation.tier === 'strong-match'
+                                ? copy.tiers.strong
+                                : recommendation.tier === 'great-match'
+                                  ? copy.tiers.great
+                                  : copy.tiers.alternative}
+                            </p>
+                            <h3 className="mt-1 mb-0 text-xl font-bold">
+                              {product.model}
+                            </h3>
+                            <p className="text-muted-foreground mt-1 mb-0 text-sm">
+                              {product.brand}
+                            </p>
+                            {reasons.length > 0 ? (
+                              <ul className="mt-3 mb-0 flex flex-wrap gap-x-5 gap-y-1 p-0 text-sm">
+                                {reasons.slice(0, 3).map((reason) => (
+                                  <li
+                                    className="flex items-center gap-1.5"
+                                    key={reason}
+                                  >
+                                    <Check
+                                      aria-hidden="true"
+                                      className="text-primary size-4"
+                                    />
+                                    {reason}
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : null}
+                          </div>
+                          <a
+                            className={buttonVariants({ variant: 'primary' })}
+                            href={href}
                           >
-                            <Check
-                              aria-hidden="true"
-                              className="text-primary size-4"
-                            />
-                            {reason}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
-                  </div>
-                  <a
-                    className={buttonVariants({ variant: 'primary' })}
-                    href={href}
-                  >
-                    {copy.actions.viewCatalogue}
-                    <ArrowRight aria-hidden="true" className="size-4" />
-                  </a>
-                </CardContent>
-              </Card>
-            );
-          })}
+                            {copy.actions.viewCatalogue}
+                            <ArrowRight aria-hidden="true" className="size-4" />
+                          </a>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              ) : (
+                <Card className="mt-4 border-dashed">
+                  <CardContent className="text-muted-foreground p-5 text-sm leading-6">
+                    {group.empty}
+                  </CardContent>
+                </Card>
+              )}
+            </section>
+          ))}
         </div>
 
         <p className="border-border text-muted-foreground mt-6 border-t pt-5 text-sm leading-6">
@@ -511,6 +567,11 @@ export function CustomerConsultation({
                   {copy.multipleHelp}
                 </p>
               ) : null}
+              {step === 2 ? (
+                <p className="text-muted-foreground mt-2 mb-0 text-sm">
+                  {copy.priorityMultipleHelp}
+                </p>
+              ) : null}
 
               {step === 0
                 ? renderChoices(
@@ -525,10 +586,14 @@ export function CustomerConsultation({
                   )
                 : null}
               {step === 2
-                ? renderChoices(
-                    priorityChoices,
-                    priority ? [priority] : [],
-                    setPriority,
+                ? renderChoices(priorityChoices, priorities, (value) =>
+                    toggleMultiple(
+                      value,
+                      priorities,
+                      setPriorities,
+                      ['unknown'],
+                      2,
+                    ),
                   )
                 : null}
               {step === 3

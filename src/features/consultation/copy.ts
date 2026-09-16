@@ -21,6 +21,7 @@ export interface ConsultationCopy {
   };
   eyebrow: string;
   multipleHelp: string;
+  priorityMultipleHelp: string;
   notSureNotice: string;
   otherComfortLabel: string;
   otherComfortPlaceholder: string;
@@ -35,6 +36,11 @@ export interface ConsultationCopy {
     title: string;
   }>;
   resultDisclaimer: string;
+  resultGroups: {
+    alternative: { empty: string; title: string };
+    great: { empty: string; title: string };
+    strong: { empty: string; title: string };
+  };
   resultIntro: string;
   resultReasons: {
     distance: string;
@@ -47,7 +53,7 @@ export interface ConsultationCopy {
   reviewIntro: string;
   reviewMissing: string;
   steps: string[];
-  tiers: { alternative: string; strong: string };
+  tiers: { alternative: string; great: string; strong: string };
   title: string;
 }
 
@@ -64,7 +70,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     },
     answerRequired: 'Choose an answer to continue.',
     comfortNotice:
-      'Comfort history adds context for the employee. It does not diagnose an injury or automatically prescribe a heel-to-toe drop.',
+      'Comfort history adds a small ranking preference for the employee. It does not diagnose an injury or promise relief.',
     evidenceConfidence: {
       high: 'High',
       label: 'Evidence confidence',
@@ -75,6 +81,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     eyebrow: 'Employee customer consultation',
     multipleHelp:
       'Multiple answers are allowed. Select the customer’s most frequent surface first.',
+    priorityMultipleHelp:
+      'Choose one or two priorities. When two are selected, they share the same total influence.',
     notSureNotice:
       '“Not sure yet” keeps this criterion neutral. It will not exclude a shoe, but the recommendation will be less specific.',
     otherComfortLabel: 'Add a short comfort note · optional',
@@ -101,9 +109,17 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: '10–21 km',
             description: 'Longer training sessions',
           },
-          over21: {
-            label: 'Over 21 km',
-            description: 'Half marathon and beyond',
+          upTo42: {
+            label: '21–42 km',
+            description: 'Marathon-distance training',
+          },
+          upTo60: {
+            label: '42–60 km',
+            description: 'Long trail and ultra sessions',
+          },
+          over60: {
+            label: 'Over 60 km',
+            description: 'Ultra-distance running',
           },
           unknown: {
             label: 'Not sure yet',
@@ -147,6 +163,10 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         title: 'What matters most for this customer?',
         help: 'This preference helps rank compatible shoes.',
         choices: {
+          value: {
+            label: 'Value / simple first shoe',
+            description: 'An accessible choice for beginning regular running',
+          },
           comfort: {
             label: 'Comfort',
             description: 'Soft and protective feel',
@@ -239,13 +259,17 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: 'No current concern',
             description: 'Nothing relevant reported',
           },
-          kneesHips: {
-            label: 'Knees or hips',
-            description: 'Customer reports sensitivity here',
+          knees: {
+            label: 'Knees',
+            description: 'Light preference for more cushioning and 0–6 mm drop',
+          },
+          hips: {
+            label: 'Hips',
+            description: 'Light preference for 0–6 mm drop',
           },
           achillesCalves: {
             label: 'Achilles or calves',
-            description: 'Customer reports sensitivity here',
+            description: 'Light preference for drop above 6 mm',
           },
           other: {
             label: 'Other concern',
@@ -269,6 +293,21 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     resultDisclaimer:
       'Recommendations describe product suitability from available product data. They do not diagnose injuries or replace professional medical advice.',
+    resultGroups: {
+      alternative: {
+        empty: 'No good alternatives are available for these answers.',
+        title: 'Good alternatives',
+      },
+      great: {
+        empty: 'No great matches are available for these answers.',
+        title: 'Great matches',
+      },
+      strong: {
+        empty:
+          'No shoe meets every essential criterion for a strong match yet.',
+        title: 'Strong matches',
+      },
+    },
     resultIntro:
       'The reasons are shown so the employee can explain each recommendation.',
     resultReasons: {
@@ -291,7 +330,11 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       'Comfort history',
       'Review',
     ],
-    tiers: { alternative: 'Good alternative', strong: 'Strong match' },
+    tiers: {
+      alternative: 'Good alternative',
+      great: 'Great match',
+      strong: 'Strong match',
+    },
     title: 'Customer running needs',
   },
   de: {
@@ -306,7 +349,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     },
     answerRequired: 'Wähle eine Antwort, um fortzufahren.',
     comfortNotice:
-      'Beschwerden dienen nur als Gesprächskontext. Sie stellen keine Diagnose dar und bestimmen nicht automatisch die Sprengung.',
+      'Komforterfahrungen beeinflussen die Rangfolge nur leicht. Sie stellen keine Diagnose dar und versprechen keine Linderung.',
     evidenceConfidence: {
       high: 'Hoch',
       label: 'Datenvertrauen',
@@ -317,6 +360,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     eyebrow: 'Kundenberatung für Mitarbeitende',
     multipleHelp:
       'Mehrere Antworten sind möglich. Wähle den häufigsten Untergrund zuerst.',
+    priorityMultipleHelp:
+      'Wähle eine oder zwei Prioritäten. Bei zwei Antworten teilen sie sich denselben Gesamteinfluss.',
     notSureNotice:
       '„Noch nicht sicher“ lässt dieses Kriterium neutral. Dadurch wird kein Schuh ausgeschlossen, die Empfehlung ist aber weniger spezifisch.',
     otherComfortLabel: 'Kurze Komfortnotiz ergänzen · optional',
@@ -343,9 +388,17 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: '10–21 km',
             description: 'Längere Trainingseinheiten',
           },
-          over21: {
-            label: 'Über 21 km',
-            description: 'Halbmarathon und weiter',
+          upTo42: {
+            label: '21–42 km',
+            description: 'Training bis zur Marathondistanz',
+          },
+          upTo60: {
+            label: '42–60 km',
+            description: 'Lange Trail- und Ultraeinheiten',
+          },
+          over60: {
+            label: 'Über 60 km',
+            description: 'Ultradistanzläufe',
           },
           unknown: {
             label: 'Noch nicht sicher',
@@ -392,6 +445,10 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         title: 'Was ist dem Kunden am wichtigsten?',
         help: 'Diese Präferenz hilft, geeignete Schuhe zu sortieren.',
         choices: {
+          value: {
+            label: 'Preiswert / einfacher erster Schuh',
+            description: 'Ein zugänglicher Einstieg ins regelmäßige Laufen',
+          },
           comfort: {
             label: 'Komfort',
             description: 'Weiches und schützendes Laufgefühl',
@@ -490,13 +547,18 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: 'Aktuell keine Beschwerden',
             description: 'Nichts Relevantes angegeben',
           },
-          kneesHips: {
-            label: 'Knie oder Hüfte',
-            description: 'Kunde berichtet hier Empfindlichkeit',
+          knees: {
+            label: 'Knie',
+            description:
+              'Leichte Präferenz für mehr Dämpfung und 0–6 mm Sprengung',
+          },
+          hips: {
+            label: 'Hüfte',
+            description: 'Leichte Präferenz für 0–6 mm Sprengung',
           },
           achillesCalves: {
             label: 'Achilles oder Waden',
-            description: 'Kunde berichtet hier Empfindlichkeit',
+            description: 'Leichte Präferenz für mehr als 6 mm Sprengung',
           },
           other: {
             label: 'Andere Beschwerden',
@@ -520,6 +582,22 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     resultDisclaimer:
       'Empfehlungen beschreiben die Produkteignung anhand verfügbarer Produktdaten. Sie stellen keine Diagnose dar und ersetzen keine medizinische Beratung.',
+    resultGroups: {
+      alternative: {
+        empty: 'Für diese Antworten sind keine guten Alternativen verfügbar.',
+        title: 'Gute Alternativen',
+      },
+      great: {
+        empty:
+          'Für diese Antworten sind keine sehr guten Übereinstimmungen verfügbar.',
+        title: 'Sehr gute Übereinstimmungen',
+      },
+      strong: {
+        empty:
+          'Noch kein Schuh erfüllt alle wesentlichen Kriterien für eine starke Übereinstimmung.',
+        title: 'Starke Übereinstimmungen',
+      },
+    },
     resultIntro:
       'Die Gründe werden angezeigt, damit Mitarbeitende jede Empfehlung erklären können.',
     resultReasons: {
@@ -544,6 +622,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     tiers: {
       alternative: 'Gute Alternative',
+      great: 'Sehr gute Übereinstimmung',
       strong: 'Starke Übereinstimmung',
     },
     title: 'Laufbedürfnisse des Kunden',
@@ -560,7 +639,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     },
     answerRequired: 'Choisissez une réponse pour continuer.',
     comfortNotice:
-      'L’historique de confort apporte seulement du contexte. Il ne constitue pas un diagnostic et ne prescrit pas automatiquement un drop.',
+      'L’historique de confort influence légèrement le classement. Il ne constitue pas un diagnostic et ne promet aucun soulagement.',
     evidenceConfidence: {
       high: 'Élevée',
       label: 'Fiabilité des données',
@@ -571,6 +650,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     eyebrow: 'Conseil client pour les employés',
     multipleHelp:
       'Plusieurs réponses sont possibles. Sélectionnez d’abord la surface la plus fréquente.',
+    priorityMultipleHelp:
+      'Choisissez une ou deux priorités. Avec deux réponses, elles partagent la même influence totale.',
     notSureNotice:
       '« Pas encore sûr » laisse ce critère neutre. Aucune chaussure ne sera exclue, mais la recommandation sera moins précise.',
     otherComfortLabel: 'Ajouter une courte note de confort · facultatif',
@@ -595,9 +676,17 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'Distance quotidienne habituelle',
           },
           upTo21: { label: '10–21 km', description: 'Séances plus longues' },
-          over21: {
-            label: 'Plus de 21 km',
-            description: 'Semi-marathon et au-delà',
+          upTo42: {
+            label: '21–42 km',
+            description: 'Entraînement jusqu’au marathon',
+          },
+          upTo60: {
+            label: '42–60 km',
+            description: 'Longues sorties trail et ultra',
+          },
+          over60: {
+            label: 'Plus de 60 km',
+            description: 'Course d’ultra-distance',
           },
           unknown: {
             label: 'Pas encore sûr',
@@ -641,6 +730,11 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         title: 'Qu’est-ce qui compte le plus pour le client ?',
         help: 'Cette préférence aide à classer les chaussures compatibles.',
         choices: {
+          value: {
+            label: 'Bon rapport qualité-prix / première chaussure simple',
+            description:
+              'Un choix accessible pour commencer à courir régulièrement',
+          },
           comfort: {
             label: 'Confort',
             description: 'Sensation douce et protectrice',
@@ -736,13 +830,18 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: 'Aucune gêne actuelle',
             description: 'Rien de pertinent signalé',
           },
-          kneesHips: {
-            label: 'Genoux ou hanches',
-            description: 'Le client signale une sensibilité',
+          knees: {
+            label: 'Genoux',
+            description:
+              'Légère préférence pour plus d’amorti et un drop de 0–6 mm',
+          },
+          hips: {
+            label: 'Hanches',
+            description: 'Légère préférence pour un drop de 0–6 mm',
           },
           achillesCalves: {
             label: 'Achille ou mollets',
-            description: 'Le client signale une sensibilité',
+            description: 'Légère préférence pour un drop supérieur à 6 mm',
           },
           other: {
             label: 'Autre gêne',
@@ -766,6 +865,21 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     resultDisclaimer:
       'Les recommandations décrivent l’adéquation des produits à partir des données disponibles. Elles ne diagnostiquent pas les blessures et ne remplacent pas un avis médical.',
+    resultGroups: {
+      alternative: {
+        empty: 'Aucune bonne alternative n’est disponible pour ces réponses.',
+        title: 'Bonnes alternatives',
+      },
+      great: {
+        empty: 'Aucune excellente correspondance n’est disponible.',
+        title: 'Excellentes correspondances',
+      },
+      strong: {
+        empty:
+          'Aucune chaussure ne remplit encore tous les critères essentiels.',
+        title: 'Très bonnes correspondances',
+      },
+    },
     resultIntro:
       'Les raisons sont affichées afin que l’employé puisse expliquer chaque recommandation.',
     resultReasons: {
@@ -789,6 +903,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     tiers: {
       alternative: 'Bonne alternative',
+      great: 'Excellente correspondance',
       strong: 'Très bonne correspondance',
     },
     title: 'Besoins de course du client',

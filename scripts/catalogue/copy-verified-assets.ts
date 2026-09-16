@@ -17,7 +17,7 @@ if (!sourceRoot) {
 
 const products = JSON.parse(
   await readFile(
-    resolve(projectRoot, 'src/content/catalogue/products.json'),
+    resolve(projectRoot, 'src/content/catalogue/legacy-products.json'),
     'utf8',
   ),
 ) as Array<{

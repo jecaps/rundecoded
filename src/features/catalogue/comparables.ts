@@ -13,34 +13,24 @@ export function rankComparableProducts(
   locale: SupportedLocale,
   limit = 3,
 ): ExplorerProduct[] {
-  const currentCategories = current.product.categories.map(({ id }) => id);
-  const currentSurfaces =
-    current.product.specifications.surfaceTags.value ?? [];
-  const currentDrop =
-    current.product.specifications.heelToToeDrop.value?.amount ?? null;
+  const currentCategories = current.product.categories;
+  const currentSurfaces = current.product.surfaceTags;
+  const currentDrop = current.product.specifications.dropMm;
 
-  const primaryCategory = current.product.categories[0]?.id;
+  const primaryCategory = current.product.categories[0];
   const rankedCandidates = candidates
     .filter(({ product }) => product.id !== current.product.id)
     .map((candidate) => {
-      const candidateCategories = candidate.product.categories.map(
-        ({ id }) => id,
-      );
-      const candidateSurfaces =
-        candidate.product.specifications.surfaceTags.value ?? [];
-      const candidateDrop =
-        candidate.product.specifications.heelToToeDrop.value?.amount ?? null;
+      const candidateCategories = candidate.product.categories;
+      const candidateSurfaces = candidate.product.surfaceTags;
+      const candidateDrop = candidate.product.specifications.dropMm;
       const sharedCategories = sharedValues(
         currentCategories,
         candidateCategories,
       );
       const sharedSurfaces = sharedValues(currentSurfaces, candidateSurfaces);
       const sameStability =
-        current.product.specifications.stability.value ===
-        candidate.product.specifications.stability.value;
-      const explicitComparable = current.product.comparables.includes(
-        candidate.product.id,
-      );
+        current.product.stability === candidate.product.stability;
       const dropDistance =
         currentDrop !== null && candidateDrop !== null
           ? Math.abs(currentDrop - candidateDrop)
@@ -53,10 +43,7 @@ export function rankComparableProducts(
           sharedSurfaces * 5 +
           (sameStability ? 2 : 0) +
           (dropDistance === null ? 0 : Math.max(0, 2 - dropDistance / 2)) +
-          (explicitComparable ? 12 : 0) +
-          (candidate.product.brand.name !== current.product.brand.name
-            ? 0.5
-            : 0),
+          (candidate.product.brand !== current.product.brand ? 0.5 : 0),
       };
     })
     .sort(
@@ -68,7 +55,7 @@ export function rankComparableProducts(
         ),
     );
   const samePrimaryCategory = rankedCandidates.filter(
-    ({ candidate }) => candidate.product.categories[0]?.id === primaryCategory,
+    ({ candidate }) => candidate.product.categories[0] === primaryCategory,
   );
   const preferredCandidates =
     samePrimaryCategory.length >= limit
@@ -77,7 +64,7 @@ export function rankComparableProducts(
           ...samePrimaryCategory,
           ...rankedCandidates.filter(
             ({ candidate }) =>
-              candidate.product.categories[0]?.id !== primaryCategory,
+              candidate.product.categories[0] !== primaryCategory,
           ),
         ];
 

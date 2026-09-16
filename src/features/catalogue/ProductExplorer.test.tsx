@@ -294,25 +294,14 @@ describe('ProductExplorer', () => {
     ).toBeVisible();
   });
 
-  it('maps every available primary prototype profile by exact product ID', () => {
+  it('renders details from the simplified product record', () => {
     const adidasProducts = products.filter(
-      ({ product }) => product.brand.id === 'adidas',
+      ({ product }) => product.brand === 'Adidas',
     );
     expect(adidasProducts).toHaveLength(8);
-    expect(adidasProducts.every(({ details }) => details !== null)).toBe(true);
-    expect(products.filter(({ details }) => details !== null)).toHaveLength(97);
-    expect(
-      products.find(
-        ({ product }) => product.id === 'decathlon-jogflow-190-grip',
-      )?.details?.provenance.status,
-    ).toBe('verified');
-    expect(
-      products.find(({ product }) => product.id === 'hoka-clifton-10')?.details,
-    ).not.toBeNull();
-    expect(
-      products.find(({ product }) => product.id === 'kiprun-kipride-support')
-        ?.details,
-    ).toBeNull();
+    expect(products.every(({ product }) => product.details.overview.en)).toBe(
+      true,
+    );
 
     window.history.replaceState({}, '', '/en/catalogue/?q=Runblaze');
     render(
@@ -328,17 +317,16 @@ describe('ProductExplorer', () => {
     expect(dialog).toHaveTextContent(
       'The Adidas Runblaze is designed for first runs',
     );
-    expect(dialog).toHaveTextContent('278 g');
-    expect(dialog).toHaveTextContent('Cloudfoam midsole');
+    expect(dialog).toHaveTextContent('274 g');
+    expect(dialog).toHaveTextContent('10 mm');
+    expect(dialog).toHaveTextContent('33 / 23 mm');
+    expect(dialog).toHaveTextContent('Cloudfoam');
     expect(dialog).toHaveTextContent('Strengths & limitations');
-    expect(dialog).toHaveTextContent(
-      'Migrated from the original RunDecoded prototype',
-    );
     expect(
       screen.getByRole('link', { name: 'View on Decathlon' }),
     ).toHaveAttribute(
       'href',
-      'https://www.decathlon.it/p/scarpe-running-uomo-adidas-runblaze-nere/_/R-p-361354',
+      'https://www.decathlon.it/p/scarpe-running-uomo-adidas-runblaze-nere/361354/c1m8929086',
     );
   });
 
@@ -357,8 +345,7 @@ describe('ProductExplorer', () => {
     expect(dialog).toHaveTextContent(
       "The Clifton 10 is HOKA's comfort-focused neutral daily trainer",
     );
-    expect(dialog).toHaveTextContent('Active Foot Frame');
-    expect(dialog).toHaveTextContent('42/34 mm');
+    expect(dialog).toHaveTextContent('42 / 34 mm');
     expect(dialog).toHaveTextContent('Strengths & limitations');
   });
 });

@@ -66,8 +66,8 @@ The generated catalogue is structurally valid. Pending research is reported rath
 
 | Status   | Count |
 | -------- | ----: |
-| Verified |   922 |
-| Derived  |    35 |
+| Verified |   921 |
+| Derived  |    40 |
 | Fallback |   257 |
 | Pending  |   240 |
 

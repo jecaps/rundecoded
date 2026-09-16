@@ -122,12 +122,21 @@ const distanceTableSource: Omit<ProductSource, 'id'> & { idSuffix: string } = {
   note: 'Fallback distance only, transcribed from the supplied running-shoe range table when no existing product-page or catalogue distance is available. For a range, the upper listed distance is stored; for a plus value, the stated threshold is stored.',
 };
 
+const jogflowMaximumDistance = {
+  maximumDistanceKm: 10,
+  maximumDistanceStatus: 'derived' as const,
+  maximumDistanceSource: {
+    idSuffix: 'customer-distance-guidance',
+    type: 'legacy-workbook' as const,
+    label: 'Customer-confirmed Jogflow distance guidance',
+    url: null,
+    checkedAt: '2026-09-12',
+    status: 'derived' as const,
+    note: 'All Jogflow models are capped at 10 km following customer-confirmed product range guidance.',
+  },
+};
+
 const recordedMaximumDistancesKm = new Map<string, number>([
-  ['decathlon-jogflow-100-1', 21],
-  ['decathlon-jogflow-190-premium', 21],
-  ['decathlon-jogflow-190-grip', 21],
-  ['decathlon-jogflow-190-grip-wp', 21],
-  ['decathlon-jogflow-190-max', 21],
   ['asics-gel-windhawk-5', 21],
   ['asics-gel-excite-11', 21],
   ['adidas-runblaze', 10],
@@ -474,6 +483,7 @@ const recordedProductFacts = new Map<string, RecordedProductFacts>([
   [
     'decathlon-jogflow-100-1',
     {
+      ...jogflowMaximumDistance,
       source: {
         idSuffix: 'verified-product-source',
         type: 'retailer-product',
@@ -493,6 +503,7 @@ const recordedProductFacts = new Map<string, RecordedProductFacts>([
   [
     'decathlon-jogflow-190-grip',
     {
+      ...jogflowMaximumDistance,
       source: {
         idSuffix: 'verified-product-source',
         type: 'retailer-product',
@@ -512,6 +523,7 @@ const recordedProductFacts = new Map<string, RecordedProductFacts>([
   [
     'decathlon-jogflow-190-grip-wp',
     {
+      ...jogflowMaximumDistance,
       source: {
         idSuffix: 'verified-product-source',
         type: 'retailer-product',
@@ -537,6 +549,7 @@ const recordedProductFacts = new Map<string, RecordedProductFacts>([
   [
     'decathlon-jogflow-190-max',
     {
+      ...jogflowMaximumDistance,
       source: {
         idSuffix: 'verified-product-source',
         type: 'retailer-product',
@@ -556,6 +569,7 @@ const recordedProductFacts = new Map<string, RecordedProductFacts>([
   [
     'decathlon-jogflow-190-premium',
     {
+      ...jogflowMaximumDistance,
       source: {
         idSuffix: 'verified-product-source',
         type: 'retailer-product',

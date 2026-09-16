@@ -1,6 +1,11 @@
 import Fuse from 'fuse.js';
 
-import { resolveLocalizedText, type SupportedLocale } from '@/domain/catalogue';
+import {
+  resolveLocalizedText,
+  surfaceFamiliesForShoe,
+  terrainProfilesForShoe,
+  type SupportedLocale,
+} from '@/domain/catalogue';
 
 import {
   categoryLabel,
@@ -47,26 +52,21 @@ function productDocument(
   const { product } = item;
   return {
     item,
-    brand: product.brand.name,
+    brand: product.brand,
     model: product.model,
-    bestFor: resolveLocalizedText(product.copy.bestFor, locale).value,
-    categories: product.categories.map(({ id, label }) =>
-      categoryLabel(id, resolveLocalizedText(label, locale).value, locale),
-    ),
-    stability: stabilityLabel(
-      product.specifications.stability.value ?? 'unknown',
-      locale,
-    ),
-    surfaces: product.specifications.surfaces.value ?? [],
+    bestFor: resolveLocalizedText(product.details.bestFor, locale).value,
+    categories: product.categories.map((id) => categoryLabel(id, id, locale)),
+    stability: stabilityLabel(product.stability, locale),
+    surfaces: product.surfaceTags,
     terrain: [
-      ...(product.specifications.surfaceFamilies.value ?? []).map((family) =>
+      ...surfaceFamiliesForShoe(product).map((family) =>
         surfaceFamilyLabel(family, locale),
       ),
-      ...(product.specifications.terrainProfiles.value ?? []).map((terrain) =>
+      ...terrainProfilesForShoe(product).map((terrain) =>
         terrainProfileLabel(terrain, locale),
       ),
     ],
-    technologies: product.technologies.value ?? [],
+    technologies: product.specifications.technologies,
   };
 }
 
@@ -164,27 +164,21 @@ export function buildSearchSuggestions(
   };
 
   for (const { product } of products) {
-    add('brand', product.brand.name);
+    add('brand', product.brand);
     add('model', product.model);
-    for (const { id, label } of product.categories) {
-      add(
-        'category',
-        categoryLabel(id, resolveLocalizedText(label, locale).value, locale),
-      );
+    for (const id of product.categories) {
+      add('category', categoryLabel(id, id, locale));
     }
-    for (const technology of product.technologies.value ?? []) {
+    for (const technology of product.specifications.technologies) {
       add('attribute', technology);
     }
-    for (const surface of product.specifications.surfaces.value ?? []) {
-      add('attribute', surface);
-    }
-    for (const family of product.specifications.surfaceFamilies.value ?? []) {
+    for (const family of surfaceFamiliesForShoe(product)) {
       add('attribute', surfaceFamilyLabel(family, locale));
     }
-    for (const surfaceTag of product.specifications.surfaceTags.value ?? []) {
+    for (const surfaceTag of product.surfaceTags) {
       add('attribute', surfaceTag.replaceAll('-', ' '));
     }
-    for (const terrain of product.specifications.terrainProfiles.value ?? []) {
+    for (const terrain of terrainProfilesForShoe(product)) {
       add('attribute', terrainProfileLabel(terrain, locale));
     }
   }

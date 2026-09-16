@@ -38,7 +38,9 @@ import { Toaster } from '@/components/ui/sonner';
 import {
   resolveLocalizedText,
   surfaceFamilies,
+  surfaceFamiliesForShoe,
   terrainProfiles,
+  terrainProfilesForShoe,
   type SupportedLocale,
 } from '@/domain/catalogue';
 import { cn } from '@/lib/utils';
@@ -84,8 +86,7 @@ interface ProductExplorerProps {
 
 function imagePath(item: ExplorerProduct, assetBase: string): string | null {
   const image = item.product.images[0];
-  if (!image || image.status === 'pending' || !image.localPath) return null;
-  return `${assetBase}${image.localPath}`;
+  return image ? `${assetBase}${image}` : null;
 }
 
 const specificationCategoryIds = new Set([
@@ -105,9 +106,8 @@ const retiredFilterParams = [
 
 function purposeCategory(item: ExplorerProduct) {
   return (
-    item.product.categories.find(
-      ({ id }) => !specificationCategoryIds.has(id),
-    ) ?? item.product.categories[0]
+    item.product.categories.find((id) => !specificationCategoryIds.has(id)) ??
+    item.product.categories[0]
   );
 }
 
@@ -115,21 +115,25 @@ function localizedCategoryValue(
   category: ExplorerProduct['product']['categories'][number],
   locale: SupportedLocale,
 ) {
-  return categoryLabel(
-    category.id,
-    resolveLocalizedText(category.label, locale).value,
-    locale,
-  );
+  return categoryLabel(category, category, locale);
 }
 
 function dropLabel(item: ExplorerProduct) {
-  const drop = item.product.specifications.heelToToeDrop.value;
-  return drop ? `${drop.amount} ${drop.unit}` : '—';
+  const drop = item.product.specifications.dropMm;
+  return drop === null ? '—' : `${drop} mm`;
 }
 
 function distanceLabel(item: ExplorerProduct, unavailable: string) {
-  const distance = item.product.specifications.maximumDistance.value;
-  return distance ? `${distance.amount} ${distance.unit}` : unavailable;
+  const distance = item.product.specifications.maximumDistanceKm;
+  return distance === null ? unavailable : `${distance} km`;
+}
+
+function stackHeightLabel(item: ExplorerProduct) {
+  const stack = item.product.specifications.stackHeightMm;
+  if (stack === null) return '—';
+  return typeof stack === 'number'
+    ? `${stack} mm`
+    : `${stack.heel} / ${stack.forefoot} mm`;
 }
 
 function bestForSummary(bestFor: string) {
@@ -186,9 +190,7 @@ export function ProductExplorer({
   const validCategoryIds = useMemo(
     () =>
       new Set([
-        ...products.flatMap(({ product }) =>
-          product.categories.map(({ id }) => id),
-        ),
+        ...products.flatMap(({ product }) => product.categories),
         ...taxonomyFilterIds,
       ]),
     [products],
@@ -291,7 +293,7 @@ export function ProductExplorer({
     for (const item of products) {
       const category = purposeCategory(item);
       if (category)
-        categories.set(category.id, localizedCategoryValue(category, locale));
+        categories.set(category, localizedCategoryValue(category, locale));
     }
     return [...categories.entries()].sort((left, right) =>
       left[1].localeCompare(right[1], locale),
@@ -300,7 +302,7 @@ export function ProductExplorer({
   const surfaceOptions = surfaceFamilies
     .filter((family) =>
       products.some(({ product }) =>
-        product.specifications.surfaceFamilies.value?.includes(family),
+        surfaceFamiliesForShoe(product).includes(family),
       ),
     )
     .map(
@@ -310,7 +312,7 @@ export function ProductExplorer({
   const terrainOptions = terrainProfiles
     .filter((terrain) =>
       products.some(({ product }) =>
-        product.specifications.terrainProfiles.value?.includes(terrain),
+        terrainProfilesForShoe(product).includes(terrain),
       ),
     )
     .map(
@@ -349,12 +351,7 @@ export function ProductExplorer({
   const comparableProducts = detailsProduct
     ? rankComparableProducts(detailsProduct, products, locale)
     : [];
-  const detailProfile = detailsProduct?.details ?? null;
-  const detailProductSource =
-    detailsProduct?.product.sources.find(
-      (source) => source.type === 'retailer-product' && source.url,
-    ) ?? null;
-  const detailSourceUrl = detailProductSource?.url;
+  const detailSourceUrl = detailsProduct?.product.sourceUrl;
 
   function updateUrlState(state: CatalogueUrlState, mode: 'push' | 'replace') {
     const nextUrl = writeCatalogueUrlState(
@@ -476,6 +473,8 @@ export function ProductExplorer({
     comparisonProducts.length === 2 &&
     comparisonProducts[0].weight !== null &&
     comparisonProducts[1].weight !== null &&
+    comparisonProducts[0].weight.referenceSize !== null &&
+    comparisonProducts[1].weight.referenceSize !== null &&
     comparisonProducts[0].weight.referenceSize !==
       comparisonProducts[1].weight.referenceSize;
   const comparisonLabels = {
@@ -702,17 +701,14 @@ export function ProductExplorer({
               const { product } = item;
               const selected = selectedIds.includes(product.id);
               const bestFor = resolveLocalizedText(
-                product.copy.bestFor,
+                product.details.bestFor,
                 locale,
               ).value;
               const bestForSummaryText = bestForSummary(bestFor);
               const distance = distanceLabel(item, copy.distanceUnavailable);
               const purpose = purposeCategory(item);
-              const stability = stabilityLabel(
-                product.specifications.stability.value ?? 'unknown',
-                locale,
-              );
-              const terrain = product.specifications.terrainProfiles.value?.[0];
+              const stability = stabilityLabel(product.stability, locale);
+              const terrain = terrainProfilesForShoe(product)[0];
               const secondaryBadge = terrain
                 ? terrainProfileLabel(terrain, locale)
                 : stability;
@@ -745,7 +741,7 @@ export function ProductExplorer({
 
                     <CardContent className="flex flex-1 flex-col p-5 pb-0">
                       <p className="text-muted-foreground m-0 text-xs font-bold tracking-[0.15em] uppercase">
-                        {product.brand.name}
+                        {product.brand}
                       </p>
                       <button
                         className="text-foreground hover:text-primary mt-1 line-clamp-2 min-h-14 cursor-pointer border-0 bg-transparent p-0 text-left text-2xl font-bold tracking-[-0.025em]"
@@ -950,16 +946,18 @@ export function ProductExplorer({
               <div className="tablet:p-8 p-6">
                 <DialogHeader>
                   <p className="text-muted-foreground m-0 text-xs font-bold tracking-[0.15em] uppercase">
-                    {detailsProduct.product.brand.name}
+                    {detailsProduct.product.brand}
                   </p>
                   <DialogTitle className="text-3xl">
                     {detailsProduct.product.model}
                   </DialogTitle>
                   <DialogDescription>
-                    {detailProfile
-                      ? resolveLocalizedText(detailProfile.overview, locale)
-                          .value
-                      : copy.detailsPending}
+                    {
+                      resolveLocalizedText(
+                        detailsProduct.product.details.overview,
+                        locale,
+                      ).value
+                    }
                   </DialogDescription>
                 </DialogHeader>
 
@@ -967,7 +965,7 @@ export function ProductExplorer({
                   {detailsProduct.product.categories.map((category) => (
                     <span
                       className="bg-surface-subtle rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
-                      key={category.id}
+                      key={category}
                     >
                       {localizedCategoryValue(category, locale)}
                     </span>
@@ -979,8 +977,7 @@ export function ProductExplorer({
                   <p className="mt-1 mb-0 text-sm leading-6">
                     {
                       resolveLocalizedText(
-                        detailProfile?.bestFor ??
-                          detailsProduct.product.copy.bestFor,
+                        detailsProduct.product.details.bestFor,
                         locale,
                       ).value
                     }
@@ -993,9 +990,9 @@ export function ProductExplorer({
                       {copy.surface}
                     </dt>
                     <dd className="mt-1 font-semibold">
-                      {detailsProduct.product.specifications.surfaceFamilies.value
-                        ?.map((family) => surfaceFamilyLabel(family, locale))
-                        .join(', ') ?? copy.pending}
+                      {surfaceFamiliesForShoe(detailsProduct.product)
+                        .map((family) => surfaceFamilyLabel(family, locale))
+                        .join(', ') || copy.notApplicable}
                     </dd>
                   </div>
                   <div className="border-border border-b pb-3">
@@ -1003,14 +1000,9 @@ export function ProductExplorer({
                       {copy.terrain}
                     </dt>
                     <dd className="mt-1 font-semibold">
-                      {detailsProduct.product.specifications.terrainProfiles
-                        .value === null
-                        ? copy.pending
-                        : detailsProduct.product.specifications.terrainProfiles.value
-                            .map((terrain) =>
-                              terrainProfileLabel(terrain, locale),
-                            )
-                            .join(', ') || copy.notApplicable}
+                      {terrainProfilesForShoe(detailsProduct.product)
+                        .map((terrain) => terrainProfileLabel(terrain, locale))
+                        .join(', ') || copy.notApplicable}
                     </dd>
                   </div>
                   <div className="border-border border-b pb-3">
@@ -1018,11 +1010,7 @@ export function ProductExplorer({
                       {copy.stability}
                     </dt>
                     <dd className="mt-1 font-semibold">
-                      {stabilityLabel(
-                        detailsProduct.product.specifications.stability.value ??
-                          'unknown',
-                        locale,
-                      )}
+                      {stabilityLabel(detailsProduct.product.stability, locale)}
                     </dd>
                   </div>
                   <div className="border-border border-b pb-3">
@@ -1030,10 +1018,9 @@ export function ProductExplorer({
                       {copy.weightValue}
                     </dt>
                     <dd className="mt-1 font-semibold">
-                      {detailProfile?.specifications.weight ??
-                        (detailsProduct.weight
-                          ? `${detailsProduct.weight.amount} ${detailsProduct.weight.unit}`
-                          : copy.pending)}
+                      {detailsProduct.weight
+                        ? `${detailsProduct.weight.amount} ${detailsProduct.weight.unit}`
+                        : copy.pending}
                     </dd>
                   </div>
                   <div className="border-border border-b pb-3">
@@ -1041,8 +1028,7 @@ export function ProductExplorer({
                       {copy.drop}
                     </dt>
                     <dd className="mt-1 font-semibold">
-                      {detailProfile?.specifications.drop ??
-                        dropLabel(detailsProduct)}
+                      {dropLabel(detailsProduct)}
                     </dd>
                   </div>
                   <div className="border-border border-b pb-3">
@@ -1050,12 +1036,8 @@ export function ProductExplorer({
                       {copy.fit}
                     </dt>
                     <dd className="mt-1 font-semibold">
-                      {detailProfile
-                        ? resolveLocalizedText(
-                            detailProfile.specifications.fit,
-                            locale,
-                          ).value
-                        : copy.pending}
+                      {detailsProduct.product.specifications.fit.join(', ') ||
+                        copy.pending}
                     </dd>
                   </div>
                   <div className="border-border border-b pb-3">
@@ -1063,21 +1045,7 @@ export function ProductExplorer({
                       {copy.stackHeight}
                     </dt>
                     <dd className="mt-1 font-semibold">
-                      {detailProfile?.specifications.stackHeight ??
-                        copy.pending}
-                    </dd>
-                  </div>
-                  <div className="border-border border-b pb-3">
-                    <dt className="text-muted-foreground text-xs font-bold uppercase">
-                      {copy.plateSystem}
-                    </dt>
-                    <dd className="mt-1 font-semibold">
-                      {detailProfile
-                        ? resolveLocalizedText(
-                            detailProfile.specifications.plateSystem,
-                            locale,
-                          ).value
-                        : copy.pending}
+                      {stackHeightLabel(detailsProduct)}
                     </dd>
                   </div>
                 </dl>
@@ -1104,95 +1072,49 @@ export function ProductExplorer({
                 <h3 className="m-0 text-lg font-semibold">
                   {copy.constructionAndRide}
                 </h3>
-                {detailProfile ? (
-                  <div className="tablet:grid-cols-2 mt-4 grid gap-3">
-                    {(
-                      [
-                        [copy.rideCharacter, detailProfile.construction.ride],
-                        [copy.support, detailProfile.construction.support],
-                        [copy.upper, detailProfile.construction.upper],
-                        [copy.midsole, detailProfile.construction.midsole],
-                        [copy.outsole, detailProfile.construction.outsole],
-                      ] as const
-                    ).map(([label, value]) => (
-                      <div
-                        className="border-border rounded-[var(--radius-control)] border p-4"
-                        key={label}
-                      >
-                        <h4 className="text-muted-foreground m-0 text-xs font-bold tracking-wide uppercase">
-                          {label}
-                        </h4>
-                        <p className="mt-2 mb-0 text-sm leading-6">
-                          {resolveLocalizedText(value, locale).value}
-                        </p>
-                      </div>
-                    ))}
-                    <div className="border-border rounded-[var(--radius-control)] border p-4">
-                      <h4 className="text-muted-foreground m-0 text-xs font-bold tracking-wide uppercase">
-                        {copy.technologies}
-                      </h4>
-                      <p className="mt-2 mb-0 text-sm leading-6">
-                        {(
-                          detailProfile.specifications.technologies ??
-                          detailsProduct.product.technologies.value
-                        )?.join(' · ') ?? copy.pending}
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="mt-3">
-                    <p className="text-muted-foreground mb-0">
-                      {copy.detailsPending}
-                    </p>
-                    <h4 className="mt-5 mb-0 text-sm font-semibold">
-                      {copy.technologies}
-                    </h4>
-                    <p className="text-muted-foreground mt-2 mb-0 text-sm leading-6">
-                      {detailsProduct.product.technologies.value?.join(' · ') ??
-                        copy.pending}
-                    </p>
-                  </div>
-                )}
+                <p className="text-muted-foreground mt-3 mb-0 text-sm leading-6">
+                  {detailsProduct.product.specifications.technologies.join(
+                    ' · ',
+                  ) || copy.pending}
+                </p>
               </section>
 
-              {detailProfile ? (
-                <section>
-                  <h3 className="m-0 text-lg font-semibold">
-                    {copy.strengthsAndLimitations}
-                  </h3>
-                  <p className="text-muted-foreground mt-1 mb-0 text-sm">
-                    {copy.strengthsLead}
-                  </p>
-                  <dl className="tablet:grid-cols-2 mt-4 grid gap-4 text-sm">
-                    <div className="border-border border-t pt-3">
-                      <dt className="text-muted-foreground text-xs font-bold uppercase">
-                        {copy.bestAt}
-                      </dt>
-                      <dd className="mt-1">
-                        {
-                          resolveLocalizedText(
-                            detailProfile.decision.bestAt,
-                            locale,
-                          ).value
-                        }
-                      </dd>
-                    </div>
-                    <div className="border-border border-t pt-3">
-                      <dt className="text-muted-foreground text-xs font-bold uppercase">
-                        {copy.lessSuitableFor}
-                      </dt>
-                      <dd className="mt-1">
-                        {
-                          resolveLocalizedText(
-                            detailProfile.decision.lessSuitableFor,
-                            locale,
-                          ).value
-                        }
-                      </dd>
-                    </div>
-                  </dl>
-                </section>
-              ) : null}
+              <section>
+                <h3 className="m-0 text-lg font-semibold">
+                  {copy.strengthsAndLimitations}
+                </h3>
+                <p className="text-muted-foreground mt-1 mb-0 text-sm">
+                  {copy.strengthsLead}
+                </p>
+                <dl className="tablet:grid-cols-2 mt-4 grid gap-4 text-sm">
+                  <div className="border-border border-t pt-3">
+                    <dt className="text-muted-foreground text-xs font-bold uppercase">
+                      {copy.bestAt}
+                    </dt>
+                    <dd className="mt-1">
+                      {
+                        resolveLocalizedText(
+                          detailsProduct.product.details.bestAt,
+                          locale,
+                        ).value
+                      }
+                    </dd>
+                  </div>
+                  <div className="border-border border-t pt-3">
+                    <dt className="text-muted-foreground text-xs font-bold uppercase">
+                      {copy.lessSuitableFor}
+                    </dt>
+                    <dd className="mt-1">
+                      {
+                        resolveLocalizedText(
+                          detailsProduct.product.details.lessSuitableFor,
+                          locale,
+                        ).value
+                      }
+                    </dd>
+                  </div>
+                </dl>
+              </section>
 
               <section>
                 <h3 className="m-0 text-lg font-semibold">
@@ -1210,7 +1132,7 @@ export function ProductExplorer({
                       >
                         <span>
                           <span className="block text-xs font-bold tracking-wide uppercase">
-                            {comparable.product.brand.name}
+                            {comparable.product.brand}
                           </span>
                           <span className="text-muted-foreground mt-1 block text-sm">
                             {comparable.product.model}
@@ -1223,24 +1145,6 @@ export function ProductExplorer({
                     );
                   })}
                 </div>
-              </section>
-
-              <section className="border-border border-t pt-4 text-sm">
-                <h3 className="m-0 text-base font-semibold">
-                  {detailProfile
-                    ? detailProfile.provenance.status === 'verified'
-                      ? copy.verifiedEvidence
-                      : copy.prototypeEvidence
-                    : copy.sources}
-                </h3>
-                <p className="text-muted-foreground mt-2 mb-0">
-                  {detailProfile
-                    ? resolveLocalizedText(
-                        detailProfile.provenance.note,
-                        locale,
-                      ).value
-                    : copy.sourcePending}
-                </p>
               </section>
             </div>
           </DialogContent>
@@ -1286,7 +1190,7 @@ export function ProductExplorer({
                       key={item.product.id}
                     >
                       <span className="block text-xs font-bold tracking-wide uppercase">
-                        {item.product.brand.name}
+                        {item.product.brand}
                       </span>
                       <span className="mt-1 block font-semibold">
                         {item.product.model}
