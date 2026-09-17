@@ -24,14 +24,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import type { CatalogueShoe } from '@/domain/catalogue';
-import {
-  recommendShoes,
-  type RecommendationPriority,
-  type RecommendationSurface,
-  type RunnerProfile,
-  type RunningGoal,
-  type StabilityPreference,
-} from '@/domain/recommendations';
+import { recommendShoes, type QuizAnswers } from '@/domain/recommendations';
 import type { Locale } from '@/i18n/config';
 import { localizedRoute } from '@/lib/routes';
 import { cn } from '@/lib/utils';
@@ -106,49 +99,7 @@ const comfortChoices = [
   ['unknown', CircleHelp],
 ] as const;
 
-const distanceValues: Record<string, number | undefined> = {
-  under5: 5,
-  upTo10: 10,
-  upTo21: 21,
-  upTo42: 42,
-  upTo60: 60,
-  over60: 80,
-  unknown: undefined,
-};
-
-const surfaceValues: Partial<Record<string, RecommendationSurface>> = {
-  road: 'road',
-  gravel: 'gravel',
-  trail: 'trail',
-  technicalTrail: 'technical-trail',
-  track: 'track',
-  crossCountry: 'cross-country',
-};
-
-const goalValues: Partial<Record<string, RunningGoal>> = {
-  startRunning: 'start-running',
-  dailyFitness: 'daily-fitness',
-  longRuns: 'comfortable-long-runs',
-  fasterTraining: 'faster-training',
-  roadRace: 'road-race',
-  trailRunning: 'trail-running',
-  trailRace: 'trail-race',
-  track: 'track-or-cross-country',
-};
-
-const priorityValues: Partial<Record<string, RecommendationPriority>> = {
-  value: 'value',
-  comfort: 'comfort',
-  versatility: 'versatility',
-  speed: 'speed',
-  guidance: 'guidance',
-};
-
-const stabilityValues: Partial<Record<string, StabilityPreference>> = {
-  neutral: 'neutral',
-  stability: 'stability',
-  noPreference: 'no-preference',
-};
+const recommendationLimitPerTier = 10;
 
 function imagePath(product: CatalogueShoe, assetBase: string) {
   const image = product.images[0];
@@ -219,28 +170,20 @@ export function CustomerConsultation({
   const answers = [distance, surfaces, priorities, goal, stability, comfort];
   const canContinue = step === 6 || Boolean(answers[step]?.length);
 
-  const profile = useMemo<RunnerProfile>(() => {
-    const mappedSurfaces = surfaces
-      .map((answer) => surfaceValues[answer])
-      .filter((surface): surface is RecommendationSurface => Boolean(surface));
-    const mappedPriorities = priorities
-      .map((answer) => priorityValues[answer])
-      .filter((priority): priority is RecommendationPriority =>
-        Boolean(priority),
-      );
+  const quizAnswers = useMemo<QuizAnswers>(() => {
     return {
-      primarySurface: mappedSurfaces[0],
-      secondarySurfaces: mappedSurfaces.slice(1),
-      typicalDistanceKm: distance ? distanceValues[distance] : undefined,
-      priorities: mappedPriorities,
-      goal: goal ? goalValues[goal] : undefined,
-      stabilityPreference: stability ? stabilityValues[stability] : undefined,
+      comfort,
+      distance: distance ? [distance] : [],
+      goal: goal ? [goal] : [],
+      priority: priorities,
+      stability: stability ? [stability] : [],
+      surfaces,
     };
-  }, [distance, goal, priorities, stability, surfaces]);
+  }, [comfort, distance, goal, priorities, stability, surfaces]);
 
   const recommendations = useMemo(
-    () => recommendShoes(profile, products, products.length),
-    [profile, products],
+    () => recommendShoes(quizAnswers, products, products.length),
+    [products, quizAnswers],
   );
   const recommendationGroups = [
     {
@@ -248,7 +191,7 @@ export function CustomerConsultation({
       id: 'strong-matches',
       recommendations: recommendations
         .filter(({ tier }) => tier === 'strong-match')
-        .slice(0, 5),
+        .slice(0, recommendationLimitPerTier),
       title: copy.resultGroups.strong.title,
     },
     {
@@ -256,7 +199,7 @@ export function CustomerConsultation({
       id: 'great-matches',
       recommendations: recommendations
         .filter(({ tier }) => tier === 'great-match')
-        .slice(0, 5),
+        .slice(0, recommendationLimitPerTier),
       title: copy.resultGroups.great.title,
     },
     {
@@ -264,7 +207,7 @@ export function CustomerConsultation({
       id: 'good-alternatives',
       recommendations: recommendations
         .filter(({ tier }) => tier === 'good-alternative')
-        .slice(0, 5),
+        .slice(0, recommendationLimitPerTier),
       title: copy.resultGroups.alternative.title,
     },
   ];
@@ -368,24 +311,30 @@ export function CustomerConsultation({
                   {group.recommendations.map((recommendation) => {
                     const product = recommendation.product;
                     const src = imagePath(product, assetBase);
-                    const reasons = recommendation.evaluations
+                    const reasons = recommendation.breakdown
                       .filter(
                         ({ outcome }) =>
-                          outcome === 'match' || outcome === 'preference-match',
+                          outcome === 'match' || outcome === 'partial-match',
                       )
-                      .map(({ rule }) => {
-                        if (rule === 'primary-surface')
+                      .map(({ stepId }) => {
+                        if (stepId === 'surfaces')
                           return copy.resultReasons.surface;
-                        if (rule === 'distance')
+                        if (stepId === 'distance')
                           return copy.resultReasons.distance;
-                        if (rule === 'goal') return copy.resultReasons.goal;
-                        if (rule === 'priority')
+                        if (stepId === 'goal') return copy.resultReasons.goal;
+                        if (stepId === 'priority')
                           return copy.resultReasons.priority;
-                        if (rule === 'stability')
+                        if (stepId === 'stability')
                           return copy.resultReasons.stability;
+                        if (stepId === 'comfort')
+                          return copy.resultReasons.comfort;
                         return null;
                       })
-                      .filter((reason): reason is string => Boolean(reason));
+                      .filter((reason): reason is string => Boolean(reason))
+                      .filter(
+                        (reason, index, values) =>
+                          values.indexOf(reason) === index,
+                      );
                     const href = `${catalogueUrl}?${new URLSearchParams({ q: product.model })}`;
 
                     return (

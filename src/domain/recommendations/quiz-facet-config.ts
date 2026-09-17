@@ -6,6 +6,8 @@ export type ConsultationStepId =
 type ShoeFacetMapping<TFacet extends keyof ShoeFacets = keyof ShoeFacets> =
   TFacet extends keyof ShoeFacets
     ? {
+        /** Scalar facet values that are equally acceptable for this answer. */
+        acceptedValues?: readonly string[];
         facet: TFacet;
         /** Array values are alternatives; `any` means one overlap is enough. */
         matchMode?: 'any';
@@ -23,6 +25,7 @@ export interface DropRangeMm {
 export type QuizFacetMapping =
   | ShoeFacetMapping
   | {
+      acceptedValues?: never;
       facet: 'dropMm';
       matchMode?: never;
       value: DropRangeMm | null;
@@ -173,19 +176,27 @@ export const quizFacetConfig = {
     },
     comfort: {
       mapsTo: {
-        facet: 'priorityTags',
-        matchMode: 'any',
-        value: ['cushioning-comfort'],
+        acceptedValues: ['balanced', 'max'],
+        facet: 'cushioningLevel',
+        value: 'max',
         weight: 0.7,
       },
     },
     versatility: {
-      mapsTo: {
-        facet: 'useCase',
-        matchMode: 'any',
-        value: ['daily-trainer'],
-        weight: 0.7,
-      },
+      mapsTo: [
+        {
+          facet: 'useCase',
+          matchMode: 'any',
+          value: ['daily-trainer'],
+          weight: 0.45,
+        },
+        {
+          facet: 'useCase',
+          matchMode: 'any',
+          value: ['long-run'],
+          weight: 0.25,
+        },
+      ],
     },
     speed: {
       mapsTo: {

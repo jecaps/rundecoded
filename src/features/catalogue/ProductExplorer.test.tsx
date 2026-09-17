@@ -321,6 +321,13 @@ describe('ProductExplorer', () => {
     expect(dialog).toHaveTextContent('10 mm');
     expect(dialog).toHaveTextContent('33 / 23 mm');
     expect(dialog).toHaveTextContent('Cloudfoam');
+    expect(dialog).toHaveTextContent('Construction & ride');
+    expect(dialog).toHaveTextContent('Ride character');
+    expect(dialog).toHaveTextContent(
+      'Lightly cushioned, straightforward and a little more responsive',
+    );
+    expect(dialog).toHaveTextContent('Stability & guidance');
+    expect(dialog).toHaveTextContent('Abrasion-resistant Adiwear rubber');
     expect(dialog).toHaveTextContent('Strengths & limitations');
     expect(
       screen.getByRole('link', { name: 'View on Decathlon' }),

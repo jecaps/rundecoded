@@ -16,6 +16,13 @@ import {
 export interface ShoeDetails {
   bestAt: LocalizedText;
   bestFor: LocalizedText;
+  construction?: {
+    midsole: LocalizedText;
+    outsole: LocalizedText;
+    ride: LocalizedText;
+    support: LocalizedText;
+    upper: LocalizedText;
+  };
   lessSuitableFor: LocalizedText;
   overview: LocalizedText;
 }
@@ -87,6 +94,15 @@ export const catalogueShoeSchema: z.ZodType<CatalogueShoe> = z.strictObject({
     overview: localizedTextSchema,
     bestAt: localizedTextSchema,
     lessSuitableFor: localizedTextSchema,
+    construction: z
+      .strictObject({
+        ride: localizedTextSchema,
+        support: localizedTextSchema,
+        upper: localizedTextSchema,
+        midsole: localizedTextSchema,
+        outsole: localizedTextSchema,
+      })
+      .optional(),
   }),
   images: z.array(z.string().trim().min(1)),
   sourceUrl: z.url().nullable(),
