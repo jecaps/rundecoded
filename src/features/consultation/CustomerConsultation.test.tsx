@@ -92,10 +92,10 @@ describe('customer consultation', () => {
     expect(
       screen.getByRole('heading', { name: 'Good alternatives' }),
     ).toBeVisible();
-    expect(screen.getAllByText('Good alternative')).toHaveLength(5);
+    expect(screen.getAllByText('Good alternative')).toHaveLength(10);
   });
 
-  it('puts purpose-built gravel options ahead of ordinary road shoes', () => {
+  it('ranks short-distance beginner road-and-gravel options first', () => {
     render(
       <CustomerConsultation
         assetBase="/rundecoded/"
@@ -123,12 +123,14 @@ describe('customer consultation', () => {
       screen.getByRole('button', { name: 'Show recommendations' }),
     );
 
+    expect(screen.getByText('Jogflow 100.1')).toBeVisible();
     expect(screen.getByText('Jogflow 190 Grip')).toBeVisible();
+    expect(screen.getByText('Jogflow 190 Premium')).toBeVisible();
     expect(screen.getByText('Jogflow 190 Grip WP')).toBeVisible();
-    expect(screen.getByText('Kipcore Gravel')).toBeVisible();
-    expect(screen.getByText('Kipride Gravel')).toBeVisible();
+    expect(screen.getByText('Ellipse')).toBeVisible();
     expect(screen.getByText('Aero Blaze 3 Grvl')).toBeVisible();
-    expect(screen.getAllByText('Strong match')).toHaveLength(3);
-    expect(screen.getAllByText('Great match')).toHaveLength(5);
+    expect(screen.getAllByText('Strong match')).toHaveLength(10);
+    expect(screen.getAllByText('Great match')).toHaveLength(4);
+    expect(screen.getAllByText('Good alternative')).toHaveLength(10);
   });
 });

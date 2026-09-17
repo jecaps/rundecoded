@@ -1070,13 +1070,58 @@ export function ProductExplorer({
             <div className="border-border tablet:p-8 grid gap-8 border-t p-6">
               <section>
                 <h3 className="m-0 text-lg font-semibold">
-                  {copy.constructionAndRide}
+                  {detailsProduct.product.details.construction
+                    ? copy.constructionAndRide
+                    : copy.technologies}
                 </h3>
-                <p className="text-muted-foreground mt-3 mb-0 text-sm leading-6">
-                  {detailsProduct.product.specifications.technologies.join(
-                    ' · ',
-                  ) || copy.pending}
-                </p>
+                {detailsProduct.product.details.construction ? (
+                  <dl className="tablet:grid-cols-2 mt-4 grid gap-4 text-sm">
+                    {(
+                      [
+                        [
+                          copy.rideCharacter,
+                          detailsProduct.product.details.construction.ride,
+                        ],
+                        [
+                          copy.support,
+                          detailsProduct.product.details.construction.support,
+                        ],
+                        [
+                          copy.upper,
+                          detailsProduct.product.details.construction.upper,
+                        ],
+                        [
+                          copy.midsole,
+                          detailsProduct.product.details.construction.midsole,
+                        ],
+                        [
+                          copy.outsole,
+                          detailsProduct.product.details.construction.outsole,
+                        ],
+                      ] as const
+                    ).map(([label, content]) => (
+                      <div className="border-border border-t pt-3" key={label}>
+                        <dt className="text-muted-foreground text-xs font-bold uppercase">
+                          {label}
+                        </dt>
+                        <dd className="mt-1 leading-6">
+                          {resolveLocalizedText(content, locale).value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : (
+                  <>
+                    <p className="text-muted-foreground mt-3 mb-0 text-sm leading-6">
+                      {copy.detailsPending}
+                    </p>
+                    <p className="text-muted-foreground mt-3 mb-0 text-sm leading-6">
+                      {detailsProduct.product.specifications.technologies.join(
+                        ' · ',
+                      ) || copy.pending}
+                    </p>
+                  </>
+                )}
               </section>
 
               <section>

@@ -1,323 +1,283 @@
 import { describe, expect, it } from 'vitest';
 
-import type { CatalogueShoe, SurfaceTag } from '@/domain/catalogue';
+import type {
+  CatalogueShoe,
+  CushioningLevel,
+  ExperienceTag,
+  PriorityTag,
+  StabilityLevel,
+  SurfaceTag,
+  UseCase,
+} from '@/domain/catalogue';
 
 import {
   evaluateShoeRecommendation,
   rankShoeRecommendations,
   recommendShoes,
-  type RunnerProfile,
+  type QuizAnswers,
 } from './matching';
 
 function shoe(
   overrides: {
-    categories?: string[];
-    distance?: number | null;
+    brand?: string;
+    cushioning?: CushioningLevel | null;
+    distance?: { max: number; min: number } | null;
+    dropMm?: number | null;
+    experience?: ExperienceTag[];
     id?: string;
     model?: string;
-    stability?: 'neutral' | 'stability' | 'unknown';
-    surfaces?: string[];
-    surfaceTags?: SurfaceTag[];
+    priorities?: PriorityTag[];
+    stability?: StabilityLevel | null;
+    surfaces?: SurfaceTag[];
+    useCase?: UseCase[];
   } = {},
 ): CatalogueShoe {
-  const surfaces = overrides.surfaces ?? ['Road', 'Gravel'];
-  const surfaceTags =
-    overrides.surfaceTags ??
-    ([
-      ...(surfaces.includes('Road') ? ['road', 'asphalt'] : []),
-      ...(surfaces.includes('Gravel') ? ['gravel'] : []),
-      ...(surfaces.includes('Trail') ? ['mixed-terrain'] : []),
-      ...(surfaces.includes('Track') ? ['track'] : []),
-      ...(surfaces.includes('Cross-country') ? ['cross-country'] : []),
-    ] as SurfaceTag[]);
+  const surfaceTags = overrides.surfaces ?? ['road', 'asphalt'];
+  const stability = overrides.stability ?? 'neutral';
+  const distanceRangeKm =
+    overrides.distance === undefined ? { min: 1, max: 42 } : overrides.distance;
   return {
-    id: overrides.id ?? 'example-daily-shoe',
+    id: overrides.id ?? 'example-shoe',
     kind: 'shoe',
-    brand: 'Example',
-    model: overrides.model ?? 'Daily Shoe',
-    categories: overrides.categories ?? ['daily-trainer'],
+    brand: overrides.brand ?? 'Example',
+    model: overrides.model ?? 'Example Shoe',
+    categories: ['daily-trainer'],
     surfaceTags,
-    stability: overrides.stability ?? 'neutral',
-    factsReviewed: false,
+    stability:
+      stability === 'motion-control' ? 'stability' : (stability ?? 'unknown'),
+    factsReviewed: true,
     facets: {
-      experienceTags: [],
-      useCase: ['daily-trainer'],
-      cushioningLevel: null,
-      stability:
-        overrides.stability === 'unknown'
-          ? null
-          : (overrides.stability ?? 'neutral'),
+      experienceTags: overrides.experience ?? ['recreational'],
+      useCase: overrides.useCase ?? ['daily-trainer'],
+      cushioningLevel: overrides.cushioning ?? 'balanced',
+      stability,
       supportFeatures: [],
       surfaceTags,
-      distanceRangeKm:
-        overrides.distance === null
-          ? null
-          : { min: 0, max: overrides.distance ?? 42 },
-      priorityTags: [],
-      fit: [],
+      distanceRangeKm,
+      priorityTags: overrides.priorities ?? ['cushioning-comfort'],
+      fit: ['regular'],
     },
     details: {
       bestFor: { en: 'Daily running', de: null, fr: null },
       overview: { en: 'Daily running', de: null, fr: null },
       bestAt: { en: 'Daily running', de: null, fr: null },
-      lessSuitableFor: { en: 'Technical trails', de: null, fr: null },
+      lessSuitableFor: { en: 'Technical terrain', de: null, fr: null },
     },
     images: [],
     sourceUrl: 'https://example.com/product',
     specifications: {
-      maximumDistanceKm:
-        overrides.distance === null ? null : (overrides.distance ?? 42),
-      dropMm: null,
+      maximumDistanceKm: distanceRangeKm?.max ?? null,
+      dropMm: overrides.dropMm ?? 8,
       stackHeightMm: null,
       weightG: null,
       weightReferenceSize: null,
-      fit: [],
+      fit: ['regular'],
       technologies: [],
     },
   };
 }
 
-const roadProfile: RunnerProfile = {
-  typicalDistanceKm: 10,
-  primarySurface: 'road',
-  secondarySurfaces: ['gravel'],
-  goal: 'daily-fitness',
-  stabilityPreference: 'neutral',
-};
-
-describe('transparent shoe recommendation rules', () => {
-  it('creates a strong match when the essential requirements match', () => {
-    const result = evaluateShoeRecommendation(roadProfile, shoe());
+describe('facet-based shoe recommendation scoring', () => {
+  it('uses OR semantics for array-valued facet mappings', () => {
+    const result = evaluateShoeRecommendation(
+      { surfaces: ['road'], goal: ['fasterTraining'] },
+      shoe({ surfaces: ['asphalt'], useCase: ['tempo'] }),
+    );
 
     expect(result.tier).toBe('strong-match');
-    expect(result.evaluations).toEqual(
+    expect(result.breakdown).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          rule: 'primary-surface',
+          facet: 'surfaceTags',
+          match: 1,
           outcome: 'match',
-          points: 40,
         }),
         expect.objectContaining({
-          rule: 'secondary-surface',
-          outcome: 'preference-match',
-          points: 20,
-        }),
-        expect.objectContaining({
-          rule: 'distance',
+          facet: 'useCase',
+          match: 1,
           outcome: 'match',
-          points: 30,
         }),
       ]),
     );
   });
 
-  it('supports multiple secondary surfaces without weakening the primary one', () => {
+  it('gives partial distance credit below the requested upper bound', () => {
     const result = evaluateShoeRecommendation(
-      {
-        ...roadProfile,
-        secondarySurfaces: ['gravel', 'trail', 'gravel'],
-      },
-      shoe({ surfaces: ['Road', 'Gravel', 'Trail'] }),
+      { distance: ['upTo21'] },
+      shoe({ distance: { min: 1, max: 15 } }),
     );
-    const secondary = result.evaluations.find(
-      ({ rule }) => rule === 'secondary-surface',
+    const distance = result.breakdown.find(
+      ({ facet }) => facet === 'distanceRangeKm',
     );
 
-    expect(secondary).toEqual(
+    expect(distance).toEqual(
       expect.objectContaining({
-        actual: 'gravel, trail',
-        outcome: 'preference-match',
-        points: 40,
+        match: expect.closeTo(5 / 11),
+        outcome: 'partial-match',
       }),
     );
-  });
-
-  it('prioritizes true gravel shoes over road shoes that only tolerate firm paths', () => {
-    const exactGravel = evaluateShoeRecommendation(
-      roadProfile,
-      shoe({
-        categories: ['trail'],
-        surfaceTags: ['road', 'firm-paths'],
-      }),
-    );
-    const compatibleRoad = evaluateShoeRecommendation(
-      roadProfile,
-      shoe({
-        categories: ['daily-trainer'],
-        surfaceTags: ['road', 'firm-paths'],
-      }),
-    );
-
-    expect(exactGravel.tier).toBe('great-match');
-    expect(exactGravel.evaluations).toContainEqual(
-      expect.objectContaining({
-        rule: 'secondary-surface',
-        outcome: 'preference-match',
-        points: 20,
-      }),
-    );
-    expect(compatibleRoad.tier).toBe('great-match');
-    expect(compatibleRoad.evaluations).toContainEqual(
-      expect.objectContaining({
-        rule: 'secondary-surface',
-        outcome: 'trade-off',
-        points: 3,
-      }),
-    );
-    expect(exactGravel.internalScore).toBeGreaterThan(
-      compatibleRoad.internalScore,
-    );
-  });
-
-  it('excludes a shoe that does not support the primary surface', () => {
-    const result = evaluateShoeRecommendation(
-      roadProfile,
-      shoe({ surfaces: ['Trail'] }),
-    );
-
-    expect(result.tier).toBe('not-a-match');
-    expect(result.evaluations).toContainEqual(
-      expect.objectContaining({
-        rule: 'primary-surface',
-        outcome: 'exclude',
-      }),
-    );
-  });
-
-  it('excludes a shoe whose published distance is too short', () => {
-    const result = evaluateShoeRecommendation(
-      roadProfile,
-      shoe({ distance: 5 }),
-    );
-
-    expect(result.tier).toBe('not-a-match');
-    expect(result.evaluations).toContainEqual(
-      expect.objectContaining({
-        rule: 'distance',
-        expected: 10,
-        actual: 5,
-        outcome: 'exclude',
-      }),
-    );
-  });
-
-  it('keeps missing distance information neutral instead of excluding a shoe', () => {
-    const pending = evaluateShoeRecommendation(
-      roadProfile,
-      shoe({ distance: null }),
-    );
-
-    expect(pending.tier).toBe('good-alternative');
-    expect(pending.evaluations).toContainEqual(
-      expect.objectContaining({
-        rule: 'distance',
-        outcome: 'unavailable',
-      }),
-    );
-  });
-
-  it('uses the great-match tier when essentials match but a preference differs', () => {
-    const result = evaluateShoeRecommendation(
-      roadProfile,
-      shoe({ surfaces: ['Road'] }),
-    );
-
-    expect(result.tier).toBe('great-match');
-    expect(result.evaluations).toContainEqual(
-      expect.objectContaining({
-        rule: 'secondary-surface',
-        outcome: 'trade-off',
-      }),
-    );
-  });
-
-  it('keeps unanswered essential questions neutral instead of excluding shoes', () => {
-    const result = evaluateShoeRecommendation(
-      {
-        goal: 'daily-fitness',
-        stabilityPreference: 'no-preference',
-      },
-      shoe({ surfaces: ['Trail'], distance: 5 }),
-    );
-
     expect(result.tier).toBe('good-alternative');
-    expect(result.evaluations).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          rule: 'primary-surface',
-          outcome: 'unavailable',
-        }),
-        expect.objectContaining({
-          rule: 'distance',
-          outcome: 'unavailable',
-        }),
-      ]),
-    );
   });
 
-  it('uses the customer priority as a ranking bonus rather than an unsupported penalty', () => {
-    const comfort = evaluateShoeRecommendation(
-      { ...roadProfile, priority: 'comfort' },
-      shoe({ categories: ['max-cushion'] }),
-    );
-    const speed = evaluateShoeRecommendation(
-      { ...roadProfile, priority: 'speed' },
-      shoe({ categories: ['max-cushion'] }),
-    );
-
-    expect(comfort.evaluations).toContainEqual(
-      expect.objectContaining({
-        rule: 'priority',
-        outcome: 'preference-match',
-        points: 10,
-      }),
-    );
-    expect(speed.evaluations).toContainEqual(
-      expect.objectContaining({
-        rule: 'priority',
-        outcome: 'unavailable',
-      }),
-    );
-    expect(speed.tier).toBe(comfort.tier);
-  });
-
-  it('shares the legacy preview priority bonus across two selections', () => {
+  it('lets an ultra-capable shoe fully satisfy a shorter long-distance answer', () => {
     const result = evaluateShoeRecommendation(
-      { ...roadProfile, priorities: ['value', 'comfort'] },
-      shoe({ categories: ['entry-level'] }),
-    );
-
-    expect(result.evaluations).toContainEqual(
-      expect.objectContaining({
-        rule: 'priority',
-        expected: 'value, comfort',
-        outcome: 'preference-match',
-        points: 5,
+      {
+        distance: ['upTo42'],
+        surfaces: ['trail'],
+        priority: ['comfort'],
+        goal: ['trailRunning'],
+        comfort: ['knees'],
+      },
+      shoe({
+        cushioning: 'max',
+        distance: { min: 42, max: 170 },
+        dropMm: 6,
+        priorities: ['cushioning-comfort'],
+        surfaces: ['mixed-terrain'],
+        useCase: ['long-run'],
       }),
     );
+
+    expect(result.internalScore).toBeCloseTo(3.65);
+    expect(result.normalizedScore).toBe(1);
+    expect(result.tier).toBe('strong-match');
   });
 
-  it('ranks matches deterministically and omits exclusions from recommendations', () => {
-    const candidates = [
-      shoe({ id: 'trail-only', model: 'Trail Only', surfaces: ['Trail'] }),
-      shoe({
-        id: 'fallback-road',
-        model: 'Fallback Road',
-      }),
-      shoe({ id: 'verified-road', model: 'Verified Road' }),
-    ];
+  it('hard-excludes only a conflicting primary surface, not a secondary one', () => {
+    const answers: QuizAnswers = { surfaces: ['road', 'gravel'] };
+    const roadOnly = evaluateShoeRecommendation(
+      answers,
+      shoe({ surfaces: ['road', 'asphalt'] }),
+    );
+    const gravelOnly = evaluateShoeRecommendation(
+      answers,
+      shoe({ surfaces: ['gravel'] }),
+    );
 
-    expect(
-      rankShoeRecommendations(roadProfile, candidates).map(
-        ({ product, tier }) => [product.id, tier],
-      ),
-    ).toEqual([
-      ['fallback-road', 'strong-match'],
-      ['verified-road', 'strong-match'],
-      ['trail-only', 'not-a-match'],
+    expect(roadOnly.hardExcluded).toBe(false);
+    expect(roadOnly.tier).toBe('good-alternative');
+    expect(gravelOnly.hardExcluded).toBe(true);
+    expect(gravelOnly.tier).toBe('not-a-match');
+  });
+
+  it('hard-excludes a neutral shoe when additional stability is requested', () => {
+    const result = evaluateShoeRecommendation(
+      { stability: ['stability'] },
+      shoe({ stability: 'neutral' }),
+    );
+
+    expect(result.hardExcluded).toBe(true);
+    expect(result.tier).toBe('not-a-match');
+  });
+
+  it('shares the priority weight when two priorities are selected', () => {
+    const result = evaluateShoeRecommendation(
+      { priority: ['value', 'comfort'] },
+      shoe({ cushioning: 'firm', priorities: ['value'] }),
+    );
+
+    expect(result.maximumScore).toBeCloseTo(0.7);
+    expect(result.internalScore).toBeCloseTo(0.35);
+  });
+
+  it('matches the comfort priority to balanced and maximum cushioning', () => {
+    const balanced = evaluateShoeRecommendation(
+      { priority: ['comfort'] },
+      shoe({ cushioning: 'balanced' }),
+    );
+    const maximum = evaluateShoeRecommendation(
+      { priority: ['comfort'] },
+      shoe({ cushioning: 'max' }),
+    );
+    const firm = evaluateShoeRecommendation(
+      { priority: ['comfort'] },
+      shoe({ cushioning: 'firm' }),
+    );
+
+    expect(balanced.internalScore).toBeCloseTo(0.7);
+    expect(maximum.internalScore).toBeCloseTo(0.7);
+    expect(firm.internalScore).toBe(0);
+  });
+
+  it('returns a broad brand-diverse spread for all not-sure answers', () => {
+    const products = [
+      shoe({ brand: 'Alpha', id: 'alpha-one', model: 'Alpha One' }),
+      shoe({ brand: 'Alpha', id: 'alpha-two', model: 'Alpha Two' }),
+      shoe({ brand: 'Beta', id: 'beta-one', model: 'Beta One' }),
+      shoe({ brand: 'Gamma', id: 'gamma-one', model: 'Gamma One' }),
+    ];
+    const answers: QuizAnswers = {
+      distance: ['unknown'],
+      surfaces: ['unknown'],
+      priority: ['unknown'],
+      goal: ['unknown'],
+      stability: ['unknown'],
+      comfort: ['unknown'],
+    };
+    const results = recommendShoes(answers, products, products.length);
+
+    expect(results).toHaveLength(4);
+    expect(results.slice(0, 3).map(({ product }) => product.brand)).toEqual([
+      'Alpha',
+      'Beta',
+      'Gamma',
     ]);
-    expect(
-      recommendShoes(roadProfile, candidates).map(({ product }) => product.id),
-    ).toEqual(['fallback-road', 'verified-road']);
+    expect(results.every(({ tier }) => tier === 'good-alternative')).toBe(true);
+  });
+
+  it('ranks responsive long-distance shoes above pure max-cushion shoes', () => {
+    const answers: QuizAnswers = {
+      distance: ['upTo42'],
+      surfaces: ['road'],
+      priority: ['speed'],
+    };
+    const responsive = shoe({
+      id: 'responsive-long-run',
+      model: 'Responsive Long Run',
+      priorities: ['speed-responsiveness'],
+    });
+    const maxCushion = shoe({
+      cushioning: 'max',
+      id: 'pure-max-cushion',
+      model: 'Pure Max Cushion',
+      priorities: ['cushioning-comfort'],
+    });
+    const results = recommendShoes(answers, [maxCushion, responsive], 10);
+
+    expect(results.map(({ product }) => product.id)).toEqual([
+      'responsive-long-run',
+      'pure-max-cushion',
+    ]);
+  });
+
+  it('returns several ranked alternatives when no product is a perfect match', () => {
+    const answers: QuizAnswers = {
+      distance: ['upTo42'],
+      surfaces: ['road'],
+      priority: ['speed'],
+      goal: ['fasterTraining'],
+    };
+    const results = rankShoeRecommendations(answers, [
+      shoe({
+        id: 'distance-only',
+        model: 'Distance Only',
+        priorities: ['cushioning-comfort'],
+      }),
+      shoe({
+        distance: { min: 1, max: 30 },
+        id: 'partial-distance',
+        model: 'Partial Distance',
+        priorities: ['speed-responsiveness'],
+      }),
+      shoe({
+        id: 'tempo-only',
+        model: 'Tempo Only',
+        priorities: ['cushioning-comfort'],
+        useCase: ['tempo'],
+      }),
+    ]).filter(({ tier }) => tier !== 'not-a-match');
+
+    expect(results).toHaveLength(3);
+    expect(results.every(({ tier }) => tier !== 'strong-match')).toBe(true);
   });
 });

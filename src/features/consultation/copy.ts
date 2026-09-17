@@ -43,6 +43,7 @@ export interface ConsultationCopy {
   };
   resultIntro: string;
   resultReasons: {
+    comfort: string;
     distance: string;
     goal: string;
     priority: string;
@@ -311,6 +312,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     resultIntro:
       'The reasons are shown so the employee can explain each recommendation.',
     resultReasons: {
+      comfort: 'Matches the selected comfort preference',
       distance: 'Supports the selected running distance',
       goal: 'Matches the selected training goal',
       priority: 'Matches the customer’s main priority',
@@ -601,6 +603,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     resultIntro:
       'Die Gründe werden angezeigt, damit Mitarbeitende jede Empfehlung erklären können.',
     resultReasons: {
+      comfort: 'Passt zur gewählten Komfortpräferenz',
       distance: 'Geeignet für die gewählte Distanz',
       goal: 'Passt zum gewählten Trainingsziel',
       priority: 'Passt zur wichtigsten Kundenpräferenz',
@@ -883,6 +886,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     resultIntro:
       'Les raisons sont affichées afin que l’employé puisse expliquer chaque recommandation.',
     resultReasons: {
+      comfort: 'Correspond à la préférence de confort choisie',
       distance: 'Convient à la distance choisie',
       goal: 'Correspond à l’objectif sélectionné',
       priority: 'Correspond à la priorité du client',

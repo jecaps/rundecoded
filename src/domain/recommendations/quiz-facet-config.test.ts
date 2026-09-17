@@ -59,10 +59,27 @@ describe('quiz facet config', () => {
         weight: 0.35,
       },
       {
-        facet: 'priorityTags',
-        matchMode: 'any',
-        value: ['cushioning-comfort'],
+        acceptedValues: ['balanced', 'max'],
+        facet: 'cushioningLevel',
+        value: 'max',
         weight: 0.35,
+      },
+    ]);
+  });
+
+  it('treats versatility as daily and long-run breadth', () => {
+    expect(quizFacetConfig.priority.versatility.mapsTo).toEqual([
+      {
+        facet: 'useCase',
+        matchMode: 'any',
+        value: ['daily-trainer'],
+        weight: 0.45,
+      },
+      {
+        facet: 'useCase',
+        matchMode: 'any',
+        value: ['long-run'],
+        weight: 0.25,
       },
     ]);
   });
