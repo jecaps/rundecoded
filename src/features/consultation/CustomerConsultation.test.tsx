@@ -84,15 +84,16 @@ describe('customer consultation', () => {
       screen.getByRole('heading', { name: 'Best options for this customer' }),
     ).toBeVisible();
     expect(
-      screen.getByRole('heading', { name: 'Strong matches' }),
-    ).toBeVisible();
+      screen.getAllByRole('link', { name: /View in catalogue/ }),
+    ).toHaveLength(5);
+    expect(screen.getAllByText('Good alternative')).toHaveLength(5);
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Show more recommendations' }),
+    );
     expect(
-      screen.getByRole('heading', { name: 'Great matches' }),
-    ).toBeVisible();
-    expect(
-      screen.getByRole('heading', { name: 'Good alternatives' }),
-    ).toBeVisible();
-    expect(screen.getAllByText('Good alternative')).toHaveLength(10);
+      screen.getAllByRole('link', { name: /View in catalogue/ }),
+    ).toHaveLength(10);
+    expect(screen.queryByText('Why this shoe')).not.toBeInTheDocument();
   });
 
   it('ranks short-distance beginner road-and-gravel options first', () => {
@@ -128,9 +129,26 @@ describe('customer consultation', () => {
     expect(screen.getByText('Jogflow 190 Premium')).toBeVisible();
     expect(screen.getByText('Jogflow 190 Grip WP')).toBeVisible();
     expect(screen.getByText('Ellipse')).toBeVisible();
-    expect(screen.getByText('Aero Blaze 3 Grvl')).toBeVisible();
-    expect(screen.getAllByText('Strong match')).toHaveLength(10);
-    expect(screen.getAllByText('Great match')).toHaveLength(4);
-    expect(screen.getAllByText('Good alternative')).toHaveLength(10);
+    expect(
+      screen.getAllByRole('link', { name: /View in catalogue/ }),
+    ).toHaveLength(5);
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Show more recommendations' }),
+    );
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Show more recommendations' }),
+    );
+
+    const strongMatches = screen.getAllByText('Strong match');
+    const greatMatches = screen.getAllByText('Great match');
+    const alternatives = screen.getAllByText('Good alternative');
+    expect(strongMatches).toHaveLength(10);
+    expect(greatMatches).toHaveLength(4);
+    expect(alternatives).toHaveLength(1);
+    expect(strongMatches[0]).toHaveClass('bg-emerald-100', 'text-emerald-800');
+    expect(greatMatches[0]).toHaveClass('bg-blue-100', 'text-blue-800');
+    expect(alternatives[0]).toHaveClass('bg-slate-100', 'text-slate-700');
+    expect(screen.getAllByText('Why this shoe').length).toBeGreaterThan(0);
+    expect(screen.queryByText('Keep in mind')).not.toBeInTheDocument();
   });
 });
