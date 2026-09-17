@@ -8,6 +8,7 @@ export interface ConsultationCopy {
     next: string;
     restart: string;
     results: string;
+    showMore: string;
     viewCatalogue: string;
   };
   answerRequired: string;
@@ -39,12 +40,6 @@ export interface ConsultationCopy {
     title: string;
   }>;
   resultDisclaimer: string;
-  resultGroups: {
-    alternative: { empty: string; title: string };
-    great: { empty: string; title: string };
-    strong: { empty: string; title: string };
-  };
-  resultIntro: string;
   resultsTitle: string;
   reviewIntro: string;
   reviewMissing: string;
@@ -62,6 +57,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       next: 'Next',
       restart: 'Start another consultation',
       results: 'Show recommendations',
+      showMore: 'Show more recommendations',
       viewCatalogue: 'View in catalogue',
     },
     answerRequired: 'Choose an answer to continue.',
@@ -292,23 +288,6 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     resultDisclaimer:
       'Recommendations describe product suitability from available product data. They do not diagnose injuries or replace professional medical advice.',
-    resultGroups: {
-      alternative: {
-        empty: 'No good alternatives are available for these answers.',
-        title: 'Good alternatives',
-      },
-      great: {
-        empty: 'No great matches are available for these answers.',
-        title: 'Great matches',
-      },
-      strong: {
-        empty:
-          'No shoe meets every essential criterion for a strong match yet.',
-        title: 'Strong matches',
-      },
-    },
-    resultIntro:
-      'The reasons are shown so the employee can explain each recommendation.',
     resultsTitle: 'Best options for this customer',
     reviewIntro:
       'Answers marked “Not sure yet” remain neutral and do not exclude products.',
@@ -337,6 +316,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       next: 'Weiter',
       restart: 'Neue Beratung starten',
       results: 'Empfehlungen anzeigen',
+      showMore: 'Weitere Empfehlungen anzeigen',
       viewCatalogue: 'Im Katalog ansehen',
     },
     answerRequired: 'Wähle eine Antwort, um fortzufahren.',
@@ -577,24 +557,6 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     resultDisclaimer:
       'Empfehlungen beschreiben die Produkteignung anhand verfügbarer Produktdaten. Sie stellen keine Diagnose dar und ersetzen keine medizinische Beratung.',
-    resultGroups: {
-      alternative: {
-        empty: 'Für diese Antworten sind keine guten Alternativen verfügbar.',
-        title: 'Gute Alternativen',
-      },
-      great: {
-        empty:
-          'Für diese Antworten sind keine sehr guten Übereinstimmungen verfügbar.',
-        title: 'Sehr gute Übereinstimmungen',
-      },
-      strong: {
-        empty:
-          'Noch kein Schuh erfüllt alle wesentlichen Kriterien für eine starke Übereinstimmung.',
-        title: 'Starke Übereinstimmungen',
-      },
-    },
-    resultIntro:
-      'Die Gründe werden angezeigt, damit Mitarbeitende jede Empfehlung erklären können.',
     resultsTitle: 'Beste Optionen für diesen Kunden',
     reviewIntro:
       '„Noch nicht sicher“ bleibt neutral und schließt keine Produkte aus.',
@@ -623,6 +585,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       next: 'Suivant',
       restart: 'Nouvelle consultation',
       results: 'Afficher les recommandations',
+      showMore: 'Afficher plus de recommandations',
       viewCatalogue: 'Voir dans le catalogue',
     },
     answerRequired: 'Choisissez une réponse pour continuer.',
@@ -856,23 +819,6 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     ],
     resultDisclaimer:
       'Les recommandations décrivent l’adéquation des produits à partir des données disponibles. Elles ne diagnostiquent pas les blessures et ne remplacent pas un avis médical.',
-    resultGroups: {
-      alternative: {
-        empty: 'Aucune bonne alternative n’est disponible pour ces réponses.',
-        title: 'Bonnes alternatives',
-      },
-      great: {
-        empty: 'Aucune excellente correspondance n’est disponible.',
-        title: 'Excellentes correspondances',
-      },
-      strong: {
-        empty:
-          'Aucune chaussure ne remplit encore tous les critères essentiels.',
-        title: 'Très bonnes correspondances',
-      },
-    },
-    resultIntro:
-      'Les raisons sont affichées afin que l’employé puisse expliquer chaque recommandation.',
     resultsTitle: 'Meilleures options pour ce client',
     reviewIntro: '« Pas encore sûr » reste neutre et n’exclut aucun produit.',
     reviewMissing: 'Pas encore sûr',

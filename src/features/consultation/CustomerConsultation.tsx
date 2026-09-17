@@ -103,7 +103,9 @@ const comfortChoices = [
   ['unknown', CircleHelp],
 ] as const;
 
-const recommendationLimitPerTier = 10;
+const initialRecommendationCount = 5;
+const maximumRecommendationsPerTier = 10;
+const recommendationCountIncrement = 5;
 
 function imagePath(product: CatalogueShoe, assetBase: string) {
   const image = product.images[0];
@@ -161,6 +163,9 @@ export function CustomerConsultation({
   const catalogueUrl = localizedRoute(locale, 'catalogue');
   const [step, setStep] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const [visibleRecommendationCount, setVisibleRecommendationCount] = useState(
+    initialRecommendationCount,
+  );
   const [distance, setDistance] = useState<string>();
   const [surfaces, setSurfaces] = useState<string[]>([]);
   const [otherSurface, setOtherSurface] = useState('');
@@ -189,32 +194,19 @@ export function CustomerConsultation({
     () => recommendShoes(quizAnswers, products, products.length),
     [products, quizAnswers],
   );
-  const recommendationGroups = [
-    {
-      empty: copy.resultGroups.strong.empty,
-      id: 'strong-matches',
-      recommendations: recommendations
-        .filter(({ tier }) => tier === 'strong-match')
-        .slice(0, recommendationLimitPerTier),
-      title: copy.resultGroups.strong.title,
-    },
-    {
-      empty: copy.resultGroups.great.empty,
-      id: 'great-matches',
-      recommendations: recommendations
-        .filter(({ tier }) => tier === 'great-match')
-        .slice(0, recommendationLimitPerTier),
-      title: copy.resultGroups.great.title,
-    },
-    {
-      empty: copy.resultGroups.alternative.empty,
-      id: 'good-alternatives',
-      recommendations: recommendations
-        .filter(({ tier }) => tier === 'good-alternative')
-        .slice(0, recommendationLimitPerTier),
-      title: copy.resultGroups.alternative.title,
-    },
-  ];
+  const recommendationPool = useMemo(() => {
+    const tierCounts: Record<string, number> = {};
+    return recommendations.filter(({ tier }) => {
+      const count = tierCounts[tier] ?? 0;
+      if (count >= maximumRecommendationsPerTier) return false;
+      tierCounts[tier] = count + 1;
+      return true;
+    });
+  }, [recommendations]);
+  const visibleRecommendations = recommendationPool.slice(
+    0,
+    visibleRecommendationCount,
+  );
 
   function toggleMultiple(
     value: string,
@@ -241,6 +233,7 @@ export function CustomerConsultation({
   function reset() {
     setStep(0);
     setShowResults(false);
+    setVisibleRecommendationCount(initialRecommendationCount);
     setDistance(undefined);
     setSurfaces([]);
     setOtherSurface('');
@@ -290,12 +283,12 @@ export function CustomerConsultation({
             <h1 className="tablet:text-4xl mt-2 mb-0 text-3xl font-bold tracking-[-0.035em]">
               {copy.resultsTitle}
             </h1>
-            <p className="text-muted-foreground mt-3 mb-0 leading-6">
-              {copy.resultIntro}
-            </p>
           </div>
           <Button
-            onClick={() => setShowResults(false)}
+            onClick={() => {
+              setShowResults(false);
+              setVisibleRecommendationCount(initialRecommendationCount);
+            }}
             type="button"
             variant="outline"
           >
@@ -304,89 +297,99 @@ export function CustomerConsultation({
           </Button>
         </div>
 
-        <div className="mt-8 grid gap-10">
-          {recommendationGroups.map((group) => (
-            <section aria-labelledby={group.id} key={group.id}>
-              <h2 className="mb-0 text-2xl font-bold" id={group.id}>
-                {group.title}
-              </h2>
-              {group.recommendations.length > 0 ? (
-                <div className="mt-4 grid gap-4">
-                  {group.recommendations.map((recommendation) => {
-                    const product = recommendation.product;
-                    const src = imagePath(product, assetBase);
-                    const explanation = explainRecommendation(recommendation);
-                    const why = resolveLocalizedText(
-                      product.details.bestAt,
-                      locale,
-                    ).value;
-                    const href = `${catalogueUrl}?${new URLSearchParams({ q: product.model })}`;
+        <div className="mt-8 grid gap-4">
+          {visibleRecommendations.map((recommendation) => {
+            const product = recommendation.product;
+            const src = imagePath(product, assetBase);
+            const explanation = explainRecommendation(recommendation);
+            const why = resolveLocalizedText(
+              product.details.bestAt,
+              locale,
+            ).value;
+            const href = `${catalogueUrl}?${new URLSearchParams({ q: product.model })}`;
 
-                    return (
-                      <Card key={product.id}>
-                        <CardContent className="tablet:grid-cols-[8rem_minmax(0,1fr)_auto] grid items-center gap-5 p-5">
-                          <div className="bg-surface-subtle flex min-h-28 items-center justify-center overflow-hidden rounded-[var(--radius-control)] p-2">
-                            {src ? (
-                              <img
-                                alt=""
-                                className="h-24 w-full object-contain"
-                                src={src}
-                              />
-                            ) : (
-                              <Sparkles
-                                aria-hidden="true"
-                                className="text-muted-foreground size-7"
-                              />
-                            )}
-                          </div>
-                          <div className="min-w-0">
-                            <p className="text-primary m-0 text-xs font-bold uppercase">
-                              {recommendation.tier === 'strong-match'
-                                ? copy.tiers.strong
-                                : recommendation.tier === 'great-match'
-                                  ? copy.tiers.great
-                                  : copy.tiers.alternative}
-                            </p>
-                            <h3 className="mt-1 mb-0 text-xl font-bold">
-                              {product.model}
-                            </h3>
-                            <p className="text-muted-foreground mt-1 mb-0 text-sm">
-                              {product.brand}
-                            </p>
-                            {explanation.showWhy ? (
-                              <dl className="mt-3 grid gap-2 text-sm">
-                                <div>
-                                  <dt className="font-semibold">
-                                    {copy.explanation.why}
-                                  </dt>
-                                  <dd className="text-muted-foreground mt-0.5 leading-6">
-                                    {why}
-                                  </dd>
-                                </div>
-                              </dl>
-                            ) : null}
-                          </div>
-                          <a
-                            className={buttonVariants({ variant: 'primary' })}
-                            href={href}
-                          >
-                            {copy.actions.viewCatalogue}
-                            <ArrowRight aria-hidden="true" className="size-4" />
-                          </a>
-                        </CardContent>
-                      </Card>
-                    );
-                  })}
-                </div>
-              ) : (
-                <Card className="mt-4 border-dashed">
-                  <CardContent className="text-muted-foreground p-5 text-sm leading-6">
-                    {group.empty}
-                  </CardContent>
-                </Card>
-              )}
-            </section>
-          ))}
+            return (
+              <Card key={product.id}>
+                <CardContent className="tablet:grid-cols-[8rem_minmax(0,1fr)_auto] grid items-center gap-5 p-5">
+                  <div className="bg-surface-subtle flex min-h-28 items-center justify-center overflow-hidden rounded-[var(--radius-control)] p-2">
+                    {src ? (
+                      <img
+                        alt=""
+                        className="h-24 w-full object-contain"
+                        src={src}
+                      />
+                    ) : (
+                      <Sparkles
+                        aria-hidden="true"
+                        className="text-muted-foreground size-7"
+                      />
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <p
+                      className={cn(
+                        'm-0 inline-flex rounded-full px-2.5 py-1 text-xs font-bold tracking-wide uppercase',
+                        recommendation.tier === 'strong-match'
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : recommendation.tier === 'great-match'
+                            ? 'bg-blue-100 text-blue-800'
+                            : 'bg-slate-100 text-slate-700',
+                      )}
+                    >
+                      {recommendation.tier === 'strong-match'
+                        ? copy.tiers.strong
+                        : recommendation.tier === 'great-match'
+                          ? copy.tiers.great
+                          : copy.tiers.alternative}
+                    </p>
+                    <h3 className="mt-1 mb-0 text-xl font-bold">
+                      {product.model}
+                    </h3>
+                    <p className="text-muted-foreground mt-1 mb-0 text-sm">
+                      {product.brand}
+                    </p>
+                    {explanation.showWhy ? (
+                      <dl className="mt-3 grid gap-2 text-sm">
+                        <div>
+                          <dt className="font-semibold">
+                            {copy.explanation.why}
+                          </dt>
+                          <dd className="text-muted-foreground mt-0.5 leading-6">
+                            {why}
+                          </dd>
+                        </div>
+                      </dl>
+                    ) : null}
+                  </div>
+                  <a
+                    className={buttonVariants({ variant: 'primary' })}
+                    href={href}
+                  >
+                    {copy.actions.viewCatalogue}
+                    <ArrowRight aria-hidden="true" className="size-4" />
+                  </a>
+                </CardContent>
+              </Card>
+            );
+          })}
+          {visibleRecommendationCount < recommendationPool.length ? (
+            <div className="flex justify-center pt-2">
+              <Button
+                onClick={() =>
+                  setVisibleRecommendationCount((count) =>
+                    Math.min(
+                      count + recommendationCountIncrement,
+                      recommendationPool.length,
+                    ),
+                  )
+                }
+                type="button"
+                variant="outline"
+              >
+                {copy.actions.showMore}
+              </Button>
+            </div>
+          ) : null}
         </div>
 
         <p className="border-border text-muted-foreground mt-6 border-t pt-5 text-sm leading-6">
@@ -672,8 +675,10 @@ export function CustomerConsultation({
                 <Button
                   disabled={!canContinue}
                   onClick={() => {
-                    if (step === 6) setShowResults(true);
-                    else setStep((current) => Math.min(6, current + 1));
+                    if (step === 6) {
+                      setVisibleRecommendationCount(initialRecommendationCount);
+                      setShowResults(true);
+                    } else setStep((current) => Math.min(6, current + 1));
                   }}
                   type="button"
                 >
