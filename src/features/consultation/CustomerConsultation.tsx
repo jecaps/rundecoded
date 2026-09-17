@@ -23,8 +23,12 @@ import {
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import type { CatalogueShoe } from '@/domain/catalogue';
-import { recommendShoes, type QuizAnswers } from '@/domain/recommendations';
+import { resolveLocalizedText, type CatalogueShoe } from '@/domain/catalogue';
+import {
+  explainRecommendation,
+  recommendShoes,
+  type QuizAnswers,
+} from '@/domain/recommendations';
 import type { Locale } from '@/i18n/config';
 import { localizedRoute } from '@/lib/routes';
 import { cn } from '@/lib/utils';
@@ -311,30 +315,11 @@ export function CustomerConsultation({
                   {group.recommendations.map((recommendation) => {
                     const product = recommendation.product;
                     const src = imagePath(product, assetBase);
-                    const reasons = recommendation.breakdown
-                      .filter(
-                        ({ outcome }) =>
-                          outcome === 'match' || outcome === 'partial-match',
-                      )
-                      .map(({ stepId }) => {
-                        if (stepId === 'surfaces')
-                          return copy.resultReasons.surface;
-                        if (stepId === 'distance')
-                          return copy.resultReasons.distance;
-                        if (stepId === 'goal') return copy.resultReasons.goal;
-                        if (stepId === 'priority')
-                          return copy.resultReasons.priority;
-                        if (stepId === 'stability')
-                          return copy.resultReasons.stability;
-                        if (stepId === 'comfort')
-                          return copy.resultReasons.comfort;
-                        return null;
-                      })
-                      .filter((reason): reason is string => Boolean(reason))
-                      .filter(
-                        (reason, index, values) =>
-                          values.indexOf(reason) === index,
-                      );
+                    const explanation = explainRecommendation(recommendation);
+                    const why = resolveLocalizedText(
+                      product.details.bestAt,
+                      locale,
+                    ).value;
                     const href = `${catalogueUrl}?${new URLSearchParams({ q: product.model })}`;
 
                     return (
@@ -368,21 +353,17 @@ export function CustomerConsultation({
                             <p className="text-muted-foreground mt-1 mb-0 text-sm">
                               {product.brand}
                             </p>
-                            {reasons.length > 0 ? (
-                              <ul className="mt-3 mb-0 flex flex-wrap gap-x-5 gap-y-1 p-0 text-sm">
-                                {reasons.slice(0, 3).map((reason) => (
-                                  <li
-                                    className="flex items-center gap-1.5"
-                                    key={reason}
-                                  >
-                                    <Check
-                                      aria-hidden="true"
-                                      className="text-primary size-4"
-                                    />
-                                    {reason}
-                                  </li>
-                                ))}
-                              </ul>
+                            {explanation.showWhy ? (
+                              <dl className="mt-3 grid gap-2 text-sm">
+                                <div>
+                                  <dt className="font-semibold">
+                                    {copy.explanation.why}
+                                  </dt>
+                                  <dd className="text-muted-foreground mt-0.5 leading-6">
+                                    {why}
+                                  </dd>
+                                </div>
+                              </dl>
                             ) : null}
                           </div>
                           <a

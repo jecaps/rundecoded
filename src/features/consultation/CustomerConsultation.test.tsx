@@ -93,6 +93,7 @@ describe('customer consultation', () => {
       screen.getByRole('heading', { name: 'Good alternatives' }),
     ).toBeVisible();
     expect(screen.getAllByText('Good alternative')).toHaveLength(10);
+    expect(screen.queryByText('Why this shoe')).not.toBeInTheDocument();
   });
 
   it('ranks short-distance beginner road-and-gravel options first', () => {
@@ -132,5 +133,7 @@ describe('customer consultation', () => {
     expect(screen.getAllByText('Strong match')).toHaveLength(10);
     expect(screen.getAllByText('Great match')).toHaveLength(4);
     expect(screen.getAllByText('Good alternative')).toHaveLength(10);
+    expect(screen.getAllByText('Why this shoe').length).toBeGreaterThan(0);
+    expect(screen.queryByText('Keep in mind')).not.toBeInTheDocument();
   });
 });

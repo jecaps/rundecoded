@@ -19,6 +19,9 @@ export interface ConsultationCopy {
     medium: string;
     unknown: string;
   };
+  explanation: {
+    why: string;
+  };
   eyebrow: string;
   multipleHelp: string;
   priorityMultipleHelp: string;
@@ -42,14 +45,6 @@ export interface ConsultationCopy {
     strong: { empty: string; title: string };
   };
   resultIntro: string;
-  resultReasons: {
-    comfort: string;
-    distance: string;
-    goal: string;
-    priority: string;
-    stability: string;
-    surface: string;
-  };
   resultsTitle: string;
   reviewIntro: string;
   reviewMissing: string;
@@ -78,6 +73,9 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       low: 'Low',
       medium: 'Medium',
       unknown: 'Incomplete',
+    },
+    explanation: {
+      why: 'Why this shoe',
     },
     eyebrow: 'Employee customer consultation',
     multipleHelp:
@@ -311,14 +309,6 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     },
     resultIntro:
       'The reasons are shown so the employee can explain each recommendation.',
-    resultReasons: {
-      comfort: 'Matches the selected comfort preference',
-      distance: 'Supports the selected running distance',
-      goal: 'Matches the selected training goal',
-      priority: 'Matches the customer’s main priority',
-      stability: 'Matches the requested guidance',
-      surface: 'Supports the selected running surface',
-    },
     resultsTitle: 'Best options for this customer',
     reviewIntro:
       'Answers marked “Not sure yet” remain neutral and do not exclude products.',
@@ -358,6 +348,9 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       low: 'Niedrig',
       medium: 'Mittel',
       unknown: 'Unvollständig',
+    },
+    explanation: {
+      why: 'Warum dieser Schuh',
     },
     eyebrow: 'Kundenberatung für Mitarbeitende',
     multipleHelp:
@@ -602,14 +595,6 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     },
     resultIntro:
       'Die Gründe werden angezeigt, damit Mitarbeitende jede Empfehlung erklären können.',
-    resultReasons: {
-      comfort: 'Passt zur gewählten Komfortpräferenz',
-      distance: 'Geeignet für die gewählte Distanz',
-      goal: 'Passt zum gewählten Trainingsziel',
-      priority: 'Passt zur wichtigsten Kundenpräferenz',
-      stability: 'Passt zur gewünschten Führung',
-      surface: 'Geeignet für den gewählten Untergrund',
-    },
     resultsTitle: 'Beste Optionen für diesen Kunden',
     reviewIntro:
       '„Noch nicht sicher“ bleibt neutral und schließt keine Produkte aus.',
@@ -649,6 +634,9 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       low: 'Faible',
       medium: 'Moyenne',
       unknown: 'Incomplète',
+    },
+    explanation: {
+      why: 'Pourquoi cette chaussure',
     },
     eyebrow: 'Conseil client pour les employés',
     multipleHelp:
@@ -885,14 +873,6 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     },
     resultIntro:
       'Les raisons sont affichées afin que l’employé puisse expliquer chaque recommandation.',
-    resultReasons: {
-      comfort: 'Correspond à la préférence de confort choisie',
-      distance: 'Convient à la distance choisie',
-      goal: 'Correspond à l’objectif sélectionné',
-      priority: 'Correspond à la priorité du client',
-      stability: 'Correspond au guidage demandé',
-      surface: 'Convient à la surface choisie',
-    },
     resultsTitle: 'Meilleures options pour ce client',
     reviewIntro: '« Pas encore sûr » reste neutre et n’exclut aucun produit.',
     reviewMissing: 'Pas encore sûr',
