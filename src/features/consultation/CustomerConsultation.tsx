@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -34,6 +34,11 @@ import { localizedRoute } from '@/lib/routes';
 import { cn } from '@/lib/utils';
 
 import { consultationCopy } from './copy';
+import {
+  defaultConsultationUrlState,
+  parseConsultationUrlState,
+  writeConsultationUrlState,
+} from './url-state';
 
 interface CustomerConsultationProps {
   assetBase: string;
@@ -48,8 +53,7 @@ const distanceChoices = [
   ['upTo10', Route],
   ['upTo21', Map],
   ['upTo42', Mountain],
-  ['upTo60', Mountain],
-  ['over60', Mountain],
+  ['over42', Mountain],
   ['unknown', CircleHelp],
 ] as const;
 
@@ -57,11 +61,28 @@ const surfaceChoices = [
   ['road', Route],
   ['gravel', Trees],
   ['trail', Map],
-  ['technicalTrail', Mountain],
+  ['trackCrossCountry', Target],
+  ['other', Pencil],
+] as const;
+
+const trailSurfaceChoices = [
+  ['easyTerrain', Trees],
+  ['mixedTerrain', Map],
+  ['technicalTerrain', Mountain],
+] as const;
+
+const trackSurfaceChoices = [
   ['track', Target],
   ['crossCountry', Trees],
-  ['other', Pencil],
-  ['unknown', CircleHelp],
+] as const;
+
+const trailSurfaceIds = [
+  'trail',
+  ...trailSurfaceChoices.map(([id]) => id),
+] as const;
+const trackSurfaceIds = [
+  'trackCrossCountry',
+  ...trackSurfaceChoices.map(([id]) => id),
 ] as const;
 
 const priorityChoices = [
@@ -69,7 +90,6 @@ const priorityChoices = [
   ['comfort', Cloud],
   ['versatility', Repeat2],
   ['speed', Zap],
-  ['guidance', ShieldCheck],
   ['unknown', CircleHelp],
 ] as const;
 
@@ -78,19 +98,14 @@ const goalChoices = [
   ['dailyFitness', Route],
   ['longRuns', Map],
   ['fasterTraining', Zap],
-  ['roadRace', Target],
-  ['trailRunning', Trees],
-  ['trailRace', Mountain],
-  ['track', Target],
+  ['race', Target],
   ['other', Pencil],
-  ['unknown', CircleHelp],
 ] as const;
 
 const stabilityChoices = [
   ['neutral', Route],
   ['stability', ShieldCheck],
   ['noPreference', Repeat2],
-  ['unknown', CircleHelp],
 ] as const;
 
 const comfortChoices = [
@@ -98,9 +113,7 @@ const comfortChoices = [
   ['knees', HeartPulse],
   ['hips', HeartPulse],
   ['achillesCalves', HeartPulse],
-  ['other', Pencil],
   ['private', ShieldCheck],
-  ['unknown', CircleHelp],
 ] as const;
 
 const initialRecommendationCount = 5;
@@ -161,20 +174,43 @@ export function CustomerConsultation({
 }: CustomerConsultationProps) {
   const copy = consultationCopy[locale];
   const catalogueUrl = localizedRoute(locale, 'catalogue');
-  const [step, setStep] = useState(0);
-  const [showResults, setShowResults] = useState(false);
+  const initialBrowserState = () =>
+    typeof window === 'undefined'
+      ? null
+      : parseConsultationUrlState(new URL(window.location.href).searchParams);
+  const [step, setStep] = useState(() =>
+    initialBrowserState()?.showResults ? 6 : 0,
+  );
+  const [showResults, setShowResults] = useState(
+    () => initialBrowserState()?.showResults ?? false,
+  );
   const [visibleRecommendationCount, setVisibleRecommendationCount] = useState(
     initialRecommendationCount,
   );
-  const [distance, setDistance] = useState<string>();
-  const [surfaces, setSurfaces] = useState<string[]>([]);
-  const [otherSurface, setOtherSurface] = useState('');
-  const [priorities, setPriorities] = useState<string[]>([]);
-  const [goal, setGoal] = useState<string>();
-  const [otherGoal, setOtherGoal] = useState('');
-  const [stability, setStability] = useState<string>();
-  const [comfort, setComfort] = useState<string[]>([]);
-  const [otherComfort, setOtherComfort] = useState('');
+  const [distance, setDistance] = useState<string | undefined>(
+    () => initialBrowserState()?.answers.distance?.[0],
+  );
+  const [surfaces, setSurfaces] = useState<string[]>(
+    () => initialBrowserState()?.answers.surfaces ?? [],
+  );
+  const [otherSurface, setOtherSurface] = useState(
+    () => initialBrowserState()?.otherSurface ?? '',
+  );
+  const [priorities, setPriorities] = useState<string[]>(
+    () => initialBrowserState()?.answers.priority ?? [],
+  );
+  const [goal, setGoal] = useState<string | undefined>(
+    () => initialBrowserState()?.answers.goal?.[0],
+  );
+  const [otherGoal, setOtherGoal] = useState(
+    () => initialBrowserState()?.otherGoal ?? '',
+  );
+  const [stability, setStability] = useState<string | undefined>(
+    () => initialBrowserState()?.answers.stability?.[0],
+  );
+  const [comfort, setComfort] = useState<string[]>(
+    () => initialBrowserState()?.answers.comfort ?? [],
+  );
 
   const answers = [distance, surfaces, priorities, goal, stability, comfort];
   const canContinue = step === 6 || Boolean(answers[step]?.length);
@@ -207,6 +243,42 @@ export function CustomerConsultation({
     0,
     visibleRecommendationCount,
   );
+
+  useEffect(() => {
+    function onPopState() {
+      const restored = parseConsultationUrlState(
+        new URL(window.location.href).searchParams,
+      );
+      setDistance(restored.answers.distance?.[0]);
+      setSurfaces(restored.answers.surfaces ?? []);
+      setOtherSurface(restored.otherSurface);
+      setPriorities(restored.answers.priority ?? []);
+      setGoal(restored.answers.goal?.[0]);
+      setOtherGoal(restored.otherGoal);
+      setStability(restored.answers.stability?.[0]);
+      setComfort(restored.answers.comfort ?? []);
+      setShowResults(restored.showResults);
+      setStep(restored.showResults ? 6 : 0);
+      setVisibleRecommendationCount(initialRecommendationCount);
+    }
+
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  function updateUrlState(nextShowResults: boolean, mode: 'push' | 'replace') {
+    const nextUrl = writeConsultationUrlState(new URL(window.location.href), {
+      answers: quizAnswers,
+      otherGoal: otherGoal.trim(),
+      otherSurface: otherSurface.trim(),
+      showResults: nextShowResults,
+    });
+    window.history[mode === 'push' ? 'pushState' : 'replaceState'](
+      {},
+      '',
+      nextUrl,
+    );
+  }
 
   function toggleMultiple(
     value: string,
@@ -242,7 +314,46 @@ export function CustomerConsultation({
     setOtherGoal('');
     setStability(undefined);
     setComfort([]);
-    setOtherComfort('');
+    const nextUrl = writeConsultationUrlState(
+      new URL(window.location.href),
+      defaultConsultationUrlState,
+    );
+    window.history.pushState({}, '', nextUrl);
+  }
+
+  function hasSurfaceFromGroup(group: readonly string[]) {
+    return surfaces.some((surface) => group.includes(surface));
+  }
+
+  function toggleSurfaceGroup(parent: string, group: readonly string[]) {
+    setSurfaces((current) => {
+      const selected = current.some((surface) => group.includes(surface));
+      const withoutGroup = current.filter(
+        (surface) => !group.includes(surface),
+      );
+      return selected ? withoutGroup : [...withoutGroup, parent];
+    });
+  }
+
+  function togglePrimarySurface(value: string) {
+    if (value === 'trail') {
+      toggleSurfaceGroup(value, trailSurfaceIds);
+      return;
+    }
+    if (value === 'trackCrossCountry') {
+      toggleSurfaceGroup(value, trackSurfaceIds);
+      return;
+    }
+    toggleMultiple(value, surfaces, setSurfaces, []);
+  }
+
+  function toggleSurfaceDetail(parent: string, value: string) {
+    setSurfaces((current) => {
+      const withoutParent = current.filter((surface) => surface !== parent);
+      return withoutParent.includes(value)
+        ? withoutParent.filter((surface) => surface !== value)
+        : [...withoutParent, value];
+    });
   }
 
   function choiceLabel(question: number, answer?: string) {
@@ -288,6 +399,7 @@ export function CustomerConsultation({
             onClick={() => {
               setShowResults(false);
               setVisibleRecommendationCount(initialRecommendationCount);
+              updateUrlState(false, 'replace');
             }}
             type="button"
             variant="outline"
@@ -514,10 +626,42 @@ export function CustomerConsultation({
                   )
                 : null}
               {step === 1
-                ? renderChoices(surfaceChoices, surfaces, (value) =>
-                    toggleMultiple(value, surfaces, setSurfaces, ['unknown']),
+                ? renderChoices(
+                    surfaceChoices,
+                    [
+                      ...(surfaces.includes('road') ? ['road'] : []),
+                      ...(surfaces.includes('gravel') ? ['gravel'] : []),
+                      ...(hasSurfaceFromGroup(trailSurfaceIds)
+                        ? ['trail']
+                        : []),
+                      ...(hasSurfaceFromGroup(trackSurfaceIds)
+                        ? ['trackCrossCountry']
+                        : []),
+                      ...(surfaces.includes('other') ? ['other'] : []),
+                    ],
+                    togglePrimarySurface,
                   )
                 : null}
+              {step === 1 && hasSurfaceFromGroup(trailSurfaceIds) ? (
+                <div className="mt-6">
+                  <p className="m-0 text-sm font-semibold">
+                    {copy.trailSurfaceFollowUp}
+                  </p>
+                  {renderChoices(trailSurfaceChoices, surfaces, (value) =>
+                    toggleSurfaceDetail('trail', value),
+                  )}
+                </div>
+              ) : null}
+              {step === 1 && hasSurfaceFromGroup(trackSurfaceIds) ? (
+                <div className="mt-6">
+                  <p className="m-0 text-sm font-semibold">
+                    {copy.trackSurfaceFollowUp}
+                  </p>
+                  {renderChoices(trackSurfaceChoices, surfaces, (value) =>
+                    toggleSurfaceDetail('trackCrossCountry', value),
+                  )}
+                </div>
+              ) : null}
               {step === 2
                 ? renderChoices(priorityChoices, priorities, (value) =>
                     toggleMultiple(
@@ -544,7 +688,6 @@ export function CustomerConsultation({
                     toggleMultiple(value, comfort, setComfort, [
                       'none',
                       'private',
-                      'unknown',
                     ]),
                   )
                 : null}
@@ -560,20 +703,6 @@ export function CustomerConsultation({
                     onChange={(event) => setOtherSurface(event.target.value)}
                     placeholder={copy.otherSurfacePlaceholder}
                     value={otherSurface}
-                  />
-                </label>
-              ) : null}
-              {step === 5 && comfort.includes('other') ? (
-                <label
-                  className="mt-5 grid max-w-xl gap-2 text-sm font-semibold"
-                  htmlFor="other-comfort"
-                >
-                  {copy.otherComfortLabel}
-                  <Input
-                    id="other-comfort"
-                    onChange={(event) => setOtherComfort(event.target.value)}
-                    placeholder={copy.otherComfortPlaceholder}
-                    value={otherComfort}
                   />
                 </label>
               ) : null}
@@ -623,9 +752,7 @@ export function CustomerConsultation({
                         ? otherSurface.trim()
                         : questionIndex === 3 && goal === 'other'
                           ? otherGoal.trim()
-                          : questionIndex === 5 && comfort.includes('other')
-                            ? otherComfort.trim()
-                            : '';
+                          : '';
                     return (
                       <div
                         className="border-border flex flex-wrap items-center justify-between gap-3 border-b py-3"
@@ -678,6 +805,7 @@ export function CustomerConsultation({
                     if (step === 6) {
                       setVisibleRecommendationCount(initialRecommendationCount);
                       setShowResults(true);
+                      updateUrlState(true, 'push');
                     } else setStep((current) => Math.min(6, current + 1));
                   }}
                   type="button"

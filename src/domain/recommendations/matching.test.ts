@@ -125,7 +125,7 @@ describe('facet-based shoe recommendation scoring', () => {
         distance: ['upTo42'],
         surfaces: ['trail'],
         priority: ['comfort'],
-        goal: ['trailRunning'],
+        goal: ['longRuns'],
         comfort: ['knees'],
       },
       shoe({
@@ -208,11 +208,11 @@ describe('facet-based shoe recommendation scoring', () => {
     ];
     const answers: QuizAnswers = {
       distance: ['unknown'],
-      surfaces: ['unknown'],
+      surfaces: ['other'],
       priority: ['unknown'],
-      goal: ['unknown'],
-      stability: ['unknown'],
-      comfort: ['unknown'],
+      goal: ['other'],
+      stability: ['noPreference'],
+      comfort: ['private'],
     };
     const results = recommendShoes(answers, products, products.length);
 

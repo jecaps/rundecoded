@@ -10,16 +10,11 @@ import {
 const neutralOptions: Array<[ConsultationStepId, string]> = [
   ['distance', 'unknown'],
   ['surfaces', 'other'],
-  ['surfaces', 'unknown'],
   ['priority', 'unknown'],
   ['goal', 'other'],
-  ['goal', 'unknown'],
   ['stability', 'noPreference'],
-  ['stability', 'unknown'],
   ['comfort', 'none'],
-  ['comfort', 'other'],
   ['comfort', 'private'],
-  ['comfort', 'unknown'],
 ];
 
 describe('quiz facet config', () => {
@@ -35,7 +30,7 @@ describe('quiz facet config', () => {
 
   it('uses high weights for distance, surface, and requested stability', () => {
     expect(quizFacetConfig.distance.upTo21.mapsTo.weight).toBe(1);
-    expect(quizFacetConfig.surfaces.technicalTrail.mapsTo.weight).toBe(1);
+    expect(quizFacetConfig.surfaces.technicalTerrain.mapsTo.weight).toBe(1);
     expect(quizFacetConfig.stability.stability.mapsTo.weight).toBe(1);
   });
 

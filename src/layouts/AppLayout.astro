@@ -11,6 +11,7 @@ import '../styles/global.css';
 interface Props {
   compactBanner?: boolean;
   description: string;
+  hideBanner?: boolean;
   locale: Locale;
   route: LocalizedRouteKey;
   title: string;
@@ -19,6 +20,7 @@ interface Props {
 const {
   compactBanner = false,
   description,
+  hideBanner = false,
   locale,
   route,
   title,
@@ -92,11 +94,15 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
   <body>
     <a class="skip-link" href="#main-content">{messages.skipLink}</a>
     <div class="app-frame">
-      <AppBanner
-        compact={compactBanner}
-        currentPath={Astro.url.pathname}
-        locale={locale}
-      />
+      {
+        !hideBanner && (
+          <AppBanner
+            compact={compactBanner}
+            currentPath={Astro.url.pathname}
+            locale={locale}
+          />
+        )
+      }
       <main id="main-content" class="page-container" tabindex="-1">
         <slot />
       </main>

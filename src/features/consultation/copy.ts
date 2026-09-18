@@ -27,12 +27,12 @@ export interface ConsultationCopy {
   multipleHelp: string;
   priorityMultipleHelp: string;
   notSureNotice: string;
-  otherComfortLabel: string;
-  otherComfortPlaceholder: string;
   otherGoalLabel: string;
   otherGoalPlaceholder: string;
   otherSurfaceLabel: string;
   otherSurfacePlaceholder: string;
+  trackSurfaceFollowUp: string;
+  trailSurfaceFollowUp: string;
   progress: (current: number, total: number) => string;
   questions: Array<{
     choices: Record<string, { description: string; label: string }>;
@@ -73,19 +73,19 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     explanation: {
       why: 'Why this shoe',
     },
-    eyebrow: 'Employee customer consultation',
+    eyebrow: 'Guided shoe selection',
     multipleHelp:
       'Multiple answers are allowed. Select the customer’s most frequent surface first.',
     priorityMultipleHelp:
       'Choose one or two priorities. When two are selected, they share the same total influence.',
     notSureNotice:
       '“Not sure yet” keeps this criterion neutral. It will not exclude a shoe, but the recommendation will be less specific.',
-    otherComfortLabel: 'Add a short comfort note · optional',
-    otherComfortPlaceholder: 'For example: discomfort after longer runs',
     otherGoalLabel: 'Describe the other goal · optional',
     otherGoalPlaceholder: 'For example: walking and occasional running',
     otherSurfaceLabel: 'Describe the other surface · optional',
     otherSurfacePlaceholder: 'For example: sandy beach or indoor track',
+    trackSurfaceFollowUp: 'Which surface matters most?',
+    trailSurfaceFollowUp: 'What kind of trail terrain matters most?',
     progress: (current, total) => `Step ${current} of ${total}`,
     questions: [
       {
@@ -108,12 +108,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: '21–42 km',
             description: 'Marathon-distance training',
           },
-          upTo60: {
-            label: '42–60 km',
-            description: 'Long trail and ultra sessions',
-          },
-          over60: {
-            label: 'Over 60 km',
+          over42: {
+            label: 'Over 42 km',
             description: 'Ultra-distance running',
           },
           unknown: {
@@ -132,12 +128,24 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'Firm paths and light trails',
           },
           trail: {
-            label: 'Mixed trails',
-            description: 'Changing off-road terrain',
+            label: 'Trail / off-road',
+            description: 'Unpaved routes and natural terrain',
           },
-          technicalTrail: {
-            label: 'Technical trails',
-            description: 'Steep, rocky or rugged routes',
+          trackCrossCountry: {
+            label: 'Track or cross-country',
+            description: 'Athletics tracks, grass and race courses',
+          },
+          easyTerrain: {
+            label: 'Easy terrain',
+            description: 'Smooth, firm and runnable paths',
+          },
+          mixedTerrain: {
+            label: 'Mixed terrain',
+            description: 'A mix of runnable and technical sections',
+          },
+          technicalTerrain: {
+            label: 'Technical terrain',
+            description: 'Steep, rocky, muddy or rugged routes',
           },
           track: { label: 'Track', description: 'Athletics track or spikes' },
           crossCountry: {
@@ -145,12 +153,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'Grass, dirt and race courses',
           },
           other: {
-            label: 'Other surface',
-            description: 'Add a short note if useful',
-          },
-          unknown: {
-            label: 'Not sure yet',
-            description: 'Keep surface neutral',
+            label: 'Other / not sure',
+            description: 'Keep surface neutral or add a short note',
           },
         },
       },
@@ -159,8 +163,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         help: 'This preference helps rank compatible shoes.',
         choices: {
           value: {
-            label: 'Value / simple first shoe',
-            description: 'An accessible choice for beginning regular running',
+            label: 'Value',
+            description: 'An accessible choice at a sensible price',
           },
           comfort: {
             label: 'Comfort',
@@ -171,7 +175,6 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'One shoe for varied runs',
           },
           speed: { label: 'Speed', description: 'Lighter and more responsive' },
-          guidance: { label: 'Guidance', description: 'A more supported ride' },
           unknown: {
             label: 'Not sure yet',
             description: 'Keep this preference neutral',
@@ -187,8 +190,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'First runs and building consistency',
           },
           dailyFitness: {
-            label: 'Daily fitness',
-            description: 'Regular training and general use',
+            label: 'Daily or easy running',
+            description: 'Regular training and comfortable everyday runs',
           },
           longRuns: {
             label: 'Comfortable long runs',
@@ -198,29 +201,13 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: 'Faster training',
             description: 'Tempo and interval sessions',
           },
-          roadRace: {
-            label: 'Road race',
-            description: 'Race-day road performance',
-          },
-          trailRunning: {
-            label: 'Trail running',
-            description: 'Regular off-road training',
-          },
-          trailRace: {
-            label: 'Trail race',
-            description: 'Off-road competition',
-          },
-          track: {
-            label: 'Track or cross-country',
-            description: 'Track events and XC races',
+          race: {
+            label: 'Racing',
+            description: 'Performance for the customer’s chosen surface',
           },
           other: {
-            label: 'Other goal',
-            description: 'Keep the goal neutral and add context later',
-          },
-          unknown: {
-            label: 'Not sure yet',
-            description: 'Do not rank by training goal',
+            label: 'Other / not sure',
+            description: 'Keep the goal neutral or add context',
           },
         },
       },
@@ -229,20 +216,16 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         help: 'Use their preference or prior fitting experience—not a visual diagnosis of gait.',
         choices: {
           neutral: {
-            label: 'Neutral',
+            label: 'No additional guidance',
             description: 'No additional guidance requested',
           },
           stability: {
-            label: 'More guidance',
+            label: 'Prefers additional guidance',
             description: 'Customer prefers a supported ride',
           },
           noPreference: {
-            label: 'No preference',
+            label: 'No preference / not sure',
             description: 'Show both neutral and guidance options',
-          },
-          unknown: {
-            label: 'Not sure yet',
-            description: 'Keep stability neutral in ranking',
           },
         },
       },
@@ -256,26 +239,18 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
           },
           knees: {
             label: 'Knees',
-            description: 'Light preference for more cushioning and 0–6 mm drop',
+            description: 'Light preference for protective cushioning',
           },
           hips: {
             label: 'Hips',
-            description: 'Light preference for 0–6 mm drop',
+            description: 'Light preference for a lower-drop option',
           },
           achillesCalves: {
             label: 'Achilles or calves',
-            description: 'Light preference for drop above 6 mm',
-          },
-          other: {
-            label: 'Other concern',
-            description: 'Add a short note if appropriate',
+            description: 'Light preference for a higher-drop option',
           },
           private: {
-            label: 'Prefer not to say',
-            description: 'Continue without comfort history',
-          },
-          unknown: {
-            label: 'Not sure yet',
+            label: 'Prefer not to say / not sure',
             description: 'Continue without this context',
           },
         },
@@ -290,7 +265,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       'Recommendations describe product suitability from available product data. They do not diagnose injuries or replace professional medical advice.',
     resultsTitle: 'Best options for this customer',
     reviewIntro:
-      'Answers marked “Not sure yet” remain neutral and do not exclude products.',
+      'Answers marked “not sure” or “no preference” remain neutral and do not exclude products.',
     reviewMissing: 'Not sure yet',
     steps: [
       'Distance',
@@ -306,7 +281,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       great: 'Great match',
       strong: 'Strong match',
     },
-    title: 'Customer running needs',
+    title: 'Customer consultation',
   },
   de: {
     actions: {
@@ -332,19 +307,19 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     explanation: {
       why: 'Warum dieser Schuh',
     },
-    eyebrow: 'Kundenberatung für Mitarbeitende',
+    eyebrow: 'Geführte Schuhauswahl',
     multipleHelp:
       'Mehrere Antworten sind möglich. Wähle den häufigsten Untergrund zuerst.',
     priorityMultipleHelp:
       'Wähle eine oder zwei Prioritäten. Bei zwei Antworten teilen sie sich denselben Gesamteinfluss.',
     notSureNotice:
       '„Noch nicht sicher“ lässt dieses Kriterium neutral. Dadurch wird kein Schuh ausgeschlossen, die Empfehlung ist aber weniger spezifisch.',
-    otherComfortLabel: 'Kurze Komfortnotiz ergänzen · optional',
-    otherComfortPlaceholder: 'Zum Beispiel: Beschwerden nach längeren Läufen',
     otherGoalLabel: 'Anderes Ziel beschreiben · optional',
     otherGoalPlaceholder: 'Zum Beispiel: Walking und gelegentliches Laufen',
     otherSurfaceLabel: 'Anderen Untergrund beschreiben · optional',
     otherSurfacePlaceholder: 'Zum Beispiel: Sandstrand oder Indoor-Bahn',
+    trackSurfaceFollowUp: 'Welcher Untergrund ist am wichtigsten?',
+    trailSurfaceFollowUp: 'Welche Art von Gelände ist am wichtigsten?',
     progress: (current, total) => `Schritt ${current} von ${total}`,
     questions: [
       {
@@ -367,12 +342,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: '21–42 km',
             description: 'Training bis zur Marathondistanz',
           },
-          upTo60: {
-            label: '42–60 km',
-            description: 'Lange Trail- und Ultraeinheiten',
-          },
-          over60: {
-            label: 'Über 60 km',
+          over42: {
+            label: 'Über 42 km',
             description: 'Ultradistanzläufe',
           },
           unknown: {
@@ -391,12 +362,24 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'Feste Wege und leichte Trails',
           },
           trail: {
-            label: 'Gemischte Trails',
-            description: 'Wechselndes Gelände',
+            label: 'Trail / Gelände',
+            description: 'Unbefestigte Wege und natürliches Gelände',
           },
-          technicalTrail: {
-            label: 'Technische Trails',
-            description: 'Steile, felsige oder anspruchsvolle Wege',
+          trackCrossCountry: {
+            label: 'Bahn oder Crosslauf',
+            description: 'Leichtathletikbahn, Gras und Wettkampfstrecken',
+          },
+          easyTerrain: {
+            label: 'Einfaches Gelände',
+            description: 'Glatte, feste und gut laufbare Wege',
+          },
+          mixedTerrain: {
+            label: 'Gemischtes Gelände',
+            description: 'Laufbare und technische Abschnitte',
+          },
+          technicalTerrain: {
+            label: 'Technisches Gelände',
+            description: 'Steile, felsige, schlammige oder anspruchsvolle Wege',
           },
           track: {
             label: 'Bahn',
@@ -407,12 +390,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'Gras, Erde und Wettkampfstrecken',
           },
           other: {
-            label: 'Anderer Untergrund',
-            description: 'Bei Bedarf kurze Notiz ergänzen',
-          },
-          unknown: {
-            label: 'Noch nicht sicher',
-            description: 'Untergrund neutral lassen',
+            label: 'Anderer / nicht sicher',
+            description: 'Neutral lassen oder kurze Notiz ergänzen',
           },
         },
       },
@@ -421,8 +400,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         help: 'Diese Präferenz hilft, geeignete Schuhe zu sortieren.',
         choices: {
           value: {
-            label: 'Preiswert / einfacher erster Schuh',
-            description: 'Ein zugänglicher Einstieg ins regelmäßige Laufen',
+            label: 'Preis-Leistung',
+            description: 'Eine zugängliche Wahl zu einem vernünftigen Preis',
           },
           comfort: {
             label: 'Komfort',
@@ -435,10 +414,6 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
           speed: {
             label: 'Tempo',
             description: 'Leichter und reaktionsfreudiger',
-          },
-          guidance: {
-            label: 'Führung',
-            description: 'Stärker unterstütztes Laufgefühl',
           },
           unknown: {
             label: 'Noch nicht sicher',
@@ -455,8 +430,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'Erste Läufe und Routine aufbauen',
           },
           dailyFitness: {
-            label: 'Alltagstraining',
-            description: 'Regelmäßiges Training und allgemeine Nutzung',
+            label: 'Alltägliche oder lockere Läufe',
+            description: 'Regelmäßiges Training und komfortable Alltagsläufe',
           },
           longRuns: {
             label: 'Komfortable lange Läufe',
@@ -466,29 +441,13 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: 'Schnelleres Training',
             description: 'Tempo- und Intervalleinheiten',
           },
-          roadRace: {
-            label: 'Straßenwettkampf',
-            description: 'Leistung am Wettkampftag',
-          },
-          trailRunning: {
-            label: 'Trailrunning',
-            description: 'Regelmäßiges Offroad-Training',
-          },
-          trailRace: {
-            label: 'Trailwettkampf',
-            description: 'Offroad-Wettkampf',
-          },
-          track: {
-            label: 'Bahn oder Crosslauf',
-            description: 'Bahndisziplinen und Crossrennen',
+          race: {
+            label: 'Wettkampf',
+            description: 'Leistung auf dem gewählten Untergrund',
           },
           other: {
-            label: 'Anderes Ziel',
-            description: 'Ziel neutral lassen und später ergänzen',
-          },
-          unknown: {
-            label: 'Noch nicht sicher',
-            description: 'Nicht nach Trainingsziel sortieren',
+            label: 'Anderes / nicht sicher',
+            description: 'Ziel neutral lassen oder Kontext ergänzen',
           },
         },
       },
@@ -497,20 +456,16 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         help: 'Nutze die Präferenz oder bisherige Erfahrung – keine visuelle Ganganalyse.',
         choices: {
           neutral: {
-            label: 'Neutral',
+            label: 'Keine zusätzliche Führung',
             description: 'Keine zusätzliche Führung gewünscht',
           },
           stability: {
-            label: 'Mehr Führung',
+            label: 'Zusätzliche Führung gewünscht',
             description: 'Kunde bevorzugt ein gestütztes Laufgefühl',
           },
           noPreference: {
-            label: 'Keine Präferenz',
+            label: 'Keine Präferenz / nicht sicher',
             description: 'Neutrale und gestützte Optionen zeigen',
-          },
-          unknown: {
-            label: 'Noch nicht sicher',
-            description: 'Stabilität neutral lassen',
           },
         },
       },
@@ -524,27 +479,18 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
           },
           knees: {
             label: 'Knie',
-            description:
-              'Leichte Präferenz für mehr Dämpfung und 0–6 mm Sprengung',
+            description: 'Leichte Präferenz für schützende Dämpfung',
           },
           hips: {
             label: 'Hüfte',
-            description: 'Leichte Präferenz für 0–6 mm Sprengung',
+            description: 'Leichte Präferenz für eine niedrigere Sprengung',
           },
           achillesCalves: {
             label: 'Achilles oder Waden',
-            description: 'Leichte Präferenz für mehr als 6 mm Sprengung',
-          },
-          other: {
-            label: 'Andere Beschwerden',
-            description: 'Bei Bedarf kurze Notiz ergänzen',
+            description: 'Leichte Präferenz für eine höhere Sprengung',
           },
           private: {
-            label: 'Keine Angabe',
-            description: 'Ohne Komforthistorie fortfahren',
-          },
-          unknown: {
-            label: 'Noch nicht sicher',
+            label: 'Keine Angabe / nicht sicher',
             description: 'Ohne diesen Kontext fortfahren',
           },
         },
@@ -559,7 +505,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       'Empfehlungen beschreiben die Produkteignung anhand verfügbarer Produktdaten. Sie stellen keine Diagnose dar und ersetzen keine medizinische Beratung.',
     resultsTitle: 'Beste Optionen für diesen Kunden',
     reviewIntro:
-      '„Noch nicht sicher“ bleibt neutral und schließt keine Produkte aus.',
+      '„Nicht sicher“ und „keine Präferenz“ bleiben neutral und schließen keine Produkte aus.',
     reviewMissing: 'Noch nicht sicher',
     steps: [
       'Distanz',
@@ -575,7 +521,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       great: 'Sehr gute Übereinstimmung',
       strong: 'Starke Übereinstimmung',
     },
-    title: 'Laufbedürfnisse des Kunden',
+    title: 'Kundenberatung',
   },
   fr: {
     actions: {
@@ -601,19 +547,19 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     explanation: {
       why: 'Pourquoi cette chaussure',
     },
-    eyebrow: 'Conseil client pour les employés',
+    eyebrow: 'Sélection guidée de chaussures',
     multipleHelp:
       'Plusieurs réponses sont possibles. Sélectionnez d’abord la surface la plus fréquente.',
     priorityMultipleHelp:
       'Choisissez une ou deux priorités. Avec deux réponses, elles partagent la même influence totale.',
     notSureNotice:
       '« Pas encore sûr » laisse ce critère neutre. Aucune chaussure ne sera exclue, mais la recommandation sera moins précise.',
-    otherComfortLabel: 'Ajouter une courte note de confort · facultatif',
-    otherComfortPlaceholder: 'Par exemple : gêne après les sorties longues',
     otherGoalLabel: 'Décrire l’autre objectif · facultatif',
     otherGoalPlaceholder: 'Par exemple : marche et course occasionnelle',
     otherSurfaceLabel: 'Décrire l’autre surface · facultatif',
     otherSurfacePlaceholder: 'Par exemple : plage de sable ou piste couverte',
+    trackSurfaceFollowUp: 'Quelle surface compte le plus ?',
+    trailSurfaceFollowUp: 'Quel type de terrain trail compte le plus ?',
     progress: (current, total) => `Étape ${current} sur ${total}`,
     questions: [
       {
@@ -634,12 +580,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: '21–42 km',
             description: 'Entraînement jusqu’au marathon',
           },
-          upTo60: {
-            label: '42–60 km',
-            description: 'Longues sorties trail et ultra',
-          },
-          over60: {
-            label: 'Plus de 60 km',
+          over42: {
+            label: 'Plus de 42 km',
             description: 'Course d’ultra-distance',
           },
           unknown: {
@@ -658,12 +600,24 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'Chemins fermes et sentiers faciles',
           },
           trail: {
-            label: 'Sentiers mixtes',
-            description: 'Terrain tout-terrain varié',
+            label: 'Trail / hors route',
+            description: 'Parcours non goudronnés et terrains naturels',
           },
-          technicalTrail: {
-            label: 'Sentiers techniques',
-            description: 'Parcours raides, rocheux ou difficiles',
+          trackCrossCountry: {
+            label: 'Piste ou cross-country',
+            description: 'Piste d’athlétisme, herbe et parcours de course',
+          },
+          easyTerrain: {
+            label: 'Terrain facile',
+            description: 'Chemins lisses, fermes et roulants',
+          },
+          mixedTerrain: {
+            label: 'Terrain mixte',
+            description: 'Sections roulantes et techniques',
+          },
+          technicalTerrain: {
+            label: 'Terrain technique',
+            description: 'Parcours raides, rocheux, boueux ou difficiles',
           },
           track: { label: 'Piste', description: 'Athlétisme ou pointes' },
           crossCountry: {
@@ -671,12 +625,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'Herbe, terre et parcours de course',
           },
           other: {
-            label: 'Autre surface',
-            description: 'Ajouter une courte note si utile',
-          },
-          unknown: {
-            label: 'Pas encore sûr',
-            description: 'Laisser la surface neutre',
+            label: 'Autre / pas encore sûr',
+            description: 'Rester neutre ou ajouter une courte note',
           },
         },
       },
@@ -685,9 +635,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         help: 'Cette préférence aide à classer les chaussures compatibles.',
         choices: {
           value: {
-            label: 'Bon rapport qualité-prix / première chaussure simple',
-            description:
-              'Un choix accessible pour commencer à courir régulièrement',
+            label: 'Bon rapport qualité-prix',
+            description: 'Un choix accessible à un prix raisonnable',
           },
           comfort: {
             label: 'Confort',
@@ -698,10 +647,6 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'Une chaussure pour des sorties variées',
           },
           speed: { label: 'Vitesse', description: 'Plus légère et réactive' },
-          guidance: {
-            label: 'Guidage',
-            description: 'Sensation plus soutenue',
-          },
           unknown: {
             label: 'Pas encore sûr',
             description: 'Laisser cette préférence neutre',
@@ -717,8 +662,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             description: 'Premières sorties et régularité',
           },
           dailyFitness: {
-            label: 'Forme quotidienne',
-            description: 'Entraînement régulier et usage général',
+            label: 'Course quotidienne ou facile',
+            description: 'Entraînement régulier et sorties confortables',
           },
           longRuns: {
             label: 'Sorties longues confortables',
@@ -728,29 +673,13 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
             label: 'Entraînement rapide',
             description: 'Séances de tempo et intervalles',
           },
-          roadRace: {
-            label: 'Course sur route',
-            description: 'Performance le jour de la course',
-          },
-          trailRunning: {
-            label: 'Trail',
-            description: 'Entraînement régulier hors route',
-          },
-          trailRace: {
-            label: 'Course de trail',
-            description: 'Compétition hors route',
-          },
-          track: {
-            label: 'Piste ou cross-country',
-            description: 'Épreuves sur piste et cross',
+          race: {
+            label: 'Compétition',
+            description: 'Performance sur la surface choisie',
           },
           other: {
-            label: 'Autre objectif',
-            description: 'Laisser l’objectif neutre et ajouter du contexte',
-          },
-          unknown: {
-            label: 'Pas encore sûr',
-            description: 'Ne pas classer par objectif',
+            label: 'Autre / pas encore sûr',
+            description: 'Rester neutre ou ajouter du contexte',
           },
         },
       },
@@ -759,20 +688,16 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
         help: 'Utilisez sa préférence ou son expérience, pas un diagnostic visuel de la foulée.',
         choices: {
           neutral: {
-            label: 'Neutre',
+            label: 'Aucun guidage supplémentaire',
             description: 'Aucun guidage supplémentaire demandé',
           },
           stability: {
-            label: 'Plus de guidage',
+            label: 'Préfère un guidage supplémentaire',
             description: 'Le client préfère une sensation soutenue',
           },
           noPreference: {
-            label: 'Aucune préférence',
+            label: 'Aucune préférence / pas encore sûr',
             description: 'Afficher les options neutres et guidées',
-          },
-          unknown: {
-            label: 'Pas encore sûr',
-            description: 'Laisser la stabilité neutre',
           },
         },
       },
@@ -786,27 +711,18 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
           },
           knees: {
             label: 'Genoux',
-            description:
-              'Légère préférence pour plus d’amorti et un drop de 0–6 mm',
+            description: 'Légère préférence pour un amorti protecteur',
           },
           hips: {
             label: 'Hanches',
-            description: 'Légère préférence pour un drop de 0–6 mm',
+            description: 'Légère préférence pour un drop plus faible',
           },
           achillesCalves: {
             label: 'Achille ou mollets',
-            description: 'Légère préférence pour un drop supérieur à 6 mm',
-          },
-          other: {
-            label: 'Autre gêne',
-            description: 'Ajouter une courte note si nécessaire',
+            description: 'Légère préférence pour un drop plus élevé',
           },
           private: {
-            label: 'Préfère ne pas répondre',
-            description: 'Continuer sans historique de confort',
-          },
-          unknown: {
-            label: 'Pas encore sûr',
+            label: 'Préfère ne pas répondre / pas encore sûr',
             description: 'Continuer sans ce contexte',
           },
         },
@@ -820,7 +736,8 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
     resultDisclaimer:
       'Les recommandations décrivent l’adéquation des produits à partir des données disponibles. Elles ne diagnostiquent pas les blessures et ne remplacent pas un avis médical.',
     resultsTitle: 'Meilleures options pour ce client',
-    reviewIntro: '« Pas encore sûr » reste neutre et n’exclut aucun produit.',
+    reviewIntro:
+      '« Pas encore sûr » et « aucune préférence » restent neutres et n’excluent aucun produit.',
     reviewMissing: 'Pas encore sûr',
     steps: [
       'Distance',
@@ -836,6 +753,6 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       great: 'Excellente correspondance',
       strong: 'Très bonne correspondance',
     },
-    title: 'Besoins de course du client',
+    title: 'Conseil client',
   },
 };

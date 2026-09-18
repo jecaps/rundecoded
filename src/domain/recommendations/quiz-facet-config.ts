@@ -79,17 +79,10 @@ export const quizFacetConfig = {
         weight: 1,
       },
     },
-    upTo60: {
+    over42: {
       mapsTo: {
         facet: 'distanceRangeKm',
-        value: { min: 42, max: 60 },
-        weight: 1,
-      },
-    },
-    over60: {
-      mapsTo: {
-        facet: 'distanceRangeKm',
-        value: { min: 60, max: 170 },
+        value: { min: 42, max: 170 },
         weight: 1,
       },
     },
@@ -122,15 +115,44 @@ export const quizFacetConfig = {
       mapsTo: {
         facet: 'surfaceTags',
         matchMode: 'any',
+        value: [
+          'easy-terrain',
+          'mixed-terrain',
+          'technical-terrain',
+          'muddy-terrain',
+        ],
+        weight: 1,
+      },
+    },
+    easyTerrain: {
+      mapsTo: {
+        facet: 'surfaceTags',
+        matchMode: 'any',
+        value: ['firm-paths', 'easy-terrain'],
+        weight: 1,
+      },
+    },
+    mixedTerrain: {
+      mapsTo: {
+        facet: 'surfaceTags',
+        matchMode: 'any',
         value: ['mixed-terrain'],
         weight: 1,
       },
     },
-    technicalTrail: {
+    technicalTerrain: {
       mapsTo: {
         facet: 'surfaceTags',
         matchMode: 'any',
         value: ['technical-terrain', 'muddy-terrain'],
+        weight: 1,
+      },
+    },
+    trackCrossCountry: {
+      mapsTo: {
+        facet: 'surfaceTags',
+        matchMode: 'any',
+        value: ['track', 'cross-country'],
         weight: 1,
       },
     },
@@ -151,13 +173,6 @@ export const quizFacetConfig = {
       },
     },
     other: {
-      mapsTo: {
-        facet: 'surfaceTags',
-        value: [],
-        weight: 0,
-      },
-    },
-    unknown: {
       mapsTo: {
         facet: 'surfaceTags',
         value: [],
@@ -206,14 +221,6 @@ export const quizFacetConfig = {
         weight: 0.7,
       },
     },
-    guidance: {
-      mapsTo: {
-        facet: 'priorityTags',
-        matchMode: 'any',
-        value: ['stability-support'],
-        weight: 0.7,
-      },
-    },
     unknown: {
       mapsTo: {
         facet: 'priorityTags',
@@ -255,31 +262,7 @@ export const quizFacetConfig = {
         weight: 0.7,
       },
     },
-    roadRace: {
-      mapsTo: {
-        facet: 'useCase',
-        matchMode: 'any',
-        value: ['race'],
-        weight: 0.7,
-      },
-    },
-    trailRunning: {
-      mapsTo: {
-        facet: 'useCase',
-        matchMode: 'any',
-        value: ['daily-trainer', 'long-run'],
-        weight: 0.7,
-      },
-    },
-    trailRace: {
-      mapsTo: {
-        facet: 'useCase',
-        matchMode: 'any',
-        value: ['race'],
-        weight: 0.7,
-      },
-    },
-    track: {
+    race: {
       mapsTo: {
         facet: 'useCase',
         matchMode: 'any',
@@ -288,13 +271,6 @@ export const quizFacetConfig = {
       },
     },
     other: {
-      mapsTo: {
-        facet: 'useCase',
-        value: [],
-        weight: 0,
-      },
-    },
-    unknown: {
       mapsTo: {
         facet: 'useCase',
         value: [],
@@ -318,13 +294,6 @@ export const quizFacetConfig = {
       },
     },
     noPreference: {
-      mapsTo: {
-        facet: 'stability',
-        value: null,
-        weight: 0,
-      },
-    },
-    unknown: {
       mapsTo: {
         facet: 'stability',
         value: null,
@@ -368,21 +337,7 @@ export const quizFacetConfig = {
         weight: 0.25,
       },
     },
-    other: {
-      mapsTo: {
-        facet: 'fit',
-        value: [],
-        weight: 0,
-      },
-    },
     private: {
-      mapsTo: {
-        facet: 'fit',
-        value: [],
-        weight: 0,
-      },
-    },
-    unknown: {
       mapsTo: {
         facet: 'fit',
         value: [],
