@@ -1,11 +1,14 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { getProductCatalogue } from '@/features/catalogue/catalogue';
 
 import { CustomerConsultation } from './CustomerConsultation';
 
 afterEach(cleanup);
+beforeEach(() => {
+  window.history.replaceState({}, '', '/en/consultation/');
+});
 
 describe('customer consultation', () => {
   it('allows up to two priorities and keeps the neutral answer exclusive', () => {
@@ -19,11 +22,11 @@ describe('customer consultation', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /Not sure yet/ }));
     fireEvent.click(screen.getByRole('button', { name: 'Next' }));
-    fireEvent.click(screen.getByRole('button', { name: /Not sure yet/ }));
+    fireEvent.click(screen.getByRole('button', { name: /^Other \/ not sure/ }));
     fireEvent.click(screen.getByRole('button', { name: 'Next' }));
 
     const value = screen.getByRole('button', {
-      name: /^Value \/ simple first shoe/,
+      name: /^Value/,
     });
     const comfort = screen.getByRole('button', { name: /^Comfort/ });
     const speed = screen.getByRole('button', { name: /^Speed/ });
@@ -50,8 +53,7 @@ describe('customer consultation', () => {
     );
 
     expect(screen.getByRole('button', { name: /^21–42 km/ })).toBeVisible();
-    expect(screen.getByRole('button', { name: /^42–60 km/ })).toBeVisible();
-    expect(screen.getByRole('button', { name: /^Over 60 km/ })).toBeVisible();
+    expect(screen.getByRole('button', { name: /^Over 42 km/ })).toBeVisible();
 
     fireEvent.click(screen.getByRole('button', { name: /Not sure yet/ }));
     expect(screen.getByText(/will not exclude a shoe/i)).toBeVisible();
@@ -59,18 +61,26 @@ describe('customer consultation', () => {
 
     const road = screen.getByRole('button', { name: /^Road/ });
     fireEvent.click(road);
-    fireEvent.click(screen.getByRole('button', { name: /Other surface/ }));
+    fireEvent.click(screen.getByRole('button', { name: /^Other \/ not sure/ }));
     expect(screen.getByLabelText(/Describe the other surface/)).toBeVisible();
     expect(road).toHaveAttribute('aria-pressed', 'true');
 
-    fireEvent.click(screen.getByRole('button', { name: /Not sure yet/ }));
+    fireEvent.click(road);
     expect(road).toHaveAttribute('aria-pressed', 'false');
     fireEvent.click(screen.getByRole('button', { name: 'Next' }));
 
-    for (let index = 0; index < 4; index += 1) {
-      fireEvent.click(screen.getByRole('button', { name: /Not sure yet/ }));
-      fireEvent.click(screen.getByRole('button', { name: 'Next' }));
-    }
+    fireEvent.click(screen.getByRole('button', { name: /Not sure yet/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    fireEvent.click(screen.getByRole('button', { name: /^Other \/ not sure/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: /^No preference \/ not sure/ }),
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: /^Prefer not to say \/ not sure/ }),
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
 
     expect(
       screen.getByRole('heading', { name: 'Review the customer’s answers' }),
@@ -94,6 +104,57 @@ describe('customer consultation', () => {
       screen.getAllByRole('link', { name: /View in catalogue/ }),
     ).toHaveLength(10);
     expect(screen.queryByText('Why this shoe')).not.toBeInTheDocument();
+
+    expect(new URL(window.location.href).searchParams.get('results')).toBe('1');
+    cleanup();
+    render(
+      <CustomerConsultation
+        assetBase="/rundecoded/"
+        locale="en"
+        products={getProductCatalogue().map(({ product }) => product)}
+      />,
+    );
+    expect(screen.getByTestId('consultation-results')).toBeVisible();
+    expect(
+      screen.getAllByRole('link', { name: /View in catalogue/ }),
+    ).toHaveLength(5);
+  });
+
+  it('reveals focused trail and track choices only when their group is selected', () => {
+    render(
+      <CustomerConsultation
+        assetBase="/rundecoded/"
+        locale="en"
+        products={getProductCatalogue().map(({ product }) => product)}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /^Under 5 km/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    expect(
+      screen.queryByRole('button', { name: /^Mixed terrain/ }),
+    ).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /^Trail \/ off-road/ }));
+    expect(screen.getByRole('button', { name: /^Easy terrain/ })).toBeVisible();
+    const mixedTerrain = screen.getByRole('button', {
+      name: /^Mixed terrain/,
+    });
+    fireEvent.click(mixedTerrain);
+    expect(mixedTerrain).toHaveAttribute('aria-pressed', 'true');
+    expect(
+      screen.getByRole('button', { name: /^Trail \/ off-road/ }),
+    ).toHaveAttribute('aria-pressed', 'true');
+
+    fireEvent.click(
+      screen.getByRole('button', { name: /^Track or cross-country/ }),
+    );
+    expect(
+      screen.getByRole('button', { name: /^Track(?! or cross-country)/ }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole('button', { name: /^Cross-country/ }),
+    ).toBeVisible();
   });
 
   it('ranks short-distance beginner road-and-gravel options first', () => {
