@@ -9,7 +9,7 @@ export interface ConsultationCopy {
     restart: string;
     results: string;
     showMore: string;
-    viewCatalogue: string;
+    viewDetails: string;
   };
   answerRequired: string;
   comfortNotice: string;
@@ -58,7 +58,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       restart: 'Start another consultation',
       results: 'Show recommendations',
       showMore: 'Show more recommendations',
-      viewCatalogue: 'View in catalogue',
+      viewDetails: 'View details',
     },
     answerRequired: 'Choose an answer to continue.',
     comfortNotice:
@@ -292,7 +292,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       restart: 'Neue Beratung starten',
       results: 'Empfehlungen anzeigen',
       showMore: 'Weitere Empfehlungen anzeigen',
-      viewCatalogue: 'Im Katalog ansehen',
+      viewDetails: 'Details ansehen',
     },
     answerRequired: 'Wähle eine Antwort, um fortzufahren.',
     comfortNotice:
@@ -532,7 +532,7 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
       restart: 'Nouvelle consultation',
       results: 'Afficher les recommandations',
       showMore: 'Afficher plus de recommandations',
-      viewCatalogue: 'Voir dans le catalogue',
+      viewDetails: 'Voir les détails',
     },
     answerRequired: 'Choisissez une réponse pour continuer.',
     comfortNotice:

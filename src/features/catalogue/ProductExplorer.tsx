@@ -62,6 +62,7 @@ import {
   searchSuggestionKindLabel,
 } from './search';
 import type { ExplorerProduct } from './catalogue';
+import { ProductDetailsDialog } from './ProductDetailsDialog';
 import {
   filterProducts,
   paginateProducts,
@@ -126,14 +127,6 @@ function dropLabel(item: ExplorerProduct) {
 function distanceLabel(item: ExplorerProduct, unavailable: string) {
   const distance = item.product.specifications.maximumDistanceKm;
   return distance === null ? unavailable : `${distance} km`;
-}
-
-function stackHeightLabel(item: ExplorerProduct) {
-  const stack = item.product.specifications.stackHeightMm;
-  if (stack === null) return '—';
-  return typeof stack === 'number'
-    ? `${stack} mm`
-    : `${stack.heel} / ${stack.forefoot} mm`;
 }
 
 function bestForSummary(bestFor: string) {
@@ -351,8 +344,6 @@ export function ProductExplorer({
   const comparableProducts = detailsProduct
     ? rankComparableProducts(detailsProduct, products, locale)
     : [];
-  const detailSourceUrl = detailsProduct?.product.sourceUrl;
-
   function updateUrlState(state: CatalogueUrlState, mode: 'push' | 'replace') {
     const nextUrl = writeCatalogueUrlState(
       new URL(window.location.href),
@@ -922,279 +913,18 @@ export function ProductExplorer({
 
       <Toaster />
 
-      <Dialog
-        open={detailsProduct !== null}
+      <ProductDetailsDialog
+        assetBase={assetBase}
+        comparableProducts={comparableProducts}
+        item={detailsProduct}
+        locale={locale}
+        onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          detailsOpenerRef.current?.focus();
+        }}
+        onCompare={compareFromDetails}
         onOpenChange={(open) => !open && setDetailsId(null)}
-      >
-        {detailsProduct ? (
-          <DialogContent
-            className="max-h-[calc(100vh-2rem)] w-[min(calc(100%-2rem),64rem)] overflow-y-auto p-0"
-            onCloseAutoFocus={(event) => {
-              event.preventDefault();
-              detailsOpenerRef.current?.focus();
-            }}
-          >
-            <div className="desktop:grid-cols-[0.85fr_1.15fr] grid">
-              <div className="bg-surface-subtle desktop:flex desktop:items-center desktop:justify-center min-h-64 p-6">
-                <ProductPicture
-                  assetBase={assetBase}
-                  className="max-h-80"
-                  item={detailsProduct}
-                  locale={locale}
-                />
-              </div>
-              <div className="tablet:p-8 p-6">
-                <DialogHeader>
-                  <p className="text-muted-foreground m-0 text-xs font-bold tracking-[0.15em] uppercase">
-                    {detailsProduct.product.brand}
-                  </p>
-                  <DialogTitle className="text-3xl">
-                    {detailsProduct.product.model}
-                  </DialogTitle>
-                  <DialogDescription>
-                    {
-                      resolveLocalizedText(
-                        detailsProduct.product.details.overview,
-                        locale,
-                      ).value
-                    }
-                  </DialogDescription>
-                </DialogHeader>
-
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {detailsProduct.product.categories.map((category) => (
-                    <span
-                      className="bg-surface-subtle rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
-                      key={category}
-                    >
-                      {localizedCategoryValue(category, locale)}
-                    </span>
-                  ))}
-                </div>
-
-                <section className="bg-surface-subtle mt-6 rounded-[var(--radius-control)] p-4">
-                  <h3 className="m-0 text-sm font-semibold">{copy.bestFor}</h3>
-                  <p className="mt-1 mb-0 text-sm leading-6">
-                    {
-                      resolveLocalizedText(
-                        detailsProduct.product.details.bestFor,
-                        locale,
-                      ).value
-                    }
-                  </p>
-                </section>
-
-                <dl className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4 text-sm">
-                  <div className="border-border border-b pb-3">
-                    <dt className="text-muted-foreground text-xs font-bold uppercase">
-                      {copy.surface}
-                    </dt>
-                    <dd className="mt-1 font-semibold">
-                      {surfaceFamiliesForShoe(detailsProduct.product)
-                        .map((family) => surfaceFamilyLabel(family, locale))
-                        .join(', ') || copy.notApplicable}
-                    </dd>
-                  </div>
-                  <div className="border-border border-b pb-3">
-                    <dt className="text-muted-foreground text-xs font-bold uppercase">
-                      {copy.terrain}
-                    </dt>
-                    <dd className="mt-1 font-semibold">
-                      {terrainProfilesForShoe(detailsProduct.product)
-                        .map((terrain) => terrainProfileLabel(terrain, locale))
-                        .join(', ') || copy.notApplicable}
-                    </dd>
-                  </div>
-                  <div className="border-border border-b pb-3">
-                    <dt className="text-muted-foreground text-xs font-bold uppercase">
-                      {copy.stability}
-                    </dt>
-                    <dd className="mt-1 font-semibold">
-                      {stabilityLabel(detailsProduct.product.stability, locale)}
-                    </dd>
-                  </div>
-                  <div className="border-border border-b pb-3">
-                    <dt className="text-muted-foreground text-xs font-bold uppercase">
-                      {copy.weightValue}
-                    </dt>
-                    <dd className="mt-1 font-semibold">
-                      {detailsProduct.weight
-                        ? `${detailsProduct.weight.amount} ${detailsProduct.weight.unit}`
-                        : copy.pending}
-                    </dd>
-                  </div>
-                  <div className="border-border border-b pb-3">
-                    <dt className="text-muted-foreground text-xs font-bold uppercase">
-                      {copy.drop}
-                    </dt>
-                    <dd className="mt-1 font-semibold">
-                      {dropLabel(detailsProduct)}
-                    </dd>
-                  </div>
-                  <div className="border-border border-b pb-3">
-                    <dt className="text-muted-foreground text-xs font-bold uppercase">
-                      {copy.fit}
-                    </dt>
-                    <dd className="mt-1 font-semibold">
-                      {detailsProduct.product.specifications.fit.join(', ') ||
-                        copy.pending}
-                    </dd>
-                  </div>
-                  <div className="border-border border-b pb-3">
-                    <dt className="text-muted-foreground text-xs font-bold uppercase">
-                      {copy.stackHeight}
-                    </dt>
-                    <dd className="mt-1 font-semibold">
-                      {stackHeightLabel(detailsProduct)}
-                    </dd>
-                  </div>
-                </dl>
-
-                {detailSourceUrl ? (
-                  <a
-                    className={cn(
-                      buttonVariants({ variant: 'primary' }),
-                      'mt-6',
-                    )}
-                    href={detailSourceUrl}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    {copy.sourceProduct}
-                    <ArrowUpRight aria-hidden="true" className="size-4" />
-                  </a>
-                ) : null}
-              </div>
-            </div>
-
-            <div className="border-border tablet:p-8 grid gap-8 border-t p-6">
-              <section>
-                <h3 className="m-0 text-lg font-semibold">
-                  {detailsProduct.product.details.construction
-                    ? copy.constructionAndRide
-                    : copy.technologies}
-                </h3>
-                {detailsProduct.product.details.construction ? (
-                  <dl className="tablet:grid-cols-2 mt-4 grid gap-4 text-sm">
-                    {(
-                      [
-                        [
-                          copy.rideCharacter,
-                          detailsProduct.product.details.construction.ride,
-                        ],
-                        [
-                          copy.support,
-                          detailsProduct.product.details.construction.support,
-                        ],
-                        [
-                          copy.upper,
-                          detailsProduct.product.details.construction.upper,
-                        ],
-                        [
-                          copy.midsole,
-                          detailsProduct.product.details.construction.midsole,
-                        ],
-                        [
-                          copy.outsole,
-                          detailsProduct.product.details.construction.outsole,
-                        ],
-                      ] as const
-                    ).map(([label, content]) => (
-                      <div className="border-border border-t pt-3" key={label}>
-                        <dt className="text-muted-foreground text-xs font-bold uppercase">
-                          {label}
-                        </dt>
-                        <dd className="mt-1 leading-6">
-                          {resolveLocalizedText(content, locale).value}
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                ) : (
-                  <>
-                    <p className="text-muted-foreground mt-3 mb-0 text-sm leading-6">
-                      {copy.detailsPending}
-                    </p>
-                    <p className="text-muted-foreground mt-3 mb-0 text-sm leading-6">
-                      {detailsProduct.product.specifications.technologies.join(
-                        ' · ',
-                      ) || copy.pending}
-                    </p>
-                  </>
-                )}
-              </section>
-
-              <section>
-                <h3 className="m-0 text-lg font-semibold">
-                  {copy.strengthsAndLimitations}
-                </h3>
-                <p className="text-muted-foreground mt-1 mb-0 text-sm">
-                  {copy.strengthsLead}
-                </p>
-                <dl className="tablet:grid-cols-2 mt-4 grid gap-4 text-sm">
-                  <div className="border-border border-t pt-3">
-                    <dt className="text-muted-foreground text-xs font-bold uppercase">
-                      {copy.bestAt}
-                    </dt>
-                    <dd className="mt-1">
-                      {
-                        resolveLocalizedText(
-                          detailsProduct.product.details.bestAt,
-                          locale,
-                        ).value
-                      }
-                    </dd>
-                  </div>
-                  <div className="border-border border-t pt-3">
-                    <dt className="text-muted-foreground text-xs font-bold uppercase">
-                      {copy.lessSuitableFor}
-                    </dt>
-                    <dd className="mt-1">
-                      {
-                        resolveLocalizedText(
-                          detailsProduct.product.details.lessSuitableFor,
-                          locale,
-                        ).value
-                      }
-                    </dd>
-                  </div>
-                </dl>
-              </section>
-
-              <section>
-                <h3 className="m-0 text-lg font-semibold">
-                  {copy.comparableProducts}
-                </h3>
-                <div className="mt-3 grid gap-2">
-                  {comparableProducts.map((comparable) => {
-                    const id = comparable.product.id;
-                    return (
-                      <button
-                        className="border-border hover:bg-surface-subtle flex cursor-pointer items-center justify-between gap-4 rounded-[var(--radius-control)] border bg-transparent px-4 py-3 text-left"
-                        key={id}
-                        onClick={() => compareFromDetails(id)}
-                        type="button"
-                      >
-                        <span>
-                          <span className="block text-xs font-bold tracking-wide uppercase">
-                            {comparable.product.brand}
-                          </span>
-                          <span className="text-muted-foreground mt-1 block text-sm">
-                            {comparable.product.model}
-                          </span>
-                        </span>
-                        <span className="text-primary text-sm font-semibold">
-                          {copy.compareWith(comparable.product.model)}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </section>
-            </div>
-          </DialogContent>
-        ) : null}
-      </Dialog>
+      />
 
       <Dialog open={comparisonOpen} onOpenChange={handleComparisonOpenChange}>
         <DialogContent
