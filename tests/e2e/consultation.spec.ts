@@ -35,7 +35,17 @@ test('keeps a completed recommendation after refresh', async ({ page }) => {
   await expect(
     page.getByRole('heading', { name: 'Best options for this customer' }),
   ).toBeVisible();
-  await expect(
-    page.getByRole('link', { name: /View in catalogue/ }),
-  ).toHaveCount(5);
+  await expect(page.getByRole('button', { name: /View details/ })).toHaveCount(
+    5,
+  );
+
+  const recommendationUrl = page.url();
+  const detailsButton = page
+    .getByRole('button', { name: /View details/ })
+    .first();
+  await detailsButton.click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(page).toHaveURL(recommendationUrl);
+  await page.getByRole('button', { name: 'Close' }).click();
+  await expect(detailsButton).toBeFocused();
 });

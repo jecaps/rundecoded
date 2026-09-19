@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -33,6 +33,8 @@ import type { Locale } from '@/i18n/config';
 import { localizedRoute } from '@/lib/routes';
 import { cn } from '@/lib/utils';
 
+import type { ExplorerProduct } from '../catalogue/catalogue';
+import { ProductDetailsDialog } from '../catalogue/ProductDetailsDialog';
 import { consultationCopy } from './copy';
 import {
   defaultConsultationUrlState,
@@ -211,6 +213,8 @@ export function CustomerConsultation({
   const [comfort, setComfort] = useState<string[]>(
     () => initialBrowserState()?.answers.comfort ?? [],
   );
+  const [detailsId, setDetailsId] = useState<string | null>(null);
+  const detailsOpenerRef = useRef<HTMLButtonElement | null>(null);
 
   const answers = [distance, surfaces, priorities, goal, stability, comfort];
   const canContinue = step === 6 || Boolean(answers[step]?.length);
@@ -243,6 +247,23 @@ export function CustomerConsultation({
     0,
     visibleRecommendationCount,
   );
+  const detailsItem = useMemo<ExplorerProduct | null>(() => {
+    if (!detailsId) return null;
+    const product = products.find((candidate) => candidate.id === detailsId);
+    if (!product) return null;
+    const amount = product.specifications.weightG;
+    return {
+      product,
+      weight:
+        amount === null
+          ? null
+          : {
+              amount,
+              referenceSize: product.specifications.weightReferenceSize,
+              unit: 'g',
+            },
+    };
+  }, [detailsId, products]);
 
   useEffect(() => {
     function onPopState() {
@@ -260,6 +281,7 @@ export function CustomerConsultation({
       setShowResults(restored.showResults);
       setStep(restored.showResults ? 6 : 0);
       setVisibleRecommendationCount(initialRecommendationCount);
+      setDetailsId(null);
     }
 
     window.addEventListener('popstate', onPopState);
@@ -303,6 +325,7 @@ export function CustomerConsultation({
   }
 
   function reset() {
+    setDetailsId(null);
     setStep(0);
     setShowResults(false);
     setVisibleRecommendationCount(initialRecommendationCount);
@@ -418,7 +441,6 @@ export function CustomerConsultation({
               product.details.bestAt,
               locale,
             ).value;
-            const href = `${catalogueUrl}?${new URLSearchParams({ q: product.model })}`;
 
             return (
               <Card key={product.id}>
@@ -473,13 +495,16 @@ export function CustomerConsultation({
                       </dl>
                     ) : null}
                   </div>
-                  <a
-                    className={buttonVariants({ variant: 'primary' })}
-                    href={href}
+                  <Button
+                    onClick={(event) => {
+                      detailsOpenerRef.current = event.currentTarget;
+                      setDetailsId(product.id);
+                    }}
+                    type="button"
                   >
-                    {copy.actions.viewCatalogue}
+                    {copy.actions.viewDetails}
                     <ArrowRight aria-hidden="true" className="size-4" />
-                  </a>
+                  </Button>
                 </CardContent>
               </Card>
             );
@@ -518,6 +543,17 @@ export function CustomerConsultation({
             {copy.actions.exit}
           </a>
         </div>
+
+        <ProductDetailsDialog
+          assetBase={assetBase}
+          item={detailsItem}
+          locale={locale}
+          onCloseAutoFocus={(event) => {
+            event.preventDefault();
+            detailsOpenerRef.current?.focus();
+          }}
+          onOpenChange={(open) => !open && setDetailsId(null)}
+        />
       </section>
     );
   }

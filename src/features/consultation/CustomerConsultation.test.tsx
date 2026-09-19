@@ -1,4 +1,11 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { getProductCatalogue } from '@/features/catalogue/catalogue';
@@ -94,14 +101,14 @@ describe('customer consultation', () => {
       screen.getByRole('heading', { name: 'Best options for this customer' }),
     ).toBeVisible();
     expect(
-      screen.getAllByRole('link', { name: /View in catalogue/ }),
+      screen.getAllByRole('button', { name: /View details/ }),
     ).toHaveLength(5);
     expect(screen.getAllByText('Good alternative')).toHaveLength(5);
     fireEvent.click(
       screen.getByRole('button', { name: 'Show more recommendations' }),
     );
     expect(
-      screen.getAllByRole('link', { name: /View in catalogue/ }),
+      screen.getAllByRole('button', { name: /View details/ }),
     ).toHaveLength(10);
     expect(screen.queryByText('Why this shoe')).not.toBeInTheDocument();
 
@@ -116,7 +123,7 @@ describe('customer consultation', () => {
     );
     expect(screen.getByTestId('consultation-results')).toBeVisible();
     expect(
-      screen.getAllByRole('link', { name: /View in catalogue/ }),
+      screen.getAllByRole('button', { name: /View details/ }),
     ).toHaveLength(5);
   });
 
@@ -157,7 +164,7 @@ describe('customer consultation', () => {
     ).toBeVisible();
   });
 
-  it('ranks short-distance beginner road-and-gravel options first', () => {
+  it('ranks short-distance beginner road-and-gravel options first', async () => {
     render(
       <CustomerConsultation
         assetBase="/rundecoded/"
@@ -191,8 +198,21 @@ describe('customer consultation', () => {
     expect(screen.getByText('Jogflow 190 Grip WP')).toBeVisible();
     expect(screen.getByText('Ellipse')).toBeVisible();
     expect(
-      screen.getAllByRole('link', { name: /View in catalogue/ }),
+      screen.getAllByRole('button', { name: /View details/ }),
     ).toHaveLength(5);
+    const detailsButton = screen.getAllByRole('button', {
+      name: /View details/,
+    })[0];
+    const recommendationUrl = window.location.href;
+    fireEvent.click(detailsButton);
+    const dialog = screen.getByRole('dialog');
+    expect(
+      within(dialog).getByRole('heading', { name: 'Jogflow 100.1' }),
+    ).toBeVisible();
+    expect(within(dialog).getByText('Construction & ride')).toBeVisible();
+    expect(window.location.href).toBe(recommendationUrl);
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Close' }));
+    await waitFor(() => expect(detailsButton).toHaveFocus());
     fireEvent.click(
       screen.getByRole('button', { name: 'Show more recommendations' }),
     );
