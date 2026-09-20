@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -6,6 +6,7 @@ import {
   Check,
   ChevronDown,
   ImageOff,
+  Plus,
   Search,
   Sparkles,
   X,
@@ -85,6 +86,20 @@ interface ProductExplorerProps {
   products: ExplorerProduct[];
 }
 
+// Run the viewport check before the browser paints when possible. This avoids
+// briefly rendering the desktop card layout during back/forward navigation on
+// a phone, while still remaining safe for server rendering.
+const useViewportLayoutEffect =
+  typeof window === 'undefined' ? useEffect : useLayoutEffect;
+
+function isCompactMobileViewport() {
+  if (typeof window === 'undefined') return false;
+  return (
+    window.matchMedia?.('(max-width: 599px)').matches ??
+    window.innerWidth <= 599
+  );
+}
+
 function imagePath(item: ExplorerProduct, assetBase: string): string | null {
   const image = item.product.images[0];
   return image ? `${assetBase}${image}` : null;
@@ -110,6 +125,84 @@ function purposeCategory(item: ExplorerProduct) {
     item.product.categories.find((id) => !specificationCategoryIds.has(id)) ??
     item.product.categories[0]
   );
+}
+
+interface BadgeTone {
+  primary: string;
+  secondary: string;
+}
+
+// One hue per purpose category. The primary badge is a soft filled tint; the
+// secondary (terrain/stability) badge is an outline in the same hue, so a row
+// reads as one colour family with a filled/outlined hierarchy and no
+// saturated blocks. Primary hues run cool -> warm as effort rises; trail
+// purposes are green; spikes are charcoal.
+const badgeTones: Record<string, BadgeTone> = {
+  'daily-trainer': {
+    primary: 'bg-blue-50 text-blue-800 dark:bg-blue-950/40 dark:text-blue-200',
+    secondary:
+      'text-blue-800 ring-1 ring-blue-100 ring-inset dark:text-blue-300 dark:ring-blue-800',
+  },
+  'entry-level': {
+    primary: 'bg-sky-50 text-sky-800 dark:bg-sky-950/40 dark:text-sky-200',
+    secondary:
+      'text-sky-800 ring-1 ring-sky-100 ring-inset dark:text-sky-300 dark:ring-sky-800',
+  },
+  'fast-training': {
+    primary:
+      'bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-200',
+    secondary:
+      'text-amber-800 ring-1 ring-amber-100 ring-inset dark:text-amber-300 dark:ring-amber-800',
+  },
+  'max-cushion': {
+    primary:
+      'bg-violet-50 text-violet-800 dark:bg-violet-950/40 dark:text-violet-200',
+    secondary:
+      'text-violet-800 ring-1 ring-violet-100 ring-inset dark:text-violet-300 dark:ring-violet-800',
+  },
+  race: {
+    primary: 'bg-red-50 text-red-800 dark:bg-red-950/40 dark:text-red-200',
+    secondary:
+      'text-red-800 ring-1 ring-red-100 ring-inset dark:text-red-300 dark:ring-red-800',
+  },
+  spikes: {
+    primary: 'bg-zinc-200 text-zinc-800 dark:bg-zinc-700/70 dark:text-zinc-100',
+    secondary:
+      'text-zinc-800 ring-1 ring-zinc-300 ring-inset dark:text-zinc-200 dark:ring-zinc-600',
+  },
+  'super-trainer': {
+    primary:
+      'bg-orange-50 text-orange-800 dark:bg-orange-950/40 dark:text-orange-200',
+    secondary:
+      'text-orange-800 ring-1 ring-orange-100 ring-inset dark:text-orange-300 dark:ring-orange-800',
+  },
+  'track-spikes': {
+    primary: 'bg-zinc-200 text-zinc-800 dark:bg-zinc-700/70 dark:text-zinc-100',
+    secondary:
+      'text-zinc-800 ring-1 ring-zinc-300 ring-inset dark:text-zinc-200 dark:ring-zinc-600',
+  },
+  trail: {
+    primary:
+      'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200',
+    secondary:
+      'text-emerald-800 ring-1 ring-emerald-100 ring-inset dark:text-emerald-300 dark:ring-emerald-800',
+  },
+  'trail-race': {
+    primary: 'bg-lime-50 text-lime-800 dark:bg-lime-950/40 dark:text-lime-200',
+    secondary:
+      'text-lime-800 ring-1 ring-lime-100 ring-inset dark:text-lime-300 dark:ring-lime-800',
+  },
+};
+
+const fallbackBadgeTone: BadgeTone = {
+  primary:
+    'bg-slate-50 text-slate-800 dark:bg-slate-950/40 dark:text-slate-200',
+  secondary:
+    'text-slate-800 ring-1 ring-slate-100 ring-inset dark:text-slate-300 dark:ring-slate-800',
+};
+
+function badgeTone(purpose: string | undefined): BadgeTone {
+  return (purpose && badgeTones[purpose]) || fallbackBadgeTone;
 }
 
 function localizedCategoryValue(
@@ -215,16 +308,26 @@ export function ProductExplorer({
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [activeComparisonIds, setActiveComparisonIds] = useState<string[]>([]);
   const [comparisonOpen, setComparisonOpen] = useState(false);
+  const [compactMobile, setCompactMobile] = useState(isCompactMobileViewport);
   const pageRef = useRef(page);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
+  const productListRef = useRef<HTMLDivElement>(null);
   const copy = catalogueCopy[locale];
 
-  useEffect(() => {
+  useViewportLayoutEffect(() => {
     const frame = window.requestAnimationFrame(() => {
       setLocale(initialLocale);
       setHydrated(true);
     });
+    const mobileQuery = window.matchMedia?.('(max-width: 599px)');
+    const updateMobileLayout = () =>
+      setCompactMobile(mobileQuery?.matches ?? window.innerWidth <= 599);
+    updateMobileLayout();
+    mobileQuery?.addEventListener('change', updateMobileLayout);
+    window.addEventListener('pageshow', updateMobileLayout);
+    window.addEventListener('resize', updateMobileLayout);
+    document.addEventListener('visibilitychange', updateMobileLayout);
 
     function onLocaleChange(event: Event) {
       const nextLocale = (event as CustomEvent<{ locale?: unknown }>).detail
@@ -237,6 +340,10 @@ export function ProductExplorer({
     window.addEventListener('rundecoded:locale-change', onLocaleChange);
     return () => {
       window.cancelAnimationFrame(frame);
+      mobileQuery?.removeEventListener('change', updateMobileLayout);
+      window.removeEventListener('pageshow', updateMobileLayout);
+      window.removeEventListener('resize', updateMobileLayout);
+      document.removeEventListener('visibilitychange', updateMobileLayout);
       window.removeEventListener('rundecoded:locale-change', onLocaleChange);
     };
   }, [initialLocale]);
@@ -327,6 +434,15 @@ export function ProductExplorer({
     [categoryId, locale, products, query],
   );
   const pagination = paginateProducts(filtered, page);
+  const mobileProductGroups = useMemo(() => {
+    const groups = new Map<string, ExplorerProduct[]>();
+    for (const item of pagination.items) {
+      const brandProducts = groups.get(item.product.brand) ?? [];
+      brandProducts.push(item);
+      groups.set(item.product.brand, brandProducts);
+    }
+    return [...groups.entries()];
+  }, [pagination.items]);
   const suggestions = useMemo(
     () => buildSearchSuggestions(products, query, locale),
     [locale, products, query],
@@ -454,6 +570,13 @@ export function ProductExplorer({
     pageRef.current = nextPage;
     setPage(nextPage);
     updateUrlState({ categoryId, page: nextPage, query }, 'push');
+    if (compactMobile) {
+      // Jump straight to the top of the new page; no smooth-scroll animation.
+      productListRef.current?.scrollIntoView({
+        behavior: 'instant',
+        block: 'start',
+      });
+    }
   }
 
   const comparisonRows =
@@ -478,27 +601,27 @@ export function ProductExplorer({
 
   return (
     <section
-      className="tablet:py-14 py-10 [overflow-anchor:none]"
+      className="tablet:py-14 py-6 [overflow-anchor:none] min-[600px]:py-10"
       aria-labelledby="catalogue-title"
       data-hydrated={hydrated ? 'true' : undefined}
       data-testid="product-explorer"
     >
       <header className="max-w-3xl">
-        <p className="text-primary m-0 text-xs font-bold tracking-[0.16em] uppercase">
+        <p className="text-primary m-0 hidden text-xs font-bold tracking-[0.16em] uppercase min-[600px]:block">
           Product explorer
         </p>
         <h1
-          className="tablet:text-5xl mt-2 mb-0 text-3xl font-bold tracking-[-0.035em]"
+          className="tablet:text-5xl m-0 text-2xl font-bold tracking-[-0.035em] min-[600px]:mt-2 min-[600px]:text-3xl"
           id="catalogue-title"
         >
           {copy.title}
         </h1>
-        <p className="text-muted-foreground tablet:text-lg mt-3 text-base leading-7">
+        <p className="text-muted-foreground tablet:text-lg mt-3 hidden text-base leading-7 min-[600px]:block">
           {copy.intro}
         </p>
       </header>
 
-      <div className="border-border bg-surface tablet:grid-cols-[auto_minmax(0,1fr)_auto] mt-8 grid items-center gap-4 rounded-[var(--radius-panel)] border p-4 shadow-[var(--shadow-sm)]">
+      <div className="border-border bg-surface tablet:grid-cols-[auto_minmax(0,1fr)_auto] mt-8 hidden items-center gap-4 rounded-[var(--radius-panel)] border p-4 shadow-[var(--shadow-sm)] min-[600px]:grid">
         <span className="bg-surface-subtle text-primary flex size-11 items-center justify-center rounded-[var(--radius-control)]">
           <Sparkles aria-hidden="true" className="size-5" />
         </span>
@@ -519,7 +642,7 @@ export function ProductExplorer({
         </a>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-4 min-[600px]:mt-5">
         <div className="tablet:grid-cols-[minmax(16rem,1fr)_auto] grid gap-2">
           <div className="relative min-w-0">
             <label className="sr-only" htmlFor="catalogue-search">
@@ -540,7 +663,7 @@ export function ProductExplorer({
                 aria-autocomplete="list"
                 aria-controls="catalogue-suggestions"
                 aria-expanded={suggestionsOpen && suggestions.length > 0}
-                className="placeholder:text-muted-foreground min-w-0 flex-1 border-0 bg-transparent text-sm outline-none"
+                className="placeholder:text-muted-foreground min-w-0 flex-1 border-0 bg-transparent text-sm outline-none [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
                 id="catalogue-search"
                 onChange={(event) => updateQuery(event.target.value)}
                 onBlur={() => {
@@ -676,151 +799,287 @@ export function ProductExplorer({
         </div>
       </div>
 
-      <div className="overflow-x-clip">
+      <div className="min-[600px]:overflow-x-clip" ref={productListRef}>
         {pagination.items.length ? (
-          <div
-            className={cn(
-              'tablet:grid-cols-2 desktop:grid-cols-3 mt-6 grid grid-cols-1 gap-5',
-              pageDirection === 'forward' && 'catalogue-page--forward',
-              pageDirection === 'backward' && 'catalogue-page--backward',
-            )}
-            data-page-direction={pageDirection ?? undefined}
-            data-testid="product-page"
-            key={`${categoryId}:${query}:${pagination.page}`}
-          >
-            {pagination.items.map((item) => {
-              const { product } = item;
-              const selected = selectedIds.includes(product.id);
-              const bestFor = resolveLocalizedText(
-                product.details.bestFor,
-                locale,
-              ).value;
-              const bestForSummaryText = bestForSummary(bestFor);
-              const distance = distanceLabel(item, copy.distanceUnavailable);
-              const purpose = purposeCategory(item);
-              const stability = stabilityLabel(product.stability, locale);
-              const terrain = terrainProfilesForShoe(product)[0];
-              const secondaryBadge = terrain
-                ? terrainProfileLabel(terrain, locale)
-                : stability;
+          compactMobile ? (
+            <div
+              className="border-border bg-surface mt-4 overflow-visible border-t"
+              data-testid="mobile-product-page"
+              key={`mobile:${categoryId}:${query}:${pagination.page}`}
+              style={{
+                marginLeft: 'calc(50% - 50vw)',
+                width: '100vw',
+              }}
+            >
+              {mobileProductGroups.map(([brand, brandProducts]) => (
+                <section key={brand}>
+                  <div>
+                    {brandProducts.map((item) => {
+                      const { product } = item;
+                      const selected = selectedIds.includes(product.id);
+                      const bestFor = resolveLocalizedText(
+                        product.details.bestFor,
+                        locale,
+                      ).value;
+                      const summary = bestForSummary(bestFor);
+                      const distance = distanceLabel(
+                        item,
+                        copy.distanceUnavailable,
+                      );
+                      const purpose = purposeCategory(item);
+                      const tone = badgeTone(purpose);
+                      const terrain = terrainProfilesForShoe(product)[0];
+                      const secondaryBadge = terrain
+                        ? terrainProfileLabel(terrain, locale)
+                        : stabilityLabel(product.stability, locale);
 
-              return (
-                <Card
-                  className="desktop:h-[37rem] min-w-0 overflow-hidden"
-                  key={product.id}
-                >
-                  <article
-                    className="flex h-full min-w-0 flex-col"
-                    data-testid="product-card"
+                      return (
+                        <article
+                          className={cn(
+                            'border-border bg-surface relative grid min-w-0 grid-cols-[minmax(0,1fr)_2.75rem] items-center gap-1 border-b pr-2',
+                            selected &&
+                              'border-l-primary bg-primary/5 border-l-4',
+                          )}
+                          data-selected={selected ? 'true' : undefined}
+                          data-testid="mobile-product-row"
+                          key={product.id}
+                        >
+                          <button
+                            aria-label={copy.openDetails(product.model)}
+                            className="focus-visible:ring-ring/35 grid min-w-0 cursor-pointer grid-cols-[5.5rem_minmax(0,1fr)] items-center gap-3 border-0 bg-transparent px-3 py-2.5 text-left outline-none focus-visible:ring-3"
+                            onClick={(event) =>
+                              openDetails(product.id, event.currentTarget)
+                            }
+                            type="button"
+                          >
+                            <span className="border-border flex size-[5.5rem] items-center justify-center overflow-hidden rounded-[var(--radius-control)] border bg-white">
+                              <ProductPicture
+                                assetBase={assetBase}
+                                className="h-[5.5rem] min-h-0 p-0.5"
+                                item={item}
+                                locale={locale}
+                              />
+                            </span>
+                            <span className="min-w-0 py-0.5">
+                              <span className="text-foreground block text-base leading-5 font-bold break-words">
+                                {product.model}
+                              </span>
+                              <span className="mt-1.5 flex min-w-0 flex-wrap gap-1.5">
+                                {purpose ? (
+                                  <span
+                                    className={cn(
+                                      'rounded-full px-2 py-0.5 text-[0.65rem] font-bold tracking-wide uppercase',
+                                      tone.primary,
+                                    )}
+                                    data-mobile-tag="purpose"
+                                  >
+                                    {localizedCategoryValue(purpose, locale)}
+                                  </span>
+                                ) : null}
+                                <span
+                                  className={cn(
+                                    'rounded-full px-2 py-0.5 text-[0.65rem] font-bold tracking-wide uppercase',
+                                    tone.secondary,
+                                  )}
+                                  data-mobile-tag={
+                                    terrain ? 'terrain' : 'stability'
+                                  }
+                                >
+                                  {secondaryBadge}
+                                </span>
+                              </span>
+                              <span className="text-muted-foreground mt-1.5 block truncate text-xs leading-4">
+                                <span className="font-semibold">
+                                  {copy.bestFor}:
+                                </span>{' '}
+                                {summary}
+                              </span>
+                              <span className="text-muted-foreground mt-0.5 block truncate text-xs leading-4">
+                                {copy.distance}: {distance} · {copy.drop}:{' '}
+                                {dropLabel(item)}
+                              </span>
+                            </span>
+                          </button>
+                          <button
+                            aria-label={
+                              selected
+                                ? copy.deselectProduct(product.model)
+                                : copy.selectProduct(product.model)
+                            }
+                            aria-pressed={selected}
+                            className={cn(
+                              'border-border bg-surface text-muted-foreground hover:border-primary hover:text-primary focus-visible:ring-ring/35 flex size-11 cursor-pointer items-center justify-center rounded-[var(--radius-control)] border outline-none focus-visible:ring-3',
+                              selected &&
+                                'border-primary bg-primary/10 text-primary',
+                            )}
+                            onClick={() => toggleComparison(product.id)}
+                            type="button"
+                          >
+                            {selected ? (
+                              <Check aria-hidden="true" className="size-4" />
+                            ) : (
+                              <Plus aria-hidden="true" className="size-4" />
+                            )}
+                          </button>
+                        </article>
+                      );
+                    })}
+                  </div>
+                </section>
+              ))}
+            </div>
+          ) : (
+            <div
+              className={cn(
+                'tablet:grid-cols-2 desktop:grid-cols-3 mt-6 grid grid-cols-1 gap-5',
+                pageDirection === 'forward' && 'catalogue-page--forward',
+                pageDirection === 'backward' && 'catalogue-page--backward',
+              )}
+              data-page-direction={pageDirection ?? undefined}
+              data-testid="product-page"
+              key={`${categoryId}:${query}:${pagination.page}`}
+            >
+              {pagination.items.map((item) => {
+                const { product } = item;
+                const selected = selectedIds.includes(product.id);
+                const bestFor = resolveLocalizedText(
+                  product.details.bestFor,
+                  locale,
+                ).value;
+                const bestForSummaryText = bestForSummary(bestFor);
+                const distance = distanceLabel(item, copy.distanceUnavailable);
+                const purpose = purposeCategory(item);
+                const tone = badgeTone(purpose);
+                const stability = stabilityLabel(product.stability, locale);
+                const terrain = terrainProfilesForShoe(product)[0];
+                const secondaryBadge = terrain
+                  ? terrainProfileLabel(terrain, locale)
+                  : stability;
+
+                return (
+                  <Card
+                    className="desktop:h-[37rem] min-w-0 overflow-hidden"
+                    key={product.id}
                   >
-                    <CardHeader className="bg-surface-subtle h-56 p-3">
-                      <button
-                        aria-label={copy.openDetails(product.model)}
-                        className="block h-full w-full cursor-pointer border-0 bg-transparent p-0"
-                        onClick={(event) =>
-                          openDetails(product.id, event.currentTarget)
-                        }
-                        type="button"
-                      >
-                        <ProductPicture
-                          assetBase={assetBase}
-                          item={item}
-                          locale={locale}
-                        />
-                      </button>
-                    </CardHeader>
+                    <article
+                      className="flex h-full min-w-0 flex-col"
+                      data-testid="product-card"
+                    >
+                      <CardHeader className="bg-surface-subtle h-56 p-3">
+                        <button
+                          aria-label={copy.openDetails(product.model)}
+                          className="block h-full w-full cursor-pointer border-0 bg-transparent p-0"
+                          onClick={(event) =>
+                            openDetails(product.id, event.currentTarget)
+                          }
+                          type="button"
+                        >
+                          <ProductPicture
+                            assetBase={assetBase}
+                            item={item}
+                            locale={locale}
+                          />
+                        </button>
+                      </CardHeader>
 
-                    <CardContent className="flex flex-1 flex-col p-5 pb-0">
-                      <p className="text-muted-foreground m-0 text-xs font-bold tracking-[0.15em] uppercase">
-                        {product.brand}
-                      </p>
-                      <button
-                        className="text-foreground hover:text-primary mt-1 line-clamp-2 min-h-14 cursor-pointer border-0 bg-transparent p-0 text-left text-2xl font-bold tracking-[-0.025em]"
-                        onClick={(event) =>
-                          openDetails(product.id, event.currentTarget)
-                        }
-                        type="button"
-                      >
-                        {product.model}
-                      </button>
+                      <CardContent className="flex flex-1 flex-col p-5 pb-0">
+                        <p className="text-muted-foreground m-0 text-xs font-bold tracking-[0.15em] uppercase">
+                          {product.brand}
+                        </p>
+                        <button
+                          className="text-foreground hover:text-primary mt-1 line-clamp-2 min-h-14 cursor-pointer border-0 bg-transparent p-0 text-left text-2xl font-bold tracking-[-0.025em]"
+                          onClick={(event) =>
+                            openDetails(product.id, event.currentTarget)
+                          }
+                          type="button"
+                        >
+                          {product.model}
+                        </button>
 
-                      <div className="mt-3 flex min-h-7 flex-wrap content-start gap-2">
-                        {purpose ? (
+                        <div className="mt-3 flex min-h-7 flex-wrap content-start gap-2">
+                          {purpose ? (
+                            <span
+                              className={cn(
+                                'rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase',
+                                tone.primary,
+                              )}
+                              data-card-badge="purpose"
+                            >
+                              {localizedCategoryValue(purpose, locale)}
+                            </span>
+                          ) : null}
                           <span
-                            className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
-                            data-card-badge="purpose"
+                            className={cn(
+                              'rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase',
+                              tone.secondary,
+                            )}
+                            data-card-badge={terrain ? 'terrain' : 'stability'}
                           >
-                            {localizedCategoryValue(purpose, locale)}
+                            {secondaryBadge}
                           </span>
-                        ) : null}
-                        <span
-                          className="bg-surface-subtle text-muted-foreground rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
-                          data-card-badge={terrain ? 'terrain' : 'stability'}
-                        >
-                          {secondaryBadge}
-                        </span>
-                      </div>
+                        </div>
 
-                      <div className="mt-4">
-                        <p className="text-muted-foreground m-0 text-[0.7rem] font-bold tracking-[0.13em] uppercase">
-                          {copy.bestFor}
-                        </p>
-                        <p
-                          className="mt-1 mb-0 line-clamp-2 text-sm leading-6"
-                          data-testid="card-best-for"
-                        >
-                          {bestForSummaryText}
-                        </p>
-                      </div>
-
-                      <dl className="border-border mt-3 grid min-h-14 grid-cols-2 border-t pt-3 text-center">
-                        <div>
-                          <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
-                            {copy.distance}
-                          </dt>
-                          <dd
-                            className="mt-1 text-sm font-semibold"
-                            data-testid="card-distance"
+                        <div className="mt-4">
+                          <p className="text-muted-foreground m-0 text-[0.7rem] font-bold tracking-[0.13em] uppercase">
+                            {copy.bestFor}
+                          </p>
+                          <p
+                            className="mt-1 mb-0 line-clamp-2 text-sm leading-6"
+                            data-testid="card-best-for"
                           >
-                            {distance}
-                          </dd>
+                            {bestForSummaryText}
+                          </p>
                         </div>
-                        <div className="border-border border-l px-2">
-                          <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
-                            {copy.drop}
-                          </dt>
-                          <dd className="mt-1 text-sm font-semibold">
-                            {dropLabel(item)}
-                          </dd>
-                        </div>
-                      </dl>
-                    </CardContent>
 
-                    <CardFooter className="grid grid-cols-2 gap-3 p-5 pt-0">
-                      <Button
-                        aria-pressed={selected}
-                        onClick={() => toggleComparison(product.id)}
-                        variant={selected ? 'primary' : 'secondary'}
-                      >
-                        {selected ? (
-                          <Check aria-hidden="true" className="size-4" />
-                        ) : null}
-                        {selected ? copy.selected : copy.compare}
-                      </Button>
-                      <Button
-                        onClick={(event) =>
-                          openDetails(product.id, event.currentTarget)
-                        }
-                        variant="outline"
-                      >
-                        {copy.details}
-                      </Button>
-                    </CardFooter>
-                  </article>
-                </Card>
-              );
-            })}
-          </div>
+                        <dl className="border-border mt-3 grid min-h-14 grid-cols-2 border-t pt-3 text-center">
+                          <div>
+                            <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
+                              {copy.distance}
+                            </dt>
+                            <dd
+                              className="mt-1 text-sm font-semibold"
+                              data-testid="card-distance"
+                            >
+                              {distance}
+                            </dd>
+                          </div>
+                          <div className="border-border border-l px-2">
+                            <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
+                              {copy.drop}
+                            </dt>
+                            <dd className="mt-1 text-sm font-semibold">
+                              {dropLabel(item)}
+                            </dd>
+                          </div>
+                        </dl>
+                      </CardContent>
+
+                      <CardFooter className="grid grid-cols-2 gap-3 p-5 pt-0">
+                        <Button
+                          aria-pressed={selected}
+                          onClick={() => toggleComparison(product.id)}
+                          variant={selected ? 'primary' : 'secondary'}
+                        >
+                          {selected ? (
+                            <Check aria-hidden="true" className="size-4" />
+                          ) : null}
+                          {selected ? copy.selected : copy.compare}
+                        </Button>
+                        <Button
+                          onClick={(event) =>
+                            openDetails(product.id, event.currentTarget)
+                          }
+                          variant="outline"
+                        >
+                          {copy.details}
+                        </Button>
+                      </CardFooter>
+                    </article>
+                  </Card>
+                );
+              })}
+            </div>
+          )
         ) : (
           <div className="border-border bg-surface mt-6 rounded-[var(--radius-panel)] border p-10 text-center">
             <p className="m-0 text-lg font-semibold">{copy.noResults}</p>

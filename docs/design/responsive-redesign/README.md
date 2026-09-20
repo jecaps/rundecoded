@@ -36,7 +36,7 @@ are not production implementation instructions.
 
 ### Catalogue
 
-- Phone uses compact one-column product rows, grouped by sticky brand headers.
+- Phone uses compact one-column product rows, grouped by brand without persistent headers.
 - Tablet portrait uses the available width for a compact multi-column grid.
 - Tablet landscape supports a catalogue-and-details master-detail layout.
 - Search, quick filters, and full filters remain easy to reach.

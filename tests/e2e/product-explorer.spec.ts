@@ -173,6 +173,88 @@ test('contains the category menu within the viewport on narrow screens', async (
   }
 });
 
+test('uses compact catalogue rows on phones', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload();
+
+  const rows = page.getByTestId('mobile-product-row');
+  await expect(rows).toHaveCount(12);
+  await expect(page.getByTestId('product-card')).toHaveCount(0);
+  await expect(page.getByText('Product explorer')).toBeHidden();
+  await expect(
+    page.getByRole('heading', {
+      name: 'Help a customer choose the right shoe',
+    }),
+  ).toBeHidden();
+
+  const firstRow = rows.first();
+  await expect(firstRow).toContainText('Adistar 5');
+  await expect(firstRow).toContainText('Best for:');
+  await expect(firstRow).toContainText('Distance: 42 km · Drop: 6 mm');
+  await expect(firstRow).not.toContainText('Adidas');
+  await expect(firstRow.locator('[data-mobile-tag]')).toHaveCount(2);
+  const longModelName = rows
+    .nth(1)
+    .getByText('Adizero Agravic Speed 2', { exact: true });
+  expect(
+    await longModelName.evaluate((element) => ({
+      fits: element.scrollWidth <= element.clientWidth,
+      whiteSpace: getComputedStyle(element).whiteSpace,
+    })),
+  ).toEqual({ fits: true, whiteSpace: 'normal' });
+
+  const thumbnail = firstRow.locator('img');
+  await expect(thumbnail).toHaveAttribute('loading', 'lazy');
+  const thumbnailBox = await thumbnail.boundingBox();
+  expect(thumbnailBox?.width).toBeGreaterThan(0);
+  expect(thumbnailBox?.height).toBeGreaterThan(0);
+
+  const compare = firstRow.getByRole('button', {
+    name: 'Add Adistar 5 to comparison',
+  });
+  const compareBox = await compare.boundingBox();
+  expect(compareBox?.width).toBeGreaterThanOrEqual(44);
+  expect(compareBox?.height).toBeGreaterThanOrEqual(44);
+  await compare.click();
+  await expect(firstRow).toHaveAttribute('data-selected', 'true');
+  await expect(
+    firstRow.getByRole('button', { name: 'Deselect Adistar 5' }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+
+  const detailsOpener = firstRow.getByRole('button', {
+    name: 'Open details for Adistar 5',
+  });
+  await detailsOpener.click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole('button', { name: 'Close' }).click();
+  await expect(detailsOpener).toBeFocused();
+
+  for (const width of [320, 599]) {
+    await page.setViewportSize({ width, height: 844 });
+    await expect(rows).toHaveCount(12);
+    const documentWidth = await page.evaluate(() =>
+      Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
+    );
+    expect(documentWidth).toBeLessThanOrEqual(width);
+  }
+});
+
+test('restores compact rows after returning from consultation', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./en/catalogue/');
+  await expect(page.getByTestId('mobile-product-row')).toHaveCount(12);
+
+  await page.goto('./en/consultation/');
+  await page.goBack();
+
+  await expect(page.getByTestId('mobile-product-row')).toHaveCount(12);
+  await expect(page.getByTestId('product-card')).toHaveCount(0);
+});
+
 test('provides typo-tolerant keyboard suggestions and an honest fallback', async ({
   page,
 }) => {
@@ -356,11 +438,11 @@ test('updates the explorer immediately when the footer language changes', async 
 });
 
 for (const viewport of [
-  { name: 'phone', width: 390, height: 844, columns: 1 },
-  { name: 'tablet', width: 768, height: 1024, columns: 2 },
-  { name: 'desktop', width: 1280, height: 900, columns: 3 },
+  { layout: 'rows', name: 'phone', width: 390, height: 844, columns: 1 },
+  { layout: 'cards', name: 'tablet', width: 768, height: 1024, columns: 2 },
+  { layout: 'cards', name: 'desktop', width: 1280, height: 900, columns: 3 },
 ]) {
-  test(`keeps readable ${viewport.columns}-column cards at the ${viewport.name} viewport`, async ({
+  test(`keeps readable ${viewport.layout} at the ${viewport.name} viewport`, async ({
     page,
   }) => {
     await page.setViewportSize({
@@ -368,13 +450,14 @@ for (const viewport of [
       height: viewport.height,
     });
     await page.reload();
-    await expect(page.getByTestId('product-card')).toHaveCount(12);
+    const products = page.getByTestId(
+      viewport.width < 600 ? 'mobile-product-row' : 'product-card',
+    );
+    await expect(products).toHaveCount(12);
 
-    const firstYCoordinates = await page
-      .getByTestId('product-card')
-      .evaluateAll((cards) =>
-        cards.map((card) => Math.round(card.getBoundingClientRect().y)),
-      );
+    const firstYCoordinates = await products.evaluateAll((items) =>
+      items.map((item) => Math.round(item.getBoundingClientRect().y)),
+    );
     expect(new Set(firstYCoordinates.slice(0, viewport.columns)).size).toBe(1);
     if (viewport.columns > 1) {
       expect(firstYCoordinates[viewport.columns]).toBeGreaterThan(

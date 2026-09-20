@@ -13,6 +13,7 @@ const { compact = false, currentPath, locale } = Astro.props;
 const messages = sharedMessages[locale];
 const navigation = [
   { key: 'catalogue', label: messages.navigation.catalogue },
+  { key: 'consultation', label: messages.navigation.find },
   { key: 'runningBasics', label: messages.navigation.runningBasics },
 ] as const;
 const navigationLinks = navigation.map((item) => ({
