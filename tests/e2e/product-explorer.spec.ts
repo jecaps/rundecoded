@@ -173,9 +173,7 @@ test('contains the category menu within the viewport on narrow screens', async (
   }
 });
 
-test('uses compact catalogue rows on phones', async ({
-  page,
-}) => {
+test('uses compact catalogue rows on phones', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.reload();
 

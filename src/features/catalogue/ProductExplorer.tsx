@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -314,9 +308,7 @@ export function ProductExplorer({
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [activeComparisonIds, setActiveComparisonIds] = useState<string[]>([]);
   const [comparisonOpen, setComparisonOpen] = useState(false);
-  const [compactMobile, setCompactMobile] = useState(
-    isCompactMobileViewport,
-  );
+  const [compactMobile, setCompactMobile] = useState(isCompactMobileViewport);
   const pageRef = useRef(page);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
@@ -330,9 +322,7 @@ export function ProductExplorer({
     });
     const mobileQuery = window.matchMedia?.('(max-width: 599px)');
     const updateMobileLayout = () =>
-      setCompactMobile(
-        mobileQuery?.matches ?? window.innerWidth <= 599,
-      );
+      setCompactMobile(mobileQuery?.matches ?? window.innerWidth <= 599);
     updateMobileLayout();
     mobileQuery?.addEventListener('change', updateMobileLayout);
     window.addEventListener('pageshow', updateMobileLayout);
