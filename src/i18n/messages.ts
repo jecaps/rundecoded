@@ -11,6 +11,7 @@ export interface SharedMessages {
   };
   navigation: {
     catalogue: string;
+    find: string;
     runningBasics: string;
   };
   pages: {
@@ -33,6 +34,7 @@ export const sharedMessages = {
     footer: { systemPreview: 'System preview' },
     navigation: {
       catalogue: 'Catalogue',
+      find: 'Find',
       runningBasics: 'Running Basics',
     },
     pages: {
@@ -69,6 +71,7 @@ export const sharedMessages = {
     footer: { systemPreview: 'Systemvorschau' },
     navigation: {
       catalogue: 'Katalog',
+      find: 'Finden',
       runningBasics: 'Laufgrundlagen',
     },
     pages: {
@@ -105,6 +108,7 @@ export const sharedMessages = {
     footer: { systemPreview: 'Aperçu du système' },
     navigation: {
       catalogue: 'Catalogue',
+      find: 'Trouver',
       runningBasics: 'Bases de la course',
     },
     pages: {

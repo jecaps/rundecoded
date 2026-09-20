@@ -83,6 +83,19 @@ test('uses client-side navigation between primary routes', async ({ page }) => {
   ).toBe('same-document');
 });
 
+test('reaches the customer consultation from the Find destination', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./en/catalogue/');
+
+  await page.getByRole('link', { name: 'Find', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/consultation\/$/);
+  await expect(
+    page.getByRole('heading', { name: 'Customer consultation' }),
+  ).toBeVisible();
+});
+
 test('persists language and theme preferences across routes', async ({
   page,
 }) => {
