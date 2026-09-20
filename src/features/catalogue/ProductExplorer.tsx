@@ -139,66 +139,66 @@ interface BadgeTone {
 // purposes are green; spikes are charcoal.
 const badgeTones: Record<string, BadgeTone> = {
   'daily-trainer': {
-    primary: 'bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-200',
+    primary: 'bg-blue-50 text-blue-800 dark:bg-blue-950/40 dark:text-blue-200',
     secondary:
-      'text-blue-600 ring-1 ring-blue-100 ring-inset dark:text-blue-300 dark:ring-blue-800',
+      'text-blue-800 ring-1 ring-blue-100 ring-inset dark:text-blue-300 dark:ring-blue-800',
   },
   'entry-level': {
-    primary: 'bg-sky-50 text-sky-700 dark:bg-sky-950/40 dark:text-sky-200',
+    primary: 'bg-sky-50 text-sky-800 dark:bg-sky-950/40 dark:text-sky-200',
     secondary:
-      'text-sky-600 ring-1 ring-sky-100 ring-inset dark:text-sky-300 dark:ring-sky-800',
+      'text-sky-800 ring-1 ring-sky-100 ring-inset dark:text-sky-300 dark:ring-sky-800',
   },
   'fast-training': {
     primary:
-      'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-200',
+      'bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-200',
     secondary:
-      'text-amber-600 ring-1 ring-amber-100 ring-inset dark:text-amber-300 dark:ring-amber-800',
+      'text-amber-800 ring-1 ring-amber-100 ring-inset dark:text-amber-300 dark:ring-amber-800',
   },
   'max-cushion': {
     primary:
-      'bg-violet-50 text-violet-700 dark:bg-violet-950/40 dark:text-violet-200',
+      'bg-violet-50 text-violet-800 dark:bg-violet-950/40 dark:text-violet-200',
     secondary:
-      'text-violet-600 ring-1 ring-violet-100 ring-inset dark:text-violet-300 dark:ring-violet-800',
+      'text-violet-800 ring-1 ring-violet-100 ring-inset dark:text-violet-300 dark:ring-violet-800',
   },
   race: {
-    primary: 'bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-200',
+    primary: 'bg-red-50 text-red-800 dark:bg-red-950/40 dark:text-red-200',
     secondary:
-      'text-red-600 ring-1 ring-red-100 ring-inset dark:text-red-300 dark:ring-red-800',
+      'text-red-800 ring-1 ring-red-100 ring-inset dark:text-red-300 dark:ring-red-800',
   },
   spikes: {
     primary: 'bg-zinc-200 text-zinc-800 dark:bg-zinc-700/70 dark:text-zinc-100',
     secondary:
-      'text-zinc-700 ring-1 ring-zinc-300 ring-inset dark:text-zinc-200 dark:ring-zinc-600',
+      'text-zinc-800 ring-1 ring-zinc-300 ring-inset dark:text-zinc-200 dark:ring-zinc-600',
   },
   'super-trainer': {
     primary:
-      'bg-orange-50 text-orange-700 dark:bg-orange-950/40 dark:text-orange-200',
+      'bg-orange-50 text-orange-800 dark:bg-orange-950/40 dark:text-orange-200',
     secondary:
-      'text-orange-600 ring-1 ring-orange-100 ring-inset dark:text-orange-300 dark:ring-orange-800',
+      'text-orange-800 ring-1 ring-orange-100 ring-inset dark:text-orange-300 dark:ring-orange-800',
   },
   'track-spikes': {
     primary: 'bg-zinc-200 text-zinc-800 dark:bg-zinc-700/70 dark:text-zinc-100',
     secondary:
-      'text-zinc-700 ring-1 ring-zinc-300 ring-inset dark:text-zinc-200 dark:ring-zinc-600',
+      'text-zinc-800 ring-1 ring-zinc-300 ring-inset dark:text-zinc-200 dark:ring-zinc-600',
   },
   trail: {
     primary:
-      'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-200',
+      'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200',
     secondary:
-      'text-emerald-600 ring-1 ring-emerald-100 ring-inset dark:text-emerald-300 dark:ring-emerald-800',
+      'text-emerald-800 ring-1 ring-emerald-100 ring-inset dark:text-emerald-300 dark:ring-emerald-800',
   },
   'trail-race': {
-    primary: 'bg-lime-50 text-lime-700 dark:bg-lime-950/40 dark:text-lime-200',
+    primary: 'bg-lime-50 text-lime-800 dark:bg-lime-950/40 dark:text-lime-200',
     secondary:
-      'text-lime-600 ring-1 ring-lime-100 ring-inset dark:text-lime-300 dark:ring-lime-800',
+      'text-lime-800 ring-1 ring-lime-100 ring-inset dark:text-lime-300 dark:ring-lime-800',
   },
 };
 
 const fallbackBadgeTone: BadgeTone = {
   primary:
-    'bg-slate-50 text-slate-700 dark:bg-slate-950/40 dark:text-slate-200',
+    'bg-slate-50 text-slate-800 dark:bg-slate-950/40 dark:text-slate-200',
   secondary:
-    'text-slate-600 ring-1 ring-slate-100 ring-inset dark:text-slate-300 dark:ring-slate-800',
+    'text-slate-800 ring-1 ring-slate-100 ring-inset dark:text-slate-300 dark:ring-slate-800',
 };
 
 function badgeTone(purpose: string | undefined): BadgeTone {
