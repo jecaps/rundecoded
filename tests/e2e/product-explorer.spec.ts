@@ -75,6 +75,39 @@ test('opens comparison after selecting two product cards', async ({ page }) => {
   await expect(page.getByLabel('Search products')).toBeFocused();
 });
 
+test('uses the Compare tab instead of a dialog on tablet', async ({ page }) => {
+  await page.setViewportSize({ height: 1280, width: 800 });
+
+  await page.getByRole('link', { name: 'Compare', exact: true }).click();
+  const emptyComparison = page.getByTestId('tablet-comparison-view');
+  await expect(emptyComparison).toBeVisible();
+  await expect(emptyComparison).toContainText(
+    'No shoes selected for comparison.',
+  );
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+
+  await page.getByRole('button', { name: 'Browse shoes' }).click();
+  await page
+    .getByRole('button', { name: 'Add Adistar 5 to comparison' })
+    .click();
+  await page
+    .getByRole('button', { name: 'Add Adizero Boston 13 to comparison' })
+    .click();
+  const comparisonCount = page.locator('[data-comparison-count]');
+  await expect(comparisonCount).toBeVisible();
+  await expect(comparisonCount).toHaveText('2');
+  await page.getByRole('link', { name: 'Learn', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/running-basics\/$/);
+  await expect(page.locator('[data-comparison-count]')).toHaveText('2');
+  await page.getByRole('link', { name: 'Compare', exact: true }).click();
+
+  const comparison = page.getByTestId('tablet-comparison-view');
+  await expect(comparison).toContainText('Adistar 5');
+  await expect(comparison).toContainText('Adizero Boston 13');
+  await expect(comparison).toContainText('Key differences');
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+});
+
 test('opens comparison from a comparable product and includes the detail product', async ({
   page,
 }) => {
@@ -440,7 +473,7 @@ test('updates the explorer immediately when the footer language changes', async 
 for (const viewport of [
   { layout: 'rows', name: 'phone', width: 390, height: 844, columns: 1 },
   { layout: 'cards', name: 'tablet', width: 768, height: 1024, columns: 2 },
-  { layout: 'cards', name: 'desktop', width: 1280, height: 900, columns: 3 },
+  { layout: 'cards', name: 'desktop', width: 1280, height: 900, columns: 2 },
 ]) {
   test(`keeps readable ${viewport.layout} at the ${viewport.name} viewport`, async ({
     page,
@@ -476,3 +509,23 @@ for (const viewport of [
     }
   });
 }
+
+test('uses a master-detail catalogue at the Nokia T10 landscape viewport', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.reload();
+
+  const detailPane = page.getByTestId('catalogue-detail-pane');
+  await expect(detailPane).toBeVisible();
+  await expect(
+    detailPane.getByRole('heading', { name: 'Adistar 5' }),
+  ).toBeVisible();
+
+  await page
+    .getByRole('button', { name: 'Adizero Boston 13', exact: true })
+    .click();
+  await expect(
+    detailPane.getByRole('heading', { name: 'Adizero Boston 13' }),
+  ).toBeVisible();
+});

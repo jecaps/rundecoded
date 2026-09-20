@@ -73,6 +73,10 @@ export const catalogueCopy = {
     comparisonTitle: 'Shoe comparison',
     comparisonDescription:
       'Compare purpose and technical facts. Differences are guidance, not a personal fit recommendation.',
+    comparisonEmpty: 'No shoes selected for comparison.',
+    comparisonNeedsAnother: 'Select another shoe to start the comparison.',
+    comparisonBrowse: 'Browse shoes',
+    clearComparison: 'Clear comparison',
     differenceSummary: 'Key differences',
     characteristic: 'Characteristic',
     category: 'Category',
@@ -156,6 +160,11 @@ export const catalogueCopy = {
     comparisonTitle: 'Schuhvergleich',
     comparisonDescription:
       'Vergleiche Einsatzzweck und technische Fakten. Unterschiede ersetzen keine persönliche Passformberatung.',
+    comparisonEmpty: 'Keine Schuhe für den Vergleich ausgewählt.',
+    comparisonNeedsAnother:
+      'Wähle einen weiteren Schuh aus, um den Vergleich zu starten.',
+    comparisonBrowse: 'Schuhe ansehen',
+    clearComparison: 'Vergleich löschen',
     differenceSummary: 'Wichtigste Unterschiede',
     characteristic: 'Merkmal',
     category: 'Kategorie',
@@ -239,6 +248,11 @@ export const catalogueCopy = {
     comparisonTitle: 'Comparaison de chaussures',
     comparisonDescription:
       'Comparez les usages et les faits techniques. Les différences ne remplacent pas un conseil personnalisé.',
+    comparisonEmpty: 'Aucune chaussure sélectionnée pour la comparaison.',
+    comparisonNeedsAnother:
+      'Sélectionnez une autre chaussure pour commencer la comparaison.',
+    comparisonBrowse: 'Voir les chaussures',
+    clearComparison: 'Effacer la comparaison',
     differenceSummary: 'Différences principales',
     characteristic: 'Caractéristique',
     category: 'Catégorie',

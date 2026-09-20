@@ -35,7 +35,7 @@ test('navigates between routes without changing the shared banner', async ({
   ).toBeVisible();
 
   const catalogueBanner = await page.locator('.app-banner').boundingBox();
-  await page.getByRole('link', { name: 'Running Basics' }).click();
+  await page.getByRole('link', { name: 'Learn' }).click();
 
   await expect(page).toHaveURL(/\/rundecoded\/en\/running-basics\/$/);
   await expect(
@@ -55,14 +55,15 @@ test('uses client-side navigation between primary routes', async ({ page }) => {
       'same-document';
   });
 
-  await page.getByRole('link', { name: 'Running Basics' }).click();
+  await page.getByRole('link', { name: 'Learn' }).click();
   await expect(page).toHaveURL(/\/en\/running-basics\/$/);
   await expect(
     page.getByRole('heading', { name: 'Running Basics' }),
   ).toBeVisible();
-  await expect(
-    page.getByRole('link', { name: 'Running Basics' }),
-  ).toHaveAttribute('aria-current', 'page');
+  await expect(page.getByRole('link', { name: 'Learn' })).toHaveAttribute(
+    'aria-current',
+    'page',
+  );
   expect(
     await page.evaluate(
       () =>
@@ -114,7 +115,7 @@ test('persists language and theme preferences across routes', async ({
     selectedTheme,
   );
 
-  await page.getByRole('link', { name: 'Laufgrundlagen' }).click();
+  await page.getByRole('link', { name: 'Lernen' }).click();
   await expect(page).toHaveURL(/\/de\/running-basics\/$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'de');
   await expect(page.locator('html')).toHaveAttribute(
@@ -133,7 +134,9 @@ test('persists language and theme preferences across routes', async ({
   ).toBeVisible();
 });
 
-test('keeps controls compact on phone and tablet widths', async ({ page }) => {
+test('hides the desktop footer on phone and tablet widths', async ({
+  page,
+}) => {
   for (const viewport of [
     { height: 844, width: 390 },
     { height: 1024, width: 768 },
@@ -141,21 +144,29 @@ test('keeps controls compact on phone and tablet widths', async ({ page }) => {
     await page.setViewportSize(viewport);
     await page.goto('./en/catalogue/');
 
-    await expect(page.locator('.site-footer__controls')).toBeVisible();
-    await expect(page.locator('.site-footer__credit')).toBeVisible();
-    await expect(
-      page.locator('.app-banner').getByLabel('Display preferences'),
-    ).toHaveCount(0);
+    await expect(page.locator('.site-footer')).toBeHidden();
+  }
 
-    const controlsBox = await page
-      .locator('.site-footer__controls')
-      .boundingBox();
-    const creditBox = await page.locator('.site-footer__credit').boundingBox();
-    expect(controlsBox).not.toBeNull();
-    expect(creditBox).not.toBeNull();
-    expect(Math.abs((controlsBox?.y ?? 0) - (creditBox?.y ?? 0))).toBeLessThan(
-      16,
-    );
+  await expect(page.getByRole('button', { name: 'Settings' })).toBeVisible();
+});
+
+test('keeps the tablet application shell on every primary route', async ({
+  page,
+}) => {
+  await page.setViewportSize({ height: 1280, width: 800 });
+
+  for (const destination of [
+    { path: 'catalogue', activeLink: 'Catalogue' },
+    { path: 'consultation', activeLink: 'Find' },
+    { path: 'running-basics', activeLink: 'Learn' },
+  ]) {
+    await page.goto(`./en/${destination.path}/`);
+
+    await expect(page.locator('.app-banner')).toBeVisible();
+    await expect(page.locator('.tablet-app-header')).toBeVisible();
+    await expect(
+      page.getByRole('link', { name: destination.activeLink, exact: true }),
+    ).toHaveAttribute('aria-current', 'page');
   }
 });
 

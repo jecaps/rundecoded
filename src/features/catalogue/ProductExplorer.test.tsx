@@ -7,14 +7,23 @@ import {
   waitFor,
   within,
 } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { ProductExplorer } from './ProductExplorer';
 import { getProductCatalogue } from './catalogue';
 
 const products = getProductCatalogue();
+const originalMatchMedia = window.matchMedia;
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+  window.sessionStorage.clear();
+  Object.defineProperty(window, 'matchMedia', {
+    configurable: true,
+    value: originalMatchMedia,
+  });
+});
 
 describe('ProductExplorer', () => {
   it('renders the first 12-product page without card prices or weights', () => {
@@ -40,7 +49,10 @@ describe('ProductExplorer', () => {
       firstCard!.querySelector('[data-card-badge="stability"]'),
     ).toHaveTextContent('Neutral');
     expect(within(firstCard!).getByTestId('card-best-for')).toHaveClass(
-      'line-clamp-2',
+      'truncate',
+    );
+    expect(within(firstCard!).getByTestId('card-best-for')).toHaveAttribute(
+      'title',
     );
     expect(
       within(firstCard!).getByTestId('card-best-for'),
@@ -92,7 +104,7 @@ describe('ProductExplorer', () => {
     expect(window.location.search).toBe('?category=terrain%3Agravel');
   });
 
-  it('presents the employee consultation entry and catalogue controls', async () => {
+  it('presents catalogue controls without a duplicate consultation entry', async () => {
     window.history.replaceState(
       {},
       '',
@@ -107,13 +119,13 @@ describe('ProductExplorer', () => {
     );
 
     expect(
-      screen.getByRole('heading', {
+      screen.queryByRole('heading', {
         name: 'Help a customer choose the right shoe',
       }),
-    ).toBeVisible();
+    ).not.toBeInTheDocument();
     expect(
-      screen.getByRole('link', { name: 'Start customer consultation' }),
-    ).toHaveAttribute('href', '/en/consultation/');
+      screen.queryByRole('link', { name: 'Start customer consultation' }),
+    ).not.toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: /All categories/ }),
     ).toBeVisible();
@@ -202,6 +214,113 @@ describe('ProductExplorer', () => {
         screen.queryAllByRole('button', { name: 'Selected' }),
       ).toHaveLength(0);
     });
+  });
+
+  it('uses a dedicated tablet comparison view for zero, one, and two shoes', async () => {
+    vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined);
+    Object.defineProperty(window, 'matchMedia', {
+      configurable: true,
+      value: vi.fn((query: string) => ({
+        addEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+        matches: query === '(min-width: 48rem) and (max-width: 80rem)',
+        media: query,
+        onchange: null,
+        removeEventListener: vi.fn(),
+      })),
+    });
+    window.history.replaceState({}, '', '/en/catalogue/#comparison');
+
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+      />,
+    );
+
+    const emptyView = await screen.findByTestId('tablet-comparison-view');
+    expect(
+      within(emptyView).getByText('No shoes selected for comparison.'),
+    ).toBeVisible();
+
+    fireEvent.click(
+      within(emptyView).getByRole('button', { name: 'Browse shoes' }),
+    );
+    fireEvent.click(screen.getAllByRole('button', { name: 'Compare' })[0]!);
+    act(() => {
+      window.location.hash = 'comparison';
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    });
+    expect(
+      await screen.findByText('Select another shoe to start the comparison.'),
+    ).toBeVisible();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Browse shoes' }));
+    fireEvent.click(screen.getAllByRole('button', { name: 'Compare' })[1]!);
+    act(() => {
+      window.location.hash = 'comparison';
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    });
+
+    const comparisonView = await screen.findByTestId('tablet-comparison-view');
+    expect(within(comparisonView).getByText('Adistar 5')).toBeVisible();
+    expect(within(comparisonView).getByText('Adizero Boston 13')).toBeVisible();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+    fireEvent.click(
+      within(comparisonView).getByRole('button', {
+        name: 'Deselect Adizero Boston 13',
+      }),
+    );
+    expect(
+      await screen.findByText('Select another shoe to start the comparison.'),
+    ).toBeVisible();
+  });
+
+  it('restores selected shoes after navigating away from the catalogue', async () => {
+    Object.defineProperty(window, 'matchMedia', {
+      configurable: true,
+      value: vi.fn((query: string) => ({
+        addEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+        matches: query === '(min-width: 48rem) and (max-width: 80rem)',
+        media: query,
+        onchange: null,
+        removeEventListener: vi.fn(),
+      })),
+    });
+    window.sessionStorage.setItem(
+      'rundecoded:catalogue-comparison-selection',
+      JSON.stringify([products[0]!.product.id, products[2]!.product.id]),
+    );
+    window.history.replaceState({}, '', '/en/catalogue/#comparison');
+
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+      />,
+    );
+
+    const comparisonView = await screen.findByTestId('tablet-comparison-view');
+    expect(await within(comparisonView).findByText('Adistar 5')).toBeVisible();
+    expect(within(comparisonView).getByText('Adizero Boston 13')).toBeVisible();
+
+    fireEvent.click(
+      within(comparisonView).getByRole('button', {
+        name: 'Clear comparison',
+      }),
+    );
+    expect(
+      await screen.findByText('No shoes selected for comparison.'),
+    ).toBeVisible();
+    expect(
+      window.sessionStorage.getItem(
+        'rundecoded:catalogue-comparison-selection',
+      ),
+    ).toBeNull();
   });
 
   it('offers keyboard-selectable typo-tolerant suggestions', () => {
