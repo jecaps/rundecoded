@@ -5,7 +5,6 @@ import {
   ArrowUpRight,
   Check,
   ChevronDown,
-  GitCompareArrows,
   ImageOff,
   Plus,
   Search,
@@ -616,10 +615,7 @@ export function ProductExplorer({
   }
 
   function selectCatalogueProduct(id: string, opener?: HTMLElement) {
-    if (masterDetail) {
-      setSelectedCatalogueId(id);
-      return;
-    }
+    if (masterDetail) setSelectedCatalogueId(id);
     const activeElement = opener ?? document.activeElement;
     if (activeElement instanceof HTMLElement) openDetails(id, activeElement);
   }
@@ -1245,7 +1241,7 @@ export function ProductExplorer({
                   return (
                     <Card
                       className={cn(
-                        'desktop:h-[37rem] min-w-0 overflow-hidden min-[600px]:h-[34rem]',
+                        'min-w-0 self-start overflow-hidden',
                         masterDetail &&
                           masterDetailProduct?.product.id === product.id &&
                           'border-primary bg-primary/5 ring-primary/20 border-l-4 ring-2',
@@ -1253,10 +1249,10 @@ export function ProductExplorer({
                       key={product.id}
                     >
                       <article
-                        className="flex h-full min-w-0 flex-col"
+                        className="flex min-w-0 flex-col"
                         data-testid="product-card"
                       >
-                        <CardHeader className="bg-surface-subtle relative h-56 p-3">
+                        <CardHeader className="bg-surface-subtle relative aspect-[3/2] p-0">
                           <button
                             aria-label={copy.openDetails(product.model)}
                             className="block h-full w-full cursor-pointer border-0 bg-transparent p-0"
@@ -1274,36 +1270,14 @@ export function ProductExplorer({
                               locale={locale}
                             />
                           </button>
-                          <Button
-                            aria-label={selected ? copy.selected : copy.compare}
-                            aria-pressed={selected}
-                            className="absolute top-3 right-3 h-10 px-3 shadow-sm"
-                            onClick={() => toggleComparison(product.id)}
-                            variant={selected ? 'primary' : 'outline'}
-                          >
-                            {selected ? (
-                              <>
-                                <Check aria-hidden="true" className="size-4" />
-                                {copy.selected}
-                              </>
-                            ) : (
-                              <>
-                                <GitCompareArrows
-                                  aria-hidden="true"
-                                  className="size-4"
-                                />
-                                {copy.compare}
-                              </>
-                            )}
-                          </Button>
                         </CardHeader>
 
-                        <CardContent className="flex flex-1 flex-col p-5 pb-0">
+                        <CardContent className="flex flex-col p-5 pb-3">
                           <p className="text-muted-foreground m-0 text-xs font-bold tracking-[0.15em] uppercase">
                             {product.brand}
                           </p>
                           <button
-                            className="text-foreground hover:text-primary mt-1 line-clamp-2 min-h-14 cursor-pointer border-0 bg-transparent p-0 text-left text-2xl font-bold tracking-[-0.025em]"
+                            className="text-foreground hover:text-primary mt-1 line-clamp-2 cursor-pointer border-0 bg-transparent p-0 text-left text-2xl leading-tight font-bold tracking-[-0.025em]"
                             onClick={(event) =>
                               selectCatalogueProduct(
                                 product.id,
@@ -1379,12 +1353,17 @@ export function ProductExplorer({
                         <CardFooter className="p-5 pt-0">
                           <Button
                             className="w-full"
-                            onClick={(event) =>
-                              openDetails(product.id, event.currentTarget)
-                            }
-                            variant="outline"
+                            aria-label={selected ? copy.added : copy.compare}
+                            aria-pressed={selected}
+                            onClick={() => toggleComparison(product.id)}
+                            variant={selected ? 'primary' : 'outline'}
                           >
-                            {copy.details}
+                            {selected ? (
+                              <Check aria-hidden="true" className="size-4" />
+                            ) : (
+                              <Plus aria-hidden="true" className="size-4" />
+                            )}
+                            {selected ? copy.added : copy.compare}
                           </Button>
                         </CardFooter>
                       </article>

@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }) => {
   );
 });
 
-test('opens details from every card entry point and restores focus', async ({
+test('opens details from the card image and name and restores focus', async ({
   page,
 }) => {
   const card = page.getByTestId('product-card').first();
@@ -23,13 +23,9 @@ test('opens details from every card entry point and restores focus', async ({
     name: 'Open details for Adistar 5',
   });
   const title = page.getByRole('button', { name: 'Adistar 5', exact: true });
-  const detailsButton = card.getByRole('button', {
-    name: 'Details',
-    exact: true,
-  });
   const dialog = page.getByRole('dialog');
 
-  for (const opener of [image, title, detailsButton]) {
+  for (const opener of [image, title]) {
     await opener.click();
     await expect(dialog).toBeVisible();
     await expect(

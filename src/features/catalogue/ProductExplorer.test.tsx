@@ -147,7 +147,7 @@ describe('ProductExplorer', () => {
     fireEvent.click(compareButtons[0]!);
     fireEvent.click(compareButtons[1]!);
 
-    expect(screen.getAllByRole('button', { name: 'Selected' })).toHaveLength(2);
+    expect(screen.getAllByRole('button', { name: 'Added' })).toHaveLength(2);
     expect(screen.getAllByRole('button', { name: /^Deselect / })).toHaveLength(
       2,
     );
@@ -167,7 +167,7 @@ describe('ProductExplorer', () => {
     );
 
     fireEvent.click(screen.getAllByRole('button', { name: /^Deselect / })[0]!);
-    expect(screen.getAllByRole('button', { name: 'Selected' })).toHaveLength(1);
+    expect(screen.getAllByRole('button', { name: 'Added' })).toHaveLength(1);
     await waitFor(() => {
       expect(
         screen.queryByText(
@@ -210,9 +210,9 @@ describe('ProductExplorer', () => {
       expect(
         screen.queryByRole('region', { name: 'Shoe comparison selection' }),
       ).not.toBeInTheDocument();
-      expect(
-        screen.queryAllByRole('button', { name: 'Selected' }),
-      ).toHaveLength(0);
+      expect(screen.queryAllByRole('button', { name: 'Added' })).toHaveLength(
+        0,
+      );
     });
   });
 
@@ -431,7 +431,7 @@ describe('ProductExplorer', () => {
         products={products}
       />,
     );
-    fireEvent.click(screen.getByRole('button', { name: 'Details' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Runblaze' }));
     const dialog = screen.getByRole('dialog');
     expect(dialog).toHaveTextContent(
       'The Adidas Runblaze is designed for first runs',
@@ -466,7 +466,7 @@ describe('ProductExplorer', () => {
         products={products}
       />,
     );
-    fireEvent.click(screen.getByRole('button', { name: 'Details' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Clifton 10' }));
     const dialog = screen.getByRole('dialog');
     expect(dialog).toHaveTextContent(
       "The Clifton 10 is HOKA's comfort-focused neutral daily trainer",
