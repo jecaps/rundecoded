@@ -84,6 +84,44 @@ test('uses client-side navigation between primary routes', async ({ page }) => {
   ).toBe('same-document');
 });
 
+test('marks the selected primary route active as navigation starts', async ({
+  page,
+}) => {
+  await page.goto('./en/catalogue/');
+
+  const pendingState = await page.evaluate(() => {
+    const link = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>('[data-navigation-key]'),
+    ).find((item) => item.dataset.navigationKey === 'consultation');
+    const preparationEvent = new Event('astro:before-preparation');
+    Object.defineProperty(preparationEvent, 'sourceElement', { value: link });
+    document.dispatchEvent(preparationEvent);
+    return {
+      active: link?.getAttribute('aria-current'),
+      busy: link?.getAttribute('aria-busy'),
+      pending: link?.dataset.navigationPending,
+    };
+  });
+
+  expect(pendingState).toEqual({
+    active: 'page',
+    busy: 'true',
+    pending: 'true',
+  });
+  await expect(
+    page.locator(
+      '[data-navigation-key="consultation"] [data-navigation-skeleton]',
+    ),
+  ).toBeVisible();
+  await page.getByRole('link', { name: 'Find', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/consultation\/$/);
+  await expect(
+    page.locator(
+      '[data-navigation-key="consultation"] [data-navigation-skeleton]',
+    ),
+  ).toBeHidden();
+});
+
 test('reaches the customer consultation from the Find destination', async ({
   page,
 }) => {
@@ -100,6 +138,7 @@ test('reaches the customer consultation from the Find destination', async ({
 test('persists language and theme preferences across routes', async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('./en/catalogue/');
 
   await page.getByRole('button', { name: 'Language: EN' }).click();
@@ -158,6 +197,7 @@ test('keeps the tablet application shell on every primary route', async ({
   for (const destination of [
     { path: 'catalogue', activeLink: 'Catalogue' },
     { path: 'consultation', activeLink: 'Find' },
+    { path: 'compare', activeLink: 'Compare' },
     { path: 'running-basics', activeLink: 'Learn' },
   ]) {
     await page.goto(`./en/${destination.path}/`);
@@ -173,6 +213,7 @@ test('keeps the tablet application shell on every primary route', async ({
 test('design-system primitives support keyboard interaction', async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('./en/design-system/');
 
   const dialogTrigger = page.getByRole('button', { name: 'Open dialog' });

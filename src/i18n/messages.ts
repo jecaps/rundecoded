@@ -17,6 +17,7 @@ export interface SharedMessages {
   };
   pages: {
     catalogue: { description: string; title: string };
+    compare: { description: string; title: string };
     consultation: { description: string; title: string };
     designSystem: { description: string; title: string };
     runningBasics: { description: string; title: string };
@@ -44,6 +45,10 @@ export const sharedMessages = {
         description:
           'Explore and compare running shoes by purpose, surface, guidance, and construction.',
         title: 'Running shoe catalogue',
+      },
+      compare: {
+        description: 'Compare selected running shoes side by side.',
+        title: 'Shoe comparison',
       },
       consultation: {
         description:
@@ -83,6 +88,10 @@ export const sharedMessages = {
           'Entdecke und vergleiche Laufschuhe nach Einsatzzweck, Untergrund, Führung und Konstruktion.',
         title: 'Laufschuh-Katalog',
       },
+      compare: {
+        description: 'Vergleiche ausgewählte Laufschuhe direkt miteinander.',
+        title: 'Schuhvergleich',
+      },
       consultation: {
         description:
           'Führe Kunden durch einen kurzen Fragebogen und prüfe nachvollziehbare Laufschuh-Empfehlungen.',
@@ -120,6 +129,11 @@ export const sharedMessages = {
         description:
           'Découvrez et comparez des chaussures de course selon l’usage, le terrain, le guidage et la construction.',
         title: 'Catalogue de chaussures de course',
+      },
+      compare: {
+        description:
+          'Comparez côte à côte les chaussures de course sélectionnées.',
+        title: 'Comparaison de chaussures',
       },
       consultation: {
         description:

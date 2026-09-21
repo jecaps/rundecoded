@@ -36,7 +36,7 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />

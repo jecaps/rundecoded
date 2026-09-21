@@ -197,20 +197,14 @@ export function RunningBasicsGuide({
 
   return (
     <section
-      className="tablet:py-14 py-10"
+      className="app-route"
       data-hydrated={String(hydrated)}
       data-testid="running-basics-guide"
     >
-      <header className="max-w-3xl">
-        <p className="text-primary m-0 text-xs font-bold tracking-[0.16em] uppercase">
-          {copy.eyebrow}
-        </p>
-        <h1 className="mt-3 mb-0 text-[clamp(2.2rem,5vw,4rem)] leading-[1.02] font-semibold tracking-[-0.045em]">
-          {copy.title}
-        </h1>
-        <p className="text-muted-foreground mt-4 mb-0 max-w-2xl text-lg leading-8">
-          {copy.introduction}
-        </p>
+      <header className="app-route__header">
+        <p className="app-route__eyebrow">{copy.eyebrow}</p>
+        <h1 className="app-route__title">{copy.title}</h1>
+        <p className="app-route__description">{copy.introduction}</p>
       </header>
 
       <div className="desktop:grid-cols-[13rem_minmax(0,1fr)] desktop:gap-14 mt-10 grid items-start gap-10">

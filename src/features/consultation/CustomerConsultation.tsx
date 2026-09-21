@@ -408,15 +408,11 @@ export function CustomerConsultation({
 
   if (showResults) {
     return (
-      <section className="py-10" data-testid="consultation-results">
+      <section className="app-route" data-testid="consultation-results">
         <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <p className="text-primary m-0 text-xs font-bold tracking-[0.16em] uppercase">
-              {copy.eyebrow}
-            </p>
-            <h1 className="tablet:text-4xl mt-2 mb-0 text-3xl font-bold tracking-[-0.035em]">
-              {copy.resultsTitle}
-            </h1>
+          <div className="app-route__header">
+            <p className="app-route__eyebrow">{copy.eyebrow}</p>
+            <h1 className="app-route__title">{copy.resultsTitle}</h1>
           </div>
           <Button
             onClick={() => {
@@ -561,15 +557,11 @@ export function CustomerConsultation({
   const question = copy.questions[step];
 
   return (
-    <section className="py-10" data-testid="customer-consultation">
+    <section className="app-route" data-testid="customer-consultation">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <p className="text-primary m-0 text-xs font-bold tracking-[0.16em] uppercase">
-            {copy.eyebrow}
-          </p>
-          <h1 className="tablet:text-4xl mt-2 mb-0 text-3xl font-bold tracking-[-0.035em]">
-            {copy.title}
-          </h1>
+        <div className="app-route__header">
+          <p className="app-route__eyebrow">{copy.eyebrow}</p>
+          <h1 className="app-route__title">{copy.title}</h1>
         </div>
         <a
           className={buttonVariants({ variant: 'outline' })}
@@ -580,279 +572,241 @@ export function CustomerConsultation({
         </a>
       </div>
 
-      <div className="desktop:grid-cols-[15rem_minmax(0,1fr)] mt-8 grid gap-6">
-        <Card className="h-fit">
-          <CardContent className="p-4">
-            <ol className="tablet:grid-cols-2 desktop:grid-cols-1 grid gap-1 p-0">
-              {copy.steps.map((label, index) => (
-                <li
-                  className={cn(
-                    'flex items-center gap-3 rounded-[var(--radius-control)] px-3 py-2 text-sm',
-                    index === step && 'bg-surface-subtle font-semibold',
-                    index < step && 'text-primary',
-                  )}
-                  key={label}
-                >
-                  <span
-                    className={cn(
-                      'border-border flex size-7 shrink-0 items-center justify-center rounded-full border text-xs',
-                      index <= step &&
-                        'border-primary bg-primary text-primary-foreground',
-                    )}
-                  >
-                    {index < step ? (
-                      <Check aria-hidden="true" className="size-3.5" />
-                    ) : (
-                      index + 1
-                    )}
-                  </span>
-                  {label}
-                </li>
-              ))}
-            </ol>
-          </CardContent>
-        </Card>
+      <div className="mt-8">
+        <div>
+          <div className="flex items-center justify-between gap-4">
+            <span className="text-sm font-semibold">{copy.steps[step]}</span>
+            <span className="text-muted-foreground shrink-0 text-sm">
+              {copy.progress(step + 1, copy.steps.length)}
+            </span>
+          </div>
+          <div
+            aria-label={copy.progress(step + 1, copy.steps.length)}
+            aria-valuemax={copy.steps.length}
+            aria-valuemin={1}
+            aria-valuenow={step + 1}
+            className="bg-surface-subtle mt-2 h-2 overflow-hidden rounded-full"
+            role="progressbar"
+          >
+            <div
+              className="bg-primary h-full rounded-full transition-[width]"
+              style={{
+                width: `${((step + 1) / copy.steps.length) * 100}%`,
+              }}
+            />
+          </div>
 
-        <Card>
-          <CardContent className="tablet:p-8 p-5">
-            <div className="flex items-center gap-4">
-              <div
-                aria-label={copy.progress(step + 1, copy.steps.length)}
-                aria-valuemax={copy.steps.length}
-                aria-valuemin={1}
-                aria-valuenow={step + 1}
-                className="bg-surface-subtle h-2 flex-1 overflow-hidden rounded-full"
-                role="progressbar"
+          <div className="mt-9">
+            <h2 className="tablet:text-3xl m-0 max-w-3xl text-2xl font-bold tracking-[-0.025em]">
+              {question.title}
+            </h2>
+            <p className="text-muted-foreground mt-2 mb-0 leading-6">
+              {question.help}
+            </p>
+            {step === 1 ? (
+              <p className="text-muted-foreground mt-2 mb-0 text-sm">
+                {copy.multipleHelp}
+              </p>
+            ) : null}
+            {step === 2 ? (
+              <p className="text-muted-foreground mt-2 mb-0 text-sm">
+                {copy.priorityMultipleHelp}
+              </p>
+            ) : null}
+
+            {step === 0
+              ? renderChoices(
+                  distanceChoices,
+                  distance ? [distance] : [],
+                  setDistance,
+                )
+              : null}
+            {step === 1
+              ? renderChoices(
+                  surfaceChoices,
+                  [
+                    ...(surfaces.includes('road') ? ['road'] : []),
+                    ...(surfaces.includes('gravel') ? ['gravel'] : []),
+                    ...(hasSurfaceFromGroup(trailSurfaceIds) ? ['trail'] : []),
+                    ...(hasSurfaceFromGroup(trackSurfaceIds)
+                      ? ['trackCrossCountry']
+                      : []),
+                    ...(surfaces.includes('other') ? ['other'] : []),
+                  ],
+                  togglePrimarySurface,
+                )
+              : null}
+            {step === 1 && hasSurfaceFromGroup(trailSurfaceIds) ? (
+              <div className="mt-6">
+                <p className="m-0 text-sm font-semibold">
+                  {copy.trailSurfaceFollowUp}
+                </p>
+                {renderChoices(trailSurfaceChoices, surfaces, (value) =>
+                  toggleSurfaceDetail('trail', value),
+                )}
+              </div>
+            ) : null}
+            {step === 1 && hasSurfaceFromGroup(trackSurfaceIds) ? (
+              <div className="mt-6">
+                <p className="m-0 text-sm font-semibold">
+                  {copy.trackSurfaceFollowUp}
+                </p>
+                {renderChoices(trackSurfaceChoices, surfaces, (value) =>
+                  toggleSurfaceDetail('trackCrossCountry', value),
+                )}
+              </div>
+            ) : null}
+            {step === 2
+              ? renderChoices(priorityChoices, priorities, (value) =>
+                  toggleMultiple(
+                    value,
+                    priorities,
+                    setPriorities,
+                    ['unknown'],
+                    2,
+                  ),
+                )
+              : null}
+            {step === 3
+              ? renderChoices(goalChoices, goal ? [goal] : [], setGoal)
+              : null}
+            {step === 4
+              ? renderChoices(
+                  stabilityChoices,
+                  stability ? [stability] : [],
+                  setStability,
+                )
+              : null}
+            {step === 5
+              ? renderChoices(comfortChoices, comfort, (value) =>
+                  toggleMultiple(value, comfort, setComfort, [
+                    'none',
+                    'private',
+                  ]),
+                )
+              : null}
+
+            {step === 1 && surfaces.includes('other') ? (
+              <label
+                className="mt-5 grid max-w-xl gap-2 text-sm font-semibold"
+                htmlFor="other-surface"
               >
-                <div
-                  className="bg-primary h-full rounded-full transition-[width]"
-                  style={{
-                    width: `${((step + 1) / copy.steps.length) * 100}%`,
-                  }}
+                {copy.otherSurfaceLabel}
+                <Input
+                  id="other-surface"
+                  onChange={(event) => setOtherSurface(event.target.value)}
+                  placeholder={copy.otherSurfacePlaceholder}
+                  value={otherSurface}
                 />
-              </div>
-              <span className="text-muted-foreground shrink-0 text-sm">
-                {copy.progress(step + 1, copy.steps.length)}
-              </span>
-            </div>
-
-            <div className="mt-9">
-              <h2 className="tablet:text-3xl m-0 max-w-3xl text-2xl font-bold tracking-[-0.025em]">
-                {question.title}
-              </h2>
-              <p className="text-muted-foreground mt-2 mb-0 leading-6">
-                {question.help}
-              </p>
-              {step === 1 ? (
-                <p className="text-muted-foreground mt-2 mb-0 text-sm">
-                  {copy.multipleHelp}
-                </p>
-              ) : null}
-              {step === 2 ? (
-                <p className="text-muted-foreground mt-2 mb-0 text-sm">
-                  {copy.priorityMultipleHelp}
-                </p>
-              ) : null}
-
-              {step === 0
-                ? renderChoices(
-                    distanceChoices,
-                    distance ? [distance] : [],
-                    setDistance,
-                  )
-                : null}
-              {step === 1
-                ? renderChoices(
-                    surfaceChoices,
-                    [
-                      ...(surfaces.includes('road') ? ['road'] : []),
-                      ...(surfaces.includes('gravel') ? ['gravel'] : []),
-                      ...(hasSurfaceFromGroup(trailSurfaceIds)
-                        ? ['trail']
-                        : []),
-                      ...(hasSurfaceFromGroup(trackSurfaceIds)
-                        ? ['trackCrossCountry']
-                        : []),
-                      ...(surfaces.includes('other') ? ['other'] : []),
-                    ],
-                    togglePrimarySurface,
-                  )
-                : null}
-              {step === 1 && hasSurfaceFromGroup(trailSurfaceIds) ? (
-                <div className="mt-6">
-                  <p className="m-0 text-sm font-semibold">
-                    {copy.trailSurfaceFollowUp}
-                  </p>
-                  {renderChoices(trailSurfaceChoices, surfaces, (value) =>
-                    toggleSurfaceDetail('trail', value),
-                  )}
-                </div>
-              ) : null}
-              {step === 1 && hasSurfaceFromGroup(trackSurfaceIds) ? (
-                <div className="mt-6">
-                  <p className="m-0 text-sm font-semibold">
-                    {copy.trackSurfaceFollowUp}
-                  </p>
-                  {renderChoices(trackSurfaceChoices, surfaces, (value) =>
-                    toggleSurfaceDetail('trackCrossCountry', value),
-                  )}
-                </div>
-              ) : null}
-              {step === 2
-                ? renderChoices(priorityChoices, priorities, (value) =>
-                    toggleMultiple(
-                      value,
-                      priorities,
-                      setPriorities,
-                      ['unknown'],
-                      2,
-                    ),
-                  )
-                : null}
-              {step === 3
-                ? renderChoices(goalChoices, goal ? [goal] : [], setGoal)
-                : null}
-              {step === 4
-                ? renderChoices(
-                    stabilityChoices,
-                    stability ? [stability] : [],
-                    setStability,
-                  )
-                : null}
-              {step === 5
-                ? renderChoices(comfortChoices, comfort, (value) =>
-                    toggleMultiple(value, comfort, setComfort, [
-                      'none',
-                      'private',
-                    ]),
-                  )
-                : null}
-
-              {step === 1 && surfaces.includes('other') ? (
-                <label
-                  className="mt-5 grid max-w-xl gap-2 text-sm font-semibold"
-                  htmlFor="other-surface"
-                >
-                  {copy.otherSurfaceLabel}
-                  <Input
-                    id="other-surface"
-                    onChange={(event) => setOtherSurface(event.target.value)}
-                    placeholder={copy.otherSurfacePlaceholder}
-                    value={otherSurface}
-                  />
-                </label>
-              ) : null}
-              {step === 3 && goal === 'other' ? (
-                <label
-                  className="mt-5 grid max-w-xl gap-2 text-sm font-semibold"
-                  htmlFor="other-goal"
-                >
-                  {copy.otherGoalLabel}
-                  <Input
-                    id="other-goal"
-                    onChange={(event) => setOtherGoal(event.target.value)}
-                    placeholder={copy.otherGoalPlaceholder}
-                    value={otherGoal}
-                  />
-                </label>
-              ) : null}
-
-              {step < 6 &&
-              (answers[step] === 'unknown' ||
-                (Array.isArray(answers[step]) &&
-                  answers[step].includes('unknown'))) ? (
-                <p className="border-callout-border bg-callout mt-5 rounded-[var(--radius-control)] border px-4 py-3 text-sm leading-6">
-                  {copy.notSureNotice}
-                </p>
-              ) : null}
-              {step === 5 ? (
-                <p className="border-callout-border bg-callout mt-5 rounded-[var(--radius-control)] border px-4 py-3 text-sm leading-6">
-                  {copy.comfortNotice}
-                </p>
-              ) : null}
-
-              {step === 6 ? (
-                <div className="mt-7 grid gap-3">
-                  <p className="text-muted-foreground m-0 text-sm">
-                    {copy.reviewIntro}
-                  </p>
-                  {[0, 1, 2, 3, 4, 5].map((questionIndex) => {
-                    const value = answers[questionIndex];
-                    const labels = Array.isArray(value)
-                      ? value
-                          .map((answer) => choiceLabel(questionIndex, answer))
-                          .join(', ')
-                      : choiceLabel(questionIndex, value);
-                    const note =
-                      questionIndex === 1 && surfaces.includes('other')
-                        ? otherSurface.trim()
-                        : questionIndex === 3 && goal === 'other'
-                          ? otherGoal.trim()
-                          : '';
-                    return (
-                      <div
-                        className="border-border flex flex-wrap items-center justify-between gap-3 border-b py-3"
-                        key={copy.steps[questionIndex]}
-                      >
-                        <div>
-                          <p className="m-0 text-sm font-semibold">
-                            {copy.steps[questionIndex]}
-                          </p>
-                          <p className="text-muted-foreground mt-1 mb-0 text-sm">
-                            {labels}
-                            {note ? ` · ${note}` : ''}
-                          </p>
-                        </div>
-                        <Button
-                          onClick={() => setStep(questionIndex)}
-                          size="sm"
-                          type="button"
-                          variant="ghost"
-                        >
-                          {copy.actions.edit}
-                        </Button>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : null}
-            </div>
-
-            <div className="border-border mt-9 flex flex-wrap items-center justify-between gap-3 border-t pt-5">
-              <p
-                className="text-muted-foreground m-0 text-sm"
-                aria-live="polite"
+              </label>
+            ) : null}
+            {step === 3 && goal === 'other' ? (
+              <label
+                className="mt-5 grid max-w-xl gap-2 text-sm font-semibold"
+                htmlFor="other-goal"
               >
-                {!canContinue ? copy.answerRequired : ''}
+                {copy.otherGoalLabel}
+                <Input
+                  id="other-goal"
+                  onChange={(event) => setOtherGoal(event.target.value)}
+                  placeholder={copy.otherGoalPlaceholder}
+                  value={otherGoal}
+                />
+              </label>
+            ) : null}
+
+            {step < 6 &&
+            (answers[step] === 'unknown' ||
+              (Array.isArray(answers[step]) &&
+                answers[step].includes('unknown'))) ? (
+              <p className="border-callout-border bg-callout mt-5 rounded-[var(--radius-control)] border px-4 py-3 text-sm leading-6">
+                {copy.notSureNotice}
               </p>
-              <div className="ml-auto flex gap-2">
-                <Button
-                  disabled={step === 0}
-                  onClick={() => setStep((current) => Math.max(0, current - 1))}
-                  type="button"
-                  variant="outline"
-                >
-                  <ArrowLeft aria-hidden="true" className="size-4" />
-                  {copy.actions.back}
-                </Button>
-                <Button
-                  disabled={!canContinue}
-                  onClick={() => {
-                    if (step === 6) {
-                      setVisibleRecommendationCount(initialRecommendationCount);
-                      setShowResults(true);
-                      updateUrlState(true, 'push');
-                    } else setStep((current) => Math.min(6, current + 1));
-                  }}
-                  type="button"
-                >
-                  {step === 6 ? copy.actions.results : copy.actions.next}
-                  <ArrowRight aria-hidden="true" className="size-4" />
-                </Button>
+            ) : null}
+            {step === 5 ? (
+              <p className="border-callout-border bg-callout mt-5 rounded-[var(--radius-control)] border px-4 py-3 text-sm leading-6">
+                {copy.comfortNotice}
+              </p>
+            ) : null}
+
+            {step === 6 ? (
+              <div className="mt-7 grid gap-3">
+                <p className="text-muted-foreground m-0 text-sm">
+                  {copy.reviewIntro}
+                </p>
+                {[0, 1, 2, 3, 4, 5].map((questionIndex) => {
+                  const value = answers[questionIndex];
+                  const labels = Array.isArray(value)
+                    ? value
+                        .map((answer) => choiceLabel(questionIndex, answer))
+                        .join(', ')
+                    : choiceLabel(questionIndex, value);
+                  const note =
+                    questionIndex === 1 && surfaces.includes('other')
+                      ? otherSurface.trim()
+                      : questionIndex === 3 && goal === 'other'
+                        ? otherGoal.trim()
+                        : '';
+                  return (
+                    <div
+                      className="border-border flex flex-wrap items-center justify-between gap-3 border-b py-3"
+                      key={copy.steps[questionIndex]}
+                    >
+                      <div>
+                        <p className="m-0 text-sm font-semibold">
+                          {copy.steps[questionIndex]}
+                        </p>
+                        <p className="text-muted-foreground mt-1 mb-0 text-sm">
+                          {labels}
+                          {note ? ` · ${note}` : ''}
+                        </p>
+                      </div>
+                      <Button
+                        onClick={() => setStep(questionIndex)}
+                        size="sm"
+                        type="button"
+                        variant="ghost"
+                      >
+                        {copy.actions.edit}
+                      </Button>
+                    </div>
+                  );
+                })}
               </div>
+            ) : null}
+          </div>
+
+          <div className="border-border mt-9 flex flex-wrap items-center justify-between gap-3 border-t pt-5">
+            <p className="text-muted-foreground m-0 text-sm" aria-live="polite">
+              {!canContinue ? copy.answerRequired : ''}
+            </p>
+            <div className="ml-auto flex gap-2">
+              <Button
+                disabled={step === 0}
+                onClick={() => setStep((current) => Math.max(0, current - 1))}
+                type="button"
+                variant="outline"
+              >
+                <ArrowLeft aria-hidden="true" className="size-4" />
+                {copy.actions.back}
+              </Button>
+              <Button
+                disabled={!canContinue}
+                onClick={() => {
+                  if (step === 6) {
+                    setVisibleRecommendationCount(initialRecommendationCount);
+                    setShowResults(true);
+                    updateUrlState(true, 'push');
+                  } else setStep((current) => Math.min(6, current + 1));
+                }}
+                type="button"
+              >
+                {step === 6 ? copy.actions.results : copy.actions.next}
+                <ArrowRight aria-hidden="true" className="size-4" />
+              </Button>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </section>
   );

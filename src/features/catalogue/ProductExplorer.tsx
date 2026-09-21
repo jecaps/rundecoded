@@ -74,6 +74,7 @@ import {
   writeCatalogueUrlState,
   type CatalogueUrlState,
 } from './url-state';
+import { localizedRoute } from '@/lib/routes';
 
 interface ProductExplorerProps {
   assetBase: string;
@@ -82,6 +83,7 @@ interface ProductExplorerProps {
   initialPage?: number;
   initialQuery?: string;
   products: ExplorerProduct[];
+  view?: 'catalogue' | 'comparison';
 }
 
 // Run the viewport check before the browser paints when possible. This avoids
@@ -288,6 +290,7 @@ export function ProductExplorer({
   initialPage = 1,
   initialQuery = '',
   products,
+  view = 'catalogue',
 }: ProductExplorerProps) {
   const validCategoryIds = useMemo(
     () =>
@@ -322,10 +325,11 @@ export function ProductExplorer({
   const [activeSuggestion, setActiveSuggestion] = useState(-1);
   const [detailsId, setDetailsId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [comparisonSelectionReady, setComparisonSelectionReady] =
+    useState(false);
   const [activeComparisonIds, setActiveComparisonIds] = useState<string[]>([]);
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const [tabletLayout, setTabletLayout] = useState(false);
-  const [tabletComparisonView, setTabletComparisonView] = useState(false);
   const [compactMobile, setCompactMobile] = useState(isCompactMobileViewport);
   const [masterDetail, setMasterDetail] = useState(false);
   const [selectedCatalogueId, setSelectedCatalogueId] = useState<string | null>(
@@ -335,16 +339,15 @@ export function ProductExplorer({
   const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
   const productListRef = useRef<HTMLDivElement>(null);
-  const comparisonSelectionInitialized = useRef(false);
   const copy = catalogueCopy[locale];
 
-  useEffect(() => {
-    if (!comparisonSelectionInitialized.current) {
-      comparisonSelectionInitialized.current = true;
-      setSelectedIds(readComparisonSelection(products));
-      return;
-    }
+  useViewportLayoutEffect(() => {
+    setSelectedIds(readComparisonSelection(products));
+    setComparisonSelectionReady(true);
+  }, [products]);
 
+  useEffect(() => {
+    if (!comparisonSelectionReady) return;
     if (selectedIds.length) {
       window.sessionStorage.setItem(
         comparisonSelectionStorageKey,
@@ -359,7 +362,7 @@ export function ProductExplorer({
         detail: { count: selectedIds.length },
       }),
     );
-  }, [products, selectedIds]);
+  }, [comparisonSelectionReady, selectedIds]);
 
   useViewportLayoutEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -370,7 +373,7 @@ export function ProductExplorer({
     const updateMobileLayout = () =>
       setCompactMobile(mobileQuery?.matches ?? window.innerWidth <= 599);
     const masterDetailQuery = window.matchMedia?.(
-      '(min-width: 56.25rem) and (orientation: landscape)',
+      '(min-width: 56.25rem) and (max-width: 80rem) and (orientation: landscape)',
     );
     const tabletQuery = window.matchMedia?.(
       '(min-width: 48rem) and (max-width: 80rem)',
@@ -379,19 +382,15 @@ export function ProductExplorer({
       setMasterDetail(masterDetailQuery?.matches ?? false);
     const updateTabletLayout = () =>
       setTabletLayout(tabletQuery?.matches ?? false);
-    const updateComparisonView = () =>
-      setTabletComparisonView(window.location.hash === '#comparison');
     updateMobileLayout();
     updateMasterDetailLayout();
     updateTabletLayout();
-    updateComparisonView();
     mobileQuery?.addEventListener('change', updateMobileLayout);
     window.addEventListener('pageshow', updateMobileLayout);
     window.addEventListener('resize', updateMobileLayout);
     masterDetailQuery?.addEventListener('change', updateMasterDetailLayout);
     tabletQuery?.addEventListener('change', updateTabletLayout);
     window.addEventListener('resize', updateMasterDetailLayout);
-    window.addEventListener('hashchange', updateComparisonView);
     document.addEventListener('visibilitychange', updateMobileLayout);
 
     function onLocaleChange(event: Event) {
@@ -414,7 +413,6 @@ export function ProductExplorer({
       );
       tabletQuery?.removeEventListener('change', updateTabletLayout);
       window.removeEventListener('resize', updateMasterDetailLayout);
-      window.removeEventListener('hashchange', updateComparisonView);
       document.removeEventListener('visibilitychange', updateMobileLayout);
       window.removeEventListener('rundecoded:locale-change', onLocaleChange);
     };
@@ -615,7 +613,10 @@ export function ProductExplorer({
   }
 
   function selectCatalogueProduct(id: string, opener?: HTMLElement) {
-    if (masterDetail) setSelectedCatalogueId(id);
+    if (masterDetail) {
+      setSelectedCatalogueId(id);
+      return;
+    }
     const activeElement = opener ?? document.activeElement;
     if (activeElement instanceof HTMLElement) openDetails(id, activeElement);
   }
@@ -642,24 +643,6 @@ export function ProductExplorer({
     toast.dismiss('comparison-selection-limit');
   }
 
-  function showTabletComparison() {
-    const nextUrl = new URL(window.location.href);
-    nextUrl.hash = 'comparison';
-    window.history.pushState({}, '', nextUrl);
-    setTabletComparisonView(true);
-    window.dispatchEvent(new HashChangeEvent('hashchange'));
-    window.scrollTo({ behavior: 'instant', top: 0 });
-  }
-
-  function showTabletCatalogue() {
-    const nextUrl = new URL(window.location.href);
-    nextUrl.hash = '';
-    window.history.pushState({}, '', nextUrl);
-    setTabletComparisonView(false);
-    window.dispatchEvent(new HashChangeEvent('hashchange'));
-    window.scrollTo({ behavior: 'instant', top: 0 });
-  }
-
   function compareFromDetails(comparableId: string) {
     if (!detailsProduct) return;
     const comparisonIds = [detailsProduct.product.id, comparableId];
@@ -668,7 +651,11 @@ export function ProductExplorer({
     setActiveComparisonIds(comparisonIds);
     setDetailsId(null);
     if (tabletLayout) {
-      showTabletComparison();
+      window.sessionStorage.setItem(
+        comparisonSelectionStorageKey,
+        JSON.stringify(comparisonIds),
+      );
+      window.location.assign(localizedRoute(locale, 'compare'));
       return;
     }
     setComparisonOpen(true);
@@ -816,74 +803,69 @@ export function ProductExplorer({
     );
   }
 
-  if (tabletLayout && tabletComparisonView) {
+  if (view === 'comparison') {
     return (
       <section
         aria-labelledby="comparison-title"
-        className="tablet:py-14 py-10"
+        className="app-route"
+        data-comparison-ready={comparisonSelectionReady}
         data-hydrated={hydrated ? 'true' : undefined}
         data-testid="tablet-comparison-view"
         id="comparison"
       >
-        <header className="max-w-3xl">
-          <p className="text-primary m-0 text-xs font-bold tracking-[0.16em] uppercase">
-            {copy.compare}
-          </p>
-          <h1
-            className="tablet:text-5xl mt-2 mb-0 text-3xl font-bold tracking-[-0.035em]"
-            id="comparison-title"
-          >
+        <header className="app-route__header">
+          <p className="app-route__eyebrow">{copy.compare}</p>
+          <h1 className="app-route__title" id="comparison-title">
             {copy.comparisonTitle}
           </h1>
-          <p className="text-muted-foreground tablet:text-lg mt-3 text-base leading-7">
-            {copy.comparisonDescription}
-          </p>
+          <p className="app-route__description">{copy.comparisonDescription}</p>
         </header>
 
-        {selectedProducts.length === 2 ? (
-          renderComparisonTable(selectedProducts, true)
-        ) : (
-          <div className="border-border bg-surface mt-8 rounded-[var(--radius-panel)] border p-8 text-center shadow-sm">
-            <p className="m-0 text-lg font-semibold">
-              {selectedProducts.length === 0
-                ? copy.comparisonEmpty
-                : copy.comparisonNeedsAnother}
-            </p>
-            {selectedProducts[0] ? (
-              <div className="bg-surface-subtle mx-auto mt-4 flex max-w-sm items-center justify-between gap-4 rounded-[var(--radius-control)] p-3 text-left">
-                <span>
-                  <span className="text-muted-foreground block text-xs font-bold tracking-wide uppercase">
-                    {selectedProducts[0].product.brand}
+        <div data-comparison-state>
+          {selectedProducts.length === 2 ? (
+            renderComparisonTable(selectedProducts, true)
+          ) : (
+            <div className="border-border bg-surface mt-8 rounded-[var(--radius-panel)] border p-8 text-center shadow-sm">
+              <p className="m-0 text-lg font-semibold">
+                {selectedProducts.length === 0
+                  ? copy.comparisonEmpty
+                  : copy.comparisonNeedsAnother}
+              </p>
+              {selectedProducts[0] ? (
+                <div className="bg-surface-subtle mx-auto mt-4 flex max-w-sm items-center justify-between gap-4 rounded-[var(--radius-control)] p-3 text-left">
+                  <span>
+                    <span className="text-muted-foreground block text-xs font-bold tracking-wide uppercase">
+                      {selectedProducts[0].product.brand}
+                    </span>
+                    <span className="mt-1 block font-semibold">
+                      {selectedProducts[0].product.model}
+                    </span>
                   </span>
-                  <span className="mt-1 block font-semibold">
-                    {selectedProducts[0].product.model}
-                  </span>
-                </span>
-                <Button
-                  aria-label={copy.deselectProduct(
-                    selectedProducts[0].product.model,
-                  )}
-                  onClick={() =>
-                    toggleComparison(selectedProducts[0]!.product.id)
-                  }
-                  size="icon"
-                  title={copy.remove}
-                  variant="ghost"
-                >
-                  <X aria-hidden="true" className="size-4" />
-                </Button>
-              </div>
-            ) : null}
-            <Button
-              className="mt-5"
-              onClick={showTabletCatalogue}
-              variant="outline"
-            >
-              <ArrowLeft aria-hidden="true" className="size-4" />
-              {copy.comparisonBrowse}
-            </Button>
-          </div>
-        )}
+                  <Button
+                    aria-label={copy.deselectProduct(
+                      selectedProducts[0].product.model,
+                    )}
+                    onClick={() =>
+                      toggleComparison(selectedProducts[0]!.product.id)
+                    }
+                    size="icon"
+                    title={copy.remove}
+                    variant="ghost"
+                  >
+                    <X aria-hidden="true" className="size-4" />
+                  </Button>
+                </div>
+              ) : null}
+              <a
+                className={cn(buttonVariants({ variant: 'outline' }), 'mt-5')}
+                href={localizedRoute(locale, 'catalogue')}
+              >
+                <ArrowLeft aria-hidden="true" className="size-4" />
+                {copy.comparisonBrowse}
+              </a>
+            </div>
+          )}
+        </div>
         <Toaster />
       </section>
     );
@@ -891,23 +873,21 @@ export function ProductExplorer({
 
   return (
     <section
-      className="tablet:py-14 py-6 [overflow-anchor:none] min-[600px]:py-10"
+      className="app-route [overflow-anchor:none]"
       aria-labelledby="catalogue-title"
+      data-comparison-ready={comparisonSelectionReady}
       data-hydrated={hydrated ? 'true' : undefined}
       data-testid="product-explorer"
       id="comparison"
     >
-      <header className="max-w-3xl">
-        <p className="text-primary m-0 hidden text-xs font-bold tracking-[0.16em] uppercase min-[600px]:block">
+      <header className="app-route__header">
+        <p className="app-route__eyebrow hidden min-[600px]:block">
           Product explorer
         </p>
-        <h1
-          className="tablet:text-5xl m-0 text-2xl font-bold tracking-[-0.035em] min-[600px]:mt-2 min-[600px]:text-3xl"
-          id="catalogue-title"
-        >
+        <h1 className="app-route__title" id="catalogue-title">
           {copy.title}
         </h1>
-        <p className="text-muted-foreground tablet:text-lg mt-3 hidden text-base leading-7 min-[600px]:block">
+        <p className="app-route__description hidden min-[600px]:block">
           {copy.intro}
         </p>
       </header>
@@ -1171,6 +1151,7 @@ export function ProductExplorer({
                             </span>
                           </button>
                           <button
+                            data-comparison-state
                             aria-label={
                               selected
                                 ? copy.deselectProduct(product.model)
@@ -1241,7 +1222,7 @@ export function ProductExplorer({
                   return (
                     <Card
                       className={cn(
-                        'min-w-0 self-start overflow-hidden',
+                        'min-w-0 overflow-hidden',
                         masterDetail &&
                           masterDetailProduct?.product.id === product.id &&
                           'border-primary bg-primary/5 ring-primary/20 border-l-4 ring-2',
@@ -1277,7 +1258,7 @@ export function ProductExplorer({
                             {product.brand}
                           </p>
                           <button
-                            className="text-foreground hover:text-primary mt-1 line-clamp-2 cursor-pointer border-0 bg-transparent p-0 text-left text-2xl leading-tight font-bold tracking-[-0.025em]"
+                            className="text-foreground hover:text-primary mt-1 line-clamp-2 min-h-[3.75rem] cursor-pointer border-0 bg-transparent p-0 text-left text-2xl leading-tight font-bold tracking-[-0.025em]"
                             onClick={(event) =>
                               selectCatalogueProduct(
                                 product.id,
@@ -1352,6 +1333,7 @@ export function ProductExplorer({
 
                         <CardFooter className="p-5 pt-0">
                           <Button
+                            data-comparison-state
                             className="w-full"
                             aria-label={selected ? copy.added : copy.compare}
                             aria-pressed={selected}
@@ -1487,40 +1469,80 @@ export function ProductExplorer({
       {selectedIds.length && !comparisonOpen ? (
         <div
           aria-label={copy.comparisonSelection}
-          className="border-border bg-surface/95 sticky bottom-3 z-30 mx-auto mt-8 flex w-[min(32rem,calc(100%-1rem))] flex-col items-center gap-2.5 rounded-[var(--radius-panel)] border p-3 shadow-[var(--shadow-panel)] backdrop-blur-sm min-[48rem]:hidden min-[80.01rem]:flex"
+          className="border-border bg-surface/95 sticky bottom-3 z-30 mx-auto mt-8 flex w-[min(48rem,calc(100%-1rem))] items-center gap-2 rounded-[var(--radius-panel)] border p-2 shadow-[var(--shadow-panel)] backdrop-blur-sm"
+          data-comparison-state
           role="region"
         >
-          <div className="flex w-full min-w-0 justify-center">
-            <div
-              aria-label={copy.compareSelected(selectedIds.length)}
-              className="flex flex-wrap items-center justify-center gap-2"
-            >
-              {selectedProducts.map((item) => (
-                <button
-                  aria-label={copy.deselectProduct(item.product.model)}
-                  className="border-primary/20 bg-primary/8 hover:border-primary/35 hover:bg-primary/12 focus-visible:ring-ring/35 inline-flex h-9 max-w-full cursor-pointer items-center gap-2 rounded-full border py-1 pr-1.5 pl-3 text-xs font-semibold outline-none focus-visible:ring-3"
-                  key={item.product.id}
-                  onClick={() => toggleComparison(item.product.id)}
-                  type="button"
-                >
-                  <span className="truncate">{item.product.model}</span>
-                  <span className="bg-surface/70 inline-flex size-6 shrink-0 items-center justify-center rounded-full">
-                    <X aria-hidden="true" className="size-3.5" />
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-          <Button
-            className="h-10 w-full max-w-xs px-4 shadow-sm"
-            disabled={selectedIds.length !== 2}
-            onClick={() => {
-              setActiveComparisonIds(selectedIds);
-              setComparisonOpen(true);
-            }}
+          <div
+            aria-label={copy.compareSelected(selectedIds.length)}
+            className="flex min-w-0 flex-1 gap-2 overflow-x-auto"
           >
-            {copy.compareSelected(selectedIds.length)}
-          </Button>
+            {selectedProducts.map((item) => {
+              const selectedImage = imagePath(item, assetBase);
+              return (
+                <div
+                  className="border-border bg-surface-subtle flex h-12 max-w-[17rem] min-w-[10rem] flex-1 items-center overflow-hidden rounded-[var(--radius-control)] border p-1"
+                  key={item.product.id}
+                >
+                  <span className="bg-surface mr-3 flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-[var(--radius-sm)]">
+                    {selectedImage ? (
+                      <img
+                        alt=""
+                        className="h-full w-full object-contain"
+                        src={selectedImage}
+                      />
+                    ) : (
+                      <ImageOff
+                        aria-hidden="true"
+                        className="text-muted-foreground size-4"
+                      />
+                    )}
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-xs font-normal">
+                    {item.product.model}
+                  </span>
+                  <button
+                    aria-label={copy.deselectProduct(item.product.model)}
+                    className="hover:bg-surface-strong focus-visible:ring-ring/35 ml-2 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] border-0 bg-transparent outline-none focus-visible:ring-3"
+                    onClick={() => toggleComparison(item.product.id)}
+                    title={copy.remove}
+                    type="button"
+                  >
+                    <X aria-hidden="true" className="size-4" />
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+          {tabletLayout && selectedIds.length === 2 ? (
+            <a
+              className={cn(
+                buttonVariants(),
+                'h-12 w-auto shrink-0 px-4 text-xs font-bold shadow-sm',
+              )}
+              data-astro-prefetch="load"
+              href={localizedRoute(locale, 'compare')}
+              onClick={() => {
+                window.sessionStorage.setItem(
+                  comparisonSelectionStorageKey,
+                  JSON.stringify(selectedIds),
+                );
+              }}
+            >
+              {copy.compareSelected(selectedIds.length)}
+            </a>
+          ) : (
+            <Button
+              className="h-12 w-auto shrink-0 px-4 text-xs font-bold shadow-sm"
+              disabled={selectedIds.length !== 2}
+              onClick={() => {
+                setActiveComparisonIds(selectedIds);
+                setComparisonOpen(true);
+              }}
+            >
+              {copy.compareSelected(selectedIds.length)}
+            </Button>
+          )}
         </div>
       ) : null}
 

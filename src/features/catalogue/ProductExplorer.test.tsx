@@ -155,7 +155,11 @@ describe('ProductExplorer', () => {
       name: 'Shoe comparison selection',
     });
     expect(selectionTray).toBeVisible();
-    expect(selectionTray).toHaveClass('flex', 'flex-col', 'items-center');
+    expect(selectionTray).toHaveClass('flex', 'items-center');
+    expect(within(selectionTray).getByText('Adistar 5')).toBeVisible();
+    expect(
+      within(selectionTray).getByText('Adizero Agravic Speed 2'),
+    ).toBeVisible();
     fireEvent.click(compareButtons[2]!);
     const selectionWarning = await screen.findByText(
       'Two shoes are already selected. Remove one before adding another.',
@@ -194,9 +198,7 @@ describe('ProductExplorer', () => {
     const compareButtons = screen.getAllByRole('button', { name: 'Compare' });
     fireEvent.click(compareButtons[0]!);
     fireEvent.click(compareButtons[1]!);
-    fireEvent.click(
-      screen.getByRole('button', { name: 'Compare selected (2/2)' }),
-    );
+    fireEvent.click(screen.getByRole('button', { name: 'Compare (2/2)' }));
 
     expect(screen.getByRole('dialog')).toBeVisible();
     expect(
@@ -217,25 +219,12 @@ describe('ProductExplorer', () => {
   });
 
   it('uses a dedicated tablet comparison view for zero, one, and two shoes', async () => {
-    vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined);
-    Object.defineProperty(window, 'matchMedia', {
-      configurable: true,
-      value: vi.fn((query: string) => ({
-        addEventListener: vi.fn(),
-        dispatchEvent: vi.fn(),
-        matches: query === '(min-width: 48rem) and (max-width: 80rem)',
-        media: query,
-        onchange: null,
-        removeEventListener: vi.fn(),
-      })),
-    });
-    window.history.replaceState({}, '', '/en/catalogue/#comparison');
-
-    render(
+    const emptyRender = render(
       <ProductExplorer
         assetBase="/rundecoded/"
         initialLocale="en"
         products={products}
+        view="comparison"
       />,
     );
 
@@ -243,25 +232,40 @@ describe('ProductExplorer', () => {
     expect(
       within(emptyView).getByText('No shoes selected for comparison.'),
     ).toBeVisible();
+    expect(
+      within(emptyView).getByRole('link', { name: 'Browse shoes' }),
+    ).toHaveAttribute('href', '/en/catalogue/');
 
-    fireEvent.click(
-      within(emptyView).getByRole('button', { name: 'Browse shoes' }),
+    emptyRender.unmount();
+    window.sessionStorage.setItem(
+      'rundecoded:catalogue-comparison-selection',
+      JSON.stringify([products[0]!.product.id]),
     );
-    fireEvent.click(screen.getAllByRole('button', { name: 'Compare' })[0]!);
-    act(() => {
-      window.location.hash = 'comparison';
-      window.dispatchEvent(new HashChangeEvent('hashchange'));
-    });
+    const singleRender = render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+        view="comparison"
+      />,
+    );
     expect(
       await screen.findByText('Select another shoe to start the comparison.'),
     ).toBeVisible();
 
-    fireEvent.click(screen.getByRole('button', { name: 'Browse shoes' }));
-    fireEvent.click(screen.getAllByRole('button', { name: 'Compare' })[1]!);
-    act(() => {
-      window.location.hash = 'comparison';
-      window.dispatchEvent(new HashChangeEvent('hashchange'));
-    });
+    singleRender.unmount();
+    window.sessionStorage.setItem(
+      'rundecoded:catalogue-comparison-selection',
+      JSON.stringify([products[0]!.product.id, products[2]!.product.id]),
+    );
+    render(
+      <ProductExplorer
+        assetBase="/rundecoded/"
+        initialLocale="en"
+        products={products}
+        view="comparison"
+      />,
+    );
 
     const comparisonView = await screen.findByTestId('tablet-comparison-view');
     expect(within(comparisonView).getByText('Adistar 5')).toBeVisible();
@@ -279,28 +283,18 @@ describe('ProductExplorer', () => {
   });
 
   it('restores selected shoes after navigating away from the catalogue', async () => {
-    Object.defineProperty(window, 'matchMedia', {
-      configurable: true,
-      value: vi.fn((query: string) => ({
-        addEventListener: vi.fn(),
-        dispatchEvent: vi.fn(),
-        matches: query === '(min-width: 48rem) and (max-width: 80rem)',
-        media: query,
-        onchange: null,
-        removeEventListener: vi.fn(),
-      })),
-    });
     window.sessionStorage.setItem(
       'rundecoded:catalogue-comparison-selection',
       JSON.stringify([products[0]!.product.id, products[2]!.product.id]),
     );
-    window.history.replaceState({}, '', '/en/catalogue/#comparison');
+    window.history.replaceState({}, '', '/en/compare/');
 
     render(
       <ProductExplorer
         assetBase="/rundecoded/"
         initialLocale="en"
         products={products}
+        view="comparison"
       />,
     );
 

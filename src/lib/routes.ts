@@ -15,16 +15,18 @@ function normalizePath(path: string) {
 export const routes = {
   home: baseUrl,
   catalogue: withBase('catalogue/'),
+  compare: withBase('compare/'),
   consultation: withBase('consultation/'),
   runningBasics: withBase('running-basics/'),
   designSystem: withBase('design-system/'),
 } as const;
 
 export type LocalizedRouteKey =
-  'catalogue' | 'consultation' | 'designSystem' | 'runningBasics';
+  'catalogue' | 'compare' | 'consultation' | 'designSystem' | 'runningBasics';
 
 const routeSegments = {
   catalogue: 'catalogue',
+  compare: 'compare',
   consultation: 'consultation',
   designSystem: 'design-system',
   runningBasics: 'running-basics',

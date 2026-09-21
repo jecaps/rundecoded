@@ -18,6 +18,22 @@ beforeEach(() => {
 });
 
 describe('customer consultation', () => {
+  it('uses compact progress without questionnaire card blocks', () => {
+    const { container } = render(
+      <CustomerConsultation
+        assetBase="/rundecoded/"
+        locale="en"
+        products={getProductCatalogue().map(({ product }) => product)}
+      />,
+    );
+
+    expect(screen.getByText('Distance')).toBeVisible();
+    expect(
+      screen.getByRole('progressbar', { name: 'Step 1 of 7' }),
+    ).toHaveAttribute('aria-valuenow', '1');
+    expect(container.querySelector('[data-slot="card"]')).toBeNull();
+  });
+
   it('allows up to two priorities and keeps the neutral answer exclusive', () => {
     render(
       <CustomerConsultation

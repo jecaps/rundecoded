@@ -2,6 +2,7 @@
 import type { Locale } from '@/i18n/config';
 import { sharedMessages } from '@/i18n/messages';
 import { isCurrentRoute, localizedRoute } from '@/lib/routes';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   BookOpenText,
   GitCompareArrows,
@@ -31,7 +32,6 @@ const navigation = [
   {
     key: 'compare',
     label: messages.navigation.compare,
-    href: `${localizedRoute(locale, 'catalogue')}#comparison`,
     icon: GitCompareArrows,
   },
   {
@@ -42,7 +42,7 @@ const navigation = [
 ] as const;
 const navigationLinks = navigation.map((item) => ({
   ...item,
-  href: 'href' in item ? item.href : localizedRoute(locale, item.key),
+  href: localizedRoute(locale, item.key),
 }));
 ---
 
@@ -75,22 +75,22 @@ const navigationLinks = navigation.map((item) => ({
             <li>
               <a
                 aria-current={
-                  item.key !== 'compare' &&
-                  isCurrentRoute(currentPath, item.key)
-                    ? 'page'
-                    : undefined
+                  isCurrentRoute(currentPath, item.key) ? 'page' : undefined
                 }
                 data-navigation-key={item.key}
                 data-route-current={
-                  item.key !== 'compare' &&
-                  isCurrentRoute(currentPath, item.key)
-                    ? 'true'
-                    : undefined
+                  isCurrentRoute(currentPath, item.key) ? 'true' : undefined
                 }
+                data-astro-prefetch="load"
                 href={item.href}
               >
                 <Icon className="primary-tabs__icon" aria-hidden="true" />
                 <span>{item.label}</span>
+                <Skeleton
+                  aria-hidden="true"
+                  className="primary-tabs__pending-skeleton"
+                  data-navigation-skeleton
+                />
                 {item.key === 'compare' && (
                   <span
                     aria-hidden="true"
@@ -145,64 +145,33 @@ const navigationLinks = navigation.map((item) => ({
       });
   }
 
-  function syncPrimaryNavigation() {
-    const compareActive = window.location.hash === '#comparison';
+  function showPendingNavigation(event: Event) {
+    const source = (event as Event & { sourceElement?: Element }).sourceElement;
+    const link = source?.closest<HTMLAnchorElement>('[data-navigation-key]');
+    if (!link) return;
+
     document
       .querySelectorAll<HTMLAnchorElement>('[data-navigation-key]')
-      .forEach((link) => {
-        const active = compareActive
-          ? link.dataset.navigationKey === 'compare'
-          : link.dataset.routeCurrent === 'true';
-        if (active) link.setAttribute('aria-current', 'page');
-        else link.removeAttribute('aria-current');
+      .forEach((navigationLink) => {
+        if (navigationLink === link) {
+          navigationLink.setAttribute('aria-current', 'page');
+          navigationLink.setAttribute('aria-busy', 'true');
+          navigationLink.dataset.navigationPending = 'true';
+        } else {
+          navigationLink.removeAttribute('aria-current');
+          navigationLink.removeAttribute('aria-busy');
+          delete navigationLink.dataset.navigationPending;
+        }
       });
   }
 
-  function openSamePageComparison(event: MouseEvent) {
-    if (
-      event.defaultPrevented ||
-      event.button !== 0 ||
-      event.metaKey ||
-      event.ctrlKey ||
-      event.shiftKey ||
-      event.altKey
-    )
-      return;
-
-    const target = event.target;
-    if (!(target instanceof Element)) return;
-    const link = target.closest<HTMLAnchorElement>(
-      'a[data-navigation-key="compare"]',
-    );
-    if (!link) return;
-
-    const destination = new URL(link.href, window.location.href);
-    if (destination.pathname !== window.location.pathname) return;
-
-    event.preventDefault();
-    const previousUrl = window.location.href;
-    const nextUrl = new URL(window.location.href);
-    nextUrl.hash = 'comparison';
-    window.history.pushState({}, '', nextUrl);
-    window.dispatchEvent(
-      new HashChangeEvent('hashchange', {
-        newURL: nextUrl.href,
-        oldURL: previousUrl,
-      }),
-    );
-    window.scrollTo({ behavior: 'instant', top: 0 });
-  }
-
-  syncPrimaryNavigation();
   syncComparisonCount();
-  document.addEventListener('click', openSamePageComparison, true);
-  window.addEventListener('hashchange', syncPrimaryNavigation);
+  document.addEventListener('astro:before-preparation', showPendingNavigation);
   window.addEventListener(
     'rundecoded:comparison-selection-change',
     syncComparisonCount,
   );
   document.addEventListener('astro:page-load', () => {
-    syncPrimaryNavigation();
     syncComparisonCount();
   });
 </script>
@@ -354,7 +323,22 @@ const navigationLinks = navigation.map((item) => ({
     font-size: clamp(0.9rem, 1.6vw, 1rem);
     font-weight: 650;
     text-decoration: none;
-    transition: color var(--duration-fast) ease;
+  }
+
+  .primary-tabs__pending-skeleton {
+    position: absolute;
+    bottom: 0.65rem;
+    left: 50%;
+    display: none;
+    width: 2.5rem;
+    height: 0.22rem;
+    translate: -50% 0;
+  }
+
+  .primary-tabs
+    a[data-navigation-pending='true']
+    .primary-tabs__pending-skeleton {
+    display: block;
   }
 
   .primary-tabs a::after {
@@ -367,7 +351,6 @@ const navigationLinks = navigation.map((item) => ({
     background: var(--primary);
     content: '';
     scale: 0 1;
-    transition: scale var(--duration-fast) ease;
   }
 
   .primary-tabs a:hover,
@@ -504,6 +487,12 @@ const navigationLinks = navigation.map((item) => ({
 
     .primary-tabs__comparison-count[hidden] {
       display: none;
+    }
+
+    .primary-tabs__pending-skeleton {
+      bottom: 0.3rem;
+      width: 1.75rem;
+      height: 0.18rem;
     }
 
     .primary-tabs a::after {
