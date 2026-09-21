@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Check, Languages, Moon, Sun } from 'lucide-react';
+import { Check, Languages, Moon, Settings, Sun } from 'lucide-react';
 import { navigate } from 'astro:transitions/client';
 
 import { Button } from '@/components/ui/button';
@@ -9,8 +9,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Switch } from '@/components/ui/switch';
 import {
   Tooltip,
   TooltipContent,
@@ -30,16 +32,38 @@ const locales: Array<{ label: string; value: Locale }> = [
 ];
 
 const labels = {
-  de: { language: 'Sprache', theme: 'Farbschema wechseln' },
-  en: { language: 'Language', theme: 'Change color theme' },
-  fr: { language: 'Langue', theme: 'Changer le thème' },
-} satisfies Record<Locale, { language: string; theme: string }>;
+  de: {
+    darkMode: 'Dunkelmodus',
+    language: 'Sprache',
+    settings: 'Einstellungen',
+    theme: 'Farbschema wechseln',
+  },
+  en: {
+    darkMode: 'Dark mode',
+    language: 'Language',
+    settings: 'Settings',
+    theme: 'Change color theme',
+  },
+  fr: {
+    darkMode: 'Mode sombre',
+    language: 'Langue',
+    settings: 'Réglages',
+    theme: 'Changer le thème',
+  },
+} satisfies Record<
+  Locale,
+  { darkMode: string; language: string; settings: string; theme: string }
+>;
 
 interface DisplayControlsProps {
+  compact?: boolean;
   initialLocale: Locale;
 }
 
-export function DisplayControls({ initialLocale }: DisplayControlsProps) {
+export function DisplayControls({
+  compact = false,
+  initialLocale,
+}: DisplayControlsProps) {
   const locale = initialLocale;
   const [theme, setTheme] = useState<Theme>(() =>
     typeof document !== 'undefined' &&
@@ -70,10 +94,52 @@ export function DisplayControls({ initialLocale }: DisplayControlsProps) {
   }
 
   function toggleTheme() {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setColorTheme(theme === 'dark' ? 'light' : 'dark');
+  }
+
+  function setColorTheme(nextTheme: Theme) {
     setTheme(nextTheme);
     document.documentElement.dataset.theme = nextTheme;
     window.localStorage.setItem('rundecoded-theme', nextTheme);
+  }
+
+  if (compact) {
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            aria-label={labels[locale].settings}
+            size="icon"
+            variant="ghost"
+          >
+            <Settings aria-hidden="true" className="size-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>{labels[locale].language}</DropdownMenuLabel>
+          <DropdownMenuRadioGroup value={locale} onValueChange={changeLocale}>
+            {locales.map((option) => (
+              <DropdownMenuRadioItem key={option.value} value={option.value}>
+                {option.label}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+          <DropdownMenuSeparator />
+          <div className="flex items-center justify-between gap-6 px-2 py-2 text-sm">
+            <label className="cursor-pointer" htmlFor="tablet-dark-mode">
+              {labels[locale].darkMode}
+            </label>
+            <Switch
+              checked={theme === 'dark'}
+              id="tablet-dark-mode"
+              onCheckedChange={(checked) =>
+                setColorTheme(checked ? 'dark' : 'light')
+              }
+            />
+          </div>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
   }
 
   return (

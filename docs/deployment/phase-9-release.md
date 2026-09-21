@@ -26,12 +26,18 @@ The initial budgets are intentionally simple release guardrails:
 
 | Asset family | Uncompressed budget | Why                                            |
 | ------------ | ------------------: | ---------------------------------------------- |
-| JavaScript   |             600 KiB | Keep the interactive explorer payload bounded. |
+| JavaScript   |             602 KiB | Keep the interactive explorer payload bounded. |
 | CSS          |             100 KiB | Keep the shared design system lightweight.     |
 
 If a feature needs to exceed a budget, update this table and
 `scripts/verify-production-budget.mjs` in the same reviewed pull request with
 the reason and a before/after measurement.
+
+Budget history:
+
+- JavaScript 600 KiB → 602 KiB for the responsive catalogue (compact phone
+  rows, tablet layouts, unified comparison flow). Measured total `.js` output:
+  599,005 bytes before, 615,594 bytes after.
 
 ## GitHub Pages deployment
 

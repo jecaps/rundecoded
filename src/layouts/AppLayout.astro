@@ -1,6 +1,7 @@
 ---
 import AppBanner from '@/components/app/AppBanner.astro';
 import SiteFooter from '@/components/app/SiteFooter.astro';
+import { DisplayControls } from '@/components/DisplayControls';
 import type { Locale } from '@/i18n/config';
 import { sharedMessages } from '@/i18n/messages';
 import { localizedRoute, type LocalizedRouteKey } from '@/lib/routes';
@@ -35,7 +36,7 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -93,16 +94,22 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
   </head>
   <body>
     <a class="skip-link" href="#main-content">{messages.skipLink}</a>
-    <div class="app-frame">
-      {
-        !hideBanner && (
-          <AppBanner
-            compact={compactBanner}
-            currentPath={Astro.url.pathname}
-            locale={locale}
-          />
-        )
-      }
+    <div class:list={['app-frame', { 'app-frame--banner-hidden': hideBanner }]}>
+      <AppBanner
+        compact={compactBanner}
+        currentPath={Astro.url.pathname}
+        locale={locale}
+      />
+      <div class="tablet-app-header">
+        <a
+          aria-label={messages.banner.catalogueLabel}
+          class="tablet-app-header__brand"
+          href={localizedRoute(locale, 'catalogue')}
+        >
+          <span>RUN</span><span>DECODED</span>
+        </a>
+        <DisplayControls client:only="react" compact initialLocale={locale} />
+      </div>
       <main id="main-content" class="page-container" tabindex="-1">
         <slot />
       </main>
@@ -120,5 +127,72 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
 
   main {
     flex: 1;
+  }
+
+  .tablet-app-header {
+    display: none;
+  }
+
+  .app-frame--banner-hidden > :global(.app-banner) {
+    display: none;
+  }
+
+  @media (max-width: 80rem) {
+    .app-frame > :global(.site-footer) {
+      display: none;
+    }
+  }
+
+  @media (min-width: 48rem) and (max-width: 80rem) {
+    .app-frame {
+      display: grid;
+      grid-template-columns: 5.5rem minmax(0, 1fr);
+      grid-template-rows: 4.5rem minmax(0, 1fr);
+      align-items: stretch;
+    }
+
+    .app-frame > :global(.app-banner) {
+      grid-column: 1;
+      grid-row: 1 / -1;
+    }
+
+    .app-frame--banner-hidden > :global(.app-banner) {
+      display: flex;
+    }
+
+    .tablet-app-header {
+      display: flex;
+      grid-column: 2;
+      grid-row: 1;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: var(--page-gutter);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .tablet-app-header__brand {
+      display: inline-flex;
+      color: var(--foreground);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .tablet-app-header__brand span:last-child {
+      color: var(--primary);
+    }
+
+    .app-frame > main.page-container {
+      grid-column: 2;
+      grid-row: 2;
+      width: auto;
+      min-width: 0;
+      margin-inline: 0;
+      padding-inline: var(--page-gutter);
+    }
   }
 </style>

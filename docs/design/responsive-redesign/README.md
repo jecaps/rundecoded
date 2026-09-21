@@ -41,7 +41,9 @@ are not production implementation instructions.
 - Tablet landscape supports a catalogue-and-details master-detail layout.
 - Search, quick filters, and full filters remain easy to reach.
 - Full filters use a bottom sheet on phone and a right-side panel on tablet.
-- Results form one continuous collection without a manual “Show more” step.
+- Results use the existing 12-product Previous/Next pagination. Changing pages
+  preserves the catalogue position and does not introduce a manual “Show more”
+  step.
 - Images reserve their dimensions and load below the fold lazily.
 
 ### Product details
@@ -56,10 +58,17 @@ are not production implementation instructions.
 ### Comparison
 
 - Comparison selection is available directly from catalogue rows and cards.
-- A compact selection tray appears after the first selection.
-- Phone supports up to three shoes; tablet supports up to four.
+- A compact selection tray appears after the first selection and remains
+  available on phone and tablet catalogue layouts.
+- Comparison remains limited to two shoes on phone and tablet. Supporting
+  three- or four-shoe comparisons is deferred to a separate product decision.
 - Selection persists for the browser session and is reflected in the Compare
   navigation badge.
+- The tray lets users remove either selection and opens comparison once two
+  shoes are selected.
+- Phone retains the existing quick-comparison dialog. Tablet uses the dedicated
+  localized Compare route as the permanent comparison view, with empty,
+  one-selection, and two-selection states plus remove and clear actions.
 - The comparison view emphasizes differences and reuses the same measurement
   scales as product details.
 
@@ -121,4 +130,5 @@ are not production implementation instructions.
 
 ## Revision
 
-Approved structural reference added on 2026-09-20.
+Approved structural reference added on 2026-09-20. Catalogue pagination and
+two-shoe comparison behavior revised by product decision on 2026-09-21.

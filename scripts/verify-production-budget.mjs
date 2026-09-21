@@ -2,7 +2,9 @@ import { readdir, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const budgets = new Map([
-  ['.js', 600 * 1024],
+  // Raised from 600 KiB with the responsive catalogue (phone rows, tablet
+  // layouts): 599,005 bytes before -> 615,594 bytes after.
+  ['.js', 602 * 1024],
   ['.css', 100 * 1024],
 ]);
 

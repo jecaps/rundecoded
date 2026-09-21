@@ -157,6 +157,9 @@ for (const locale of [
 test('updates the guide immediately when the footer language changes', async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.reload();
+  await waitForGuide(page);
   await page.getByRole('button', { name: 'Language: EN' }).click();
   await page.getByRole('menuitemradio', { name: 'Deutsch' }).click();
   await expect(

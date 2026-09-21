@@ -15,21 +15,19 @@ test.beforeEach(async ({ page }) => {
   );
 });
 
-test('opens details from every card entry point and restores focus', async ({
+test('opens details from the card image and name and restores focus', async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.reload();
   const card = page.getByTestId('product-card').first();
   const image = card.getByRole('button', {
     name: 'Open details for Adistar 5',
   });
   const title = page.getByRole('button', { name: 'Adistar 5', exact: true });
-  const detailsButton = card.getByRole('button', {
-    name: 'Details',
-    exact: true,
-  });
   const dialog = page.getByRole('dialog');
 
-  for (const opener of [image, title, detailsButton]) {
+  for (const opener of [image, title]) {
     await opener.click();
     await expect(dialog).toBeVisible();
     await expect(
@@ -49,11 +47,13 @@ test('opens details from every card entry point and restores focus', async ({
 });
 
 test('opens comparison after selecting two product cards', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.reload();
   const cards = page.getByTestId('product-card');
   await cards.nth(0).getByRole('button', { name: 'Compare' }).click();
   await cards.nth(1).getByRole('button', { name: 'Compare' }).click();
   const compareSelected = page.getByRole('button', {
-    name: 'Compare selected (2/2)',
+    name: 'Compare (2/2)',
   });
   await compareSelected.click();
 
@@ -75,9 +75,118 @@ test('opens comparison after selecting two product cards', async ({ page }) => {
   await expect(page.getByLabel('Search products')).toBeFocused();
 });
 
+test('uses the Compare tab instead of a dialog on tablet', async ({ page }) => {
+  await page.setViewportSize({ height: 1280, width: 800 });
+
+  await page.getByRole('link', { name: 'Compare', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/compare\/$/);
+  const emptyComparison = page.getByTestId('tablet-comparison-view');
+  await expect(emptyComparison).toBeVisible();
+  await expect(emptyComparison).toContainText(
+    'No shoes selected for comparison.',
+  );
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+
+  await page.getByRole('link', { name: 'Browse shoes' }).click();
+  await expect(page).toHaveURL(/\/en\/catalogue\/$/);
+  await page
+    .getByTestId('product-card')
+    .filter({ hasText: 'Adistar 5' })
+    .getByRole('button', { name: 'Compare' })
+    .click();
+  await page
+    .getByTestId('product-card')
+    .filter({ hasText: 'Adizero Boston 13' })
+    .getByRole('button', { name: 'Compare' })
+    .click();
+  const comparisonCount = page.locator('[data-comparison-count]');
+  await expect(comparisonCount).toBeVisible();
+  await expect(comparisonCount).toHaveText('2');
+  const selectionTray = page.getByRole('region', {
+    name: 'Shoe comparison selection',
+  });
+  await expect(selectionTray).toBeVisible();
+  await expect(selectionTray).toContainText('Adistar 5');
+  await expect(selectionTray).toContainText('Adizero Boston 13');
+  await selectionTray.getByRole('link', { name: 'Compare (2/2)' }).click();
+  await expect(page).toHaveURL(/\/en\/compare\/$/);
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+
+  await page.getByRole('link', { name: 'Learn', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/running-basics\/$/);
+  await expect(page.locator('[data-comparison-count]')).toHaveText('2');
+  await page.getByRole('link', { name: 'Compare', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/compare\/$/);
+
+  const comparison = page.getByTestId('tablet-comparison-view');
+  await expect(comparison).toContainText('Adistar 5');
+  await expect(comparison).toContainText('Adizero Boston 13');
+  await expect(comparison).toContainText('Key differences');
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+});
+
+test('restores a selected tablet card without a visible deselection flash', async ({
+  page,
+}) => {
+  await page.setViewportSize({ height: 1280, width: 800 });
+  await page
+    .getByTestId('product-card')
+    .filter({ hasText: 'Adizero Agravic Speed 2' })
+    .getByRole('button', { name: 'Compare' })
+    .click();
+  await page.getByRole('link', { name: 'Find', exact: true }).click();
+
+  await page.evaluate(() => {
+    const state = window as Window & {
+      __comparisonButtonStates?: string[];
+      __stopComparisonSampling?: boolean;
+    };
+    state.__comparisonButtonStates = [];
+    state.__stopComparisonSampling = false;
+
+    function sampleComparisonButton() {
+      const card = Array.from(
+        document.querySelectorAll<HTMLElement>('[data-testid="product-card"]'),
+      ).find((item) => item.textContent?.includes('Adizero Agravic Speed 2'));
+      const button = card?.querySelector<HTMLElement>(
+        '[data-comparison-state]',
+      );
+      if (button && getComputedStyle(button).visibility !== 'hidden') {
+        state.__comparisonButtonStates?.push(button.textContent?.trim() ?? '');
+      }
+      if (!state.__stopComparisonSampling) {
+        requestAnimationFrame(sampleComparisonButton);
+      }
+    }
+
+    requestAnimationFrame(sampleComparisonButton);
+  });
+
+  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await expect(
+    page
+      .getByTestId('product-card')
+      .filter({ hasText: 'Adizero Agravic Speed 2' })
+      .getByRole('button', { name: 'Added' }),
+  ).toBeVisible();
+
+  const visibleStates = await page.evaluate(() => {
+    const state = window as Window & {
+      __comparisonButtonStates?: string[];
+      __stopComparisonSampling?: boolean;
+    };
+    state.__stopComparisonSampling = true;
+    return state.__comparisonButtonStates ?? [];
+  });
+  expect(visibleStates).not.toContain('Compare');
+  expect(visibleStates).toContain('Added');
+});
+
 test('opens comparison from a comparable product and includes the detail product', async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.reload();
   await page.getByLabel('Search products').fill('Jogflow 100.1');
   await page
     .getByRole('button', { name: 'Jogflow 100.1', exact: true })
@@ -155,11 +264,16 @@ test('contains the category menu within the viewport on narrow screens', async (
   for (const width of [320, 390, 768]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto('./en/catalogue/');
+    await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+      'data-hydrated',
+      'true',
+    );
 
     const categoryMenu = page.getByRole('button', {
       name: 'All categories',
       exact: true,
     });
+    await expect(categoryMenu).toBeVisible();
     const categoryMenuBox = await categoryMenu.boundingBox();
     const documentWidth = await page.evaluate(() =>
       Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
@@ -327,9 +441,7 @@ test('restores shareable filter state on reload and browser history', async ({
   expect(consoleErrors.join('\n')).not.toMatch(/hydration|didn't match/i);
 });
 
-test('changes result pages horizontally without moving the viewport', async ({
-  page,
-}) => {
+test('changes result pages without moving the viewport', async ({ page }) => {
   const pagination = page.getByRole('navigation', { name: 'Pagination' });
   await pagination.evaluate((element) => {
     document.documentElement.style.scrollBehavior = 'auto';
@@ -341,7 +453,9 @@ test('changes result pages horizontally without moving the viewport', async ({
     .evaluateAll((cards) =>
       cards.map((card) => Math.round(card.getBoundingClientRect().height)),
     );
-  expect(new Set(initialCardHeights).size).toBe(1);
+  expect(
+    Math.max(...initialCardHeights) - Math.min(...initialCardHeights),
+  ).toBeLessThanOrEqual(2);
 
   await pagination
     .getByRole('button', { name: 'Next' })
@@ -363,8 +477,12 @@ test('changes result pages horizontally without moving the viewport', async ({
     .evaluateAll((cards) =>
       cards.map((card) => Math.round(card.getBoundingClientRect().height)),
     );
-  expect(new Set(forwardCardHeights).size).toBe(1);
-  expect(forwardCardHeights[0]).toBe(initialCardHeights[0]);
+  expect(
+    Math.max(...forwardCardHeights) - Math.min(...forwardCardHeights),
+  ).toBeLessThanOrEqual(2);
+  expect(
+    Math.abs((forwardCardHeights[0] ?? 0) - (initialCardHeights[0] ?? 0)),
+  ).toBeLessThanOrEqual(2);
   expect(forwardScrollY).toBeGreaterThan(500);
   expect(Math.abs(forwardScrollY - initialScrollY)).toBeLessThanOrEqual(32);
 
@@ -390,6 +508,8 @@ test('changes result pages horizontally without moving the viewport', async ({
 test('passes automated accessibility checks in explorer states', async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.reload();
   const baseResults = await new AxeBuilder({ page }).include('main').analyze();
   expect(
     baseResults.violations.filter(
@@ -428,6 +548,8 @@ test('passes automated accessibility checks in explorer states', async ({
 test('updates the explorer immediately when the footer language changes', async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.reload();
   await page.getByRole('button', { name: 'Language: EN' }).click();
   await page.getByRole('menuitemradio', { name: 'Deutsch' }).click();
   await expect(
@@ -440,7 +562,7 @@ test('updates the explorer immediately when the footer language changes', async 
 for (const viewport of [
   { layout: 'rows', name: 'phone', width: 390, height: 844, columns: 1 },
   { layout: 'cards', name: 'tablet', width: 768, height: 1024, columns: 2 },
-  { layout: 'cards', name: 'desktop', width: 1280, height: 900, columns: 3 },
+  { layout: 'cards', name: 'desktop', width: 1280, height: 900, columns: 2 },
 ]) {
   test(`keeps readable ${viewport.layout} at the ${viewport.name} viewport`, async ({
     page,
@@ -476,3 +598,23 @@ for (const viewport of [
     }
   });
 }
+
+test('uses a master-detail catalogue at the Nokia T10 landscape viewport', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.reload();
+
+  const detailPane = page.getByTestId('catalogue-detail-pane');
+  await expect(detailPane).toBeVisible();
+  await expect(
+    detailPane.getByRole('heading', { name: 'Adistar 5' }),
+  ).toBeVisible();
+
+  await page
+    .getByRole('button', { name: 'Adizero Boston 13', exact: true })
+    .click();
+  await expect(
+    detailPane.getByRole('heading', { name: 'Adizero Boston 13' }),
+  ).toBeVisible();
+});

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('keeps a completed recommendation after refresh', async ({ page }) => {
   await page.goto('en/consultation/');
 
-  await expect(page.getByRole('banner')).toHaveCount(0);
+  await expect(page.getByRole('banner')).toHaveCount(1);
   await expect(page.getByText('Guided shoe selection')).toBeVisible();
   await expect(
     page.getByRole('heading', { name: 'Customer consultation' }),

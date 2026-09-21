@@ -2,6 +2,13 @@
 import type { Locale } from '@/i18n/config';
 import { sharedMessages } from '@/i18n/messages';
 import { isCurrentRoute, localizedRoute } from '@/lib/routes';
+import { Skeleton } from '@/components/ui/skeleton';
+import {
+  BookOpenText,
+  GitCompareArrows,
+  LibraryBig,
+  ScanSearch,
+} from 'lucide-react';
 
 interface Props {
   compact?: boolean;
@@ -12,9 +19,26 @@ interface Props {
 const { compact = false, currentPath, locale } = Astro.props;
 const messages = sharedMessages[locale];
 const navigation = [
-  { key: 'catalogue', label: messages.navigation.catalogue },
-  { key: 'consultation', label: messages.navigation.find },
-  { key: 'runningBasics', label: messages.navigation.runningBasics },
+  {
+    key: 'catalogue',
+    label: messages.navigation.catalogue,
+    icon: LibraryBig,
+  },
+  {
+    key: 'consultation',
+    label: messages.navigation.find,
+    icon: ScanSearch,
+  },
+  {
+    key: 'compare',
+    label: messages.navigation.compare,
+    icon: GitCompareArrows,
+  },
+  {
+    key: 'runningBasics',
+    label: messages.navigation.runningBasics,
+    icon: BookOpenText,
+  },
 ] as const;
 const navigationLinks = navigation.map((item) => ({
   ...item,
@@ -33,6 +57,9 @@ const navigationLinks = navigation.map((item) => ({
     >
       <span class="app-banner__eyebrow">{messages.banner.eyebrow}</span>
       <span class="app-banner__title">RunDecoded</span>
+      <span class="app-banner__rail-mark" aria-hidden="true">
+        <span>R</span><span>D</span>
+      </span>
     </a>
     <p class="app-banner__description">
       {messages.banner.description}
@@ -44,15 +71,36 @@ const navigationLinks = navigation.map((item) => ({
     !compact && (
       <nav class="primary-tabs" aria-label="Primary navigation">
         <ul>
-          {navigationLinks.map((item) => (
+          {navigationLinks.map(({ icon: Icon, ...item }) => (
             <li>
               <a
                 aria-current={
                   isCurrentRoute(currentPath, item.key) ? 'page' : undefined
                 }
+                data-navigation-key={item.key}
+                data-route-current={
+                  isCurrentRoute(currentPath, item.key) ? 'true' : undefined
+                }
+                data-astro-prefetch="load"
                 href={item.href}
               >
-                {item.label}
+                <Icon className="primary-tabs__icon" aria-hidden="true" />
+                <span>{item.label}</span>
+                <Skeleton
+                  aria-hidden="true"
+                  className="primary-tabs__pending-skeleton"
+                  data-navigation-skeleton
+                />
+                {item.key === 'compare' && (
+                  <span
+                    aria-hidden="true"
+                    class="primary-tabs__comparison-count"
+                    data-comparison-count
+                    hidden
+                  >
+                    0
+                  </span>
+                )}
               </a>
             </li>
           ))}
@@ -61,6 +109,72 @@ const navigationLinks = navigation.map((item) => ({
     )
   }
 </header>
+
+<script>
+  const comparisonSelectionStorageKey =
+    'rundecoded:catalogue-comparison-selection';
+
+  function storedComparisonCount() {
+    try {
+      const selection = JSON.parse(
+        window.sessionStorage.getItem(comparisonSelectionStorageKey) ?? '[]',
+      );
+      return Array.isArray(selection)
+        ? selection.filter((id) => typeof id === 'string').length
+        : 0;
+    } catch {
+      return 0;
+    }
+  }
+
+  function syncComparisonCount(event?: Event) {
+    const detail =
+      event instanceof CustomEvent
+        ? (event.detail as { count?: unknown } | undefined)
+        : undefined;
+    const count =
+      typeof detail?.count === 'number'
+        ? Math.max(0, detail.count)
+        : storedComparisonCount();
+
+    document
+      .querySelectorAll<HTMLElement>('[data-comparison-count]')
+      .forEach((badge) => {
+        badge.textContent = String(count);
+        badge.hidden = count === 0;
+      });
+  }
+
+  function showPendingNavigation(event: Event) {
+    const source = (event as Event & { sourceElement?: Element }).sourceElement;
+    const link = source?.closest<HTMLAnchorElement>('[data-navigation-key]');
+    if (!link) return;
+
+    document
+      .querySelectorAll<HTMLAnchorElement>('[data-navigation-key]')
+      .forEach((navigationLink) => {
+        if (navigationLink === link) {
+          navigationLink.setAttribute('aria-current', 'page');
+          navigationLink.setAttribute('aria-busy', 'true');
+          navigationLink.dataset.navigationPending = 'true';
+        } else {
+          navigationLink.removeAttribute('aria-current');
+          navigationLink.removeAttribute('aria-busy');
+          delete navigationLink.dataset.navigationPending;
+        }
+      });
+  }
+
+  syncComparisonCount();
+  document.addEventListener('astro:before-preparation', showPendingNavigation);
+  window.addEventListener(
+    'rundecoded:comparison-selection-change',
+    syncComparisonCount,
+  );
+  document.addEventListener('astro:page-load', () => {
+    syncComparisonCount();
+  });
+</script>
 
 <style>
   .app-banner {
@@ -123,6 +237,12 @@ const navigationLinks = navigation.map((item) => ({
     font-weight: 780;
     letter-spacing: -0.075em;
     line-height: 0.86;
+  }
+
+  .app-banner__rail-mark,
+  .primary-tabs__icon,
+  .primary-tabs__comparison-count {
+    display: none;
   }
 
   .app-banner__description {
@@ -203,7 +323,22 @@ const navigationLinks = navigation.map((item) => ({
     font-size: clamp(0.9rem, 1.6vw, 1rem);
     font-weight: 650;
     text-decoration: none;
-    transition: color var(--duration-fast) ease;
+  }
+
+  .primary-tabs__pending-skeleton {
+    position: absolute;
+    bottom: 0.65rem;
+    left: 50%;
+    display: none;
+    width: 2.5rem;
+    height: 0.22rem;
+    translate: -50% 0;
+  }
+
+  .primary-tabs
+    a[data-navigation-pending='true']
+    .primary-tabs__pending-skeleton {
+    display: block;
   }
 
   .primary-tabs a::after {
@@ -216,7 +351,6 @@ const navigationLinks = navigation.map((item) => ({
     background: var(--primary);
     content: '';
     scale: 0 1;
-    transition: scale var(--duration-fast) ease;
   }
 
   .primary-tabs a:hover,
@@ -227,6 +361,165 @@ const navigationLinks = navigation.map((item) => ({
   .primary-tabs a:hover::after,
   .primary-tabs a[aria-current='page']::after {
     scale: 1 1;
+  }
+
+  /* Tablet navigation becomes a compact rail so the catalogue gets the full
+     width of the T10-class viewport instead of carrying a desktop banner. */
+  @media (min-width: 48rem) and (max-width: 80rem) {
+    .app-banner {
+      display: flex;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      flex-direction: column;
+      align-self: start;
+      width: 5.5rem;
+      height: 100vh;
+      height: 100dvh;
+      min-height: 100vh;
+      margin: 0;
+      overflow-y: auto;
+      border-width: 0 1px 0 0;
+      border-color: color-mix(in srgb, var(--border) 55%, transparent);
+      border-radius: 0;
+      box-shadow: none;
+      background: var(--surface);
+    }
+
+    .app-banner__hero {
+      display: flex;
+      min-height: 5.5rem;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem;
+      background: var(--surface);
+    }
+
+    .app-banner__hero::before {
+      display: none;
+    }
+
+    .app-banner__brand {
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .app-banner__eyebrow,
+    .app-banner__description,
+    .app-banner__watermark {
+      display: none;
+    }
+
+    .app-banner__title {
+      display: none;
+    }
+
+    .app-banner__rail-mark {
+      display: flex;
+      color: var(--foreground);
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.08em;
+      line-height: 1;
+    }
+
+    .app-banner__rail-mark span:last-child {
+      color: var(--primary);
+    }
+
+    .primary-tabs,
+    .primary-tabs ul {
+      min-height: 0;
+    }
+
+    .primary-tabs {
+      flex: 1;
+      padding: 0.75rem 0.4rem;
+    }
+
+    .primary-tabs ul {
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .primary-tabs li,
+    .primary-tabs a {
+      width: 100%;
+    }
+
+    .primary-tabs a {
+      flex-direction: column;
+      gap: 0.35rem;
+      min-height: 3.75rem;
+      justify-content: center;
+      padding: 0.5rem 0.25rem;
+      border-radius: var(--radius-control);
+      font-size: 0.68rem;
+      line-height: 1.2;
+      text-align: center;
+      color: var(--muted-foreground);
+    }
+
+    .primary-tabs__icon {
+      display: block;
+      width: 1.15rem;
+      height: 1.15rem;
+      flex: none;
+      stroke-width: 1.9;
+    }
+
+    .primary-tabs__comparison-count {
+      position: absolute;
+      top: 0.25rem;
+      right: 0.3rem;
+      z-index: 1;
+      display: inline-flex;
+      min-width: 1.25rem;
+      height: 1.25rem;
+      align-items: center;
+      justify-content: center;
+      padding-inline: 0.25rem;
+      border-radius: 999px;
+      background: var(--primary);
+      box-shadow: 0 0 0 2px var(--surface);
+      color: var(--primary-foreground);
+      font-size: 0.65rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .primary-tabs__comparison-count[hidden] {
+      display: none;
+    }
+
+    .primary-tabs__pending-skeleton {
+      bottom: 0.3rem;
+      width: 1.75rem;
+      height: 0.18rem;
+    }
+
+    .primary-tabs a::after {
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 100%;
+      border-radius: var(--radius-control);
+      background: var(--primary);
+      opacity: 0.16;
+      scale: 0;
+      z-index: -1;
+    }
+
+    .primary-tabs a:hover::after,
+    .primary-tabs a[aria-current='page']::after {
+      scale: 1;
+    }
+
+    .primary-tabs a:hover,
+    .primary-tabs a[aria-current='page'] {
+      color: var(--primary);
+    }
   }
 
   @media (max-width: 47.99rem) {

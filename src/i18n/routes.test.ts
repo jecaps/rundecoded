@@ -19,6 +19,9 @@ describe('localized routes', () => {
       expect(localizedRoute(locale, 'runningBasics')).toMatch(
         new RegExp(`/${locale}/running-basics/$`),
       );
+      expect(localizedRoute(locale, 'compare')).toMatch(
+        new RegExp(`/${locale}/compare/$`),
+      );
     }
   });
 
@@ -55,8 +58,10 @@ describe('typed shared messages', () => {
       const messages = sharedMessages[locale];
       expect(messages.skipLink).not.toHaveLength(0);
       expect(messages.navigation.catalogue).not.toHaveLength(0);
+      expect(messages.navigation.compare).not.toHaveLength(0);
       expect(messages.navigation.runningBasics).not.toHaveLength(0);
       expect(messages.pages.catalogue.title).not.toHaveLength(0);
+      expect(messages.pages.compare.title).not.toHaveLength(0);
       expect(messages.pages.runningBasics.description).not.toHaveLength(0);
     }
   });
