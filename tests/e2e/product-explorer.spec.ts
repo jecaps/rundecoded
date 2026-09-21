@@ -264,11 +264,16 @@ test('contains the category menu within the viewport on narrow screens', async (
   for (const width of [320, 390, 768]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto('./en/catalogue/');
+    await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+      'data-hydrated',
+      'true',
+    );
 
     const categoryMenu = page.getByRole('button', {
       name: 'All categories',
       exact: true,
     });
+    await expect(categoryMenu).toBeVisible();
     const categoryMenuBox = await categoryMenu.boundingBox();
     const documentWidth = await page.evaluate(() =>
       Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),

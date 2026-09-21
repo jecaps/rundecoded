@@ -9,7 +9,6 @@ export default defineConfig({
   base: site.base,
   trailingSlash: 'always',
   integrations: [react()],
-  prefetch: true,
   vite: {
     plugins: [tailwindcss()],
   },
