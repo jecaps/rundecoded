@@ -37,8 +37,8 @@ are not production implementation instructions.
 ### Catalogue
 
 - Phone uses compact one-column product rows, grouped by brand without persistent headers.
-- Tablet portrait uses the available width for a compact multi-column grid.
-- Tablet landscape supports a catalogue-and-details master-detail layout.
+- Tablet uses the available width for a compact multi-column grid in both
+  portrait and landscape.
 - Search, quick filters, and full filters remain easy to reach.
 - Full filters use a bottom sheet on phone and a right-side panel on tablet.
 - Results use the existing 12-product Previous/Next pagination. Changing pages
@@ -50,8 +50,7 @@ are not production implementation instructions.
 
 - Phone uses a dedicated pushed detail screen and restores the exact catalogue
   state when the user returns.
-- Tablet portrait uses a side panel.
-- Tablet landscape uses the detail pane in the master-detail layout.
+- Tablet opens product details consistently in both orientations.
 - “Best for” appears before detailed specifications, followed by shared visual
   scales, technical content, similar shoes, and accessible actions.
 
@@ -97,8 +96,8 @@ are not production implementation instructions.
 ## Responsive and accessibility expectations
 
 - Validate representative 320 px and 390 px phone widths.
-- Validate approximately 744/768 px tablet portrait widths.
-- Validate the 900 px transition and 1024/1133 px tablet landscape widths.
+- Validate the 575/576 px phone-to-tablet boundary.
+- Validate the 1024/1025 px tablet-to-desktop boundary.
 - Respect device safe areas and preserve at least 44×44 px interactive targets.
 - Prevent horizontal overflow and content hidden behind sticky surfaces.
 - Support light and dark themes with accessible contrast and no startup flash.

@@ -95,8 +95,8 @@ const useViewportLayoutEffect =
 function isCompactMobileViewport() {
   if (typeof window === 'undefined') return false;
   return (
-    window.matchMedia?.('(max-width: 599px)').matches ??
-    window.innerWidth <= 599
+    window.matchMedia?.('(max-width: 35.99rem)').matches ??
+    window.innerWidth < 576
   );
 }
 
@@ -276,7 +276,7 @@ function ProductPicture({
   return (
     <img
       alt={copy.productImage(item.product.model)}
-      className={cn('h-full w-full object-contain', className)}
+      className={cn('h-full w-full max-w-full object-contain', className)}
       loading="lazy"
       src={src}
     />
@@ -331,10 +331,6 @@ export function ProductExplorer({
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const [tabletLayout, setTabletLayout] = useState(false);
   const [compactMobile, setCompactMobile] = useState(isCompactMobileViewport);
-  const [masterDetail, setMasterDetail] = useState(false);
-  const [selectedCatalogueId, setSelectedCatalogueId] = useState<string | null>(
-    null,
-  );
   const pageRef = useRef(page);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
@@ -369,28 +365,24 @@ export function ProductExplorer({
       setLocale(initialLocale);
       setHydrated(true);
     });
-    const mobileQuery = window.matchMedia?.('(max-width: 599px)');
+    const mobileQuery = window.matchMedia?.('(max-width: 35.99rem)');
     const updateMobileLayout = () =>
-      setCompactMobile(mobileQuery?.matches ?? window.innerWidth <= 599);
-    const masterDetailQuery = window.matchMedia?.(
-      '(min-width: 56.25rem) and (max-width: 80rem) and (orientation: landscape)',
-    );
+      setCompactMobile(mobileQuery?.matches ?? window.innerWidth < 576);
     const tabletQuery = window.matchMedia?.(
-      '(min-width: 48rem) and (max-width: 80rem)',
+      '(min-width: 36rem) and (max-width: 64rem)',
     );
-    const updateMasterDetailLayout = () =>
-      setMasterDetail(masterDetailQuery?.matches ?? false);
     const updateTabletLayout = () =>
-      setTabletLayout(tabletQuery?.matches ?? false);
+      setTabletLayout(
+        tabletQuery?.matches ??
+          (window.innerWidth >= 576 && window.innerWidth <= 1024),
+      );
     updateMobileLayout();
-    updateMasterDetailLayout();
     updateTabletLayout();
     mobileQuery?.addEventListener('change', updateMobileLayout);
     window.addEventListener('pageshow', updateMobileLayout);
     window.addEventListener('resize', updateMobileLayout);
-    masterDetailQuery?.addEventListener('change', updateMasterDetailLayout);
     tabletQuery?.addEventListener('change', updateTabletLayout);
-    window.addEventListener('resize', updateMasterDetailLayout);
+    window.addEventListener('resize', updateTabletLayout);
     document.addEventListener('visibilitychange', updateMobileLayout);
 
     function onLocaleChange(event: Event) {
@@ -407,12 +399,8 @@ export function ProductExplorer({
       mobileQuery?.removeEventListener('change', updateMobileLayout);
       window.removeEventListener('pageshow', updateMobileLayout);
       window.removeEventListener('resize', updateMobileLayout);
-      masterDetailQuery?.removeEventListener(
-        'change',
-        updateMasterDetailLayout,
-      );
       tabletQuery?.removeEventListener('change', updateTabletLayout);
-      window.removeEventListener('resize', updateMasterDetailLayout);
+      window.removeEventListener('resize', updateTabletLayout);
       document.removeEventListener('visibilitychange', updateMobileLayout);
       window.removeEventListener('rundecoded:locale-change', onLocaleChange);
     };
@@ -526,17 +514,6 @@ export function ProductExplorer({
   const comparisonProducts = activeComparisonIds
     .map((id) => productsById.get(id))
     .filter((item): item is ExplorerProduct => Boolean(item));
-  const visibleSelectedCatalogueId = pagination.items.some(
-    ({ product }) => product.id === selectedCatalogueId,
-  )
-    ? selectedCatalogueId
-    : null;
-  const masterDetailProduct = visibleSelectedCatalogueId
-    ? (productsById.get(visibleSelectedCatalogueId) ??
-      pagination.items[0] ??
-      null)
-    : (pagination.items[0] ?? null);
-
   const comparableProducts = detailsProduct
     ? rankComparableProducts(detailsProduct, products, locale)
     : [];
@@ -610,15 +587,6 @@ export function ProductExplorer({
   function openDetails(id: string, opener: HTMLElement) {
     detailsOpenerRef.current = opener;
     setDetailsId(id);
-  }
-
-  function selectCatalogueProduct(id: string, opener?: HTMLElement) {
-    if (masterDetail) {
-      setSelectedCatalogueId(id);
-      return;
-    }
-    const activeElement = opener ?? document.activeElement;
-    if (activeElement instanceof HTMLElement) openDetails(id, activeElement);
   }
 
   function toggleComparison(id: string) {
@@ -881,18 +849,18 @@ export function ProductExplorer({
       id="comparison"
     >
       <header className="app-route__header">
-        <p className="app-route__eyebrow hidden min-[600px]:block">
+        <p className="app-route__eyebrow tablet:block hidden">
           Product explorer
         </p>
         <h1 className="app-route__title" id="catalogue-title">
           {copy.title}
         </h1>
-        <p className="app-route__description hidden min-[600px]:block">
+        <p className="app-route__description tablet:block hidden">
           {copy.intro}
         </p>
       </header>
 
-      <div className="mt-4 min-[600px]:mt-5">
+      <div className="tablet:mt-5 mt-4">
         <div className="tablet:grid-cols-[minmax(16rem,1fr)_auto] grid gap-2">
           <div className="relative min-w-0">
             <label className="sr-only" htmlFor="catalogue-search">
@@ -1049,7 +1017,7 @@ export function ProductExplorer({
         </div>
       </div>
 
-      <div className="min-[600px]:overflow-x-clip" ref={productListRef}>
+      <div className="tablet:overflow-x-clip" ref={productListRef}>
         {pagination.items.length ? (
           compactMobile ? (
             <div
@@ -1182,10 +1150,7 @@ export function ProductExplorer({
           ) : (
             <div
               className={cn(
-                'mt-6 grid gap-5',
-                masterDetail
-                  ? 'desktop:grid-cols-[minmax(0,1fr)_minmax(20rem,26rem)]'
-                  : 'grid-cols-1 min-[600px]:grid-cols-2',
+                'tablet:grid-cols-2 mt-6 grid grid-cols-1 gap-[clamp(0.75rem,2vw,1rem)]',
                 pageDirection === 'forward' && 'catalogue-page--forward',
                 pageDirection === 'backward' && 'catalogue-page--backward',
               )}
@@ -1193,12 +1158,7 @@ export function ProductExplorer({
               data-testid="product-page"
               key={`${categoryId}:${query}:${pagination.page}`}
             >
-              <div
-                className={cn(
-                  'grid min-w-0 grid-cols-1 gap-5',
-                  masterDetail ? 'min-[600px]:grid-cols-2' : 'contents',
-                )}
-              >
+              <div className="contents">
                 {pagination.items.map((item) => {
                   const { product } = item;
                   const selected = selectedIds.includes(product.id);
@@ -1221,27 +1181,19 @@ export function ProductExplorer({
 
                   return (
                     <Card
-                      className={cn(
-                        'min-w-0 overflow-hidden',
-                        masterDetail &&
-                          masterDetailProduct?.product.id === product.id &&
-                          'border-primary bg-primary/5 ring-primary/20 border-l-4 ring-2',
-                      )}
+                      className="catalogue-card [container-type:inline-size] h-full min-w-0 overflow-hidden"
                       key={product.id}
                     >
                       <article
-                        className="flex min-w-0 flex-col"
+                        className="grid h-full w-full max-w-full min-w-0 grid-cols-[minmax(0,1fr)] grid-rows-[auto_1fr_auto] overflow-hidden"
                         data-testid="product-card"
                       >
-                        <CardHeader className="bg-surface-subtle relative aspect-[3/2] p-0">
+                        <CardHeader className="bg-surface-subtle relative aspect-[3/2] w-full max-w-full min-w-0 overflow-hidden p-0">
                           <button
                             aria-label={copy.openDetails(product.model)}
-                            className="block h-full w-full cursor-pointer border-0 bg-transparent p-0"
+                            className="absolute inset-0 block cursor-pointer border-0 bg-transparent p-0"
                             onClick={(event) =>
-                              selectCatalogueProduct(
-                                product.id,
-                                event.currentTarget,
-                              )
+                              openDetails(product.id, event.currentTarget)
                             }
                             type="button"
                           >
@@ -1253,28 +1205,28 @@ export function ProductExplorer({
                           </button>
                         </CardHeader>
 
-                        <CardContent className="flex flex-col p-5 pb-3">
-                          <p className="text-muted-foreground m-0 text-xs font-bold tracking-[0.15em] uppercase">
+                        <CardContent className="flex min-h-0 flex-col p-[clamp(0.875rem,6cqi,1.25rem)] pb-3">
+                          <p className="text-muted-foreground m-0 text-[clamp(0.625rem,3.5cqi,0.75rem)] font-bold tracking-[0.15em] uppercase">
                             {product.brand}
                           </p>
                           <button
-                            className="text-foreground hover:text-primary mt-1 line-clamp-2 min-h-[3.75rem] cursor-pointer border-0 bg-transparent p-0 text-left text-2xl leading-tight font-bold tracking-[-0.025em]"
+                            className="catalogue-card__title text-foreground hover:text-primary mt-1 cursor-pointer overflow-hidden border-0 bg-transparent p-0 text-left text-[clamp(0.875rem,6.5cqi,1.375rem)] leading-tight font-bold tracking-[-0.025em] text-ellipsis whitespace-nowrap"
                             onClick={(event) =>
-                              selectCatalogueProduct(
-                                product.id,
-                                event.currentTarget,
-                              )
+                              openDetails(product.id, event.currentTarget)
                             }
                             type="button"
                           >
                             {product.model}
                           </button>
 
-                          <div className="mt-3 flex min-h-7 flex-wrap content-start gap-2">
+                          <div
+                            className="mt-3 flex flex-wrap content-start gap-2 overflow-hidden"
+                            data-testid="card-badges"
+                          >
                             {purpose ? (
                               <span
                                 className={cn(
-                                  'rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase',
+                                  'rounded-full px-[clamp(0.5rem,3cqi,0.75rem)] py-1 text-[clamp(0.5625rem,3.25cqi,0.75rem)] font-bold tracking-wide whitespace-nowrap uppercase',
                                   tone.primary,
                                 )}
                                 data-card-badge="purpose"
@@ -1284,7 +1236,7 @@ export function ProductExplorer({
                             ) : null}
                             <span
                               className={cn(
-                                'rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase',
+                                'rounded-full px-[clamp(0.5rem,3cqi,0.75rem)] py-1 text-[clamp(0.5625rem,3.25cqi,0.75rem)] font-bold tracking-wide whitespace-nowrap uppercase',
                                 tone.secondary,
                               )}
                               data-card-badge={
@@ -1296,11 +1248,11 @@ export function ProductExplorer({
                           </div>
 
                           <div className="mt-4">
-                            <p className="text-muted-foreground m-0 text-[0.7rem] font-bold tracking-[0.13em] uppercase">
+                            <p className="text-muted-foreground m-0 text-[clamp(0.625rem,3.25cqi,0.7rem)] font-bold tracking-[0.13em] uppercase">
                               {copy.bestFor}
                             </p>
                             <p
-                              className="mt-1 mb-0 truncate text-sm leading-6"
+                              className="mt-1 mb-0 truncate text-[clamp(0.75rem,4cqi,0.875rem)] leading-6"
                               title={bestForSummaryText}
                               data-testid="card-best-for"
                             >
@@ -1308,33 +1260,36 @@ export function ProductExplorer({
                             </p>
                           </div>
 
-                          <dl className="border-border mt-3 grid min-h-14 grid-cols-2 border-t pt-3 text-center">
+                          <dl
+                            className="border-border mt-3 grid min-h-14 grid-cols-2 border-t pt-3 text-center"
+                            data-testid="card-metrics"
+                          >
                             <div>
-                              <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
+                              <dt className="text-muted-foreground text-[clamp(0.625rem,3.25cqi,0.68rem)] font-bold tracking-wide uppercase">
                                 {copy.distance}
                               </dt>
                               <dd
-                                className="mt-1 text-sm font-semibold"
+                                className="mt-1 text-[clamp(0.75rem,4cqi,0.875rem)] font-semibold"
                                 data-testid="card-distance"
                               >
                                 {distance}
                               </dd>
                             </div>
                             <div className="border-border border-l px-2">
-                              <dt className="text-muted-foreground text-[0.68rem] font-bold tracking-wide uppercase">
+                              <dt className="text-muted-foreground text-[clamp(0.625rem,3.25cqi,0.68rem)] font-bold tracking-wide uppercase">
                                 {copy.drop}
                               </dt>
-                              <dd className="mt-1 text-sm font-semibold">
+                              <dd className="mt-1 text-[clamp(0.75rem,4cqi,0.875rem)] font-semibold">
                                 {dropLabel(item)}
                               </dd>
                             </div>
                           </dl>
                         </CardContent>
 
-                        <CardFooter className="p-5 pt-0">
+                        <CardFooter className="p-[clamp(0.875rem,6cqi,1.25rem)] pt-0">
                           <Button
                             data-comparison-state
-                            className="w-full"
+                            className="w-full text-[clamp(0.75rem,4cqi,0.875rem)]"
                             aria-label={selected ? copy.added : copy.compare}
                             aria-pressed={selected}
                             onClick={() => toggleComparison(product.id)}
@@ -1353,67 +1308,6 @@ export function ProductExplorer({
                   );
                 })}
               </div>
-              {masterDetail && masterDetailProduct ? (
-                <aside
-                  aria-label={`${masterDetailProduct.product.model} details`}
-                  className="border-border bg-surface desktop:sticky desktop:top-6 desktop:self-start min-w-0 rounded-[var(--radius-panel)] border p-5 shadow-[var(--shadow-sm)]"
-                  data-testid="catalogue-detail-pane"
-                >
-                  <div className="bg-surface-subtle flex h-48 items-center justify-center rounded-[var(--radius-control)] p-4">
-                    <ProductPicture
-                      assetBase={assetBase}
-                      item={masterDetailProduct}
-                      locale={locale}
-                    />
-                  </div>
-                  <p className="text-muted-foreground mt-4 mb-0 text-xs font-bold tracking-[0.15em] uppercase">
-                    {masterDetailProduct.product.brand}
-                  </p>
-                  <h2 className="mt-1 mb-0 text-2xl font-bold tracking-[-0.025em]">
-                    {masterDetailProduct.product.model}
-                  </h2>
-                  <p className="text-muted-foreground mt-3 mb-0 text-sm leading-6">
-                    {bestForSummary(
-                      resolveLocalizedText(
-                        masterDetailProduct.product.details.bestFor,
-                        locale,
-                      ).value,
-                    )}
-                  </p>
-                  <dl className="border-border mt-4 grid grid-cols-2 border-t pt-4 text-center">
-                    <div>
-                      <dt className="text-muted-foreground text-xs font-bold uppercase">
-                        {copy.distance}
-                      </dt>
-                      <dd className="mt-1 text-sm font-semibold">
-                        {distanceLabel(
-                          masterDetailProduct,
-                          copy.distanceUnavailable,
-                        )}
-                      </dd>
-                    </div>
-                    <div className="border-border border-l">
-                      <dt className="text-muted-foreground text-xs font-bold uppercase">
-                        {copy.drop}
-                      </dt>
-                      <dd className="mt-1 text-sm font-semibold">
-                        {dropLabel(masterDetailProduct)}
-                      </dd>
-                    </div>
-                  </dl>
-                  <Button
-                    className="mt-5 w-full"
-                    onClick={(event) =>
-                      openDetails(
-                        masterDetailProduct.product.id,
-                        event.currentTarget,
-                      )
-                    }
-                  >
-                    {copy.details}
-                  </Button>
-                </aside>
-              ) : null}
             </div>
           )
         ) : (

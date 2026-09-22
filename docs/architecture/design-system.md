@@ -27,16 +27,17 @@ avoid a light/dark flash.
 
 ## Responsive contract
 
-RunDecoded uses three named layout thresholds:
+RunDecoded uses three layout modes with two shared thresholds:
 
-| Name    | Minimum width | Intended behavior                                                   |
-| ------- | ------------: | ------------------------------------------------------------------- |
-| Phone   |   below 48rem | Single-column content, compact controls, stable banner type         |
-| Tablet  |         48rem | Multi-column content where useful without changing shell typography |
-| Desktop |         64rem | Full navigation and content density                                 |
-| Wide    |         80rem | Maximum-width layout; content does not continue stretching          |
+| Name    | Minimum width | Intended behavior                          |
+| ------- | ------------: | ------------------------------------------ |
+| Phone   |   below 36rem | Single-column content and compact controls |
+| Tablet  |         36rem | One consistent tablet shell through 64rem  |
+| Desktop |    64.0625rem | Full navigation and content density        |
 
-Fluid type and spacing use `clamp()` within those modes. Both primary routes
+Orientation does not select a different layout: portrait and landscape use the
+same mode for their viewport width. Fluid type and spacing use `clamp()` within
+those modes. Both primary routes
 share the same banner markup and rules, preventing type or height changes when
 navigating between them.
 

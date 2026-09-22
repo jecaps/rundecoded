@@ -20,9 +20,8 @@
   --color-danger: var(--danger);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
-  --breakpoint-tablet: 48rem;
-  --breakpoint-desktop: 64rem;
-  --breakpoint-wide: 80rem;
+  --breakpoint-tablet: 36rem;
+  --breakpoint-desktop: 64.0625rem;
 }
 
 :root {
@@ -253,6 +252,10 @@
     line-height: 1.6;
   }
 
+  .catalogue-card__title {
+    height: 1.5em;
+  }
+
   .sr-only {
     position: absolute;
     width: 1px;
@@ -266,7 +269,7 @@
   }
 }
 
-@media (min-width: 48rem) and (max-width: 80rem) {
+@media (min-width: 36rem) and (max-width: 64rem) {
   .app-route {
     padding-block: 2rem;
   }

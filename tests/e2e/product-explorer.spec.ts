@@ -258,6 +258,125 @@ test('keeps filter control and result row dimensions stable', async ({
   expect(filteredResultsBox?.height).toBe(initialResultsBox?.height);
 });
 
+test('keeps neighboring tablet card content aligned with natural badge height', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 768, height: 1024 });
+  await page.reload();
+
+  const cards = page.getByTestId('product-card');
+  const firstCard = cards.nth(0);
+  const secondCard = cards.nth(1);
+
+  const compactTitle = await firstCard
+    .getByRole('button', { name: 'Adistar 5', exact: true })
+    .boundingBox();
+  const compactBadges = await firstCard
+    .getByTestId('card-badges')
+    .boundingBox();
+  expect(compactTitle?.height).toBeLessThan(40);
+  expect(compactBadges?.height).toBeLessThanOrEqual(28);
+
+  for (const testId of ['card-best-for', 'card-metrics']) {
+    const firstBox = await firstCard.getByTestId(testId).boundingBox();
+    const secondBox = await secondCard.getByTestId(testId).boundingBox();
+    expect(firstBox?.y).toBeCloseTo(secondBox?.y ?? 0, 0);
+  }
+
+  const firstAction = await firstCard
+    .getByRole('button', { name: 'Compare' })
+    .boundingBox();
+  const secondAction = await secondCard
+    .getByRole('button', { name: 'Compare' })
+    .boundingBox();
+  expect(firstAction?.y).toBeCloseTo(secondAction?.y ?? 0, 0);
+});
+
+test('scales card typography with the available card width', async ({
+  page,
+}) => {
+  const sizes: Array<{ badge: number; title: number }> = [];
+
+  for (const width of [576, 768, 1024]) {
+    await page.setViewportSize({ width, height: 1024 });
+    await page.reload();
+
+    const firstCard = page.getByTestId('product-card').first();
+    if (width === 576) {
+      const longModel = page
+        .getByTestId('product-card')
+        .nth(1)
+        .getByRole('button', {
+          name: 'Adizero Agravic Speed 2',
+          exact: true,
+        });
+      expect(
+        await longModel.evaluate((element) => ({
+          fits: element.scrollWidth <= element.clientWidth,
+          whiteSpace: getComputedStyle(element).whiteSpace,
+        })),
+      ).toEqual({ fits: true, whiteSpace: 'nowrap' });
+    }
+
+    sizes.push({
+      badge: await firstCard
+        .getByTestId('card-badges')
+        .locator('[data-card-badge]')
+        .first()
+        .evaluate((element) =>
+          Number.parseFloat(getComputedStyle(element).fontSize),
+        ),
+      title: await firstCard
+        .getByRole('button', { name: 'Adistar 5', exact: true })
+        .evaluate((element) =>
+          Number.parseFloat(getComputedStyle(element).fontSize),
+        ),
+    });
+  }
+
+  expect(sizes[0].title).toBeLessThan(sizes[1].title);
+  expect(sizes[1].title).toBeLessThan(sizes[2].title);
+  expect(sizes[0].badge).toBeLessThan(sizes[1].badge);
+  expect(sizes[1].badge).toBeLessThan(sizes[2].badge);
+});
+
+test('keeps compact single-line card headers at 580px', async ({ page }) => {
+  await page.setViewportSize({ width: 580, height: 1024 });
+  await page.reload();
+
+  const cards = page.getByTestId('product-card');
+  const spacing = await page.evaluate(() => {
+    const main = document.querySelector('main');
+    const productPage = document.querySelector('[data-testid="product-page"]');
+    return {
+      columnGap: Number.parseFloat(
+        productPage ? getComputedStyle(productPage).columnGap : '0',
+      ),
+      mainPadding: Number.parseFloat(
+        main ? getComputedStyle(main).paddingInlineStart : '0',
+      ),
+    };
+  });
+  expect(spacing.columnGap).toBeLessThanOrEqual(12);
+  expect(spacing.mainPadding).toBeLessThanOrEqual(12);
+
+  for (const card of [cards.nth(0), cards.nth(1)]) {
+    const badges = await card.getByTestId('card-badges').boundingBox();
+    expect(badges?.height).toBeLessThanOrEqual(28);
+  }
+
+  const longModel = cards.nth(1).getByRole('button', {
+    name: 'Adizero Agravic Speed 2',
+    exact: true,
+  });
+  expect(
+    await longModel.evaluate((element) => ({
+      fits: element.scrollWidth <= element.clientWidth,
+      whiteSpace: getComputedStyle(element).whiteSpace,
+    })),
+  ).toEqual({ fits: true, whiteSpace: 'nowrap' });
+});
+
 test('contains the category menu within the viewport on narrow screens', async ({
   page,
 }) => {
@@ -345,7 +464,7 @@ test('uses compact catalogue rows on phones', async ({ page }) => {
   await dialog.getByRole('button', { name: 'Close' }).click();
   await expect(detailsOpener).toBeFocused();
 
-  for (const width of [320, 599]) {
+  for (const width of [320, 575]) {
     await page.setViewportSize({ width, height: 844 });
     await expect(rows).toHaveCount(12);
     const documentWidth = await page.evaluate(() =>
@@ -573,7 +692,7 @@ for (const viewport of [
     });
     await page.reload();
     const products = page.getByTestId(
-      viewport.width < 600 ? 'mobile-product-row' : 'product-card',
+      viewport.width < 576 ? 'mobile-product-row' : 'product-card',
     );
     await expect(products).toHaveCount(12);
 
@@ -599,22 +718,42 @@ for (const viewport of [
   });
 }
 
-test('uses a master-detail catalogue at the Nokia T10 landscape viewport', async ({
+test('keeps the card catalogue at the largest tablet viewport', async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.setViewportSize({ width: 1024, height: 700 });
   await page.reload();
 
-  const detailPane = page.getByTestId('catalogue-detail-pane');
-  await expect(detailPane).toBeVisible();
-  await expect(
-    detailPane.getByRole('heading', { name: 'Adistar 5' }),
-  ).toBeVisible();
-
+  await expect(page.getByTestId('product-card')).toHaveCount(12);
+  await expect(page.getByTestId('catalogue-detail-pane')).toHaveCount(0);
   await page
     .getByRole('button', { name: 'Adizero Boston 13', exact: true })
     .click();
   await expect(
-    detailPane.getByRole('heading', { name: 'Adizero Boston 13' }),
+    page.getByRole('dialog').getByRole('heading', {
+      name: 'Adizero Boston 13',
+    }),
   ).toBeVisible();
 });
+
+for (const viewport of [
+  { expected: 'phone', width: 575 },
+  { expected: 'tablet', width: 576 },
+  { expected: 'tablet', width: 1024 },
+  { expected: 'desktop', width: 1025 },
+] as const) {
+  test(`uses the ${viewport.expected} catalogue at ${viewport.width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: viewport.width, height: 900 });
+    await page.reload();
+
+    if (viewport.expected === 'phone') {
+      await expect(page.getByTestId('mobile-product-row')).toHaveCount(12);
+      await expect(page.getByTestId('product-card')).toHaveCount(0);
+    } else {
+      await expect(page.getByTestId('product-card')).toHaveCount(12);
+      await expect(page.getByTestId('mobile-product-row')).toHaveCount(0);
+    }
+  });
+}

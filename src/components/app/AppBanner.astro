@@ -363,9 +363,8 @@ const navigationLinks = navigation.map((item) => ({
     scale: 1 1;
   }
 
-  /* Tablet navigation becomes a compact rail so the catalogue gets the full
-     width of the T10-class viewport instead of carrying a desktop banner. */
-  @media (min-width: 48rem) and (max-width: 80rem) {
+  /* Tablet navigation uses one compact rail in portrait and landscape. */
+  @media (min-width: 36rem) and (max-width: 64rem) {
     .app-banner {
       display: flex;
       position: sticky;
@@ -522,7 +521,7 @@ const navigationLinks = navigation.map((item) => ({
     }
   }
 
-  @media (max-width: 47.99rem) {
+  @media (max-width: 35.99rem) {
     .app-banner__hero {
       min-height: 17rem;
     }

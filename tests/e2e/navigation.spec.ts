@@ -173,20 +173,30 @@ test('persists language and theme preferences across routes', async ({
   ).toBeVisible();
 });
 
-test('hides the desktop footer on phone and tablet widths', async ({
+test('switches the application shell at the shared breakpoint boundaries', async ({
   page,
 }) => {
   for (const viewport of [
-    { height: 844, width: 390 },
-    { height: 1024, width: 768 },
+    { footer: false, tabletHeader: false, width: 575 },
+    { footer: false, tabletHeader: true, width: 576 },
+    { footer: false, tabletHeader: true, width: 1024 },
+    { footer: true, tabletHeader: false, width: 1025 },
   ]) {
-    await page.setViewportSize(viewport);
+    await page.setViewportSize({ height: 900, width: viewport.width });
     await page.goto('./en/catalogue/');
 
-    await expect(page.locator('.site-footer')).toBeHidden();
-  }
+    if (viewport.footer) {
+      await expect(page.locator('.site-footer')).toBeVisible();
+    } else {
+      await expect(page.locator('.site-footer')).toBeHidden();
+    }
 
-  await expect(page.getByRole('button', { name: 'Settings' })).toBeVisible();
+    if (viewport.tabletHeader) {
+      await expect(page.locator('.tablet-app-header')).toBeVisible();
+    } else {
+      await expect(page.locator('.tablet-app-header')).toBeHidden();
+    }
+  }
 });
 
 test('keeps the tablet application shell on every primary route', async ({
