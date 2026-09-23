@@ -3,8 +3,7 @@ import { expect, test } from '@playwright/test';
 const productionBase = 'https://jecaps.github.io/rundecoded';
 
 test.beforeEach(async ({ page }) => {
-  // Language controls live in the desktop footer. At the 1280px tablet
-  // breakpoint they intentionally move into the compact header settings menu.
+  // Language controls live in the desktop footer, so use a desktop viewport.
   await page.setViewportSize({ width: 1440, height: 900 });
 });
 
