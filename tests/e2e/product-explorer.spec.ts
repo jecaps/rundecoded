@@ -134,7 +134,7 @@ test('restores a selected tablet card without a visible deselection flash', asyn
     .filter({ hasText: 'Adizero Agravic Speed 2' })
     .getByRole('button', { name: 'Compare' })
     .click();
-  await page.getByRole('link', { name: 'Find', exact: true }).click();
+  await page.getByRole('link', { name: 'Guide', exact: true }).click();
 
   await page.evaluate(() => {
     const state = window as Window & {
@@ -681,7 +681,7 @@ test('updates the explorer immediately when the footer language changes', async 
 for (const viewport of [
   { layout: 'rows', name: 'phone', width: 390, height: 844, columns: 1 },
   { layout: 'cards', name: 'tablet', width: 768, height: 1024, columns: 2 },
-  { layout: 'cards', name: 'desktop', width: 1280, height: 900, columns: 2 },
+  { layout: 'cards', name: 'desktop', width: 1280, height: 900, columns: 3 },
 ]) {
   test(`keeps readable ${viewport.layout} at the ${viewport.name} viewport`, async ({
     page,

@@ -12,7 +12,7 @@ export interface SharedMessages {
   navigation: {
     catalogue: string;
     compare: string;
-    find: string;
+    guide: string;
     runningBasics: string;
   };
   pages: {
@@ -37,7 +37,7 @@ export const sharedMessages = {
     navigation: {
       catalogue: 'Catalogue',
       compare: 'Compare',
-      find: 'Find',
+      guide: 'Guide',
       runningBasics: 'Learn',
     },
     pages: {
@@ -79,7 +79,7 @@ export const sharedMessages = {
     navigation: {
       catalogue: 'Katalog',
       compare: 'Vergleichen',
-      find: 'Finden',
+      guide: 'Beratung',
       runningBasics: 'Lernen',
     },
     pages: {
@@ -121,7 +121,7 @@ export const sharedMessages = {
     navigation: {
       catalogue: 'Catalogue',
       compare: 'Comparer',
-      find: 'Trouver',
+      guide: 'Conseil',
       runningBasics: 'Apprendre',
     },
     pages: {

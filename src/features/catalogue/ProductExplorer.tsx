@@ -1150,7 +1150,7 @@ export function ProductExplorer({
           ) : (
             <div
               className={cn(
-                'tablet:grid-cols-2 mt-6 grid grid-cols-1 gap-[clamp(0.75rem,2vw,1rem)]',
+                'tablet:grid-cols-2 desktop:grid-cols-3 mt-6 grid grid-cols-1 gap-[clamp(0.75rem,2vw,1rem)]',
                 pageDirection === 'forward' && 'catalogue-page--forward',
                 pageDirection === 'backward' && 'catalogue-page--backward',
               )}

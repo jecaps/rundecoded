@@ -3,15 +3,14 @@ import type { Locale } from '@/i18n/config';
 export interface ConsultationCopy {
   actions: {
     back: string;
+    browseCatalogue: string;
     edit: string;
-    exit: string;
     next: string;
     restart: string;
     results: string;
     showMore: string;
     viewDetails: string;
   };
-  answerRequired: string;
   comfortNotice: string;
   evidenceConfidence: {
     high: string;
@@ -52,15 +51,14 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
   en: {
     actions: {
       back: 'Back',
+      browseCatalogue: 'Browse shoe catalogue',
       edit: 'Edit',
-      exit: 'Back to catalogue',
       next: 'Next',
       restart: 'Start another consultation',
       results: 'Show recommendations',
       showMore: 'Show more recommendations',
       viewDetails: 'View details',
     },
-    answerRequired: 'Choose an answer to continue.',
     comfortNotice:
       'Comfort history adds a small ranking preference for the employee. It does not diagnose an injury or promise relief.',
     evidenceConfidence: {
@@ -286,15 +284,14 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
   de: {
     actions: {
       back: 'Zurück',
+      browseCatalogue: 'Schuhkatalog ansehen',
       edit: 'Bearbeiten',
-      exit: 'Zurück zum Katalog',
       next: 'Weiter',
       restart: 'Neue Beratung starten',
       results: 'Empfehlungen anzeigen',
       showMore: 'Weitere Empfehlungen anzeigen',
       viewDetails: 'Details ansehen',
     },
-    answerRequired: 'Wähle eine Antwort, um fortzufahren.',
     comfortNotice:
       'Komforterfahrungen beeinflussen die Rangfolge nur leicht. Sie stellen keine Diagnose dar und versprechen keine Linderung.',
     evidenceConfidence: {
@@ -526,15 +523,14 @@ export const consultationCopy: Record<Locale, ConsultationCopy> = {
   fr: {
     actions: {
       back: 'Retour',
+      browseCatalogue: 'Parcourir le catalogue',
       edit: 'Modifier',
-      exit: 'Retour au catalogue',
       next: 'Suivant',
       restart: 'Nouvelle consultation',
       results: 'Afficher les recommandations',
       showMore: 'Afficher plus de recommandations',
       viewDetails: 'Voir les détails',
     },
-    answerRequired: 'Choisissez une réponse pour continuer.',
     comfortNotice:
       'L’historique de confort influence légèrement le classement. Il ne constitue pas un diagnostic et ne promet aucun soulagement.',
     evidenceConfidence: {

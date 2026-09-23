@@ -5,9 +5,9 @@ import { isCurrentRoute, localizedRoute } from '@/lib/routes';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   BookOpenText,
+  Compass,
   GitCompareArrows,
   LibraryBig,
-  ScanSearch,
 } from 'lucide-react';
 
 interface Props {
@@ -26,8 +26,8 @@ const navigation = [
   },
   {
     key: 'consultation',
-    label: messages.navigation.find,
-    icon: ScanSearch,
+    label: messages.navigation.guide,
+    icon: Compass,
   },
   {
     key: 'compare',

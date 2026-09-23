@@ -31,6 +31,15 @@ describe('customer consultation', () => {
     expect(
       screen.getByRole('progressbar', { name: 'Step 1 of 7' }),
     ).toHaveAttribute('aria-valuenow', '1');
+    const catalogueLink = screen.getByRole('link', {
+      name: 'Browse shoe catalogue',
+    });
+    expect(catalogueLink).toHaveAttribute('href', '/en/catalogue/');
+    expect(catalogueLink.querySelector('svg')).toBeNull();
+    expect(
+      screen.queryByRole('link', { name: 'Back to catalogue' }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
     expect(container.querySelector('[data-slot="card"]')).toBeNull();
   });
 

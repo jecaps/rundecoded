@@ -141,7 +141,10 @@ function AnswerButton({
   return (
     <Button
       aria-pressed={selected}
-      className="h-auto min-h-16 justify-start px-4 py-3 text-left whitespace-normal"
+      className={cn(
+        'h-auto min-h-16 justify-start px-4 py-3 text-left whitespace-normal',
+        selected && 'border border-transparent',
+      )}
       onClick={onClick}
       type="button"
       variant={selected ? 'primary' : 'outline'}
@@ -214,7 +217,7 @@ export function CustomerConsultation({
     () => initialBrowserState()?.answers.comfort ?? [],
   );
   const [detailsId, setDetailsId] = useState<string | null>(null);
-  const detailsOpenerRef = useRef<HTMLButtonElement | null>(null);
+  const detailsOpenerRef = useRef<HTMLElement | null>(null);
 
   const answers = [distance, surfaces, priorities, goal, stability, comfort];
   const canContinue = step === 6 || Boolean(answers[step]?.length);
@@ -439,9 +442,25 @@ export function CustomerConsultation({
             ).value;
 
             return (
-              <Card key={product.id}>
-                <CardContent className="tablet:grid-cols-[8rem_minmax(0,1fr)_auto] grid items-center gap-5 p-5">
-                  <div className="bg-surface-subtle flex min-h-28 items-center justify-center overflow-hidden rounded-[var(--radius-control)] p-2">
+              <Card
+                aria-label={`${copy.actions.viewDetails}: ${product.model}`}
+                className="hover:border-primary/50 focus-visible:ring-ring/35 cursor-pointer transition-colors outline-none focus-visible:ring-3"
+                key={product.id}
+                onClick={(event) => {
+                  detailsOpenerRef.current = event.currentTarget;
+                  setDetailsId(product.id);
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    event.currentTarget.click();
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                <CardContent className="flex items-center gap-4 p-4">
+                  <div className="bg-surface-subtle flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-[var(--radius-control)] p-2">
                     {src ? (
                       <img
                         alt=""
@@ -455,10 +474,10 @@ export function CustomerConsultation({
                       />
                     )}
                   </div>
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <p
                       className={cn(
-                        'm-0 inline-flex rounded-full px-2.5 py-1 text-xs font-bold tracking-wide uppercase',
+                        'm-0 inline-flex rounded-full px-2.5 py-1 text-xs font-semibold',
                         recommendation.tier === 'strong-match'
                           ? 'bg-emerald-100 text-emerald-800'
                           : recommendation.tier === 'great-match'
@@ -475,32 +494,20 @@ export function CustomerConsultation({
                     <h3 className="mt-1 mb-0 text-xl font-bold">
                       {product.model}
                     </h3>
-                    <p className="text-muted-foreground mt-1 mb-0 text-sm">
+                    <p className="text-muted-foreground mt-0.5 mb-0 text-sm">
                       {product.brand}
                     </p>
                     {explanation.showWhy ? (
-                      <dl className="mt-3 grid gap-2 text-sm">
+                      <dl className="mt-2 text-sm">
                         <div>
-                          <dt className="font-semibold">
+                          <dt className="text-primary text-xs font-semibold tracking-wide uppercase">
                             {copy.explanation.why}
                           </dt>
-                          <dd className="text-muted-foreground mt-0.5 leading-6">
-                            {why}
-                          </dd>
+                          <dd className="mt-1 leading-5">{why}</dd>
                         </div>
                       </dl>
                     ) : null}
                   </div>
-                  <Button
-                    onClick={(event) => {
-                      detailsOpenerRef.current = event.currentTarget;
-                      setDetailsId(product.id);
-                    }}
-                    type="button"
-                  >
-                    {copy.actions.viewDetails}
-                    <ArrowRight aria-hidden="true" className="size-4" />
-                  </Button>
                 </CardContent>
               </Card>
             );
@@ -536,7 +543,7 @@ export function CustomerConsultation({
             className={buttonVariants({ variant: 'outline' })}
             href={catalogueUrl}
           >
-            {copy.actions.exit}
+            {copy.actions.browseCatalogue}
           </a>
         </div>
 
@@ -558,18 +565,9 @@ export function CustomerConsultation({
 
   return (
     <section className="app-route" data-testid="customer-consultation">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="app-route__header">
-          <p className="app-route__eyebrow">{copy.eyebrow}</p>
-          <h1 className="app-route__title">{copy.title}</h1>
-        </div>
-        <a
-          className={buttonVariants({ variant: 'outline' })}
-          href={catalogueUrl}
-        >
-          <ArrowLeft aria-hidden="true" className="size-4" />
-          {copy.actions.exit}
-        </a>
+      <div className="app-route__header">
+        <p className="app-route__eyebrow">{copy.eyebrow}</p>
+        <h1 className="app-route__title">{copy.title}</h1>
       </div>
 
       <div className="mt-8">
@@ -777,9 +775,12 @@ export function CustomerConsultation({
           </div>
 
           <div className="border-border mt-9 flex flex-wrap items-center justify-between gap-3 border-t pt-5">
-            <p className="text-muted-foreground m-0 text-sm" aria-live="polite">
-              {!canContinue ? copy.answerRequired : ''}
-            </p>
+            <a
+              className={buttonVariants({ variant: 'outline' })}
+              href={catalogueUrl}
+            >
+              {copy.actions.browseCatalogue}
+            </a>
             <div className="ml-auto flex gap-2">
               <Button
                 disabled={step === 0}

@@ -113,7 +113,7 @@ test('marks the selected primary route active as navigation starts', async ({
       '[data-navigation-key="consultation"] [data-navigation-skeleton]',
     ),
   ).toBeVisible();
-  await page.getByRole('link', { name: 'Find', exact: true }).click();
+  await page.getByRole('link', { name: 'Guide', exact: true }).click();
   await expect(page).toHaveURL(/\/en\/consultation\/$/);
   await expect(
     page.locator(
@@ -122,13 +122,13 @@ test('marks the selected primary route active as navigation starts', async ({
   ).toBeHidden();
 });
 
-test('reaches the customer consultation from the Find destination', async ({
+test('reaches the customer consultation from the Guide destination', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('./en/catalogue/');
 
-  await page.getByRole('link', { name: 'Find', exact: true }).click();
+  await page.getByRole('link', { name: 'Guide', exact: true }).click();
   await expect(page).toHaveURL(/\/en\/consultation\/$/);
   await expect(
     page.getByRole('heading', { name: 'Customer consultation' }),
@@ -206,7 +206,7 @@ test('keeps the tablet application shell on every primary route', async ({
 
   for (const destination of [
     { path: 'catalogue', activeLink: 'Catalogue' },
-    { path: 'consultation', activeLink: 'Find' },
+    { path: 'consultation', activeLink: 'Guide' },
     { path: 'compare', activeLink: 'Compare' },
     { path: 'running-basics', activeLink: 'Learn' },
   ]) {

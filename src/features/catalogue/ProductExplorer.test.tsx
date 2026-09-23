@@ -14,6 +14,7 @@ import { getProductCatalogue } from './catalogue';
 
 const products = getProductCatalogue();
 const originalMatchMedia = window.matchMedia;
+const originalInnerWidth = window.innerWidth;
 
 afterEach(() => {
   cleanup();
@@ -22,6 +23,10 @@ afterEach(() => {
   Object.defineProperty(window, 'matchMedia', {
     configurable: true,
     value: originalMatchMedia,
+  });
+  Object.defineProperty(window, 'innerWidth', {
+    configurable: true,
+    value: originalInnerWidth,
   });
 });
 
@@ -187,6 +192,11 @@ describe('ProductExplorer', () => {
   });
 
   it('hides the selection tray while comparing and clears it after closing', async () => {
+    Object.defineProperty(window, 'innerWidth', {
+      configurable: true,
+      value: 1280,
+    });
+
     render(
       <ProductExplorer
         assetBase="/rundecoded/"
