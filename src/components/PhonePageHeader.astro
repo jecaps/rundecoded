@@ -1,0 +1,142 @@
+---
+import { ArrowLeft, Settings } from 'lucide-react';
+import type { Locale } from '@/i18n/config';
+import { localizedRoute } from '@/lib/routes';
+
+interface Props {
+  locale: Locale;
+  kind: 'settings' | 'shoe';
+  shoeId?: string;
+}
+
+const { locale, kind, shoeId } = Astro.props;
+const catalogueLabel = { en: 'Catalogue', de: 'Katalog', fr: 'Catalogue' }[
+  locale
+];
+const settingsLabel = { en: 'Settings', de: 'Einstellungen', fr: 'Réglages' }[
+  locale
+];
+const recommendationsLabel = {
+  en: 'Recommendations',
+  de: 'Empfehlungen',
+  fr: 'Recommandations',
+}[locale];
+---
+
+<header
+  class="border-border bg-surface tablet:hidden sticky top-0 z-30 flex min-h-[calc(3.75rem+env(safe-area-inset-top))] items-center justify-between border-b px-4 pt-[env(safe-area-inset-top)]"
+>
+  <a
+    class="text-foreground inline-flex min-h-11 items-center gap-2 text-base no-underline"
+    data-phone-return={kind}
+    data-shoe-id={shoeId}
+    data-recommendations-label={recommendationsLabel}
+    href={localizedRoute(locale, 'catalogue')}
+  >
+    <ArrowLeft aria-hidden="true" className="size-5" />
+    <span data-phone-return-label
+      >{
+        kind === 'shoe'
+          ? catalogueLabel
+          : { en: 'Back', de: 'Zurück', fr: 'Retour' }[locale]
+      }</span
+    >
+  </a>
+  <span class="text-foreground text-lg font-bold"
+    >{kind === 'settings' ? settingsLabel : ''}</span
+  >
+  {
+    kind === 'shoe' ? (
+      <a
+        aria-label={settingsLabel}
+        class="flex size-11 items-center justify-center"
+        data-phone-settings-link
+        href={localizedRoute(locale, 'settings')}
+      >
+        <Settings aria-hidden="true" className="size-5" />
+      </a>
+    ) : (
+      <span class="size-11" aria-hidden="true" />
+    )
+  }
+</header>
+
+<script>
+  function setPhoneReturnLinks() {
+    document
+      .querySelectorAll<HTMLAnchorElement>('[data-phone-return]')
+      .forEach((link) => {
+        let stored: string | null = null;
+        if (link.dataset.phoneReturn === 'settings') {
+          stored = window.sessionStorage.getItem(
+            'rundecoded:phone-settings-return',
+          );
+        } else {
+          try {
+            const context = JSON.parse(
+              window.sessionStorage.getItem('rundecoded:phone-shoe-return') ??
+                'null',
+            ) as { href?: unknown; shoeId?: unknown; source?: unknown } | null;
+            if (
+              context &&
+              context.shoeId === link.dataset.shoeId &&
+              typeof context.href === 'string'
+            ) {
+              stored = context.href;
+              if (context.source === 'consultation') {
+                const label = link.querySelector<HTMLElement>(
+                  '[data-phone-return-label]',
+                );
+                if (label)
+                  label.textContent =
+                    link.dataset.recommendationsLabel ?? 'Recommendations';
+              }
+            }
+          } catch {
+            // A malformed session value is ignored; the catalogue remains the safe fallback.
+          }
+        }
+        if (!stored) return;
+        const destination = new URL(stored, window.location.origin);
+        if (destination.origin === window.location.origin) {
+          link.href = `${destination.pathname}${destination.search}${destination.hash}`;
+        }
+        if (
+          link.dataset.phoneReturn === 'shoe' &&
+          link.dataset.returnBound !== 'true'
+        ) {
+          link.dataset.returnBound = 'true';
+          link.addEventListener(
+            'click',
+            () =>
+              window.sessionStorage.removeItem('rundecoded:phone-shoe-return'),
+            { once: true },
+          );
+        }
+      });
+  }
+  function bindSettingsLink() {
+    document
+      .querySelectorAll<HTMLAnchorElement>('[data-phone-settings-link]')
+      .forEach((link) => {
+        if (link.dataset.settingsBound === 'true') return;
+        link.dataset.settingsBound = 'true';
+        link.addEventListener(
+          'click',
+          () => {
+            window.sessionStorage.setItem(
+              'rundecoded:phone-settings-return',
+              `${window.location.pathname}${window.location.search}${window.location.hash}`,
+            );
+          },
+          { once: true },
+        );
+      });
+  }
+  setPhoneReturnLinks();
+  bindSettingsLink();
+  document.addEventListener('astro:page-load', () => {
+    setPhoneReturnLinks();
+    bindSettingsLink();
+  });
+</script>

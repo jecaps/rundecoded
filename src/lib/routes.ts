@@ -18,11 +18,17 @@ export const routes = {
   compare: withBase('compare/'),
   consultation: withBase('consultation/'),
   runningBasics: withBase('running-basics/'),
+  settings: withBase('settings/'),
   designSystem: withBase('design-system/'),
 } as const;
 
 export type LocalizedRouteKey =
-  'catalogue' | 'compare' | 'consultation' | 'designSystem' | 'runningBasics';
+  | 'catalogue'
+  | 'compare'
+  | 'consultation'
+  | 'designSystem'
+  | 'runningBasics'
+  | 'settings';
 
 const routeSegments = {
   catalogue: 'catalogue',
@@ -30,6 +36,7 @@ const routeSegments = {
   consultation: 'consultation',
   designSystem: 'design-system',
   runningBasics: 'running-basics',
+  settings: 'settings',
 } satisfies Record<LocalizedRouteKey, string>;
 
 export function localizedRoute(locale: Locale, route: LocalizedRouteKey) {
@@ -38,6 +45,10 @@ export function localizedRoute(locale: Locale, route: LocalizedRouteKey) {
 
 export function localizedHome(locale: Locale) {
   return withBase(`${locale}/`);
+}
+
+export function localizedShoeRoute(locale: Locale, shoeId: string) {
+  return withBase(`${locale}/catalogue/${encodeURIComponent(shoeId)}/`);
 }
 
 export function localeFromPathname(pathname: string): Locale | null {

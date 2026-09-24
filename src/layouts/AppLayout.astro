@@ -13,6 +13,8 @@ interface Props {
   compactBanner?: boolean;
   description: string;
   hideBanner?: boolean;
+  phoneSecondaryPage?: boolean;
+  pagePath?: (locale: Locale) => string;
   locale: Locale;
   route: LocalizedRouteKey;
   title: string;
@@ -22,15 +24,20 @@ const {
   compactBanner = false,
   description,
   hideBanner = false,
+  phoneSecondaryPage = false,
+  pagePath,
   locale,
   route,
   title,
-} = Astro.props;
+} = Astro.props as Props;
 const messages = sharedMessages[locale];
 const siteOrigin = Astro.site ?? Astro.url.origin;
-const canonicalUrl = new URL(localizedRoute(locale, route), siteOrigin);
+const routePath =
+  pagePath ??
+  ((alternateLocale: Locale) => localizedRoute(alternateLocale, route));
+const canonicalUrl = new URL(routePath(locale), siteOrigin);
 const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
-  href: new URL(localizedRoute(alternateLocale, route), siteOrigin),
+  href: new URL(routePath(alternateLocale), siteOrigin),
   locale: alternateLocale,
 }));
 ---
@@ -54,7 +61,7 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
     <link
       rel="alternate"
       hreflang="x-default"
-      href={new URL(localizedRoute('en', route), siteOrigin)}
+      href={new URL(routePath('en'), siteOrigin)}
     />
     <meta property="og:title" content={`${title} | RunDecoded`} />
     <meta property="og:description" content={description} />
@@ -68,23 +75,28 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
     <ClientRouter />
     <script is:inline>
       (() => {
-        const storedTheme = localStorage.getItem('rundecoded-theme');
-        const theme =
-          storedTheme === 'dark' || storedTheme === 'light'
-            ? storedTheme
-            : matchMedia('(prefers-color-scheme: dark)').matches
-              ? 'dark'
-              : 'light';
-        document.documentElement.dataset.theme = theme;
+        const systemTheme = matchMedia('(prefers-color-scheme: dark)');
+        const applyTheme = () => {
+          const storedTheme = localStorage.getItem('rundecoded-theme');
+          document.documentElement.dataset.theme =
+            storedTheme === 'dark' || storedTheme === 'light'
+              ? storedTheme
+              : systemTheme.matches
+                ? 'dark'
+                : 'light';
+        };
+        applyTheme();
 
         const pathLocale = location.pathname.match(/\/(de|en|fr)(?:\/|$)/)?.[1];
         document.documentElement.lang = pathLocale ?? 'en';
 
+        if (!window.__rundecodedThemeWatcher) {
+          window.__rundecodedThemeWatcher = true;
+          systemTheme.addEventListener('change', applyTheme);
+        }
+
         document.addEventListener('astro:after-swap', () => {
-          const persistedTheme = localStorage.getItem('rundecoded-theme');
-          if (persistedTheme === 'dark' || persistedTheme === 'light') {
-            document.documentElement.dataset.theme = persistedTheme;
-          }
+          applyTheme();
           const nextLocale =
             location.pathname.match(/\/(de|en|fr)(?:\/|$)/)?.[1];
           document.documentElement.lang = nextLocale ?? 'en';
@@ -98,9 +110,15 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
       <AppBanner
         compact={compactBanner}
         currentPath={Astro.url.pathname}
+        hideOnPhone={phoneSecondaryPage}
         locale={locale}
       />
-      <div class="tablet-app-header">
+      <div
+        class:list={[
+          'tablet-app-header',
+          { 'max-[35.99rem]:hidden!': phoneSecondaryPage },
+        ]}
+      >
         <a
           aria-label={messages.banner.catalogueLabel}
           class="tablet-app-header__brand"
@@ -110,7 +128,16 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
         </a>
         <DisplayControls client:only="react" compact initialLocale={locale} />
       </div>
-      <main id="main-content" class="page-container" tabindex="-1">
+      <main
+        id="main-content"
+        class:list={[
+          'page-container',
+          phoneSecondaryPage
+            ? 'max-[35.99rem]:mx-0! max-[35.99rem]:w-full! max-[35.99rem]:pb-0!'
+            : 'max-[35.99rem]:pb-[calc(4.25rem+env(safe-area-inset-bottom))]',
+        ]}
+        tabindex="-1"
+      >
         <slot />
       </main>
       <SiteFooter locale={locale} />
@@ -140,6 +167,42 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
   @media (max-width: 64rem) {
     .app-frame > :global(.site-footer) {
       display: none;
+    }
+  }
+
+  @media (max-width: 35.99rem) {
+    .app-frame--banner-hidden > :global(.app-banner) {
+      display: block;
+    }
+
+    .tablet-app-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      min-height: calc(3.75rem + env(safe-area-inset-top));
+      align-items: center;
+      justify-content: space-between;
+      padding: env(safe-area-inset-top) var(--page-gutter) 0;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .tablet-app-header__brand {
+      display: inline-flex;
+      min-height: 2.75rem;
+      align-items: center;
+      color: var(--foreground);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .tablet-app-header__brand span:last-child {
+      color: var(--primary);
     }
   }
 

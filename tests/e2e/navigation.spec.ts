@@ -177,7 +177,7 @@ test('switches the application shell at the shared breakpoint boundaries', async
   page,
 }) => {
   for (const viewport of [
-    { footer: false, tabletHeader: false, width: 575 },
+    { footer: false, tabletHeader: true, width: 575 },
     { footer: false, tabletHeader: true, width: 576 },
     { footer: false, tabletHeader: true, width: 1024 },
     { footer: true, tabletHeader: false, width: 1025 },
@@ -196,6 +196,100 @@ test('switches the application shell at the shared breakpoint boundaries', async
     } else {
       await expect(page.locator('.tablet-app-header')).toBeHidden();
     }
+  }
+});
+
+test('keeps the phone header and four fixed destinations separate from the tablet rail', async ({
+  page,
+}) => {
+  await page.setViewportSize({ height: 844, width: 390 });
+  await page.goto('./en/catalogue/');
+
+  const navigation = page.getByRole('navigation', {
+    name: 'Primary navigation',
+  });
+  await expect(page.locator('.tablet-app-header')).toBeVisible();
+  await expect(navigation).toBeVisible();
+  for (const label of ['Catalogue', 'Guide', 'Compare', 'Learn']) {
+    await expect(
+      navigation.getByRole('link', { name: label, exact: true }),
+    ).toBeVisible();
+  }
+  const itemOffsets = await navigation.locator('li').evaluateAll((items) =>
+    items.map((item) => {
+      const cell = item.getBoundingClientRect();
+      const link = item.querySelector('a')!.getBoundingClientRect();
+      return Math.abs(
+        cell.left + cell.width / 2 - (link.left + link.width / 2),
+      );
+    }),
+  );
+  expect(Math.max(...itemOffsets)).toBeLessThan(1);
+  const phoneLayout = await navigation.evaluate((nav) => {
+    const list = nav.querySelector('ul')!;
+    const links = [...nav.querySelectorAll('a')];
+    const navBox = nav.getBoundingClientRect();
+    const linkBoxes = links.map((link) => link.getBoundingClientRect());
+    return {
+      display: getComputedStyle(list).display,
+      paddingTop: getComputedStyle(nav).paddingTop,
+      paddingBottom: getComputedStyle(nav).paddingBottom,
+      firstLeft: linkBoxes[0]!.left - navBox.left,
+      lastRight: navBox.right - linkBoxes.at(-1)!.right,
+      widths: linkBoxes.map((box) => box.width),
+      height: linkBoxes[0]!.height,
+      navHeight: navBox.height,
+      activeRadius: getComputedStyle(links[0]!, '::after').borderRadius,
+    };
+  });
+  expect(phoneLayout.display).toBe('flex');
+  expect(phoneLayout.paddingTop).toBe('0px');
+  expect(phoneLayout.paddingBottom).toBe('0px');
+  expect(phoneLayout.firstLeft).toBe(0);
+  expect(phoneLayout.lastRight).toBe(0);
+  expect(
+    Math.max(...phoneLayout.widths) - Math.min(...phoneLayout.widths),
+  ).toBeLessThan(1);
+  expect(phoneLayout.height).toBeGreaterThanOrEqual(68);
+  expect(phoneLayout.height).toBe(phoneLayout.navHeight);
+  expect(phoneLayout.activeRadius).toBe('0px');
+  const phoneNavBox = await page.locator('.app-banner').boundingBox();
+  expect(phoneNavBox?.y).toBeGreaterThan(700);
+
+  await navigation.getByRole('link', { name: 'Compare' }).click();
+  await expect(page).toHaveURL(/\/en\/compare\/$/);
+  await expect(
+    navigation.getByRole('link', { name: 'Compare' }),
+  ).toHaveAttribute('aria-current', 'page');
+
+  await page.setViewportSize({ height: 844, width: 800 });
+  const tabletNavBox = await page.locator('.app-banner').boundingBox();
+  expect(tabletNavBox?.x).toBe(0);
+  expect(tabletNavBox?.width).toBeLessThan(100);
+});
+
+test('uses compact, matching phone content insets on every primary route', async ({
+  page,
+}) => {
+  await page.setViewportSize({ height: 844, width: 390 });
+  for (const route of [
+    'catalogue',
+    'consultation',
+    'compare',
+    'running-basics',
+  ]) {
+    await page.goto(`./en/${route}/`);
+    const mainPadding = await page
+      .locator('main')
+      .evaluate((element) => getComputedStyle(element).paddingBottom);
+    expect(mainPadding).toBe('68px');
+    const section = page.locator('main .app-route').first();
+    await expect(section).toBeVisible();
+    const padding = await section.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return [style.paddingTop, style.paddingBottom];
+    });
+    expect(padding).toEqual(['16px', '16px']);
   }
 });
 
@@ -218,6 +312,91 @@ test('keeps the tablet application shell on every primary route', async ({
       page.getByRole('link', { name: destination.activeLink, exact: true }),
     ).toHaveAttribute('aria-current', 'page');
   }
+});
+
+test('opens phone settings as a route without a version section', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./en/catalogue/');
+  await page.getByRole('link', { name: 'Settings' }).click();
+  await expect(page).toHaveURL(/\/en\/settings\/$/);
+  await expect(
+    page.getByRole('button', { name: 'Language: English' }),
+  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Appearance' })).toBeVisible();
+  await expect(page.getByText('Version')).toHaveCount(0);
+  await expect(
+    page.getByRole('navigation', { name: 'Primary navigation' }),
+  ).toBeHidden();
+
+  await page.getByRole('button', { name: 'Dark' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await page.getByRole('button', { name: 'System' }).click();
+  expect(
+    await page.evaluate(() => localStorage.getItem('rundecoded-theme')),
+  ).toBeNull();
+  await page.getByRole('button', { name: 'Language: English' }).click();
+  await page.getByRole('button', { name: 'Deutsch' }).click();
+  await expect(page).toHaveURL(/\/de\/settings\/$/);
+  await page.getByRole('link', { name: 'Zurück' }).click();
+  await expect(page).toHaveURL(/\/de\/catalogue\/$/);
+});
+
+test('opens a phone shoe route and returns to the filtered catalogue', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./en/catalogue/?q=Adistar');
+  await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+  await page.getByRole('link', { name: 'Open details for Adistar 5' }).click();
+  await expect(page).toHaveURL(/\/en\/catalogue\/adidas-adistar-5\/$/);
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Adistar 5' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('navigation', { name: 'Primary navigation' }),
+  ).toBeHidden();
+  await page.getByRole('button', { name: 'Compare', exact: true }).click();
+  await expect(
+    page.getByRole('button', { name: 'Added', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/catalogue\/\?q=Adistar$/);
+  await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+  const row = page.getByTestId('mobile-product-row').first();
+  await expect(
+    row.getByRole('link', { name: 'Open details for Adistar 5' }),
+  ).toBeVisible();
+  await expect(row).toHaveAttribute('data-selected', 'true');
+});
+
+test('restores the phone catalogue scroll position after shoe details', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./en/catalogue/');
+  await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+  const shoe = page.getByTestId('mobile-product-row').nth(8).getByRole('link');
+  await shoe.scrollIntoViewIfNeeded();
+  const scrollY = await page.evaluate(() => window.scrollY);
+  expect(scrollY).toBeGreaterThan(100);
+  await shoe.click();
+  await expect(page).toHaveURL(/\/en\/catalogue\/[^/]+\/$/);
+  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/catalogue\/$/);
+  await expect
+    .poll(async () => page.evaluate(() => window.scrollY))
+    .toBeGreaterThan(scrollY - 10);
 });
 
 test('design-system primitives support keyboard interaction', async ({

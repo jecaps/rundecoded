@@ -1,0 +1,41 @@
+---
+import AppLayout from '@layouts/AppLayout.astro';
+import PhonePageHeader from '@/components/PhonePageHeader.astro';
+import PhoneShoeDetails from '@/features/catalogue/PhoneShoeDetails.astro';
+import { getProductCatalogue } from '@/features/catalogue/catalogue';
+import { rankComparableProducts } from '@/features/catalogue/comparables';
+import { supportedLocales, type Locale } from '@/i18n/config';
+import { localizedShoeRoute } from '@/lib/routes';
+
+const products = getProductCatalogue();
+
+export function getStaticPaths() {
+  const products = getProductCatalogue();
+  return supportedLocales.flatMap((lang) =>
+    products.map(({ product }) => ({ params: { lang, shoeId: product.id } })),
+  );
+}
+
+const locale = Astro.params.lang as Locale;
+const item = products.find(({ product }) => product.id === Astro.params.shoeId);
+if (!item) throw new Error(`Unknown shoe: ${Astro.params.shoeId}`);
+const similar = rankComparableProducts(item, products, locale);
+---
+
+<AppLayout
+  title={`${item.product.brand} ${item.product.model}`}
+  description={`${item.product.brand} ${item.product.model}`}
+  locale={locale}
+  route="catalogue"
+  pagePath={(alternateLocale: Locale) =>
+    localizedShoeRoute(alternateLocale, item.product.id)}
+  phoneSecondaryPage
+>
+  <PhonePageHeader kind="shoe" locale={locale} shoeId={item.product.id} />
+  <PhoneShoeDetails
+    assetBase={import.meta.env.BASE_URL}
+    item={item}
+    locale={locale}
+    similar={similar}
+  />
+</AppLayout>

@@ -197,7 +197,7 @@ export function RunningBasicsGuide({
 
   return (
     <section
-      className="app-route"
+      className="app-route max-[35.99rem]:py-4"
       data-hydrated={String(hydrated)}
       data-testid="running-basics-guide"
     >
