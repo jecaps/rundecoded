@@ -401,9 +401,18 @@ test('opens phone settings as a route without a version section', async ({
   ).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Appearance' })).toBeVisible();
   await expect(page.getByText('Version')).toHaveCount(0);
+  const navigation = page.getByRole('navigation', {
+    name: 'Primary navigation',
+  });
+  await expect(navigation).toBeVisible();
   await expect(
-    page.getByRole('navigation', { name: 'Primary navigation' }),
-  ).toBeHidden();
+    navigation.getByRole('link', { name: 'Catalogue' }),
+  ).toHaveAttribute('aria-current', 'page');
+  expect(
+    await page
+      .locator('main')
+      .evaluate((element) => getComputedStyle(element).paddingBottom),
+  ).toBe('68px');
 
   await page.getByRole('button', { name: 'Dark' }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
@@ -433,13 +442,20 @@ test('opens a phone shoe route and returns to the filtered catalogue', async ({
     page.getByRole('heading', { level: 1, name: 'Adistar 5' }),
   ).toBeVisible();
   await expect(
-    page.getByRole('navigation', { name: 'Primary navigation' }),
-  ).toBeHidden();
+    page
+      .getByRole('navigation', { name: 'Primary navigation' })
+      .getByRole('link', { name: 'Catalogue' }),
+  ).toHaveAttribute('aria-current', 'page');
+  expect(
+    await page
+      .locator('main')
+      .evaluate((element) => getComputedStyle(element).paddingBottom),
+  ).toBe('68px');
   await page.getByRole('button', { name: 'Compare', exact: true }).click();
   await expect(
     page.getByRole('button', { name: 'Added', exact: true }),
   ).toHaveAttribute('aria-pressed', 'true');
-  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await page.locator('[data-phone-return="shoe"]').click();
   await expect(page).toHaveURL(/\/en\/catalogue\/\?q=Adistar$/);
   await expect(page.getByTestId('product-explorer')).toHaveAttribute(
     'data-hydrated',
@@ -450,6 +466,44 @@ test('opens a phone shoe route and returns to the filtered catalogue', async ({
     row.getByRole('link', { name: 'Open details for Adistar 5' }),
   ).toBeVisible();
   await expect(row).toHaveAttribute('data-selected', 'true');
+});
+
+test('keeps the originating phone tab active on secondary routes', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./en/consultation/');
+  await page.getByRole('link', { name: 'Settings' }).click();
+  await expect(page).toHaveURL(/\/en\/settings\/$/);
+  const navigation = page.getByRole('navigation', {
+    name: 'Primary navigation',
+  });
+  await expect(navigation.getByRole('link', { name: 'Guide' })).toHaveAttribute(
+    'aria-current',
+    'page',
+  );
+  await page.getByRole('link', { name: 'Back' }).click();
+  await expect(page).toHaveURL(/\/en\/consultation\/$/);
+
+  await page.evaluate(() => {
+    sessionStorage.setItem(
+      'rundecoded:phone-shoe-return',
+      JSON.stringify({
+        href: `${location.pathname}${location.search}`,
+        shoeId: 'adidas-adistar-5',
+        source: 'consultation',
+      }),
+    );
+  });
+  await page.goto('./en/catalogue/adidas-adistar-5/');
+  await expect(navigation.getByRole('link', { name: 'Guide' })).toHaveAttribute(
+    'aria-current',
+    'page',
+  );
+  await page.setViewportSize({ width: 800, height: 844 });
+  await expect(
+    navigation.getByRole('link', { name: 'Guide' }),
+  ).not.toHaveAttribute('aria-current', 'page');
 });
 
 test('restores the phone catalogue scroll position after shoe details', async ({
@@ -472,7 +526,7 @@ test('restores the phone catalogue scroll position after shoe details', async ({
     return saved ? (JSON.parse(saved) as { scrollY: number }).scrollY : null;
   });
   expect(savedScrollY).toBeGreaterThan(scrollY - 10);
-  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await page.locator('[data-phone-return="shoe"]').click();
   await expect(page).toHaveURL(/\/en\/catalogue\/$/);
   await expect(page.getByTestId('product-explorer')).toHaveAttribute(
     'data-hydrated',

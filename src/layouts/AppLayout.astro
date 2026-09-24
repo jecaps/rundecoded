@@ -112,8 +112,8 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
       <AppBanner
         compact={compactBanner}
         currentPath={Astro.url.pathname}
-        hideOnPhone={phoneSecondaryPage}
         locale={locale}
+        phoneSecondaryRoute={phoneSecondaryPage ? route : undefined}
       />
       <div
         class:list={[
@@ -135,7 +135,7 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
         class:list={[
           'page-container',
           phoneSecondaryPage
-            ? 'max-[35.99rem]:mx-0! max-[35.99rem]:w-full! max-[35.99rem]:pb-0!'
+            ? 'max-[35.99rem]:mx-0! max-[35.99rem]:w-full! max-[35.99rem]:pb-[calc(4.25rem+env(safe-area-inset-bottom))]!'
             : 'max-[35.99rem]:pb-[calc(4.25rem+env(safe-area-inset-bottom))]',
         ]}
         tabindex="-1"

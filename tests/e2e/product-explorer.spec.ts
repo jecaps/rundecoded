@@ -410,7 +410,7 @@ test('restores phone scroll after opening a shoe from an appended batch', async 
   expect(originalScrollY).toBeGreaterThan(1000);
   await laterRow.getByRole('link').click();
   await expect(page).toHaveURL(/\/en\/catalogue\/[^/]+\/$/);
-  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await page.locator('[data-phone-return="shoe"]').click();
   await expect(page).toHaveURL(/\/en\/catalogue\/$/);
   await expect(rows).toHaveCount(48);
   await expect
@@ -712,7 +712,7 @@ test('uses compact catalogue rows on phones', async ({ page }) => {
     page.getByRole('heading', { level: 1, name: 'Adistar 5' }),
   ).toBeVisible();
   await expect(page.getByRole('dialog')).toHaveCount(0);
-  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await page.locator('[data-phone-return="shoe"]').click();
   await expect(page).toHaveURL(/\/en\/catalogue\/$/);
 
   for (const width of [320, 575]) {
