@@ -126,8 +126,6 @@ const navigationLinks = navigation.map((item) => ({
 </header>
 
 <script>
-  import { localizedRouteFromPathname } from '@/lib/routes';
-
   const comparisonSelectionStorageKey =
     'rundecoded:catalogue-comparison-selection';
   const phoneBreakpoint = window.matchMedia('(max-width: 35.99rem)');
@@ -163,22 +161,13 @@ const navigationLinks = navigation.map((item) => ({
     if (!stored) return null;
     const returnUrl = new URL(stored, window.location.origin);
     if (returnUrl.origin !== window.location.origin) return null;
-    const route = localizedRouteFromPathname(returnUrl.pathname);
-    if (
-      route === 'catalogue' ||
-      route === 'consultation' ||
-      route === 'compare' ||
-      route === 'runningBasics'
-    ) {
-      return route;
-    }
-    if (returnUrl.pathname.includes('/catalogue/')) {
-      const shoeId = decodeURIComponent(
-        returnUrl.pathname.split('/').filter(Boolean).at(-1) ?? '',
-      );
-      return shoeReturnRoute(shoeId);
-    }
-    return null;
+    const [, section, shoeId] =
+      returnUrl.pathname.match(
+        /\/(?:en|de|fr)\/(catalogue|consultation|compare|running-basics)(?:\/([^/]+))?\/?$/,
+      ) ?? [];
+    if (section === 'catalogue')
+      return shoeId ? shoeReturnRoute(decodeURIComponent(shoeId)) : section;
+    return section === 'running-basics' ? 'runningBasics' : (section ?? null);
   }
 
   function syncPhoneActiveNavigation() {
