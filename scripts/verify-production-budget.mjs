@@ -2,9 +2,9 @@ import { readdir, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const budgets = new Map([
-  // Raised from 600 KiB with the responsive catalogue (phone rows, tablet
-  // layouts): 599,005 bytes before -> 615,594 bytes after.
-  ['.js', 602 * 1024],
+  // Phone-only navigation and filters raised this to 620,574 bytes; adding
+  // the Radix-backed Select brings the static JS total to 643,664 bytes.
+  ['.js', 640 * 1024],
   ['.css', 100 * 1024],
 ]);
 

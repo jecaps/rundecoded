@@ -6,6 +6,7 @@ import {
   Check,
   ChevronDown,
   ImageOff,
+  SlidersHorizontal,
   Plus,
   Search,
   X,
@@ -20,6 +21,7 @@ import {
 } from '@/components/ui/card';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -34,6 +36,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Toaster } from '@/components/ui/sonner';
 import {
   resolveLocalizedText,
@@ -63,6 +72,17 @@ import {
 import type { ExplorerProduct } from './catalogue';
 import { ProductDetailsDialog } from './ProductDetailsDialog';
 import {
+  applyPhoneFilters,
+  emptyPhoneFilters,
+  parsePhoneFilters,
+  phoneFilterCopy,
+  phoneFilterCount,
+  writePhoneFilters,
+  type PhoneFilters,
+  type PhoneSort,
+  type PhoneSurface,
+} from './phone-filters';
+import {
   filterProducts,
   paginateProducts,
   surfaceFilterId,
@@ -74,7 +94,7 @@ import {
   writeCatalogueUrlState,
   type CatalogueUrlState,
 } from './url-state';
-import { localizedRoute } from '@/lib/routes';
+import { localizedRoute, localizedShoeRoute } from '@/lib/routes';
 
 interface ProductExplorerProps {
   assetBase: string;
@@ -86,19 +106,10 @@ interface ProductExplorerProps {
   view?: 'catalogue' | 'comparison';
 }
 
-// Run the viewport check before the browser paints when possible. This avoids
-// briefly rendering the desktop card layout during back/forward navigation on
-// a phone, while still remaining safe for server rendering.
+// Run browser-only state updates before the first post-hydration paint when
+// possible. The initial render itself must remain identical to the server.
 const useViewportLayoutEffect =
   typeof window === 'undefined' ? useEffect : useLayoutEffect;
-
-function isCompactMobileViewport() {
-  if (typeof window === 'undefined') return false;
-  return (
-    window.matchMedia?.('(max-width: 35.99rem)').matches ??
-    window.innerWidth < 576
-  );
-}
 
 function imagePath(item: ExplorerProduct, assetBase: string): string | null {
   const image = item.product.images[0];
@@ -300,24 +311,23 @@ export function ProductExplorer({
       ]),
     [products],
   );
-  const initialBrowserState = () =>
-    typeof window === 'undefined'
-      ? null
-      : parseCatalogueUrlState(
-          new URL(window.location.href).searchParams,
-          validCategoryIds,
-        );
+  const validPurposes = useMemo(
+    () =>
+      new Set(
+        products
+          .map(purposeCategory)
+          .filter((value): value is string => Boolean(value)),
+      ),
+    [products],
+  );
   const [locale, setLocale] = useState(initialLocale);
   const [hydrated, setHydrated] = useState(false);
-  const [query, setQuery] = useState(
-    () => initialBrowserState()?.query ?? initialQuery,
-  );
-  const [categoryId, setCategoryId] = useState(
-    () => initialBrowserState()?.categoryId ?? initialCategoryId,
-  );
-  const [page, setPage] = useState(
-    () => initialBrowserState()?.page ?? initialPage,
-  );
+  const [query, setQuery] = useState(initialQuery);
+  const [categoryId, setCategoryId] = useState(initialCategoryId);
+  const [page, setPage] = useState(initialPage);
+  const [phoneFilters, setPhoneFilters] =
+    useState<PhoneFilters>(emptyPhoneFilters);
+  const [phoneFiltersOpen, setPhoneFiltersOpen] = useState(false);
   const [pageDirection, setPageDirection] = useState<
     'backward' | 'forward' | null
   >(null);
@@ -330,17 +340,28 @@ export function ProductExplorer({
   const [activeComparisonIds, setActiveComparisonIds] = useState<string[]>([]);
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const [tabletLayout, setTabletLayout] = useState(false);
-  const [compactMobile, setCompactMobile] = useState(isCompactMobileViewport);
+  const [compactMobile, setCompactMobile] = useState(false);
   const pageRef = useRef(page);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
   const productListRef = useRef<HTMLDivElement>(null);
   const copy = catalogueCopy[locale];
+  const phoneCopy = phoneFilterCopy[locale];
 
   useViewportLayoutEffect(() => {
     setSelectedIds(readComparisonSelection(products));
     setComparisonSelectionReady(true);
   }, [products]);
+
+  useViewportLayoutEffect(() => {
+    const searchParams = new URL(window.location.href).searchParams;
+    const restored = parseCatalogueUrlState(searchParams, validCategoryIds);
+    setQuery(restored.query);
+    setCategoryId(restored.categoryId);
+    setPage(restored.page);
+    pageRef.current = restored.page;
+    setPhoneFilters(parsePhoneFilters(searchParams, validPurposes));
+  }, [validCategoryIds, validPurposes]);
 
   useEffect(() => {
     if (!comparisonSelectionReady) return;
@@ -366,8 +387,11 @@ export function ProductExplorer({
       setHydrated(true);
     });
     const mobileQuery = window.matchMedia?.('(max-width: 35.99rem)');
-    const updateMobileLayout = () =>
-      setCompactMobile(mobileQuery?.matches ?? window.innerWidth < 576);
+    const updateMobileLayout = () => {
+      const isPhone = mobileQuery?.matches ?? window.innerWidth < 576;
+      setCompactMobile(isPhone);
+      if (!isPhone) setPhoneFiltersOpen(false);
+    };
     const tabletQuery = window.matchMedia?.(
       '(min-width: 36rem) and (max-width: 64rem)',
     );
@@ -407,6 +431,48 @@ export function ProductExplorer({
   }, [initialLocale]);
 
   useEffect(() => {
+    if (!hydrated || !compactMobile || view !== 'catalogue') return;
+    const stored = window.sessionStorage.getItem(
+      'rundecoded:phone-catalogue-scroll',
+    );
+    if (!stored) return;
+    try {
+      const snapshot = JSON.parse(stored) as { href: string; scrollY: number };
+      if (
+        snapshot.href !== `${window.location.pathname}${window.location.search}`
+      )
+        return;
+      const frames: number[] = [];
+      const restoreScroll = () => {
+        frames.push(
+          window.requestAnimationFrame(() => {
+            frames.push(
+              window.requestAnimationFrame(() => {
+                window.scrollTo({ top: snapshot.scrollY, behavior: 'instant' });
+                if (Math.abs(window.scrollY - snapshot.scrollY) < 10) {
+                  window.sessionStorage.removeItem(
+                    'rundecoded:phone-catalogue-scroll',
+                  );
+                }
+              }),
+            );
+          }),
+        );
+      };
+      restoreScroll();
+      document.addEventListener('astro:page-load', restoreScroll, {
+        once: true,
+      });
+      return () => {
+        document.removeEventListener('astro:page-load', restoreScroll);
+        frames.forEach((frame) => window.cancelAnimationFrame(frame));
+      };
+    } catch {
+      window.sessionStorage.removeItem('rundecoded:phone-catalogue-scroll');
+    }
+  }, [compactMobile, hydrated, view]);
+
+  useEffect(() => {
     const currentUrl = new URL(window.location.href);
     const hadRetiredFilters = retiredFilterParams.some((parameter) =>
       currentUrl.searchParams.has(parameter),
@@ -426,6 +492,12 @@ export function ProductExplorer({
       );
       setQuery(restored.query);
       setCategoryId(restored.categoryId);
+      setPhoneFilters(
+        parsePhoneFilters(
+          new URL(window.location.href).searchParams,
+          validPurposes,
+        ),
+      );
       setPageDirection(
         restored.page === pageRef.current
           ? null
@@ -440,7 +512,7 @@ export function ProductExplorer({
     }
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
-  }, [validCategoryIds]);
+  }, [validCategoryIds, validPurposes]);
 
   const productsById = useMemo(
     () => new Map(products.map((item) => [item.product.id, item])),
@@ -457,6 +529,19 @@ export function ProductExplorer({
       left[1].localeCompare(right[1], locale),
     );
   }, [locale, products]);
+  const preferredPhonePurposes = [
+    'daily-trainer',
+    'fast-training',
+    'max-cushion',
+  ];
+  const phoneQuickCategories = [...categoryOptions].sort((left, right) => {
+    const leftPriority = preferredPhonePurposes.indexOf(left[0]);
+    const rightPriority = preferredPhonePurposes.indexOf(right[0]);
+    return (
+      (leftPriority < 0 ? 100 : leftPriority) -
+      (rightPriority < 0 ? 100 : rightPriority)
+    );
+  });
   const surfaceOptions = surfaceFamilies
     .filter((family) =>
       products.some(({ product }) =>
@@ -467,6 +552,28 @@ export function ProductExplorer({
       (family) =>
         [surfaceFilterId(family), surfaceFamilyLabel(family, locale)] as const,
     );
+  const phonePurposeOptions = [
+    'entry-level',
+    'daily-trainer',
+    'fast-training',
+    'super-trainer',
+    'max-cushion',
+    'trail',
+    'trail-race',
+  ].flatMap((id) => categoryOptions.filter(([optionId]) => optionId === id));
+  const phoneSurfaceOptions = (
+    [
+      ['road', surfaceFamilyLabel('road', locale)],
+      ['easy-terrain', terrainProfileLabel('easy-terrain', locale)],
+      ['mixed-terrain', terrainProfileLabel('mixed-terrain', locale)],
+    ] as const
+  ).filter(([surface]) =>
+    products.some(({ product }) =>
+      surface === 'road'
+        ? surfaceFamiliesForShoe(product).includes('road')
+        : terrainProfilesForShoe(product).includes(surface),
+    ),
+  ) as [PhoneSurface, string][];
   const terrainOptions = terrainProfiles
     .filter((terrain) =>
       products.some(({ product }) =>
@@ -487,10 +594,18 @@ export function ProductExplorer({
       : (categoryOptions.find(([id]) => id === categoryId)?.[1] ??
         taxonomyOptions.find(([id]) => id === categoryId)?.[1] ??
         copy.allCategories);
-  const filtered = useMemo(
-    () => filterProducts(products, query, categoryId, locale),
-    [categoryId, locale, products, query],
-  );
+  const activePhoneFilterCount = phoneFilterCount(phoneFilters);
+  const filtered = useMemo(() => {
+    const searched = filterProducts(
+      products,
+      query,
+      compactMobile ? 'all' : categoryId,
+      locale,
+    );
+    return compactMobile
+      ? applyPhoneFilters(searched, phoneFilters, locale)
+      : searched;
+  }, [categoryId, compactMobile, locale, phoneFilters, products, query]);
   const pagination = paginateProducts(filtered, page);
   const mobileProductGroups = useMemo(() => {
     const groups = new Map<string, ExplorerProduct[]>();
@@ -529,6 +644,32 @@ export function ProductExplorer({
     );
   }
 
+  function updatePhoneFilters(nextFilters: PhoneFilters) {
+    setPhoneFilters(nextFilters);
+    pageRef.current = 1;
+    setPage(1);
+    setPageDirection(null);
+    const nextUrl = writeCatalogueUrlState(new URL(window.location.href), {
+      categoryId,
+      page: 1,
+      query,
+    });
+    window.history.pushState({}, '', writePhoneFilters(nextUrl, nextFilters));
+  }
+
+  function togglePhoneFilter(
+    group: 'purposes' | 'surfaces' | 'stabilities',
+    value: string,
+  ) {
+    const current = phoneFilters[group] as string[];
+    updatePhoneFilters({
+      ...phoneFilters,
+      [group]: current.includes(value)
+        ? current.filter((item) => item !== value)
+        : [...current, value],
+    } as PhoneFilters);
+  }
+
   function updateQuery(nextQuery: string) {
     setQuery(nextQuery);
     pageRef.current = 1;
@@ -563,14 +704,21 @@ export function ProductExplorer({
     setPageDirection(null);
     setSuggestionsOpen(false);
     setActiveSuggestion(-1);
-    updateUrlState(
-      {
+    if (compactMobile) {
+      setPhoneFilters(emptyPhoneFilters);
+      const url = writeCatalogueUrlState(new URL(window.location.href), {
         categoryId: 'all',
         page: 1,
         query: '',
-      },
-      'push',
-    );
+      });
+      window.history.pushState(
+        {},
+        '',
+        writePhoneFilters(url, emptyPhoneFilters),
+      );
+    } else {
+      updateUrlState({ categoryId: 'all', page: 1, query: '' }, 'push');
+    }
   }
 
   function chooseSuggestion(value: string) {
@@ -618,7 +766,7 @@ export function ProductExplorer({
     setSelectedIds(comparisonIds);
     setActiveComparisonIds(comparisonIds);
     setDetailsId(null);
-    if (tabletLayout) {
+    if (tabletLayout || compactMobile) {
       window.sessionStorage.setItem(
         comparisonSelectionStorageKey,
         JSON.stringify(comparisonIds),
@@ -775,7 +923,7 @@ export function ProductExplorer({
     return (
       <section
         aria-labelledby="comparison-title"
-        className="app-route"
+        className="app-route max-[35.99rem]:py-4"
         data-comparison-ready={comparisonSelectionReady}
         data-hydrated={hydrated ? 'true' : undefined}
         data-testid="tablet-comparison-view"
@@ -841,7 +989,7 @@ export function ProductExplorer({
 
   return (
     <section
-      className="app-route [overflow-anchor:none]"
+      className="app-route [overflow-anchor:none] max-[35.99rem]:py-4"
       aria-labelledby="catalogue-title"
       data-comparison-ready={comparisonSelectionReady}
       data-hydrated={hydrated ? 'true' : undefined}
@@ -849,9 +997,7 @@ export function ProductExplorer({
       id="comparison"
     >
       <header className="app-route__header">
-        <p className="app-route__eyebrow tablet:block hidden">
-          Product explorer
-        </p>
+        <p className="app-route__eyebrow">Product explorer</p>
         <h1 className="app-route__title" id="catalogue-title">
           {copy.title}
         </h1>
@@ -860,107 +1006,129 @@ export function ProductExplorer({
         </p>
       </header>
 
-      <div className="tablet:mt-5 mt-4">
+      <div className="tablet:mt-5 mt-3">
         <div className="tablet:grid-cols-[minmax(16rem,1fr)_auto] grid gap-2">
-          <div className="relative min-w-0">
-            <label className="sr-only" htmlFor="catalogue-search">
-              {copy.searchLabel}
-            </label>
-            <div className="border-border bg-background focus-within:border-primary focus-within:ring-ring/20 flex h-11 items-center gap-3 rounded-[var(--radius-control)] border px-4 focus-within:ring-3">
-              <Search
-                aria-hidden="true"
-                className="text-muted-foreground size-4 shrink-0"
-              />
-              <input
-                ref={searchInputRef}
-                aria-activedescendant={
-                  activeSuggestion >= 0
-                    ? `catalogue-suggestion-${activeSuggestion}`
-                    : undefined
-                }
-                aria-autocomplete="list"
-                aria-controls="catalogue-suggestions"
-                aria-expanded={suggestionsOpen && suggestions.length > 0}
-                className="placeholder:text-muted-foreground min-w-0 flex-1 border-0 bg-transparent text-sm outline-none [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
-                id="catalogue-search"
-                onChange={(event) => updateQuery(event.target.value)}
-                onBlur={() => {
-                  setSuggestionsOpen(false);
-                  setActiveSuggestion(-1);
-                }}
-                onFocus={() => setSuggestionsOpen(query.trim().length >= 2)}
-                onKeyDown={(event) => {
-                  if (!suggestions.length) return;
-                  if (event.key === 'ArrowDown') {
-                    event.preventDefault();
-                    setSuggestionsOpen(true);
-                    setActiveSuggestion((current) =>
-                      Math.min(current + 1, suggestions.length - 1),
-                    );
-                  } else if (event.key === 'ArrowUp') {
-                    event.preventDefault();
-                    setActiveSuggestion((current) => Math.max(current - 1, 0));
-                  } else if (event.key === 'Enter' && activeSuggestion >= 0) {
-                    event.preventDefault();
-                    const suggestion = suggestions[activeSuggestion];
-                    if (suggestion) chooseSuggestion(suggestion.value);
-                  } else if (event.key === 'Escape') {
+          <div className="tablet:contents flex min-w-0 items-start gap-2">
+            <div className="relative min-w-0 flex-1">
+              <label className="sr-only" htmlFor="catalogue-search">
+                {copy.searchLabel}
+              </label>
+              <div className="border-border bg-background focus-within:border-primary focus-within:ring-ring/20 flex h-11 items-center gap-3 rounded-[var(--radius-control)] border px-4 focus-within:ring-3">
+                <Search
+                  aria-hidden="true"
+                  className="text-muted-foreground size-4 shrink-0"
+                />
+                <input
+                  ref={searchInputRef}
+                  aria-activedescendant={
+                    activeSuggestion >= 0
+                      ? `catalogue-suggestion-${activeSuggestion}`
+                      : undefined
+                  }
+                  aria-autocomplete="list"
+                  aria-controls="catalogue-suggestions"
+                  aria-expanded={suggestionsOpen && suggestions.length > 0}
+                  className="placeholder:text-muted-foreground min-w-0 flex-1 border-0 bg-transparent text-sm outline-none [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
+                  id="catalogue-search"
+                  onChange={(event) => updateQuery(event.target.value)}
+                  onBlur={() => {
                     setSuggestionsOpen(false);
                     setActiveSuggestion(-1);
-                  }
-                }}
-                placeholder={copy.searchPlaceholder}
-                role="combobox"
-                type="search"
-                value={query}
-              />
-              {query ? (
-                <button
-                  aria-label={copy.clearFilters}
-                  className="text-muted-foreground hover:text-foreground cursor-pointer border-0 bg-transparent p-1"
-                  onClick={() => updateQuery('')}
-                  type="button"
+                  }}
+                  onFocus={() => setSuggestionsOpen(query.trim().length >= 2)}
+                  onKeyDown={(event) => {
+                    if (!suggestions.length) return;
+                    if (event.key === 'ArrowDown') {
+                      event.preventDefault();
+                      setSuggestionsOpen(true);
+                      setActiveSuggestion((current) =>
+                        Math.min(current + 1, suggestions.length - 1),
+                      );
+                    } else if (event.key === 'ArrowUp') {
+                      event.preventDefault();
+                      setActiveSuggestion((current) =>
+                        Math.max(current - 1, 0),
+                      );
+                    } else if (event.key === 'Enter' && activeSuggestion >= 0) {
+                      event.preventDefault();
+                      const suggestion = suggestions[activeSuggestion];
+                      if (suggestion) chooseSuggestion(suggestion.value);
+                    } else if (event.key === 'Escape') {
+                      setSuggestionsOpen(false);
+                      setActiveSuggestion(-1);
+                    }
+                  }}
+                  placeholder={copy.searchPlaceholder}
+                  role="combobox"
+                  type="search"
+                  value={query}
+                />
+                {query ? (
+                  <button
+                    aria-label={copy.clearFilters}
+                    className="text-muted-foreground hover:text-foreground cursor-pointer border-0 bg-transparent p-1 max-[35.99rem]:flex max-[35.99rem]:size-11 max-[35.99rem]:items-center max-[35.99rem]:justify-center"
+                    onClick={() => updateQuery('')}
+                    type="button"
+                  >
+                    <X aria-hidden="true" className="size-4" />
+                  </button>
+                ) : null}
+              </div>
+              {suggestionsOpen && suggestions.length ? (
+                <ul
+                  aria-label={copy.suggestions}
+                  className="border-border bg-surface absolute top-full right-0 left-0 z-40 mt-2 max-h-80 list-none overflow-y-auto rounded-[var(--radius-control)] border p-1 shadow-xl"
+                  id="catalogue-suggestions"
+                  role="listbox"
                 >
-                  <X aria-hidden="true" className="size-4" />
-                </button>
+                  {suggestions.map((suggestion, index) => (
+                    <li key={suggestion.id} role="presentation">
+                      <button
+                        aria-selected={activeSuggestion === index}
+                        className={cn(
+                          'hover:bg-surface-subtle focus-visible:bg-surface-subtle flex min-h-11 w-full cursor-pointer items-center justify-between gap-4 rounded-[calc(var(--radius-control)-0.2rem)] border-0 bg-transparent px-3 py-2 text-left outline-none',
+                          activeSuggestion === index && 'bg-surface-subtle',
+                        )}
+                        id={`catalogue-suggestion-${index}`}
+                        onClick={() => chooseSuggestion(suggestion.value)}
+                        onMouseDown={(event) => event.preventDefault()}
+                        role="option"
+                        type="button"
+                      >
+                        <span className="font-medium">{suggestion.label}</span>
+                        <span className="text-muted-foreground text-xs">
+                          {searchSuggestionKindLabel(suggestion.kind, locale)}
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
               ) : null}
             </div>
-            {suggestionsOpen && suggestions.length ? (
-              <ul
-                aria-label={copy.suggestions}
-                className="border-border bg-surface absolute top-full right-0 left-0 z-40 mt-2 max-h-80 list-none overflow-y-auto rounded-[var(--radius-control)] border p-1 shadow-xl"
-                id="catalogue-suggestions"
-                role="listbox"
-              >
-                {suggestions.map((suggestion, index) => (
-                  <li key={suggestion.id} role="presentation">
-                    <button
-                      aria-selected={activeSuggestion === index}
-                      className={cn(
-                        'hover:bg-surface-subtle focus-visible:bg-surface-subtle flex min-h-11 w-full cursor-pointer items-center justify-between gap-4 rounded-[calc(var(--radius-control)-0.2rem)] border-0 bg-transparent px-3 py-2 text-left outline-none',
-                        activeSuggestion === index && 'bg-surface-subtle',
-                      )}
-                      id={`catalogue-suggestion-${index}`}
-                      onClick={() => chooseSuggestion(suggestion.value)}
-                      onMouseDown={(event) => event.preventDefault()}
-                      role="option"
-                      type="button"
-                    >
-                      <span className="font-medium">{suggestion.label}</span>
-                      <span className="text-muted-foreground text-xs">
-                        {searchSuggestionKindLabel(suggestion.kind, locale)}
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
+
+            <Button
+              aria-label={`${phoneCopy.filters}${activePhoneFilterCount ? ` (${activePhoneFilterCount})` : ''}`}
+              className="tablet:hidden relative size-11 shrink-0 rounded-[var(--radius-control)]"
+              onClick={() => setPhoneFiltersOpen(true)}
+              size="icon"
+              variant="outline"
+            >
+              <SlidersHorizontal aria-hidden="true" className="size-4" />
+              {activePhoneFilterCount ? (
+                <span
+                  aria-hidden="true"
+                  className="bg-primary text-primary-foreground absolute -top-2 -right-2 flex size-5 items-center justify-center rounded-full text-[0.65rem] font-bold"
+                >
+                  {activePhoneFilterCount}
+                </span>
+              ) : null}
+            </Button>
           </div>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className="tablet:w-52 h-11 w-full shrink-0 justify-between"
+                className="tablet:flex tablet:w-52 hidden h-11 w-full shrink-0 justify-between"
                 variant="outline"
               >
                 {selectedCategoryLabel}
@@ -1003,13 +1171,60 @@ export function ProductExplorer({
         </div>
 
         <div
-          className="mt-4 flex min-h-8 flex-wrap items-center justify-between gap-3"
+          className="tablet:hidden mt-3 flex min-w-0 gap-2 overflow-x-auto pb-1"
+          data-testid="phone-quick-filters"
+        >
+          <button
+            aria-pressed={phoneFilters.purposes.length === 0}
+            className={cn(
+              'border-border bg-surface text-foreground flex min-h-11 shrink-0 cursor-pointer items-center gap-1.5 rounded-[var(--radius-control)] border px-3 text-sm font-medium',
+              phoneFilters.purposes.length === 0 &&
+                'border-primary bg-primary text-primary-foreground',
+            )}
+            onClick={() =>
+              updatePhoneFilters({ ...phoneFilters, purposes: [] })
+            }
+            type="button"
+          >
+            {phoneFilters.purposes.length === 0 ? (
+              <Check aria-hidden="true" className="size-4" />
+            ) : null}
+            {phoneCopy.all}
+          </button>
+          {phoneQuickCategories.map(([id, label]) => {
+            const selected = phoneFilters.purposes.includes(id);
+            return (
+              <button
+                aria-pressed={selected}
+                className={cn(
+                  'border-border bg-surface text-foreground flex min-h-11 shrink-0 cursor-pointer items-center gap-1.5 rounded-[var(--radius-control)] border px-3 text-sm font-medium',
+                  selected &&
+                    'border-primary bg-primary text-primary-foreground',
+                )}
+                key={id}
+                onClick={() => togglePhoneFilter('purposes', id)}
+                type="button"
+              >
+                {selected ? (
+                  <Check aria-hidden="true" className="size-4" />
+                ) : null}
+                {label}
+              </button>
+            );
+          })}
+        </div>
+
+        <div
+          className="tablet:mt-4 mt-2 flex min-h-8 flex-wrap items-center justify-between gap-3"
           data-testid="catalogue-results-bar"
         >
           <p aria-live="polite" className="text-muted-foreground m-0 text-sm">
             {copy.results(filtered.length, products.length)}
           </p>
-          {query || categoryId !== 'all' ? (
+          {query ||
+          (compactMobile
+            ? activePhoneFilterCount > 0 || phoneFilters.sort !== 'default'
+            : categoryId !== 'all') ? (
             <Button onClick={clearFilters} size="sm" variant="ghost">
               {copy.clearFilters}
             </Button>
@@ -1017,11 +1232,198 @@ export function ProductExplorer({
         </div>
       </div>
 
+      <Dialog open={phoneFiltersOpen} onOpenChange={setPhoneFiltersOpen}>
+        <DialogContent
+          aria-describedby="phone-filters-description"
+          className="top-auto right-0 bottom-0 left-0 m-0 grid h-[min(82dvh,48rem)] max-h-[calc(100dvh-env(safe-area-inset-top)-1rem)] w-full max-w-none translate-x-0 translate-y-0 grid-rows-[auto_minmax(0,1fr)_auto] gap-0 rounded-t-[var(--radius-panel)] rounded-b-none border-x-0 border-b-0 p-0 [&>button]:hidden"
+          data-testid="phone-filters-sheet"
+        >
+          <div className="border-border border-b px-5 pt-2 pb-4">
+            <div className="bg-border mx-auto mb-3 h-1 w-10 rounded-full" />
+            <div className="flex items-center justify-between gap-2">
+              <DialogTitle>{phoneCopy.filters}</DialogTitle>
+              <div className="flex items-center gap-1">
+                <Button
+                  className="min-h-11 px-2"
+                  onClick={clearFilters}
+                  size="sm"
+                  variant="ghost"
+                >
+                  {phoneCopy.clear}
+                </Button>
+                <DialogClose
+                  aria-label={phoneCopy.close}
+                  className="hover:bg-surface-subtle flex size-11 cursor-pointer items-center justify-center rounded-[var(--radius-control)]"
+                >
+                  <X aria-hidden="true" className="size-5" />
+                </DialogClose>
+              </div>
+            </div>
+            <DialogDescription
+              className="sr-only"
+              id="phone-filters-description"
+            >
+              {copy.results(filtered.length, products.length)}
+            </DialogDescription>
+          </div>
+          <div className="min-h-0 overflow-y-auto px-5 py-5">
+            {(
+              [
+                [phoneCopy.purpose, 'purposes', phonePurposeOptions],
+                [
+                  phoneCopy.guidance,
+                  'stabilities',
+                  [
+                    ['neutral', stabilityLabel('neutral', locale)],
+                    ['stability', stabilityLabel('stability', locale)],
+                  ],
+                ],
+                [phoneCopy.surface, 'surfaces', phoneSurfaceOptions],
+              ] as const
+            ).map(([label, group, options]) => (
+              <fieldset className="mb-5" key={group}>
+                <legend className="text-muted-foreground mb-2 text-xs font-bold tracking-[0.12em] uppercase">
+                  {label}
+                </legend>
+                <div className="flex flex-wrap gap-2">
+                  {options.map(([value, optionLabel]) => {
+                    const selected = (phoneFilters[group] as string[]).includes(
+                      value,
+                    );
+                    return (
+                      <button
+                        aria-pressed={selected}
+                        className={cn(
+                          'border-border bg-surface flex min-h-11 cursor-pointer items-center gap-2 rounded-[var(--radius-control)] border px-3 py-2 text-left text-sm',
+                          selected &&
+                            'border-primary bg-primary text-primary-foreground',
+                        )}
+                        key={value}
+                        onClick={() => togglePhoneFilter(group, value)}
+                        type="button"
+                      >
+                        {selected ? (
+                          <Check
+                            aria-hidden="true"
+                            className="size-4 shrink-0"
+                          />
+                        ) : null}
+                        {optionLabel}
+                      </button>
+                    );
+                  })}
+                </div>
+              </fieldset>
+            ))}
+            <fieldset className="mb-5">
+              <legend className="text-muted-foreground mb-2 text-xs font-bold tracking-[0.12em] uppercase">
+                {phoneCopy.drop}
+              </legend>
+              <div className="bg-surface-subtle flex gap-1 rounded-[var(--radius-control)] p-1">
+                {(
+                  [
+                    ['low', phoneCopy.lowDrop],
+                    ['mid', phoneCopy.midDrop],
+                    ['high', phoneCopy.highDrop],
+                  ] as const
+                ).map(([value, label]) => (
+                  <button
+                    aria-pressed={phoneFilters.drop === value}
+                    className={cn(
+                      'text-foreground min-h-12 min-w-0 flex-1 cursor-pointer rounded-[var(--radius-sm)] px-1 text-xs font-medium',
+                      phoneFilters.drop === value &&
+                        'bg-primary text-primary-foreground',
+                    )}
+                    key={value}
+                    onClick={() =>
+                      updatePhoneFilters({
+                        ...phoneFilters,
+                        drop: phoneFilters.drop === value ? 'any' : value,
+                      })
+                    }
+                    type="button"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+            <fieldset className="mb-5">
+              <legend className="text-muted-foreground mb-2 text-xs font-bold tracking-[0.12em] uppercase">
+                {phoneCopy.distance}
+              </legend>
+              <div className="bg-surface-subtle flex gap-1 rounded-[var(--radius-control)] p-1">
+                {(
+                  [
+                    ['10', '10 km'],
+                    ['21', '21 km'],
+                    ['42', '42 km'],
+                    ['any', phoneCopy.any],
+                  ] as const
+                ).map(([value, label]) => (
+                  <button
+                    aria-pressed={phoneFilters.distance === value}
+                    className={cn(
+                      'text-foreground min-h-11 min-w-0 flex-1 cursor-pointer rounded-[var(--radius-sm)] px-1 text-xs font-medium',
+                      phoneFilters.distance === value &&
+                        'bg-primary text-primary-foreground',
+                    )}
+                    key={value}
+                    onClick={() =>
+                      updatePhoneFilters({ ...phoneFilters, distance: value })
+                    }
+                    type="button"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+            <div>
+              <label
+                className="text-muted-foreground mb-2 block text-xs font-bold tracking-[0.12em] uppercase"
+                id="phone-sort-label"
+              >
+                {phoneCopy.sort}
+              </label>
+              <Select
+                onValueChange={(value) =>
+                  updatePhoneFilters({
+                    ...phoneFilters,
+                    sort: value as PhoneSort,
+                  })
+                }
+                value={phoneFilters.sort}
+              >
+                <SelectTrigger aria-labelledby="phone-sort-label">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="default">
+                    {phoneCopy.defaultSort}
+                  </SelectItem>
+                  <SelectItem value="brand">{phoneCopy.brandSort}</SelectItem>
+                  <SelectItem value="model">{phoneCopy.modelSort}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="border-border bg-surface flex border-t px-5 pt-3 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+            <Button
+              className="min-h-11 flex-1"
+              onClick={() => setPhoneFiltersOpen(false)}
+            >
+              {phoneCopy.show(filtered.length)}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <div className="tablet:overflow-x-clip" ref={productListRef}>
         {pagination.items.length ? (
-          compactMobile ? (
+          <>
             <div
-              className="border-border bg-surface mt-4 overflow-visible border-t"
+              className="border-border bg-surface tablet:hidden mt-2 overflow-visible border-t"
               data-testid="mobile-product-page"
               key={`mobile:${categoryId}:${query}:${pagination.page}`}
               style={{
@@ -1062,13 +1464,32 @@ export function ProductExplorer({
                           data-testid="mobile-product-row"
                           key={product.id}
                         >
-                          <button
+                          <a
                             aria-label={copy.openDetails(product.model)}
                             className="focus-visible:ring-ring/35 grid min-w-0 cursor-pointer grid-cols-[5.5rem_minmax(0,1fr)] items-center gap-3 border-0 bg-transparent px-3 py-2.5 text-left outline-none focus-visible:ring-3"
-                            onClick={(event) =>
-                              openDetails(product.id, event.currentTarget)
-                            }
-                            type="button"
+                            href={localizedShoeRoute(locale, product.id)}
+                            onClick={() => {
+                              const href = `${window.location.pathname}${window.location.search}`;
+                              window.sessionStorage.setItem(
+                                'rundecoded:phone-catalogue-return',
+                                href,
+                              );
+                              window.sessionStorage.setItem(
+                                'rundecoded:phone-shoe-return',
+                                JSON.stringify({
+                                  href,
+                                  shoeId: product.id,
+                                  source: 'catalogue',
+                                }),
+                              );
+                              window.sessionStorage.setItem(
+                                'rundecoded:phone-catalogue-scroll',
+                                JSON.stringify({
+                                  href,
+                                  scrollY: window.scrollY,
+                                }),
+                              );
+                            }}
                           >
                             <span className="border-border flex size-[5.5rem] items-center justify-center overflow-hidden rounded-[var(--radius-control)] border bg-white">
                               <ProductPicture
@@ -1117,7 +1538,7 @@ export function ProductExplorer({
                                 {dropLabel(item)}
                               </span>
                             </span>
-                          </button>
+                          </a>
                           <button
                             data-comparison-state
                             aria-label={
@@ -1147,10 +1568,9 @@ export function ProductExplorer({
                 </section>
               ))}
             </div>
-          ) : (
             <div
               className={cn(
-                'tablet:grid-cols-2 desktop:grid-cols-3 mt-6 grid grid-cols-1 gap-[clamp(0.75rem,2vw,1rem)]',
+                'tablet:grid tablet:grid-cols-2 desktop:grid-cols-3 mt-6 hidden grid-cols-1 gap-[clamp(0.75rem,2vw,1rem)]',
                 pageDirection === 'forward' && 'catalogue-page--forward',
                 pageDirection === 'backward' && 'catalogue-page--backward',
               )}
@@ -1309,7 +1729,7 @@ export function ProductExplorer({
                 })}
               </div>
             </div>
-          )
+          </>
         ) : (
           <div className="border-border bg-surface mt-6 rounded-[var(--radius-panel)] border p-10 text-center">
             <p className="m-0 text-lg font-semibold">{copy.noResults}</p>
@@ -1335,10 +1755,11 @@ export function ProductExplorer({
 
       {pagination.pageCount > 1 ? (
         <nav
-          className="mt-8 flex items-center justify-center gap-4"
+          className="tablet:mt-8 tablet:flex tablet:justify-center tablet:gap-4 mt-4 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2"
           aria-label="Pagination"
         >
           <Button
+            className="tablet:w-auto tablet:gap-2 tablet:px-4 tablet:text-sm w-full min-w-0 gap-1 px-2 text-xs"
             disabled={pagination.page === 1}
             onClick={() => changePage(pagination.page - 1)}
             variant="outline"
@@ -1346,10 +1767,14 @@ export function ProductExplorer({
             <ArrowLeft aria-hidden="true" className="size-4" />
             {copy.previous}
           </Button>
-          <span aria-live="polite" className="text-muted-foreground text-sm">
+          <span
+            aria-live="polite"
+            className="text-muted-foreground text-center text-sm whitespace-nowrap"
+          >
             {copy.page(pagination.page, pagination.pageCount)}
           </span>
           <Button
+            className="tablet:w-auto tablet:gap-2 tablet:px-4 tablet:text-sm w-full min-w-0 gap-1 px-2 text-xs"
             disabled={pagination.page === pagination.pageCount}
             onClick={() => changePage(pagination.page + 1)}
             variant="outline"
@@ -1363,7 +1788,7 @@ export function ProductExplorer({
       {selectedIds.length && !comparisonOpen ? (
         <div
           aria-label={copy.comparisonSelection}
-          className="border-border bg-surface/95 sticky bottom-3 z-30 mx-auto mt-8 flex w-[min(48rem,calc(100%-1rem))] items-center gap-2 rounded-[var(--radius-panel)] border p-2 shadow-[var(--shadow-panel)] backdrop-blur-sm"
+          className="border-border bg-surface/95 sticky bottom-3 z-30 mx-auto mt-8 flex w-[min(48rem,calc(100%-1rem))] items-center gap-2 rounded-[var(--radius-panel)] border p-2 shadow-[var(--shadow-panel)] backdrop-blur-sm max-[35.99rem]:bottom-[calc(4.5rem+env(safe-area-inset-bottom))]"
           data-comparison-state
           role="region"
         >
@@ -1397,7 +1822,7 @@ export function ProductExplorer({
                   </span>
                   <button
                     aria-label={copy.deselectProduct(item.product.model)}
-                    className="hover:bg-surface-strong focus-visible:ring-ring/35 ml-2 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] border-0 bg-transparent outline-none focus-visible:ring-3"
+                    className="hover:bg-surface-strong focus-visible:ring-ring/35 ml-2 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] border-0 bg-transparent outline-none focus-visible:ring-3 max-[35.99rem]:size-11"
                     onClick={() => toggleComparison(item.product.id)}
                     title={copy.remove}
                     type="button"
@@ -1408,7 +1833,7 @@ export function ProductExplorer({
               );
             })}
           </div>
-          {tabletLayout && selectedIds.length === 2 ? (
+          {(tabletLayout || compactMobile) && selectedIds.length === 2 ? (
             <a
               className={cn(
                 buttonVariants(),

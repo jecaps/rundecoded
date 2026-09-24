@@ -134,7 +134,7 @@ describe('ProductExplorer', () => {
     expect(
       screen.getByRole('button', { name: /All categories/ }),
     ).toBeVisible();
-    expect(screen.queryByRole('button', { name: 'Filters' })).toBeNull();
+    expect(screen.getByRole('button', { name: 'Filters' })).toBeInTheDocument();
     await waitFor(() => expect(window.location.search).toBe(''));
   });
 
@@ -153,12 +153,12 @@ describe('ProductExplorer', () => {
     fireEvent.click(compareButtons[1]!);
 
     expect(screen.getAllByRole('button', { name: 'Added' })).toHaveLength(2);
-    expect(screen.getAllByRole('button', { name: /^Deselect / })).toHaveLength(
-      2,
-    );
     const selectionTray = screen.getByRole('region', {
       name: 'Shoe comparison selection',
     });
+    expect(
+      within(selectionTray).getAllByRole('button', { name: /^Deselect / }),
+    ).toHaveLength(2);
     expect(selectionTray).toBeVisible();
     expect(selectionTray).toHaveClass('flex', 'items-center');
     expect(within(selectionTray).getByText('Adistar 5')).toBeVisible();

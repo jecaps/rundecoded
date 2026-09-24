@@ -30,7 +30,7 @@ import {
   type QuizAnswers,
 } from '@/domain/recommendations';
 import type { Locale } from '@/i18n/config';
-import { localizedRoute } from '@/lib/routes';
+import { localizedRoute, localizedShoeRoute } from '@/lib/routes';
 import { cn } from '@/lib/utils';
 
 import type { ExplorerProduct } from '../catalogue/catalogue';
@@ -179,43 +179,19 @@ export function CustomerConsultation({
 }: CustomerConsultationProps) {
   const copy = consultationCopy[locale];
   const catalogueUrl = localizedRoute(locale, 'catalogue');
-  const initialBrowserState = () =>
-    typeof window === 'undefined'
-      ? null
-      : parseConsultationUrlState(new URL(window.location.href).searchParams);
-  const [step, setStep] = useState(() =>
-    initialBrowserState()?.showResults ? 6 : 0,
-  );
-  const [showResults, setShowResults] = useState(
-    () => initialBrowserState()?.showResults ?? false,
-  );
+  const [step, setStep] = useState(0);
+  const [showResults, setShowResults] = useState(false);
   const [visibleRecommendationCount, setVisibleRecommendationCount] = useState(
     initialRecommendationCount,
   );
-  const [distance, setDistance] = useState<string | undefined>(
-    () => initialBrowserState()?.answers.distance?.[0],
-  );
-  const [surfaces, setSurfaces] = useState<string[]>(
-    () => initialBrowserState()?.answers.surfaces ?? [],
-  );
-  const [otherSurface, setOtherSurface] = useState(
-    () => initialBrowserState()?.otherSurface ?? '',
-  );
-  const [priorities, setPriorities] = useState<string[]>(
-    () => initialBrowserState()?.answers.priority ?? [],
-  );
-  const [goal, setGoal] = useState<string | undefined>(
-    () => initialBrowserState()?.answers.goal?.[0],
-  );
-  const [otherGoal, setOtherGoal] = useState(
-    () => initialBrowserState()?.otherGoal ?? '',
-  );
-  const [stability, setStability] = useState<string | undefined>(
-    () => initialBrowserState()?.answers.stability?.[0],
-  );
-  const [comfort, setComfort] = useState<string[]>(
-    () => initialBrowserState()?.answers.comfort ?? [],
-  );
+  const [distance, setDistance] = useState<string | undefined>();
+  const [surfaces, setSurfaces] = useState<string[]>([]);
+  const [otherSurface, setOtherSurface] = useState('');
+  const [priorities, setPriorities] = useState<string[]>([]);
+  const [goal, setGoal] = useState<string | undefined>();
+  const [otherGoal, setOtherGoal] = useState('');
+  const [stability, setStability] = useState<string | undefined>();
+  const [comfort, setComfort] = useState<string[]>([]);
   const [detailsId, setDetailsId] = useState<string | null>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
 
@@ -287,9 +263,53 @@ export function CustomerConsultation({
       setDetailsId(null);
     }
 
+    onPopState();
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
+
+  useEffect(() => {
+    if (!showResults) return;
+    const stored = window.sessionStorage.getItem(
+      'rundecoded:phone-consultation-scroll',
+    );
+    if (!stored) return;
+    try {
+      const snapshot = JSON.parse(stored) as { href: string; scrollY: number };
+      if (
+        snapshot.href !==
+        `${window.location.pathname}${window.location.search}${window.location.hash}`
+      )
+        return;
+      window.sessionStorage.removeItem('rundecoded:phone-consultation-scroll');
+      const frame = window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() =>
+          window.scrollTo({ top: snapshot.scrollY, behavior: 'instant' }),
+        );
+      });
+      return () => window.cancelAnimationFrame(frame);
+    } catch {
+      window.sessionStorage.removeItem('rundecoded:phone-consultation-scroll');
+    }
+  }, [showResults]);
+
+  function openRecommendationDetails(id: string, opener: HTMLElement) {
+    if (window.matchMedia?.('(max-width: 35.99rem)').matches) {
+      const href = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      window.sessionStorage.setItem(
+        'rundecoded:phone-shoe-return',
+        JSON.stringify({ href, shoeId: id, source: 'consultation' }),
+      );
+      window.sessionStorage.setItem(
+        'rundecoded:phone-consultation-scroll',
+        JSON.stringify({ href, scrollY: window.scrollY }),
+      );
+      window.location.assign(localizedShoeRoute(locale, id));
+      return;
+    }
+    detailsOpenerRef.current = opener;
+    setDetailsId(id);
+  }
 
   function updateUrlState(nextShowResults: boolean, mode: 'push' | 'replace') {
     const nextUrl = writeConsultationUrlState(new URL(window.location.href), {
@@ -411,7 +431,10 @@ export function CustomerConsultation({
 
   if (showResults) {
     return (
-      <section className="app-route" data-testid="consultation-results">
+      <section
+        className="app-route max-[35.99rem]:py-4"
+        data-testid="consultation-results"
+      >
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="app-route__header">
             <p className="app-route__eyebrow">{copy.eyebrow}</p>
@@ -446,10 +469,9 @@ export function CustomerConsultation({
                 aria-label={`${copy.actions.viewDetails}: ${product.model}`}
                 className="hover:border-primary/50 focus-visible:ring-ring/35 cursor-pointer transition-colors outline-none focus-visible:ring-3"
                 key={product.id}
-                onClick={(event) => {
-                  detailsOpenerRef.current = event.currentTarget;
-                  setDetailsId(product.id);
-                }}
+                onClick={(event) =>
+                  openRecommendationDetails(product.id, event.currentTarget)
+                }
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault();
@@ -515,6 +537,7 @@ export function CustomerConsultation({
           {visibleRecommendationCount < recommendationPool.length ? (
             <div className="flex justify-center pt-2">
               <Button
+                className="max-[35.99rem]:h-11 max-[35.99rem]:w-full max-[35.99rem]:max-w-80"
                 onClick={() =>
                   setVisibleRecommendationCount((count) =>
                     Math.min(
@@ -535,12 +558,19 @@ export function CustomerConsultation({
         <p className="border-border text-muted-foreground mt-6 border-t pt-5 text-sm leading-6">
           {copy.resultDisclaimer}
         </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Button onClick={reset} type="button">
+        <div className="mt-6 flex flex-wrap gap-3 max-[35.99rem]:flex-col max-[35.99rem]:items-center">
+          <Button
+            className="max-[35.99rem]:h-11 max-[35.99rem]:w-full max-[35.99rem]:max-w-80"
+            onClick={reset}
+            type="button"
+          >
             {copy.actions.restart}
           </Button>
           <a
-            className={buttonVariants({ variant: 'outline' })}
+            className={cn(
+              buttonVariants({ variant: 'outline' }),
+              'max-[35.99rem]:h-11 max-[35.99rem]:w-full max-[35.99rem]:max-w-80',
+            )}
             href={catalogueUrl}
           >
             {copy.actions.browseCatalogue}
@@ -564,7 +594,10 @@ export function CustomerConsultation({
   const question = copy.questions[step];
 
   return (
-    <section className="app-route" data-testid="customer-consultation">
+    <section
+      className="app-route max-[35.99rem]:py-4"
+      data-testid="customer-consultation"
+    >
       <div className="app-route__header">
         <p className="app-route__eyebrow">{copy.eyebrow}</p>
         <h1 className="app-route__title">{copy.title}</h1>
@@ -774,24 +807,36 @@ export function CustomerConsultation({
             ) : null}
           </div>
 
-          <div className="border-border mt-9 flex flex-wrap items-center justify-between gap-3 border-t pt-5">
+          <div className="border-border mt-9 flex flex-wrap items-center justify-between gap-3 border-t pt-5 max-[35.99rem]:flex-nowrap max-[35.99rem]:gap-2">
             <a
-              className={buttonVariants({ variant: 'outline' })}
+              className={cn(
+                buttonVariants({ variant: 'outline' }),
+                'max-[35.99rem]:hidden',
+              )}
               href={catalogueUrl}
             >
               {copy.actions.browseCatalogue}
             </a>
-            <div className="ml-auto flex gap-2">
+            <div className="ml-auto flex gap-2 max-[35.99rem]:ml-0 max-[35.99rem]:w-full max-[35.99rem]:justify-center max-[35.99rem]:gap-3">
               <Button
+                aria-label={copy.actions.back}
+                className="max-[35.99rem]:size-11 max-[35.99rem]:p-0"
                 disabled={step === 0}
                 onClick={() => setStep((current) => Math.max(0, current - 1))}
                 type="button"
+                title={copy.actions.back}
                 variant="outline"
               >
                 <ArrowLeft aria-hidden="true" className="size-4" />
-                {copy.actions.back}
+                <span className="max-[35.99rem]:hidden">
+                  {copy.actions.back}
+                </span>
               </Button>
               <Button
+                aria-label={
+                  step === 6 ? copy.actions.results : copy.actions.next
+                }
+                className="max-[35.99rem]:size-11 max-[35.99rem]:p-0"
                 disabled={!canContinue}
                 onClick={() => {
                   if (step === 6) {
@@ -801,8 +846,11 @@ export function CustomerConsultation({
                   } else setStep((current) => Math.min(6, current + 1));
                 }}
                 type="button"
+                title={step === 6 ? copy.actions.results : copy.actions.next}
               >
-                {step === 6 ? copy.actions.results : copy.actions.next}
+                <span className="max-[35.99rem]:hidden">
+                  {step === 6 ? copy.actions.results : copy.actions.next}
+                </span>
                 <ArrowRight aria-hidden="true" className="size-4" />
               </Button>
             </div>

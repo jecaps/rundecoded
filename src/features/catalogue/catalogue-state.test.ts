@@ -13,6 +13,13 @@ import {
   searchProducts,
 } from './search';
 import { getProductCatalogue } from './catalogue';
+import {
+  applyPhoneFilters,
+  parsePhoneFilters,
+  phoneFilterCount,
+  writePhoneFilters,
+  type PhoneFilters,
+} from './phone-filters';
 import { filterProducts, paginateProducts } from './state';
 import { parseCatalogueUrlState, writeCatalogueUrlState } from './url-state';
 
@@ -61,6 +68,66 @@ describe('Phase 8 product catalogue', () => {
 });
 
 describe('catalogue state', () => {
+  it('round-trips phone facets and sort through the URL while ignoring invalid values', () => {
+    const url = writePhoneFilters(
+      new URL('https://example.com/en/catalogue/?q=adidas'),
+      {
+        purposes: ['trail'],
+        surfaces: ['road', 'easy-terrain'],
+        stabilities: ['neutral'],
+        drop: 'low',
+        distance: '42',
+        sort: 'brand',
+      },
+    );
+    expect(url.searchParams.get('q')).toBe('adidas');
+    expect(parsePhoneFilters(url.searchParams, new Set(['trail']))).toEqual({
+      purposes: ['trail'],
+      surfaces: ['road', 'easy-terrain'],
+      stabilities: ['neutral'],
+      drop: 'low',
+      distance: '42',
+      sort: 'brand',
+    });
+    expect(
+      parsePhoneFilters(
+        new URLSearchParams('f_purpose=unknown&f_surface=moon&f_sort=nope'),
+        new Set(['trail']),
+      ),
+    ).toEqual({
+      purposes: [],
+      surfaces: [],
+      stabilities: [],
+      drop: 'any',
+      distance: 'any',
+      sort: 'default',
+    });
+  });
+
+  it('uses OR within phone filter groups and AND between groups', () => {
+    const filters: PhoneFilters = {
+      purposes: ['trail', 'max-cushion'],
+      surfaces: ['easy-terrain'],
+      stabilities: ['neutral'],
+      drop: 'any',
+      distance: 'any',
+      sort: 'default',
+    };
+    const matching = applyPhoneFilters(products, filters, 'en');
+    expect(matching.length).toBeGreaterThan(0);
+    expect(matching).toEqual(
+      products.filter(
+        ({ product }) =>
+          filters.purposes.some((purpose) =>
+            product.categories.includes(purpose),
+          ) &&
+          terrainProfilesForShoe(product).includes('easy-terrain') &&
+          product.stability === 'neutral',
+      ),
+    );
+    expect(phoneFilterCount(filters)).toBe(4);
+  });
+
   it('searches brand, model, category, benefit, and technology text', () => {
     expect(filterProducts(products, 'kayano', 'all', 'en')).toHaveLength(2);
     expect(

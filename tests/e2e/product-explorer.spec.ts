@@ -1,7 +1,15 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 const shouldAssertVisualSnapshots = !process.env.CI;
+
+async function reloadHydratedCatalogue(page: Page) {
+  await page.reload();
+  await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+}
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
@@ -19,7 +27,7 @@ test('opens details from the card image and name and restores focus', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.reload();
+  await reloadHydratedCatalogue(page);
   const card = page.getByTestId('product-card').first();
   const image = card.getByRole('button', {
     name: 'Open details for Adistar 5',
@@ -186,7 +194,7 @@ test('opens comparison from a comparable product and includes the detail product
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.reload();
+  await reloadHydratedCatalogue(page);
   await page.getByLabel('Search products').fill('Jogflow 100.1');
   await page
     .getByRole('button', { name: 'Jogflow 100.1', exact: true })
@@ -230,6 +238,188 @@ test('search and filters produce accurate counts and an honest empty state', asy
   await expect(page.getByTestId('product-card')).toHaveCount(12);
   await expect(page.getByText('45 of 106 shoes')).toBeVisible();
   await expect(page).toHaveURL(/category=surface%3Aoff-road/);
+});
+
+test('phone filters combine facets, restore URL history, and leave tablet controls intact', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await reloadHydratedCatalogue(page);
+
+  await page.getByRole('button', { name: 'Filters', exact: true }).click();
+  const sheet = page.getByTestId('phone-filters-sheet');
+  await expect(sheet).toBeVisible();
+  const sheetBounds = await sheet.boundingBox();
+  expect(sheetBounds?.x).toBe(0);
+  expect(sheetBounds?.width).toBe(390);
+  expect(sheetBounds?.height).toBeLessThan(844 * 0.85);
+  expect(Math.round((sheetBounds?.y ?? 0) + (sheetBounds?.height ?? 0))).toBe(
+    844,
+  );
+  await expect(sheet.getByText('Guidance', { exact: true })).toBeVisible();
+  await expect(sheet.getByText('Distance up to')).toBeVisible();
+  await sheet.getByRole('button', { name: 'Easy terrain' }).click();
+  await sheet.getByRole('button', { name: 'Neutral' }).click();
+  await expect(
+    sheet.getByRole('button', { name: /Show \d+ shoes/ }),
+  ).toBeVisible();
+  await sheet.getByRole('button', { name: /Show \d+ shoes/ }).click();
+  await expect(sheet).toBeHidden();
+  await expect(page).toHaveURL(/f_surface=easy-terrain/);
+  await expect(page).toHaveURL(/f_stability=neutral/);
+  await expect(page.getByRole('button', { name: 'Filters (2)' })).toBeVisible();
+
+  await page.goBack();
+  await expect(page).not.toHaveURL(/f_stability=neutral/);
+  await expect(page.getByRole('button', { name: 'Filters (1)' })).toBeVisible();
+  await page.goForward();
+  await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+  await expect(page.getByRole('button', { name: 'Filters (2)' })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Filters (2)' }).click();
+  await expect(sheet).toBeVisible();
+  await page.setViewportSize({ width: 800, height: 1024 });
+  await expect(sheet).toBeHidden();
+  await expect(
+    page.getByRole('button', { name: 'All categories' }),
+  ).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Filters (2)' })).toBeHidden();
+  await expect(page.getByText('106 of 106 shoes')).toBeVisible();
+});
+
+test('phone search and icon filter share a row above purpose chips', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload();
+  await expect(
+    page.getByText('Product explorer', { exact: true }),
+  ).toBeVisible();
+
+  const search = page.getByLabel('Search products');
+  const filterButton = page.getByRole('button', {
+    name: 'Filters',
+    exact: true,
+  });
+  const searchBox = await search.locator('..').boundingBox();
+  const filterBox = await filterButton.boundingBox();
+  expect(Math.abs((searchBox?.y ?? 0) - (filterBox?.y ?? 0))).toBeLessThan(1);
+  expect(filterBox?.x).toBeGreaterThan(
+    (searchBox?.x ?? 0) + (searchBox?.width ?? 0),
+  );
+  expect(await filterButton.innerText()).toBe('');
+
+  const all = page.getByRole('button', { name: 'All', exact: true });
+  const resultsBar = page.getByTestId('catalogue-results-bar');
+  const initialBar = await resultsBar.boundingBox();
+  const chips = await page.getByTestId('phone-quick-filters').boundingBox();
+  const firstRow = await page
+    .getByTestId('mobile-product-row')
+    .first()
+    .boundingBox();
+  expect((initialBar?.y ?? 0) - ((chips?.y ?? 0) + (chips?.height ?? 0))).toBe(
+    8,
+  );
+  expect(
+    (firstRow?.y ?? 0) - ((initialBar?.y ?? 0) + (initialBar?.height ?? 0)),
+  ).toBe(9);
+  await expect(
+    page.getByTestId('phone-quick-filters').getByRole('button').first(),
+  ).toHaveText('All');
+  await expect(
+    page.getByTestId('phone-quick-filters').getByRole('button').nth(1),
+  ).toHaveText('Daily training');
+  await expect(
+    page.getByTestId('phone-quick-filters').getByRole('button').nth(2),
+  ).toHaveText('Fast training');
+  const dailyTraining = page.getByRole('button', {
+    name: 'Daily training',
+    exact: true,
+  });
+  await expect(all).toHaveAttribute('aria-pressed', 'true');
+  await dailyTraining.click();
+  await expect(all).toHaveAttribute('aria-pressed', 'false');
+  await expect(dailyTraining).toHaveAttribute('aria-pressed', 'true');
+  await expect(page).toHaveURL(/f_purpose=daily-trainer/);
+  await expect(page.getByRole('button', { name: 'Filters (1)' })).toBeVisible();
+  const filteredBar = await resultsBar.boundingBox();
+  expect(filteredBar?.height).toBe(initialBar?.height);
+  expect(filteredBar?.y).toBe(initialBar?.y);
+
+  await all.click();
+  await expect(page).not.toHaveURL(/f_purpose=/);
+  await expect(filterButton).toBeVisible();
+});
+
+test('phone pagination keeps a compact gap above the fixed navigation', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload();
+  await page.evaluate(() =>
+    window.scrollTo(0, document.documentElement.scrollHeight),
+  );
+  const pagination = await page
+    .getByRole('navigation', { name: 'Pagination' })
+    .boundingBox();
+  const bottomNavigation = await page
+    .getByRole('navigation', { name: 'Primary navigation' })
+    .boundingBox();
+  const gap =
+    (bottomNavigation?.y ?? 0) -
+    ((pagination?.y ?? 0) + (pagination?.height ?? 0));
+  expect(gap).toBeGreaterThanOrEqual(8);
+  expect(gap).toBeLessThanOrEqual(24);
+});
+
+test('phone filter sheet offers drop and distance controls with a custom sort menu', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await reloadHydratedCatalogue(page);
+  await page.getByRole('button', { name: 'Filters', exact: true }).click();
+  const sheet = page.getByTestId('phone-filters-sheet');
+  await sheet.getByRole('button', { name: 'Mid · 7–8 mm' }).click();
+  await sheet.getByRole('button', { name: '42 km' }).click();
+  await expect(page).toHaveURL(/f_drop=mid/);
+  await expect(page).toHaveURL(/f_distance=42/);
+  const sort = sheet.getByRole('combobox', { name: 'Sort' });
+  await sort.scrollIntoViewIfNeeded();
+  await expect(sort).toBeVisible();
+  await sort.click();
+  await expect(page.getByRole('option', { name: 'Brand A–Z' })).toBeVisible();
+  await page.getByRole('option', { name: 'Brand A–Z' }).click();
+  await expect(page).toHaveURL(/f_sort=brand/);
+  await sheet.getByRole('button', { name: 'Clear all' }).click();
+  await expect(page).not.toHaveURL(/f_drop=|f_distance=|f_sort=/);
+});
+
+test('phone comparison tray stays above the bottom navigation', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload();
+  const rows = page.getByTestId('mobile-product-row');
+  await rows
+    .nth(0)
+    .getByRole('button', { name: 'Add Adistar 5 to comparison' })
+    .click();
+  await rows
+    .nth(1)
+    .getByRole('button', { name: 'Add Adizero Agravic Speed 2 to comparison' })
+    .click();
+  const tray = page.getByRole('region', { name: 'Shoe comparison selection' });
+  await expect(tray).toBeVisible();
+  const trayBounds = await tray.boundingBox();
+  const navBounds = await page.locator('.app-banner').boundingBox();
+  expect((trayBounds?.y ?? 0) + (trayBounds?.height ?? 0)).toBeLessThanOrEqual(
+    navBounds?.y ?? 0,
+  );
+  await tray.getByRole('link', { name: 'Compare (2/2)' }).click();
+  await expect(page).toHaveURL(/\/en\/compare\/$/);
 });
 
 test('keeps filter control and result row dimensions stable', async ({
@@ -377,7 +567,7 @@ test('keeps compact single-line card headers at 580px', async ({ page }) => {
   ).toEqual({ fits: true, whiteSpace: 'nowrap' });
 });
 
-test('contains the category menu within the viewport on narrow screens', async ({
+test('contains phone filters and the tablet category menu within narrow viewports', async ({
   page,
 }) => {
   for (const width of [320, 390, 768]) {
@@ -388,19 +578,22 @@ test('contains the category menu within the viewport on narrow screens', async (
       'true',
     );
 
-    const categoryMenu = page.getByRole('button', {
-      name: 'All categories',
-      exact: true,
-    });
-    await expect(categoryMenu).toBeVisible();
-    const categoryMenuBox = await categoryMenu.boundingBox();
+    const filterControl =
+      width < 576
+        ? page.getByRole('button', { name: 'Filters', exact: true })
+        : page.getByRole('button', {
+            name: 'All categories',
+            exact: true,
+          });
+    await expect(filterControl).toBeVisible();
+    const filterControlBox = await filterControl.boundingBox();
     const documentWidth = await page.evaluate(() =>
       Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
     );
 
-    expect(categoryMenuBox).not.toBeNull();
+    expect(filterControlBox).not.toBeNull();
     expect(
-      (categoryMenuBox?.x ?? 0) + (categoryMenuBox?.width ?? 0),
+      (filterControlBox?.x ?? 0) + (filterControlBox?.width ?? 0),
     ).toBeLessThanOrEqual(width);
     expect(documentWidth).toBeLessThanOrEqual(width);
   }
@@ -412,8 +605,9 @@ test('uses compact catalogue rows on phones', async ({ page }) => {
 
   const rows = page.getByTestId('mobile-product-row');
   await expect(rows).toHaveCount(12);
-  await expect(page.getByTestId('product-card')).toHaveCount(0);
-  await expect(page.getByText('Product explorer')).toBeHidden();
+  await expect(page.getByTestId('product-card')).toHaveCount(12);
+  await expect(page.getByTestId('product-page')).toBeHidden();
+  await expect(page.getByText('Product explorer')).toBeVisible();
   await expect(
     page.getByRole('heading', {
       name: 'Help a customer choose the right shoe',
@@ -455,14 +649,17 @@ test('uses compact catalogue rows on phones', async ({ page }) => {
   ).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('dialog')).toHaveCount(0);
 
-  const detailsOpener = firstRow.getByRole('button', {
+  const detailsOpener = firstRow.getByRole('link', {
     name: 'Open details for Adistar 5',
   });
   await detailsOpener.click();
-  const dialog = page.getByRole('dialog');
-  await expect(dialog).toBeVisible();
-  await dialog.getByRole('button', { name: 'Close' }).click();
-  await expect(detailsOpener).toBeFocused();
+  await expect(page).toHaveURL(/\/en\/catalogue\/adidas-adistar-5\/$/);
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Adistar 5' }),
+  ).toBeVisible();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/catalogue\/$/);
 
   for (const width of [320, 575]) {
     await page.setViewportSize({ width, height: 844 });
@@ -472,6 +669,47 @@ test('uses compact catalogue rows on phones', async ({ page }) => {
     );
     expect(documentWidth).toBeLessThanOrEqual(width);
   }
+});
+
+test('serves phone rows before hydration without a React mismatch', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.route('**/*', (route) =>
+    route.request().resourceType() === 'script'
+      ? route.abort()
+      : route.continue(),
+  );
+  await page.goto('./en/catalogue/');
+  await expect(page.getByTestId('mobile-product-page')).toBeVisible();
+  await expect(page.getByTestId('product-page')).toBeHidden();
+  await expect(page.getByTestId('product-explorer')).not.toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+  await page.setViewportSize({ width: 576, height: 844 });
+  await expect(page.getByTestId('product-page')).toBeVisible();
+  await expect(page.getByTestId('mobile-product-page')).toBeHidden();
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  await page.unrouteAll();
+  const pageErrors: string[] = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+  await page.reload();
+  await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+  await expect(page.getByTestId('mobile-product-page')).toBeVisible();
+  await expect(page.getByTestId('product-page')).toBeHidden();
+  await page.goto('./en/catalogue/?q=adistar&f_purpose=max-cushion');
+  await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+  expect(
+    pageErrors.filter((message) => /hydration|React error #418/i.test(message)),
+  ).toEqual([]);
 });
 
 test('restores compact rows after returning from consultation', async ({
@@ -485,7 +723,7 @@ test('restores compact rows after returning from consultation', async ({
   await page.goBack();
 
   await expect(page.getByTestId('mobile-product-row')).toHaveCount(12);
-  await expect(page.getByTestId('product-card')).toHaveCount(0);
+  await expect(page.getByTestId('product-page')).toBeHidden();
 });
 
 test('provides typo-tolerant keyboard suggestions and an honest fallback', async ({
@@ -624,6 +862,33 @@ test('changes result pages without moving the viewport', async ({ page }) => {
   expect(Math.abs(backwardScrollY - initialScrollY)).toBeLessThanOrEqual(32);
 });
 
+test('centers the phone page label between equal pagination buttons', async ({
+  page,
+}) => {
+  const pagination = page.getByRole('navigation', { name: 'Pagination' });
+
+  for (const width of [320, 390]) {
+    await page.setViewportSize({ width, height: 844 });
+    const previous = await pagination
+      .getByRole('button', { name: 'Previous' })
+      .boundingBox();
+    const label = await pagination.getByText('Page 1 of 9').boundingBox();
+    const next = await pagination
+      .getByRole('button', { name: 'Next' })
+      .boundingBox();
+    const container = await pagination.boundingBox();
+
+    expect(previous && label && next && container).toBeTruthy();
+    expect(Math.abs(previous!.width - next!.width)).toBeLessThan(1);
+    expect(Math.abs(previous!.height - next!.height)).toBeLessThan(1);
+    expect(Math.abs(label!.x + label!.width / 2 - width / 2)).toBeLessThan(1);
+    expect(previous!.x).toBeGreaterThanOrEqual(container!.x);
+    expect(next!.x + next!.width).toBeLessThanOrEqual(
+      container!.x + container!.width,
+    );
+  }
+});
+
 test('passes automated accessibility checks in explorer states', async ({
   page,
 }) => {
@@ -707,12 +972,11 @@ for (const viewport of [
     }
 
     if (shouldAssertVisualSnapshots) {
-      await expect(page.locator('main')).toHaveScreenshot(
+      const screenshotTarget =
+        viewport.name === 'phone' ? page : page.locator('main');
+      await expect(screenshotTarget).toHaveScreenshot(
         `catalogue-${viewport.name}.png`,
-        {
-          animations: 'disabled',
-          maxDiffPixelRatio: 0.05,
-        },
+        { animations: 'disabled', maxDiffPixelRatio: 0.05 },
       );
     }
   });
@@ -722,7 +986,7 @@ test('keeps the card catalogue at the largest tablet viewport', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1024, height: 700 });
-  await page.reload();
+  await reloadHydratedCatalogue(page);
 
   await expect(page.getByTestId('product-card')).toHaveCount(12);
   await expect(page.getByTestId('catalogue-detail-pane')).toHaveCount(0);
@@ -750,10 +1014,12 @@ for (const viewport of [
 
     if (viewport.expected === 'phone') {
       await expect(page.getByTestId('mobile-product-row')).toHaveCount(12);
-      await expect(page.getByTestId('product-card')).toHaveCount(0);
+      await expect(page.getByTestId('mobile-product-page')).toBeVisible();
+      await expect(page.getByTestId('product-page')).toBeHidden();
     } else {
       await expect(page.getByTestId('product-card')).toHaveCount(12);
-      await expect(page.getByTestId('mobile-product-row')).toHaveCount(0);
+      await expect(page.getByTestId('product-page')).toBeVisible();
+      await expect(page.getByTestId('mobile-product-page')).toBeHidden();
     }
   });
 }

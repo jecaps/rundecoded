@@ -20,7 +20,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { isLocale, type Locale } from '@/i18n/config';
-import { switchLocaleUrl } from '@/lib/routes';
+import { localizedRoute, switchLocaleUrl } from '@/lib/routes';
 import { preserveScrollOnNextAstroNavigation } from '@/lib/scroll-restoration';
 
 type Theme = 'dark' | 'light';
@@ -105,40 +105,64 @@ export function DisplayControls({
 
   if (compact) {
     return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            aria-label={labels[locale].settings}
-            size="icon"
-            variant="ghost"
-          >
-            <Settings aria-hidden="true" className="size-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>{labels[locale].language}</DropdownMenuLabel>
-          <DropdownMenuRadioGroup value={locale} onValueChange={changeLocale}>
-            {locales.map((option) => (
-              <DropdownMenuRadioItem key={option.value} value={option.value}>
-                {option.label}
-              </DropdownMenuRadioItem>
-            ))}
-          </DropdownMenuRadioGroup>
-          <DropdownMenuSeparator />
-          <div className="flex items-center justify-between gap-6 px-2 py-2 text-sm">
-            <label className="cursor-pointer" htmlFor="tablet-dark-mode">
-              {labels[locale].darkMode}
-            </label>
-            <Switch
-              checked={theme === 'dark'}
-              id="tablet-dark-mode"
-              onCheckedChange={(checked) =>
-                setColorTheme(checked ? 'dark' : 'light')
-              }
-            />
-          </div>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <>
+        <a
+          aria-label={labels[locale].settings}
+          className="text-foreground tablet:hidden flex size-11 items-center justify-center rounded-[var(--radius-control)]"
+          href={localizedRoute(locale, 'settings')}
+          onClick={() =>
+            window.sessionStorage.setItem(
+              'rundecoded:phone-settings-return',
+              `${window.location.pathname}${window.location.search}${window.location.hash}`,
+            )
+          }
+        >
+          <Settings aria-hidden="true" className="size-4" />
+        </a>
+        <div className="tablet:block hidden">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                aria-label={labels[locale].settings}
+                className="max-[35.99rem]:size-11"
+                size="icon"
+                variant="ghost"
+              >
+                <Settings aria-hidden="true" className="size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>{labels[locale].language}</DropdownMenuLabel>
+              <DropdownMenuRadioGroup
+                value={locale}
+                onValueChange={changeLocale}
+              >
+                {locales.map((option) => (
+                  <DropdownMenuRadioItem
+                    key={option.value}
+                    value={option.value}
+                  >
+                    {option.label}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+              <DropdownMenuSeparator />
+              <div className="flex items-center justify-between gap-6 px-2 py-2 text-sm">
+                <label className="cursor-pointer" htmlFor="tablet-dark-mode">
+                  {labels[locale].darkMode}
+                </label>
+                <Switch
+                  checked={theme === 'dark'}
+                  id="tablet-dark-mode"
+                  onCheckedChange={(checked) =>
+                    setColorTheme(checked ? 'dark' : 'light')
+                  }
+                />
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </>
     );
   }
 
