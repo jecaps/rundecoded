@@ -84,6 +84,7 @@ import {
 } from './phone-filters';
 import {
   filterProducts,
+  PAGE_SIZE,
   paginateProducts,
   surfaceFilterId,
   taxonomyFilterIds,
@@ -325,6 +326,7 @@ export function ProductExplorer({
   const [query, setQuery] = useState(initialQuery);
   const [categoryId, setCategoryId] = useState(initialCategoryId);
   const [page, setPage] = useState(initialPage);
+  const [visiblePhoneCount, setVisiblePhoneCount] = useState(PAGE_SIZE);
   const [phoneFilters, setPhoneFilters] =
     useState<PhoneFilters>(emptyPhoneFilters);
   const [phoneFiltersOpen, setPhoneFiltersOpen] = useState(false);
@@ -345,6 +347,7 @@ export function ProductExplorer({
   const searchInputRef = useRef<HTMLInputElement>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
   const productListRef = useRef<HTMLDivElement>(null);
+  const phoneListSentinelRef = useRef<HTMLDivElement>(null);
   const copy = catalogueCopy[locale];
   const phoneCopy = phoneFilterCopy[locale];
 
@@ -437,11 +440,23 @@ export function ProductExplorer({
     );
     if (!stored) return;
     try {
-      const snapshot = JSON.parse(stored) as { href: string; scrollY: number };
+      const snapshot = JSON.parse(stored) as {
+        href: string;
+        scrollY: number;
+        visibleCount?: number;
+      };
       if (
         snapshot.href !== `${window.location.pathname}${window.location.search}`
       )
         return;
+      const restoredVisibleCount =
+        typeof snapshot.visibleCount === 'number' &&
+        Number.isFinite(snapshot.visibleCount)
+          ? Math.min(
+              products.length,
+              Math.max(PAGE_SIZE, Math.floor(snapshot.visibleCount)),
+            )
+          : null;
       const frames: number[] = [];
       const restoreScroll = () => {
         frames.push(
@@ -459,7 +474,16 @@ export function ProductExplorer({
           }),
         );
       };
-      restoreScroll();
+      if (restoredVisibleCount !== null) {
+        frames.push(
+          window.requestAnimationFrame(() => {
+            setVisiblePhoneCount(restoredVisibleCount);
+            restoreScroll();
+          }),
+        );
+      } else {
+        restoreScroll();
+      }
       document.addEventListener('astro:page-load', restoreScroll, {
         once: true,
       });
@@ -470,7 +494,7 @@ export function ProductExplorer({
     } catch {
       window.sessionStorage.removeItem('rundecoded:phone-catalogue-scroll');
     }
-  }, [compactMobile, hydrated, view]);
+  }, [compactMobile, hydrated, products.length, view]);
 
   useEffect(() => {
     const currentUrl = new URL(window.location.href);
@@ -507,6 +531,7 @@ export function ProductExplorer({
       );
       pageRef.current = restored.page;
       setPage(restored.page);
+      setVisiblePhoneCount(PAGE_SIZE);
       setSuggestionsOpen(false);
       setActiveSuggestion(-1);
     }
@@ -607,15 +632,33 @@ export function ProductExplorer({
       : searched;
   }, [categoryId, compactMobile, locale, phoneFilters, products, query]);
   const pagination = paginateProducts(filtered, page);
+  useEffect(() => {
+    if (!compactMobile || view !== 'catalogue') return;
+    if (visiblePhoneCount >= filtered.length) return;
+    const sentinel = phoneListSentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setVisiblePhoneCount((count) =>
+            Math.min(count + PAGE_SIZE, filtered.length),
+          );
+        }
+      },
+      { rootMargin: '400px 0px' },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [compactMobile, filtered.length, visiblePhoneCount, view]);
   const mobileProductGroups = useMemo(() => {
     const groups = new Map<string, ExplorerProduct[]>();
-    for (const item of pagination.items) {
+    for (const item of filtered.slice(0, visiblePhoneCount)) {
       const brandProducts = groups.get(item.product.brand) ?? [];
       brandProducts.push(item);
       groups.set(item.product.brand, brandProducts);
     }
     return [...groups.entries()];
-  }, [pagination.items]);
+  }, [filtered, visiblePhoneCount]);
   const suggestions = useMemo(
     () => buildSearchSuggestions(products, query, locale),
     [locale, products, query],
@@ -646,6 +689,7 @@ export function ProductExplorer({
 
   function updatePhoneFilters(nextFilters: PhoneFilters) {
     setPhoneFilters(nextFilters);
+    setVisiblePhoneCount(PAGE_SIZE);
     pageRef.current = 1;
     setPage(1);
     setPageDirection(null);
@@ -672,6 +716,7 @@ export function ProductExplorer({
 
   function updateQuery(nextQuery: string) {
     setQuery(nextQuery);
+    setVisiblePhoneCount(PAGE_SIZE);
     pageRef.current = 1;
     setPage(1);
     setPageDirection(null);
@@ -682,6 +727,7 @@ export function ProductExplorer({
 
   function updateCategory(nextCategory: string) {
     setCategoryId(nextCategory);
+    setVisiblePhoneCount(PAGE_SIZE);
     pageRef.current = 1;
     setPage(1);
     setPageDirection(null);
@@ -698,6 +744,7 @@ export function ProductExplorer({
 
   function clearFilters() {
     setQuery('');
+    setVisiblePhoneCount(PAGE_SIZE);
     setCategoryId('all');
     pageRef.current = 1;
     setPage(1);
@@ -723,6 +770,7 @@ export function ProductExplorer({
 
   function chooseSuggestion(value: string) {
     setQuery(value);
+    setVisiblePhoneCount(PAGE_SIZE);
     pageRef.current = 1;
     setPage(1);
     setPageDirection(null);
@@ -1487,6 +1535,7 @@ export function ProductExplorer({
                                 JSON.stringify({
                                   href,
                                   scrollY: window.scrollY,
+                                  visibleCount: visiblePhoneCount,
                                 }),
                               );
                             }}
@@ -1527,15 +1576,41 @@ export function ProductExplorer({
                                   {secondaryBadge}
                                 </span>
                               </span>
-                              <span className="text-muted-foreground mt-1.5 block truncate text-xs leading-4">
+                              <span
+                                className="text-muted-foreground mt-1.5 line-clamp-2 min-h-8 text-xs leading-4"
+                                data-testid="mobile-best-for"
+                              >
                                 <span className="font-semibold">
                                   {copy.bestFor}:
                                 </span>{' '}
                                 {summary}
                               </span>
-                              <span className="text-muted-foreground mt-0.5 block truncate text-xs leading-4">
-                                {copy.distance}: {distance} · {copy.drop}:{' '}
-                                {dropLabel(item)}
+                              <span
+                                className="text-muted-foreground mt-0.5 block truncate text-xs leading-4"
+                                data-testid="mobile-metrics"
+                              >
+                                <span className="sr-only">
+                                  {copy.distance}: {distance}. {copy.drop}:{' '}
+                                  {dropLabel(item)}.
+                                </span>
+                                <span aria-hidden="true">
+                                  <strong className="text-foreground font-bold">
+                                    {product.specifications.maximumDistanceKm ??
+                                      copy.distanceUnavailable}
+                                  </strong>
+                                  {product.specifications.maximumDistanceKm !==
+                                  null
+                                    ? ' km'
+                                    : ''}{' '}
+                                  ·{' '}
+                                  <strong className="text-foreground font-bold">
+                                    {product.specifications.dropMm ?? '—'}
+                                  </strong>
+                                  {product.specifications.dropMm !== null
+                                    ? ' mm'
+                                    : ''}{' '}
+                                  {copy.drop.toLowerCase()}
+                                </span>
                               </span>
                             </span>
                           </a>
@@ -1567,6 +1642,14 @@ export function ProductExplorer({
                   </div>
                 </section>
               ))}
+              {visiblePhoneCount < filtered.length ? (
+                <div
+                  aria-hidden="true"
+                  className="h-1"
+                  data-testid="phone-list-sentinel"
+                  ref={phoneListSentinelRef}
+                />
+              ) : null}
             </div>
             <div
               className={cn(
@@ -1755,7 +1838,7 @@ export function ProductExplorer({
 
       {pagination.pageCount > 1 ? (
         <nav
-          className="tablet:mt-8 tablet:flex tablet:justify-center tablet:gap-4 mt-4 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2"
+          className="tablet:mt-8 tablet:flex tablet:justify-center tablet:gap-4 hidden items-center gap-2"
           aria-label="Pagination"
         >
           <Button

@@ -173,6 +173,81 @@ test('persists language and theme preferences across routes', async ({
   ).toBeVisible();
 });
 
+test('keeps the phone theme on the incoming page before each tab swap', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.addInitScript(() => {
+    localStorage.setItem('rundecoded-theme', 'dark');
+  });
+  await page.goto('./en/catalogue/');
+  await page.waitForLoadState('networkidle');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+
+  const darkBackground = await page.evaluate(() => {
+    const background = getComputedStyle(document.body).backgroundColor;
+    type ThemeSample = {
+      phase: 'before' | 'after';
+      theme: string | null;
+      background?: string;
+    };
+    const state = window as Window & { __themeSamples?: ThemeSample[] };
+    state.__themeSamples = [];
+
+    document.addEventListener('astro:before-swap', (event) => {
+      const incomingDocument = (event as Event & { newDocument: Document })
+        .newDocument;
+      state.__themeSamples?.push({
+        phase: 'before',
+        theme: incomingDocument.documentElement.getAttribute('data-theme'),
+      });
+    });
+    document.addEventListener('astro:after-swap', () => {
+      state.__themeSamples?.push({
+        phase: 'after',
+        theme: document.documentElement.getAttribute('data-theme'),
+        background: getComputedStyle(document.body).backgroundColor,
+      });
+    });
+    return background;
+  });
+
+  await page.getByRole('link', { name: 'Guide', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/consultation\/$/);
+  await page.getByRole('link', { name: 'Compare', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/compare\/$/);
+  await page.getByRole('link', { name: 'Learn', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/running-basics\/$/);
+
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.evaluate(() => localStorage.removeItem('rundecoded-theme'));
+  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/catalogue\/$/);
+
+  const samples = await page.evaluate(
+    () =>
+      (
+        window as Window & {
+          __themeSamples?: Array<{
+            phase: 'before' | 'after';
+            theme: string | null;
+            background?: string;
+          }>;
+        }
+      ).__themeSamples,
+  );
+  expect(samples).toHaveLength(8);
+  for (const sample of samples ?? []) {
+    expect(sample.theme, `${sample.phase} swap theme`).toBe('dark');
+    if (sample.phase === 'after') {
+      expect(sample.background, 'background immediately after swap').toBe(
+        darkBackground,
+      );
+    }
+  }
+});
+
 test('switches the application shell at the shared breakpoint boundaries', async ({
   page,
 }) => {
@@ -326,9 +401,18 @@ test('opens phone settings as a route without a version section', async ({
   ).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Appearance' })).toBeVisible();
   await expect(page.getByText('Version')).toHaveCount(0);
+  const navigation = page.getByRole('navigation', {
+    name: 'Primary navigation',
+  });
+  await expect(navigation).toBeVisible();
   await expect(
-    page.getByRole('navigation', { name: 'Primary navigation' }),
-  ).toBeHidden();
+    navigation.getByRole('link', { name: 'Catalogue' }),
+  ).toHaveAttribute('aria-current', 'page');
+  expect(
+    await page
+      .locator('main')
+      .evaluate((element) => getComputedStyle(element).paddingBottom),
+  ).toBe('68px');
 
   await page.getByRole('button', { name: 'Dark' }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
@@ -358,13 +442,20 @@ test('opens a phone shoe route and returns to the filtered catalogue', async ({
     page.getByRole('heading', { level: 1, name: 'Adistar 5' }),
   ).toBeVisible();
   await expect(
-    page.getByRole('navigation', { name: 'Primary navigation' }),
-  ).toBeHidden();
+    page
+      .getByRole('navigation', { name: 'Primary navigation' })
+      .getByRole('link', { name: 'Catalogue' }),
+  ).toHaveAttribute('aria-current', 'page');
+  expect(
+    await page
+      .locator('main')
+      .evaluate((element) => getComputedStyle(element).paddingBottom),
+  ).toBe('68px');
   await page.getByRole('button', { name: 'Compare', exact: true }).click();
   await expect(
     page.getByRole('button', { name: 'Added', exact: true }),
   ).toHaveAttribute('aria-pressed', 'true');
-  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await page.locator('[data-phone-return="shoe"]').click();
   await expect(page).toHaveURL(/\/en\/catalogue\/\?q=Adistar$/);
   await expect(page.getByTestId('product-explorer')).toHaveAttribute(
     'data-hydrated',
@@ -375,6 +466,44 @@ test('opens a phone shoe route and returns to the filtered catalogue', async ({
     row.getByRole('link', { name: 'Open details for Adistar 5' }),
   ).toBeVisible();
   await expect(row).toHaveAttribute('data-selected', 'true');
+});
+
+test('keeps the originating phone tab active on secondary routes', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./en/consultation/');
+  await page.getByRole('link', { name: 'Settings' }).click();
+  await expect(page).toHaveURL(/\/en\/settings\/$/);
+  const navigation = page.getByRole('navigation', {
+    name: 'Primary navigation',
+  });
+  await expect(navigation.getByRole('link', { name: 'Guide' })).toHaveAttribute(
+    'aria-current',
+    'page',
+  );
+  await page.getByRole('link', { name: 'Back' }).click();
+  await expect(page).toHaveURL(/\/en\/consultation\/$/);
+
+  await page.evaluate(() => {
+    sessionStorage.setItem(
+      'rundecoded:phone-shoe-return',
+      JSON.stringify({
+        href: `${location.pathname}${location.search}`,
+        shoeId: 'adidas-adistar-5',
+        source: 'consultation',
+      }),
+    );
+  });
+  await page.goto('./en/catalogue/adidas-adistar-5/');
+  await expect(navigation.getByRole('link', { name: 'Guide' })).toHaveAttribute(
+    'aria-current',
+    'page',
+  );
+  await page.setViewportSize({ width: 800, height: 844 });
+  await expect(
+    navigation.getByRole('link', { name: 'Guide' }),
+  ).not.toHaveAttribute('aria-current', 'page');
 });
 
 test('restores the phone catalogue scroll position after shoe details', async ({
@@ -397,7 +526,7 @@ test('restores the phone catalogue scroll position after shoe details', async ({
     return saved ? (JSON.parse(saved) as { scrollY: number }).scrollY : null;
   });
   expect(savedScrollY).toBeGreaterThan(scrollY - 10);
-  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await page.locator('[data-phone-return="shoe"]').click();
   await expect(page).toHaveURL(/\/en\/catalogue\/$/);
   await expect(page.getByTestId('product-explorer')).toHaveAttribute(
     'data-hydrated',
