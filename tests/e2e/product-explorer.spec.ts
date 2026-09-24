@@ -354,25 +354,68 @@ test('phone search and icon filter share a row above purpose chips', async ({
   await expect(filterButton).toBeVisible();
 });
 
-test('phone pagination keeps a compact gap above the fixed navigation', async ({
+test('phone catalogue extends as it scrolls without pagination', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.reload();
+  await reloadHydratedCatalogue(page);
+  const rows = page.getByTestId('mobile-product-row');
+  await expect(rows).toHaveCount(12);
+  await expect(
+    page.getByRole('navigation', { name: 'Pagination' }),
+  ).toBeHidden();
+
+  for (let visible = 24; visible <= 96; visible += 12) {
+    await page.getByTestId('phone-list-sentinel').scrollIntoViewIfNeeded();
+    await expect(rows).toHaveCount(visible);
+  }
+  await page.getByTestId('phone-list-sentinel').scrollIntoViewIfNeeded();
+  await expect(rows).toHaveCount(106);
+  await expect(page.getByTestId('phone-list-sentinel')).toHaveCount(0);
+  await expect(page).not.toHaveURL(/page=/);
+
   await page.evaluate(() =>
     window.scrollTo(0, document.documentElement.scrollHeight),
   );
-  const pagination = await page
-    .getByRole('navigation', { name: 'Pagination' })
-    .boundingBox();
+  const finalRow = await rows.last().boundingBox();
   const bottomNavigation = await page
     .getByRole('navigation', { name: 'Primary navigation' })
     .boundingBox();
-  const gap =
-    (bottomNavigation?.y ?? 0) -
-    ((pagination?.y ?? 0) + (pagination?.height ?? 0));
-  expect(gap).toBeGreaterThanOrEqual(8);
-  expect(gap).toBeLessThanOrEqual(24);
+  expect((finalRow?.y ?? 0) + (finalRow?.height ?? 0)).toBeLessThan(
+    bottomNavigation?.y ?? 0,
+  );
+
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page
+    .getByRole('button', { name: 'Daily training', exact: true })
+    .click();
+  await expect(page).toHaveURL(/f_purpose=daily-trainer/);
+  await expect(rows).toHaveCount(12);
+});
+
+test('restores phone scroll after opening a shoe from an appended batch', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await reloadHydratedCatalogue(page);
+  const rows = page.getByTestId('mobile-product-row');
+  for (const visible of [24, 36, 48]) {
+    await page.getByTestId('phone-list-sentinel').scrollIntoViewIfNeeded();
+    await expect(rows).toHaveCount(visible);
+  }
+
+  const laterRow = rows.nth(32);
+  await laterRow.scrollIntoViewIfNeeded();
+  const originalScrollY = await page.evaluate(() => window.scrollY);
+  expect(originalScrollY).toBeGreaterThan(1000);
+  await laterRow.getByRole('link').click();
+  await expect(page).toHaveURL(/\/en\/catalogue\/[^/]+\/$/);
+  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/catalogue\/$/);
+  await expect(rows).toHaveCount(48);
+  await expect
+    .poll(() => page.evaluate(() => window.scrollY))
+    .toBeGreaterThan(originalScrollY - 10);
 });
 
 test('phone filter sheet offers drop and distance controls with a custom sort menu', async ({
@@ -617,7 +660,18 @@ test('uses compact catalogue rows on phones', async ({ page }) => {
   const firstRow = rows.first();
   await expect(firstRow).toContainText('Adistar 5');
   await expect(firstRow).toContainText('Best for:');
-  await expect(firstRow).toContainText('Distance: 42 km · Drop: 6 mm');
+  await expect(firstRow.getByTestId('mobile-metrics')).toContainText(
+    '42 km · 6 mm drop',
+  );
+  await expect(
+    firstRow.getByTestId('mobile-metrics').locator('strong'),
+  ).toHaveText(['42', '6']);
+  expect(
+    await firstRow.getByTestId('mobile-best-for').evaluate((element) => ({
+      lineClamp: getComputedStyle(element).webkitLineClamp,
+      height: element.getBoundingClientRect().height,
+    })),
+  ).toEqual({ lineClamp: '2', height: 32 });
   await expect(firstRow).not.toContainText('Adidas');
   await expect(firstRow.locator('[data-mobile-tag]')).toHaveCount(2);
   const longModelName = rows
@@ -862,30 +916,21 @@ test('changes result pages without moving the viewport', async ({ page }) => {
   expect(Math.abs(backwardScrollY - initialScrollY)).toBeLessThanOrEqual(32);
 });
 
-test('centers the phone page label between equal pagination buttons', async ({
+test('keeps pagination on tablets while hiding it on phones', async ({
   page,
 }) => {
   const pagination = page.getByRole('navigation', { name: 'Pagination' });
 
   for (const width of [320, 390]) {
     await page.setViewportSize({ width, height: 844 });
-    const previous = await pagination
-      .getByRole('button', { name: 'Previous' })
-      .boundingBox();
-    const label = await pagination.getByText('Page 1 of 9').boundingBox();
-    const next = await pagination
-      .getByRole('button', { name: 'Next' })
-      .boundingBox();
-    const container = await pagination.boundingBox();
+    await expect(pagination).toBeHidden();
+  }
 
-    expect(previous && label && next && container).toBeTruthy();
-    expect(Math.abs(previous!.width - next!.width)).toBeLessThan(1);
-    expect(Math.abs(previous!.height - next!.height)).toBeLessThan(1);
-    expect(Math.abs(label!.x + label!.width / 2 - width / 2)).toBeLessThan(1);
-    expect(previous!.x).toBeGreaterThanOrEqual(container!.x);
-    expect(next!.x + next!.width).toBeLessThanOrEqual(
-      container!.x + container!.width,
-    );
+  for (const width of [576, 1024]) {
+    await page.setViewportSize({ width, height: 844 });
+    await expect(pagination).toBeVisible();
+    await expect(pagination.getByText('Page 1 of 9')).toBeVisible();
+    await expect(page.getByTestId('product-card')).toHaveCount(12);
   }
 });
 

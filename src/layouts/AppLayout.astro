@@ -76,9 +76,9 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
     <script is:inline>
       (() => {
         const systemTheme = matchMedia('(prefers-color-scheme: dark)');
-        const applyTheme = () => {
+        const applyTheme = (root = document.documentElement) => {
           const storedTheme = localStorage.getItem('rundecoded-theme');
-          document.documentElement.dataset.theme =
+          root.dataset.theme =
             storedTheme === 'dark' || storedTheme === 'light'
               ? storedTheme
               : systemTheme.matches
@@ -92,15 +92,17 @@ const alternates = (['en', 'de', 'fr'] as const).map((alternateLocale) => ({
 
         if (!window.__rundecodedThemeWatcher) {
           window.__rundecodedThemeWatcher = true;
-          systemTheme.addEventListener('change', applyTheme);
+          systemTheme.addEventListener('change', () => applyTheme());
+          document.addEventListener('astro:before-swap', (event) => {
+            applyTheme(event.newDocument.documentElement);
+          });
+          document.addEventListener('astro:after-swap', () => {
+            applyTheme();
+            const nextLocale =
+              location.pathname.match(/\/(de|en|fr)(?:\/|$)/)?.[1];
+            document.documentElement.lang = nextLocale ?? 'en';
+          });
         }
-
-        document.addEventListener('astro:after-swap', () => {
-          applyTheme();
-          const nextLocale =
-            location.pathname.match(/\/(de|en|fr)(?:\/|$)/)?.[1];
-          document.documentElement.lang = nextLocale ?? 'en';
-        });
       })();
     </script>
   </head>

@@ -173,6 +173,81 @@ test('persists language and theme preferences across routes', async ({
   ).toBeVisible();
 });
 
+test('keeps the phone theme on the incoming page before each tab swap', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.addInitScript(() => {
+    localStorage.setItem('rundecoded-theme', 'dark');
+  });
+  await page.goto('./en/catalogue/');
+  await page.waitForLoadState('networkidle');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+
+  const darkBackground = await page.evaluate(() => {
+    const background = getComputedStyle(document.body).backgroundColor;
+    type ThemeSample = {
+      phase: 'before' | 'after';
+      theme: string | null;
+      background?: string;
+    };
+    const state = window as Window & { __themeSamples?: ThemeSample[] };
+    state.__themeSamples = [];
+
+    document.addEventListener('astro:before-swap', (event) => {
+      const incomingDocument = (event as Event & { newDocument: Document })
+        .newDocument;
+      state.__themeSamples?.push({
+        phase: 'before',
+        theme: incomingDocument.documentElement.getAttribute('data-theme'),
+      });
+    });
+    document.addEventListener('astro:after-swap', () => {
+      state.__themeSamples?.push({
+        phase: 'after',
+        theme: document.documentElement.getAttribute('data-theme'),
+        background: getComputedStyle(document.body).backgroundColor,
+      });
+    });
+    return background;
+  });
+
+  await page.getByRole('link', { name: 'Guide', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/consultation\/$/);
+  await page.getByRole('link', { name: 'Compare', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/compare\/$/);
+  await page.getByRole('link', { name: 'Learn', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/running-basics\/$/);
+
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.evaluate(() => localStorage.removeItem('rundecoded-theme'));
+  await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
+  await expect(page).toHaveURL(/\/en\/catalogue\/$/);
+
+  const samples = await page.evaluate(
+    () =>
+      (
+        window as Window & {
+          __themeSamples?: Array<{
+            phase: 'before' | 'after';
+            theme: string | null;
+            background?: string;
+          }>;
+        }
+      ).__themeSamples,
+  );
+  expect(samples).toHaveLength(8);
+  for (const sample of samples ?? []) {
+    expect(sample.theme, `${sample.phase} swap theme`).toBe('dark');
+    if (sample.phase === 'after') {
+      expect(sample.background, 'background immediately after swap').toBe(
+        darkBackground,
+      );
+    }
+  }
+});
+
 test('switches the application shell at the shared breakpoint boundaries', async ({
   page,
 }) => {
