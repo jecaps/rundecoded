@@ -26,6 +26,7 @@ export default defineConfig({
     },
   ],
   webServer: {
+    env: { RUNDECODED_E2E: '1' },
     command: productionPreview
       ? `node scripts/serve-dist.mjs --port ${serverPort}`
       : `./node_modules/.bin/astro dev --host 127.0.0.1 --port ${serverPort}`,

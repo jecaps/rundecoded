@@ -179,43 +179,19 @@ export function CustomerConsultation({
 }: CustomerConsultationProps) {
   const copy = consultationCopy[locale];
   const catalogueUrl = localizedRoute(locale, 'catalogue');
-  const initialBrowserState = () =>
-    typeof window === 'undefined'
-      ? null
-      : parseConsultationUrlState(new URL(window.location.href).searchParams);
-  const [step, setStep] = useState(() =>
-    initialBrowserState()?.showResults ? 6 : 0,
-  );
-  const [showResults, setShowResults] = useState(
-    () => initialBrowserState()?.showResults ?? false,
-  );
+  const [step, setStep] = useState(0);
+  const [showResults, setShowResults] = useState(false);
   const [visibleRecommendationCount, setVisibleRecommendationCount] = useState(
     initialRecommendationCount,
   );
-  const [distance, setDistance] = useState<string | undefined>(
-    () => initialBrowserState()?.answers.distance?.[0],
-  );
-  const [surfaces, setSurfaces] = useState<string[]>(
-    () => initialBrowserState()?.answers.surfaces ?? [],
-  );
-  const [otherSurface, setOtherSurface] = useState(
-    () => initialBrowserState()?.otherSurface ?? '',
-  );
-  const [priorities, setPriorities] = useState<string[]>(
-    () => initialBrowserState()?.answers.priority ?? [],
-  );
-  const [goal, setGoal] = useState<string | undefined>(
-    () => initialBrowserState()?.answers.goal?.[0],
-  );
-  const [otherGoal, setOtherGoal] = useState(
-    () => initialBrowserState()?.otherGoal ?? '',
-  );
-  const [stability, setStability] = useState<string | undefined>(
-    () => initialBrowserState()?.answers.stability?.[0],
-  );
-  const [comfort, setComfort] = useState<string[]>(
-    () => initialBrowserState()?.answers.comfort ?? [],
-  );
+  const [distance, setDistance] = useState<string | undefined>();
+  const [surfaces, setSurfaces] = useState<string[]>([]);
+  const [otherSurface, setOtherSurface] = useState('');
+  const [priorities, setPriorities] = useState<string[]>([]);
+  const [goal, setGoal] = useState<string | undefined>();
+  const [otherGoal, setOtherGoal] = useState('');
+  const [stability, setStability] = useState<string | undefined>();
+  const [comfort, setComfort] = useState<string[]>([]);
   const [detailsId, setDetailsId] = useState<string | null>(null);
   const detailsOpenerRef = useRef<HTMLElement | null>(null);
 
@@ -287,6 +263,7 @@ export function CustomerConsultation({
       setDetailsId(null);
     }
 
+    onPopState();
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
   }, []);

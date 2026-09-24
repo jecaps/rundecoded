@@ -442,13 +442,31 @@ export function ProductExplorer({
         snapshot.href !== `${window.location.pathname}${window.location.search}`
       )
         return;
-      window.sessionStorage.removeItem('rundecoded:phone-catalogue-scroll');
-      const frame = window.requestAnimationFrame(() => {
-        window.requestAnimationFrame(() =>
-          window.scrollTo({ top: snapshot.scrollY, behavior: 'instant' }),
+      const frames: number[] = [];
+      const restoreScroll = () => {
+        frames.push(
+          window.requestAnimationFrame(() => {
+            frames.push(
+              window.requestAnimationFrame(() => {
+                window.scrollTo({ top: snapshot.scrollY, behavior: 'instant' });
+                if (Math.abs(window.scrollY - snapshot.scrollY) < 10) {
+                  window.sessionStorage.removeItem(
+                    'rundecoded:phone-catalogue-scroll',
+                  );
+                }
+              }),
+            );
+          }),
         );
+      };
+      restoreScroll();
+      document.addEventListener('astro:page-load', restoreScroll, {
+        once: true,
       });
-      return () => window.cancelAnimationFrame(frame);
+      return () => {
+        document.removeEventListener('astro:page-load', restoreScroll);
+        frames.forEach((frame) => window.cancelAnimationFrame(frame));
+      };
     } catch {
       window.sessionStorage.removeItem('rundecoded:phone-catalogue-scroll');
     }

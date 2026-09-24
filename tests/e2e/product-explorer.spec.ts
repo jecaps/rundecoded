@@ -1,7 +1,15 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 const shouldAssertVisualSnapshots = !process.env.CI;
+
+async function reloadHydratedCatalogue(page: Page) {
+  await page.reload();
+  await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+}
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
@@ -19,7 +27,7 @@ test('opens details from the card image and name and restores focus', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.reload();
+  await reloadHydratedCatalogue(page);
   const card = page.getByTestId('product-card').first();
   const image = card.getByRole('button', {
     name: 'Open details for Adistar 5',
@@ -186,7 +194,7 @@ test('opens comparison from a comparable product and includes the detail product
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.reload();
+  await reloadHydratedCatalogue(page);
   await page.getByLabel('Search products').fill('Jogflow 100.1');
   await page
     .getByRole('button', { name: 'Jogflow 100.1', exact: true })
@@ -236,7 +244,7 @@ test('phone filters combine facets, restore URL history, and leave tablet contro
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.reload();
+  await reloadHydratedCatalogue(page);
 
   await page.getByRole('button', { name: 'Filters', exact: true }).click();
   const sheet = page.getByTestId('phone-filters-sheet');
@@ -265,6 +273,10 @@ test('phone filters combine facets, restore URL history, and leave tablet contro
   await expect(page).not.toHaveURL(/f_stability=neutral/);
   await expect(page.getByRole('button', { name: 'Filters (1)' })).toBeVisible();
   await page.goForward();
+  await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
   await expect(page.getByRole('button', { name: 'Filters (2)' })).toBeVisible();
 
   await page.getByRole('button', { name: 'Filters (2)' }).click();
@@ -367,7 +379,7 @@ test('phone filter sheet offers drop and distance controls with a custom sort me
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.reload();
+  await reloadHydratedCatalogue(page);
   await page.getByRole('button', { name: 'Filters', exact: true }).click();
   const sheet = page.getByTestId('phone-filters-sheet');
   await sheet.getByRole('button', { name: 'Mid · 7–8 mm' }).click();
@@ -974,7 +986,7 @@ test('keeps the card catalogue at the largest tablet viewport', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1024, height: 700 });
-  await page.reload();
+  await reloadHydratedCatalogue(page);
 
   await expect(page.getByTestId('product-card')).toHaveCount(12);
   await expect(page.getByTestId('catalogue-detail-pane')).toHaveCount(0);

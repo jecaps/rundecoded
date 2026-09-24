@@ -392,8 +392,24 @@ test('restores the phone catalogue scroll position after shoe details', async ({
   expect(scrollY).toBeGreaterThan(100);
   await shoe.click();
   await expect(page).toHaveURL(/\/en\/catalogue\/[^/]+\/$/);
+  const savedScrollY = await page.evaluate(() => {
+    const saved = sessionStorage.getItem('rundecoded:phone-catalogue-scroll');
+    return saved ? (JSON.parse(saved) as { scrollY: number }).scrollY : null;
+  });
+  expect(savedScrollY).toBeGreaterThan(scrollY - 10);
   await page.getByRole('link', { name: 'Catalogue', exact: true }).click();
   await expect(page).toHaveURL(/\/en\/catalogue\/$/);
+  await expect(page.getByTestId('product-explorer')).toHaveAttribute(
+    'data-hydrated',
+    'true',
+  );
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        sessionStorage.getItem('rundecoded:phone-catalogue-scroll'),
+      ),
+    )
+    .toBeNull();
   await expect
     .poll(async () => page.evaluate(() => window.scrollY))
     .toBeGreaterThan(scrollY - 10);

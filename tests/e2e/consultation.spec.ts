@@ -1,10 +1,19 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
+
+async function waitForConsultationHydration(page: Page) {
+  await expect(
+    page.locator(
+      'astro-island:has([data-testid="customer-consultation"]):not([ssr])',
+    ),
+  ).toHaveCount(1);
+}
 
 test('keeps answer text wrapping stable when an option is selected', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 768, height: 900 });
   await page.goto('en/consultation/');
+  await waitForConsultationHydration(page);
 
   const option = page.getByRole('button', { name: /^Under 5 km/ });
   const description = option.getByText('Short runs and first sessions');
@@ -25,6 +34,7 @@ test('keeps answer text wrapping stable when an option is selected', async ({
 test('keeps a completed recommendation after refresh', async ({ page }) => {
   await page.setViewportSize({ width: 768, height: 900 });
   await page.goto('en/consultation/');
+  await waitForConsultationHydration(page);
 
   await expect(page.getByText('Guided shoe selection')).toBeVisible();
   await expect(
@@ -52,7 +62,18 @@ test('keeps a completed recommendation after refresh', async ({ page }) => {
     page.getByRole('heading', { name: 'Best options for this customer' }),
   ).toBeVisible();
 
+  const hydrationErrors: string[] = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error' && /hydration/i.test(message.text())) {
+      hydrationErrors.push(message.text());
+    }
+  });
   await page.reload();
+  await expect(
+    page.locator(
+      'astro-island:has([data-testid="consultation-results"]):not([ssr])',
+    ),
+  ).toHaveCount(1);
 
   await expect(
     page.getByRole('heading', { name: 'Best options for this customer' }),
@@ -60,6 +81,7 @@ test('keeps a completed recommendation after refresh', async ({ page }) => {
   await expect(page.getByRole('button', { name: /View details/ })).toHaveCount(
     5,
   );
+  expect(hydrationErrors).toEqual([]);
 
   const firstExplanation = page
     .getByText('Why this shoe')
@@ -96,6 +118,7 @@ test('aligns phone review actions and opens recommended shoes as pages', async (
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('en/consultation/');
+  await waitForConsultationHydration(page);
 
   await page.getByRole('button', { name: /^Under 5 km/ }).click();
   await page.getByRole('button', { name: 'Next' }).click();
