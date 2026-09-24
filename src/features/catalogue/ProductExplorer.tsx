@@ -1737,10 +1737,11 @@ export function ProductExplorer({
 
       {pagination.pageCount > 1 ? (
         <nav
-          className="tablet:mt-8 mt-4 flex items-center justify-center gap-4"
+          className="tablet:mt-8 tablet:flex tablet:justify-center tablet:gap-4 mt-4 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2"
           aria-label="Pagination"
         >
           <Button
+            className="tablet:w-auto tablet:gap-2 tablet:px-4 tablet:text-sm w-full min-w-0 gap-1 px-2 text-xs"
             disabled={pagination.page === 1}
             onClick={() => changePage(pagination.page - 1)}
             variant="outline"
@@ -1748,10 +1749,14 @@ export function ProductExplorer({
             <ArrowLeft aria-hidden="true" className="size-4" />
             {copy.previous}
           </Button>
-          <span aria-live="polite" className="text-muted-foreground text-sm">
+          <span
+            aria-live="polite"
+            className="text-muted-foreground text-center text-sm whitespace-nowrap"
+          >
             {copy.page(pagination.page, pagination.pageCount)}
           </span>
           <Button
+            className="tablet:w-auto tablet:gap-2 tablet:px-4 tablet:text-sm w-full min-w-0 gap-1 px-2 text-xs"
             disabled={pagination.page === pagination.pageCount}
             onClick={() => changePage(pagination.page + 1)}
             variant="outline"

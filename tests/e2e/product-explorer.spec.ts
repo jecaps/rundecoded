@@ -850,6 +850,33 @@ test('changes result pages without moving the viewport', async ({ page }) => {
   expect(Math.abs(backwardScrollY - initialScrollY)).toBeLessThanOrEqual(32);
 });
 
+test('centers the phone page label between equal pagination buttons', async ({
+  page,
+}) => {
+  const pagination = page.getByRole('navigation', { name: 'Pagination' });
+
+  for (const width of [320, 390]) {
+    await page.setViewportSize({ width, height: 844 });
+    const previous = await pagination
+      .getByRole('button', { name: 'Previous' })
+      .boundingBox();
+    const label = await pagination.getByText('Page 1 of 9').boundingBox();
+    const next = await pagination
+      .getByRole('button', { name: 'Next' })
+      .boundingBox();
+    const container = await pagination.boundingBox();
+
+    expect(previous && label && next && container).toBeTruthy();
+    expect(Math.abs(previous!.width - next!.width)).toBeLessThan(1);
+    expect(Math.abs(previous!.height - next!.height)).toBeLessThan(1);
+    expect(Math.abs(label!.x + label!.width / 2 - width / 2)).toBeLessThan(1);
+    expect(previous!.x).toBeGreaterThanOrEqual(container!.x);
+    expect(next!.x + next!.width).toBeLessThanOrEqual(
+      container!.x + container!.width,
+    );
+  }
+});
+
 test('passes automated accessibility checks in explorer states', async ({
   page,
 }) => {
